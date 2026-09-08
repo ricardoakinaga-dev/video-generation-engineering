@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "project": "video-generation-engineering-vNext",
+  "goal": "Implement and test the complete video-generation-engineering skill",
+  "project_profile": "GREENFIELD",
+  "work_mode": "FEATURE",
+  "work_mode_overlays": [],
+  "lifecycle_stage": "BUILD",
+  "active_activity": "VERIFY",
+  "engineering_tier": "T3_SYSTEM",
+  "risk_level": "MEDIUM",
+  "blast_radius": "SYSTEM",
+  "status": "DONE",
+  "active_execplan": ".agent/plans/skill-implementation.md",
+  "active_task": null,
+  "verification_state": "PASS_SCOPED_SOFTWARE_MEDIA_PARTIAL",
+  "repository_state": "NO_GIT; original docs/BLUEPRINT.md baseline hash preserved; prior Gauntlet fingerprint is historical after AUDIT-docs r4 remediation",
+  "instruction_scope_refs": [
+    "/home/ricardo/.agents/skills/engineering-framework/SKILL.md",
+    "/home/ricardo/.codex/skills/.system/skill-creator/SKILL.md"
+  ],
+  "last_gate_record": "VER-VGE-SKILL-RELEASE",
+  "last_event_id": "EVT-VGE-IMPLEMENT-COMPLETE",
+  "state_revision": 19,
+  "next_gate": null,
+  "active_action_id": null,
+  "blocked_by": [],
+  "human_approval_required": [],
+  "updated_at": "2026-09-08T13:30:32.341798+00:00",
+  "remaining_capability_limits": [
+    "Full audiovisual production acceptance",
+    "Paid provider and external transfer authority",
+    "Unprobed I2V/FLF/voice/reference modes"
+  ]
+}

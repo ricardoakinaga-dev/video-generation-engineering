@@ -1,0 +1,4625 @@
+{
+  "request_id": "G-004",
+  "scope": "Independent authored 15-second four-shot treatment; no generation/runtime/network",
+  "temporary_directory": "/tmp/vge-forward-nr6ao5cc",
+  "authored_treatment": {
+    "schema_version": 1,
+    "revision": 1,
+    "execution_mode": "PLAN_ONLY",
+    "scene_intent": {
+      "schema_version": 1,
+      "project_id": "proj_example",
+      "scene_id": "scene_001",
+      "title": "Missed train",
+      "objective": "Two colleagues move from defensiveness to sympathy after missing a train",
+      "duration": {
+        "target_seconds": 15
+      },
+      "target": {
+        "platform": "unselected",
+        "aspect_ratio": "16:9",
+        "delivery": "video"
+      },
+      "subjects": [
+        "subject_a",
+        "subject_b"
+      ],
+      "objects": [
+        "train_001"
+      ],
+      "environments": [
+        "environment_platform"
+      ],
+      "actions": [
+        "notice_departure",
+        "speak_defensively",
+        "process_explanation",
+        "offer_sympathy",
+        "relax"
+      ],
+      "dialogue_required": true,
+      "audio_required": true,
+      "style_preferences": [
+        "naturalistic"
+      ],
+      "hard_constraints": [
+        "Listener processes before reaction",
+        "Preserve speaker identity and platform axis"
+      ],
+      "preferences": [
+        "medium static coverage"
+      ],
+      "unknowns": [
+        "Model and reference support unselected",
+        "Dialogue is proposed original text",
+        "Voice production and lip sync stage pending"
+      ]
+    },
+    "scene_bible": {
+      "schema_version": 1,
+      "project_id": "proj_example",
+      "scene_id": "scene_001",
+      "revision": 1,
+      "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+      "time_of_day": "morning",
+      "lighting": "soft overcast daylight",
+      "visual_style": "naturalistic",
+      "camera_language": "establish geography, preserve axis, hold reactions",
+      "initial_state": {
+        "subject_a": {
+          "emotion": "defensive",
+          "gaze": "departing_train",
+          "position": "camera_left"
+        },
+        "subject_b": {
+          "emotion": "frustrated",
+          "gaze": "departing_train",
+          "position": "camera_right"
+        },
+        "train_001": {
+          "state": "departing"
+        }
+      },
+      "entities": [
+        {
+          "id": "subject_a",
+          "type": "character",
+          "description": "Fictional adult colleague A in navy jacket",
+          "permanence": "PERSISTENT"
+        },
+        {
+          "id": "subject_b",
+          "type": "character",
+          "description": "Fictional adult colleague B in tan coat",
+          "permanence": "PERSISTENT"
+        },
+        {
+          "id": "train_001",
+          "type": "vehicle",
+          "description": "Commuter train receding from platform",
+          "permanence": "PERSISTENT"
+        },
+        {
+          "id": "environment_platform",
+          "type": "environment",
+          "description": "Quiet platform with marked safety line",
+          "permanence": "PERSISTENT"
+        }
+      ]
+    },
+    "references": [],
+    "retention_rules": [],
+    "reference_conflicts": [],
+    "dialogue_timeline": [
+      {
+        "id": "dialogue_a",
+        "shot_id": "shot_002",
+        "speaker": "subject_a",
+        "target_listener": "subject_b",
+        "text": "I thought we still had time.",
+        "start_s": 0.3,
+        "end_s": 2.6,
+        "delivery": "restrained defensive",
+        "start_conditions": "Train departure noticed",
+        "end_conditions": "A completes explanation",
+        "required_reaction": "B processes after line end",
+        "reaction_at_s": 3.0,
+        "visible_speech": true,
+        "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+        "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+      },
+      {
+        "id": "dialogue_b",
+        "shot_id": "shot_003",
+        "speaker": "subject_b",
+        "target_listener": "subject_a",
+        "text": "You were trying to help. I know.",
+        "start_s": 0.8,
+        "end_s": 2.8,
+        "delivery": "gentle sympathy",
+        "start_conditions": "B has processed explanation",
+        "end_conditions": "B completes reassurance",
+        "required_reaction": "A relaxes in next shot",
+        "visible_speech": true,
+        "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+        "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+      }
+    ],
+    "audio_timeline": [
+      {
+        "id": "audio_tone_001",
+        "shot_id": "shot_001",
+        "layer": "ambience",
+        "start_s": 0,
+        "end_s": 3,
+        "source": "PROPOSED permitted platform ambience recording, pending",
+        "bridge_ref": "bridge_platform_tone"
+      },
+      {
+        "id": "audio_tone_002",
+        "shot_id": "shot_002",
+        "layer": "ambience",
+        "start_s": 0,
+        "end_s": 4,
+        "source": "PROPOSED permitted platform ambience recording, pending",
+        "bridge_ref": "bridge_platform_tone"
+      },
+      {
+        "id": "audio_tone_003",
+        "shot_id": "shot_003",
+        "layer": "ambience",
+        "start_s": 0,
+        "end_s": 4,
+        "source": "PROPOSED permitted platform ambience recording, pending",
+        "bridge_ref": "bridge_platform_tone"
+      },
+      {
+        "id": "audio_tone_004",
+        "shot_id": "shot_004",
+        "layer": "ambience",
+        "start_s": 0,
+        "end_s": 4,
+        "source": "PROPOSED permitted platform ambience recording, pending",
+        "bridge_ref": "bridge_platform_tone"
+      }
+    ],
+    "shots": [
+      {
+        "id": "shot_001",
+        "duration_s": 3,
+        "purpose": "Establish missed train and two colleagues",
+        "dependency_ids": [],
+        "active_subject_ids": [
+          "subject_a",
+          "subject_b"
+        ],
+        "supporting_subject_ids": [],
+        "action_primitives": [
+          "notice_departure"
+        ],
+        "state_changes": [],
+        "references": [],
+        "camera": {
+          "size": "MEDIUM",
+          "angle": "EYE_LEVEL",
+          "focal_length": "50mm_equivalent",
+          "framing": "TWO_SHOT",
+          "focus": "subject_a and subject_b",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL",
+          "exposure": "LOCKED_TO_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "established partner eyeline, except initial train gaze",
+          "movement": {
+            "type": "STATIC",
+            "direction": "NONE",
+            "phase": "HOLD"
+          },
+          "screen_direction": "LEFT_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+        },
+        "generation_mode": "T2V",
+        "capability_requirements": [],
+        "constraints": [
+          "con_reaction"
+        ],
+        "acceptance_ids": [
+          "QG-05",
+          "QG-06",
+          "QG-07",
+          "QG-10",
+          "QG-11",
+          "QG-12",
+          "QG-14"
+        ],
+        "performance": [
+          "Both gaze at receding train"
+        ]
+      },
+      {
+        "id": "shot_002",
+        "duration_s": 4,
+        "purpose": "A explains defensively while B listens",
+        "dependency_ids": [
+          "shot_001"
+        ],
+        "active_subject_ids": [
+          "subject_a",
+          "subject_b"
+        ],
+        "supporting_subject_ids": [],
+        "action_primitives": [
+          "speak_defensively",
+          "process_explanation",
+          "turn_to_partner"
+        ],
+        "state_changes": [
+          {
+            "property": "subject_b.emotion",
+            "prior": "frustrated",
+            "next": "processing",
+            "cause": "process_explanation"
+          },
+          {
+            "property": "subject_a.gaze",
+            "prior": "departing_train",
+            "next": "subject_b",
+            "cause": "turn_to_partner"
+          },
+          {
+            "property": "subject_b.gaze",
+            "prior": "departing_train",
+            "next": "subject_a",
+            "cause": "turn_to_partner"
+          }
+        ],
+        "references": [],
+        "camera": {
+          "size": "MEDIUM",
+          "angle": "EYE_LEVEL",
+          "focal_length": "50mm_equivalent",
+          "framing": "MEDIUM_A",
+          "focus": "subject_a",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL",
+          "exposure": "LOCKED_TO_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "established partner eyeline, except initial train gaze",
+          "movement": {
+            "type": "STATIC",
+            "direction": "NONE",
+            "phase": "HOLD"
+          },
+          "screen_direction": "LEFT_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+        },
+        "generation_mode": "T2V",
+        "capability_requirements": [
+          "visible_speech_sync"
+        ],
+        "constraints": [
+          "con_reaction"
+        ],
+        "acceptance_ids": [
+          "QG-05",
+          "QG-06",
+          "QG-07",
+          "QG-10",
+          "QG-11",
+          "QG-12",
+          "QG-14"
+        ],
+        "performance": [
+          "A speaks 0.3\u20132.6 s; B only processes after the line ends"
+        ]
+      },
+      {
+        "id": "shot_003",
+        "duration_s": 4,
+        "purpose": "B offers sympathy after processing",
+        "dependency_ids": [
+          "shot_002"
+        ],
+        "active_subject_ids": [
+          "subject_a",
+          "subject_b"
+        ],
+        "supporting_subject_ids": [],
+        "action_primitives": [
+          "offer_sympathy"
+        ],
+        "state_changes": [
+          {
+            "property": "subject_b.emotion",
+            "prior": "processing",
+            "next": "sympathetic",
+            "cause": "offer_sympathy"
+          }
+        ],
+        "references": [],
+        "camera": {
+          "size": "MEDIUM",
+          "angle": "EYE_LEVEL",
+          "focal_length": "50mm_equivalent",
+          "framing": "MEDIUM_B",
+          "focus": "subject_b",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL",
+          "exposure": "LOCKED_TO_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "established partner eyeline, except initial train gaze",
+          "movement": {
+            "type": "STATIC",
+            "direction": "NONE",
+            "phase": "HOLD"
+          },
+          "screen_direction": "LEFT_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+        },
+        "generation_mode": "T2V",
+        "capability_requirements": [
+          "visible_speech_sync"
+        ],
+        "constraints": [
+          "con_reaction"
+        ],
+        "acceptance_ids": [
+          "QG-05",
+          "QG-06",
+          "QG-07",
+          "QG-10",
+          "QG-11",
+          "QG-12",
+          "QG-14"
+        ],
+        "performance": [
+          "B softens jaw, speaks at 0.8\u20132.8 s; A listens"
+        ]
+      },
+      {
+        "id": "shot_004",
+        "duration_s": 4,
+        "purpose": "A receives sympathy and relaxes",
+        "dependency_ids": [
+          "shot_003"
+        ],
+        "active_subject_ids": [
+          "subject_a",
+          "subject_b"
+        ],
+        "supporting_subject_ids": [],
+        "action_primitives": [
+          "relax"
+        ],
+        "state_changes": [
+          {
+            "property": "subject_a.emotion",
+            "prior": "defensive",
+            "next": "relieved",
+            "cause": "relax"
+          }
+        ],
+        "references": [],
+        "camera": {
+          "size": "MEDIUM",
+          "angle": "EYE_LEVEL",
+          "focal_length": "50mm_equivalent",
+          "framing": "TWO_SHOT",
+          "focus": "subject_a and subject_b",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL",
+          "exposure": "LOCKED_TO_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "established partner eyeline, except initial train gaze",
+          "movement": {
+            "type": "STATIC",
+            "direction": "NONE",
+            "phase": "HOLD"
+          },
+          "screen_direction": "LEFT_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+        },
+        "generation_mode": "T2V",
+        "capability_requirements": [],
+        "constraints": [
+          "con_reaction"
+        ],
+        "acceptance_ids": [
+          "QG-05",
+          "QG-06",
+          "QG-07",
+          "QG-10",
+          "QG-11",
+          "QG-12",
+          "QG-14"
+        ],
+        "performance": [
+          "A exhales and releases shoulder tension after B finishes"
+        ]
+      }
+    ],
+    "constraints": [
+      {
+        "constraint_id": "con_reaction",
+        "subject": "subject_a and subject_b",
+        "kind": "QA_ASSERTION",
+        "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+        "priority": "HIGH",
+        "scope": [
+          "shot_001",
+          "shot_002",
+          "shot_003",
+          "shot_004"
+        ],
+        "evidence": {
+          "status": "PROPOSED",
+          "claim_type": "DECISION",
+          "confidence": "HIGH"
+        },
+        "validation": {
+          "method": "audio_and_frame_timeline_review",
+          "blocking": true
+        },
+        "fallback": "Separate reaction coverage",
+        "status": "PROPOSED"
+      }
+    ],
+    "contact_graphs": [],
+    "generation_strategy": {
+      "mode": "independent canonical reference anchors",
+      "reanchor_every_shots": 3,
+      "reset_points": [
+        "shot_001",
+        "shot_004"
+      ],
+      "status": "PROPOSED",
+      "execution_blockers": [
+        "No verified visible_speech_sync feature evidence",
+        "Audio sources pending"
+      ]
+    },
+    "assembly_plan": {
+      "shot_ids": [
+        "shot_001",
+        "shot_002",
+        "shot_003",
+        "shot_004"
+      ],
+      "target_duration_s": 15,
+      "fps": "UNKNOWN",
+      "codec": "UNKNOWN",
+      "audio": "Dialogue over continuous platform ambience; inspect actual phonetic sync",
+      "editorial_status": "NOT_RUN"
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "prepare",
+        "/tmp/vge-forward-nr6ao5cc/treatment.json",
+        "--output",
+        "/tmp/vge-forward-nr6ao5cc/plan.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "validate",
+        "/tmp/vge-forward-nr6ao5cc/plan.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"scope\": \"STRUCTURAL_PLAN_ONLY\",\n  \"issues\": [],\n  \"shot_order\": [\n    \"shot_001\",\n    \"shot_002\",\n    \"shot_003\",\n    \"shot_004\"\n  ],\n  \"end_states\": {\n    \"shot_001\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"departing_train\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"frustrated\",\n      \"subject_b.gaze\": \"departing_train\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_002\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"subject_b\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"processing\",\n      \"subject_b.gaze\": \"subject_a\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_003\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"subject_b\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"sympathetic\",\n      \"subject_b.gaze\": \"subject_a\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_004\": {\n      \"subject_a.emotion\": \"relieved\",\n      \"subject_a.gaze\": \"subject_b\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"sympathetic\",\n      \"subject_b.gaze\": \"subject_a\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    }\n  },\n  \"limitations\": [\n    \"Does not verify visual identity, physics, editorial quality or model feasibility\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "compile",
+        "/tmp/vge-forward-nr6ao5cc/plan.json",
+        "--output",
+        "/tmp/vge-forward-nr6ao5cc/prompts.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "artifacts": {
+    "plan.json": {
+      "schema_version": 1,
+      "revision": 1,
+      "execution_mode": "PLAN_ONLY",
+      "scene_intent": {
+        "schema_version": 1,
+        "project_id": "proj_example",
+        "scene_id": "scene_001",
+        "title": "Missed train",
+        "objective": "Two colleagues move from defensiveness to sympathy after missing a train",
+        "duration": {
+          "target_seconds": 15
+        },
+        "target": {
+          "platform": "unselected",
+          "aspect_ratio": "16:9",
+          "delivery": "video"
+        },
+        "subjects": [
+          "subject_a",
+          "subject_b"
+        ],
+        "objects": [
+          "train_001"
+        ],
+        "environments": [
+          "environment_platform"
+        ],
+        "actions": [
+          "notice_departure",
+          "speak_defensively",
+          "process_explanation",
+          "offer_sympathy",
+          "relax"
+        ],
+        "dialogue_required": true,
+        "audio_required": true,
+        "style_preferences": [
+          "naturalistic"
+        ],
+        "hard_constraints": [
+          "Listener processes before reaction",
+          "Preserve speaker identity and platform axis"
+        ],
+        "preferences": [
+          "medium static coverage"
+        ],
+        "unknowns": [
+          "Model and reference support unselected",
+          "Dialogue is proposed original text",
+          "Voice production and lip sync stage pending"
+        ]
+      },
+      "scene_bible": {
+        "schema_version": 1,
+        "project_id": "proj_example",
+        "scene_id": "scene_001",
+        "revision": 1,
+        "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+        "time_of_day": "morning",
+        "lighting": "soft overcast daylight",
+        "visual_style": "naturalistic",
+        "camera_language": "establish geography, preserve axis, hold reactions",
+        "initial_state": {
+          "subject_a": {
+            "emotion": "defensive",
+            "gaze": "departing_train",
+            "position": "camera_left"
+          },
+          "subject_b": {
+            "emotion": "frustrated",
+            "gaze": "departing_train",
+            "position": "camera_right"
+          },
+          "train_001": {
+            "state": "departing"
+          }
+        },
+        "entities": [
+          {
+            "id": "subject_a",
+            "type": "character",
+            "description": "Fictional adult colleague A in navy jacket",
+            "permanence": "PERSISTENT"
+          },
+          {
+            "id": "subject_b",
+            "type": "character",
+            "description": "Fictional adult colleague B in tan coat",
+            "permanence": "PERSISTENT"
+          },
+          {
+            "id": "train_001",
+            "type": "vehicle",
+            "description": "Commuter train receding from platform",
+            "permanence": "PERSISTENT"
+          },
+          {
+            "id": "environment_platform",
+            "type": "environment",
+            "description": "Quiet platform with marked safety line",
+            "permanence": "PERSISTENT"
+          }
+        ],
+        "initial_state_ref": "scene_bible:scene_001:initial"
+      },
+      "references": [],
+      "retention_rules": [],
+      "reference_conflicts": [],
+      "dialogue_timeline": [
+        {
+          "id": "dialogue_a",
+          "shot_id": "shot_002",
+          "speaker": "subject_a",
+          "target_listener": "subject_b",
+          "text": "I thought we still had time.",
+          "start_s": 0.3,
+          "end_s": 2.6,
+          "delivery": "restrained defensive",
+          "start_conditions": "Train departure noticed",
+          "end_conditions": "A completes explanation",
+          "required_reaction": "B processes after line end",
+          "reaction_at_s": 3.0,
+          "visible_speech": true,
+          "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+          "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+        },
+        {
+          "id": "dialogue_b",
+          "shot_id": "shot_003",
+          "speaker": "subject_b",
+          "target_listener": "subject_a",
+          "text": "You were trying to help. I know.",
+          "start_s": 0.8,
+          "end_s": 2.8,
+          "delivery": "gentle sympathy",
+          "start_conditions": "B has processed explanation",
+          "end_conditions": "B completes reassurance",
+          "required_reaction": "A relaxes in next shot",
+          "visible_speech": true,
+          "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+          "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+        }
+      ],
+      "audio_timeline": [
+        {
+          "id": "audio_tone_001",
+          "shot_id": "shot_001",
+          "layer": "ambience",
+          "start_s": 0,
+          "end_s": 3,
+          "source": "PROPOSED permitted platform ambience recording, pending",
+          "bridge_ref": "bridge_platform_tone"
+        },
+        {
+          "id": "audio_tone_002",
+          "shot_id": "shot_002",
+          "layer": "ambience",
+          "start_s": 0,
+          "end_s": 4,
+          "source": "PROPOSED permitted platform ambience recording, pending",
+          "bridge_ref": "bridge_platform_tone"
+        },
+        {
+          "id": "audio_tone_003",
+          "shot_id": "shot_003",
+          "layer": "ambience",
+          "start_s": 0,
+          "end_s": 4,
+          "source": "PROPOSED permitted platform ambience recording, pending",
+          "bridge_ref": "bridge_platform_tone"
+        },
+        {
+          "id": "audio_tone_004",
+          "shot_id": "shot_004",
+          "layer": "ambience",
+          "start_s": 0,
+          "end_s": 4,
+          "source": "PROPOSED permitted platform ambience recording, pending",
+          "bridge_ref": "bridge_platform_tone"
+        }
+      ],
+      "shots": [
+        {
+          "id": "shot_001",
+          "duration_s": 3,
+          "purpose": "Establish missed train and two colleagues",
+          "dependency_ids": [],
+          "active_subject_ids": [
+            "subject_a",
+            "subject_b"
+          ],
+          "supporting_subject_ids": [],
+          "action_primitives": [
+            "notice_departure"
+          ],
+          "state_changes": [],
+          "references": [],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "TWO_SHOT",
+            "focus": "subject_a and subject_b",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "established partner eyeline, except initial train gaze",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+          },
+          "generation_mode": "T2V",
+          "capability_requirements": [],
+          "constraints": [
+            "con_reaction"
+          ],
+          "acceptance_ids": [
+            "QG-05",
+            "QG-06",
+            "QG-07",
+            "QG-10",
+            "QG-11",
+            "QG-12",
+            "QG-14"
+          ],
+          "performance": [
+            "Both gaze at receding train"
+          ],
+          "scene_id": "scene_001",
+          "revision": 1,
+          "lifecycle_status": "PLANNED",
+          "generation_artifact_ref": null,
+          "artifact_observation_ref": null,
+          "start_state_ref": "scene_bible:scene_001:initial",
+          "start_state_delta": {},
+          "end_state_delta": {}
+        },
+        {
+          "id": "shot_002",
+          "duration_s": 4,
+          "purpose": "A explains defensively while B listens",
+          "dependency_ids": [
+            "shot_001"
+          ],
+          "active_subject_ids": [
+            "subject_a",
+            "subject_b"
+          ],
+          "supporting_subject_ids": [],
+          "action_primitives": [
+            "speak_defensively",
+            "process_explanation",
+            "turn_to_partner"
+          ],
+          "state_changes": [
+            {
+              "property": "subject_b.emotion",
+              "prior": "frustrated",
+              "next": "processing",
+              "cause": "process_explanation"
+            },
+            {
+              "property": "subject_a.gaze",
+              "prior": "departing_train",
+              "next": "subject_b",
+              "cause": "turn_to_partner"
+            },
+            {
+              "property": "subject_b.gaze",
+              "prior": "departing_train",
+              "next": "subject_a",
+              "cause": "turn_to_partner"
+            }
+          ],
+          "references": [],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "MEDIUM_A",
+            "focus": "subject_a",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "established partner eyeline, except initial train gaze",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+          },
+          "generation_mode": "T2V",
+          "capability_requirements": [
+            "visible_speech_sync"
+          ],
+          "constraints": [
+            "con_reaction"
+          ],
+          "acceptance_ids": [
+            "QG-05",
+            "QG-06",
+            "QG-07",
+            "QG-10",
+            "QG-11",
+            "QG-12",
+            "QG-14"
+          ],
+          "performance": [
+            "A speaks 0.3\u20132.6 s; B only processes after the line ends"
+          ],
+          "scene_id": "scene_001",
+          "revision": 1,
+          "lifecycle_status": "PLANNED",
+          "generation_artifact_ref": null,
+          "artifact_observation_ref": null,
+          "start_state_ref": "continuity:shot_001:end",
+          "start_state_delta": {},
+          "end_state_delta": {
+            "subject_b.emotion": "processing",
+            "subject_a.gaze": "subject_b",
+            "subject_b.gaze": "subject_a"
+          }
+        },
+        {
+          "id": "shot_003",
+          "duration_s": 4,
+          "purpose": "B offers sympathy after processing",
+          "dependency_ids": [
+            "shot_002"
+          ],
+          "active_subject_ids": [
+            "subject_a",
+            "subject_b"
+          ],
+          "supporting_subject_ids": [],
+          "action_primitives": [
+            "offer_sympathy"
+          ],
+          "state_changes": [
+            {
+              "property": "subject_b.emotion",
+              "prior": "processing",
+              "next": "sympathetic",
+              "cause": "offer_sympathy"
+            }
+          ],
+          "references": [],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "MEDIUM_B",
+            "focus": "subject_b",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "established partner eyeline, except initial train gaze",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+          },
+          "generation_mode": "T2V",
+          "capability_requirements": [
+            "visible_speech_sync"
+          ],
+          "constraints": [
+            "con_reaction"
+          ],
+          "acceptance_ids": [
+            "QG-05",
+            "QG-06",
+            "QG-07",
+            "QG-10",
+            "QG-11",
+            "QG-12",
+            "QG-14"
+          ],
+          "performance": [
+            "B softens jaw, speaks at 0.8\u20132.8 s; A listens"
+          ],
+          "scene_id": "scene_001",
+          "revision": 1,
+          "lifecycle_status": "PLANNED",
+          "generation_artifact_ref": null,
+          "artifact_observation_ref": null,
+          "start_state_ref": "continuity:shot_002:end",
+          "start_state_delta": {},
+          "end_state_delta": {
+            "subject_b.emotion": "sympathetic"
+          }
+        },
+        {
+          "id": "shot_004",
+          "duration_s": 4,
+          "purpose": "A receives sympathy and relaxes",
+          "dependency_ids": [
+            "shot_003"
+          ],
+          "active_subject_ids": [
+            "subject_a",
+            "subject_b"
+          ],
+          "supporting_subject_ids": [],
+          "action_primitives": [
+            "relax"
+          ],
+          "state_changes": [
+            {
+              "property": "subject_a.emotion",
+              "prior": "defensive",
+              "next": "relieved",
+              "cause": "relax"
+            }
+          ],
+          "references": [],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "TWO_SHOT",
+            "focus": "subject_a and subject_b",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "established partner eyeline, except initial train gaze",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+          },
+          "generation_mode": "T2V",
+          "capability_requirements": [],
+          "constraints": [
+            "con_reaction"
+          ],
+          "acceptance_ids": [
+            "QG-05",
+            "QG-06",
+            "QG-07",
+            "QG-10",
+            "QG-11",
+            "QG-12",
+            "QG-14"
+          ],
+          "performance": [
+            "A exhales and releases shoulder tension after B finishes"
+          ],
+          "scene_id": "scene_001",
+          "revision": 1,
+          "lifecycle_status": "PLANNED",
+          "generation_artifact_ref": null,
+          "artifact_observation_ref": null,
+          "start_state_ref": "continuity:shot_003:end",
+          "start_state_delta": {},
+          "end_state_delta": {
+            "subject_a.emotion": "relieved"
+          }
+        }
+      ],
+      "constraints": [
+        {
+          "constraint_id": "con_reaction",
+          "subject": "subject_a and subject_b",
+          "kind": "QA_ASSERTION",
+          "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+          "priority": "HIGH",
+          "scope": [
+            "shot_001",
+            "shot_002",
+            "shot_003",
+            "shot_004"
+          ],
+          "evidence": {
+            "status": "PROPOSED",
+            "claim_type": "DECISION",
+            "confidence": "HIGH"
+          },
+          "validation": {
+            "method": "audio_and_frame_timeline_review",
+            "blocking": true
+          },
+          "fallback": "Separate reaction coverage",
+          "status": "PROPOSED"
+        }
+      ],
+      "contact_graphs": [],
+      "generation_strategy": {
+        "mode": "independent canonical reference anchors",
+        "reanchor_every_shots": 3,
+        "reset_points": [
+          "shot_001",
+          "shot_004"
+        ],
+        "status": "PROPOSED",
+        "execution_blockers": [
+          "No verified visible_speech_sync feature evidence",
+          "Audio sources pending"
+        ]
+      },
+      "assembly_plan": {
+        "shot_ids": [
+          "shot_001",
+          "shot_002",
+          "shot_003",
+          "shot_004"
+        ],
+        "target_duration_s": 15,
+        "fps": "UNKNOWN",
+        "codec": "UNKNOWN",
+        "audio": "Dialogue over continuous platform ambience; inspect actual phonetic sync",
+        "editorial_status": "NOT_RUN"
+      },
+      "shot_graph": {
+        "nodes": [
+          "shot_001",
+          "shot_002",
+          "shot_003",
+          "shot_004"
+        ],
+        "edges": [
+          {
+            "from": "shot_001",
+            "to": "shot_002",
+            "state_channel": "PLANNED"
+          },
+          {
+            "from": "shot_002",
+            "to": "shot_003",
+            "state_channel": "PLANNED"
+          },
+          {
+            "from": "shot_003",
+            "to": "shot_004",
+            "state_channel": "PLANNED"
+          }
+        ]
+      },
+      "narrative_timeline": [
+        {
+          "id": "beat_shot_001",
+          "shot_id": "shot_001",
+          "time": {
+            "start_s": 0.0,
+            "end_s": 3.0
+          },
+          "purpose": "Establish missed train and two colleagues",
+          "action": [
+            "notice_departure"
+          ],
+          "prerequisites": []
+        },
+        {
+          "id": "beat_shot_002",
+          "shot_id": "shot_002",
+          "time": {
+            "start_s": 3.0,
+            "end_s": 7.0
+          },
+          "purpose": "A explains defensively while B listens",
+          "action": [
+            "speak_defensively",
+            "process_explanation",
+            "turn_to_partner"
+          ],
+          "prerequisites": [
+            "shot_001"
+          ]
+        },
+        {
+          "id": "beat_shot_003",
+          "shot_id": "shot_003",
+          "time": {
+            "start_s": 7.0,
+            "end_s": 11.0
+          },
+          "purpose": "B offers sympathy after processing",
+          "action": [
+            "offer_sympathy"
+          ],
+          "prerequisites": [
+            "shot_002"
+          ]
+        },
+        {
+          "id": "beat_shot_004",
+          "shot_id": "shot_004",
+          "time": {
+            "start_s": 11.0,
+            "end_s": 15.0
+          },
+          "purpose": "A receives sympathy and relaxes",
+          "action": [
+            "relax"
+          ],
+          "prerequisites": [
+            "shot_003"
+          ]
+        }
+      ],
+      "reference_timeline": [
+        {
+          "shot_id": "shot_001",
+          "reference_ids": []
+        },
+        {
+          "shot_id": "shot_002",
+          "reference_ids": []
+        },
+        {
+          "shot_id": "shot_003",
+          "reference_ids": []
+        },
+        {
+          "shot_id": "shot_004",
+          "reference_ids": []
+        }
+      ],
+      "complexity": {
+        "identities": 2,
+        "references": 0,
+        "dialogue": 2,
+        "lip_sync": 2,
+        "interaction": 0,
+        "articulated_objects": 1,
+        "motion": 6,
+        "camera": 1,
+        "duration": 15,
+        "vfx": "UNKNOWN"
+      },
+      "presentation_mode": "PRODUCTION",
+      "continuity_states": [
+        {
+          "scope": "shot_001",
+          "state_channel": "PLANNED",
+          "inherited_from": "scene_bible:scene_001:initial",
+          "end_state": {
+            "subject_a.emotion": "defensive",
+            "subject_a.gaze": "departing_train",
+            "subject_a.position": "camera_left",
+            "subject_b.emotion": "frustrated",
+            "subject_b.gaze": "departing_train",
+            "subject_b.position": "camera_right",
+            "train_001.state": "departing"
+          }
+        },
+        {
+          "scope": "shot_002",
+          "state_channel": "PLANNED",
+          "inherited_from": "continuity:shot_001:end",
+          "end_state": {
+            "subject_a.emotion": "defensive",
+            "subject_a.gaze": "subject_b",
+            "subject_a.position": "camera_left",
+            "subject_b.emotion": "processing",
+            "subject_b.gaze": "subject_a",
+            "subject_b.position": "camera_right",
+            "train_001.state": "departing"
+          }
+        },
+        {
+          "scope": "shot_003",
+          "state_channel": "PLANNED",
+          "inherited_from": "continuity:shot_002:end",
+          "end_state": {
+            "subject_a.emotion": "defensive",
+            "subject_a.gaze": "subject_b",
+            "subject_a.position": "camera_left",
+            "subject_b.emotion": "sympathetic",
+            "subject_b.gaze": "subject_a",
+            "subject_b.position": "camera_right",
+            "train_001.state": "departing"
+          }
+        },
+        {
+          "scope": "shot_004",
+          "state_channel": "PLANNED",
+          "inherited_from": "continuity:shot_003:end",
+          "end_state": {
+            "subject_a.emotion": "relieved",
+            "subject_a.gaze": "subject_b",
+            "subject_a.position": "camera_left",
+            "subject_b.emotion": "sympathetic",
+            "subject_b.gaze": "subject_a",
+            "subject_b.position": "camera_right",
+            "train_001.state": "departing"
+          }
+        }
+      ],
+      "validation": {
+        "status": "PASS",
+        "scope": "STRUCTURAL_PLAN_ONLY",
+        "issues": [],
+        "shot_order": [
+          "shot_001",
+          "shot_002",
+          "shot_003",
+          "shot_004"
+        ],
+        "end_states": {
+          "shot_001": {
+            "subject_a.emotion": "defensive",
+            "subject_a.gaze": "departing_train",
+            "subject_a.position": "camera_left",
+            "subject_b.emotion": "frustrated",
+            "subject_b.gaze": "departing_train",
+            "subject_b.position": "camera_right",
+            "train_001.state": "departing"
+          },
+          "shot_002": {
+            "subject_a.emotion": "defensive",
+            "subject_a.gaze": "subject_b",
+            "subject_a.position": "camera_left",
+            "subject_b.emotion": "processing",
+            "subject_b.gaze": "subject_a",
+            "subject_b.position": "camera_right",
+            "train_001.state": "departing"
+          },
+          "shot_003": {
+            "subject_a.emotion": "defensive",
+            "subject_a.gaze": "subject_b",
+            "subject_a.position": "camera_left",
+            "subject_b.emotion": "sympathetic",
+            "subject_b.gaze": "subject_a",
+            "subject_b.position": "camera_right",
+            "train_001.state": "departing"
+          },
+          "shot_004": {
+            "subject_a.emotion": "relieved",
+            "subject_a.gaze": "subject_b",
+            "subject_a.position": "camera_left",
+            "subject_b.emotion": "sympathetic",
+            "subject_b.gaze": "subject_a",
+            "subject_b.position": "camera_right",
+            "train_001.state": "departing"
+          }
+        },
+        "limitations": [
+          "Does not verify visual identity, physics, editorial quality or model feasibility"
+        ]
+      }
+    },
+    "prompts.json": {
+      "schema_version": 1,
+      "plan_hash": "sha256:6a2f29d69e043b2899fa715f3468d691647a2f632f1caede287c94a1f854d8f0",
+      "execution_mode": "PLAN_ONLY",
+      "prompts": [
+        {
+          "schema_version": 1,
+          "shot_id": "shot_001",
+          "canonical_revision": "scene_001_rev1",
+          "profile_reference": null,
+          "sections": {
+            "subject_and_identity": {
+              "entities": [
+                {
+                  "id": "subject_a",
+                  "type": "character",
+                  "description": "Fictional adult colleague A in navy jacket",
+                  "permanence": "PERSISTENT"
+                },
+                {
+                  "id": "subject_b",
+                  "type": "character",
+                  "description": "Fictional adult colleague B in tan coat",
+                  "permanence": "PERSISTENT"
+                }
+              ],
+              "retention": []
+            },
+            "setting_and_time": {
+              "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+              "time_of_day": "morning",
+              "lighting": "soft overcast daylight"
+            },
+            "action_sequence": [
+              "notice_departure"
+            ],
+            "performance": [
+              "Both gaze at receding train"
+            ],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "TWO_SHOT",
+              "focus": "subject_a and subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "lighting_and_style": "naturalistic",
+            "audio_or_sync": {
+              "dialogue": [],
+              "audio": [
+                {
+                  "id": "audio_tone_001",
+                  "shot_id": "shot_001",
+                  "layer": "ambience",
+                  "start_s": 0,
+                  "end_s": 3,
+                  "source": "PROPOSED permitted platform ambience recording, pending",
+                  "bridge_ref": "bridge_platform_tone"
+                }
+              ]
+            },
+            "continuity": {
+              "start": "scene_bible:scene_001:initial",
+              "end": {
+                "subject_a.emotion": "defensive",
+                "subject_a.gaze": "departing_train",
+                "subject_a.position": "camera_left",
+                "subject_b.emotion": "frustrated",
+                "subject_b.gaze": "departing_train",
+                "subject_b.position": "camera_right",
+                "train_001.state": "departing"
+              },
+              "changes": []
+            },
+            "constraints": {
+              "hard": [
+                "Listener processes before reaction",
+                "Preserve speaker identity and platform axis"
+              ],
+              "shot": [
+                "con_reaction"
+              ]
+            },
+            "references": []
+          },
+          "mappings": [
+            {
+              "canonical_section": "subject_and_identity",
+              "compiled_representation": "positive_prompt.subject_and_identity",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "setting_and_time",
+              "compiled_representation": "positive_prompt.setting_and_time",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "action_sequence",
+              "compiled_representation": "positive_prompt.action_sequence",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "performance",
+              "compiled_representation": "positive_prompt.performance",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "camera",
+              "compiled_representation": "positive_prompt.camera",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "lighting_and_style",
+              "compiled_representation": "positive_prompt.lighting_and_style",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "audio_or_sync",
+              "compiled_representation": "positive_prompt.audio_or_sync",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "continuity",
+              "compiled_representation": "positive_prompt.continuity",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "constraints",
+              "compiled_representation": "positive_prompt.constraints",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "references",
+              "compiled_representation": "positive_prompt.references",
+              "status": "PROPOSED"
+            }
+          ],
+          "omissions": [],
+          "presentation": {
+            "subject_definitions": {
+              "entities": [
+                {
+                  "id": "subject_a",
+                  "type": "character",
+                  "description": "Fictional adult colleague A in navy jacket",
+                  "permanence": "PERSISTENT"
+                },
+                {
+                  "id": "subject_b",
+                  "type": "character",
+                  "description": "Fictional adult colleague B in tan coat",
+                  "permanence": "PERSISTENT"
+                }
+              ],
+              "retention": []
+            },
+            "environment_definitions": {
+              "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+              "time_of_day": "morning",
+              "lighting": "soft overcast daylight"
+            },
+            "summary": "Establish missed train and two colleagues",
+            "retention_analysis": [],
+            "detailed_description": [
+              "notice_departure"
+            ],
+            "global_physical_constraints": [
+              {
+                "constraint_id": "con_reaction",
+                "subject": "subject_a and subject_b",
+                "kind": "QA_ASSERTION",
+                "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+                "priority": "HIGH",
+                "scope": [
+                  "shot_001",
+                  "shot_002",
+                  "shot_003",
+                  "shot_004"
+                ],
+                "evidence": {
+                  "status": "PROPOSED",
+                  "claim_type": "DECISION",
+                  "confidence": "HIGH"
+                },
+                "validation": {
+                  "method": "audio_and_frame_timeline_review",
+                  "blocking": true
+                },
+                "fallback": "Separate reaction coverage",
+                "status": "PROPOSED"
+              }
+            ],
+            "cinematography": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "TWO_SHOT",
+              "focus": "subject_a and subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "overall_soundscape": {
+              "dialogue": [],
+              "audio": [
+                {
+                  "id": "audio_tone_001",
+                  "shot_id": "shot_001",
+                  "layer": "ambience",
+                  "start_s": 0,
+                  "end_s": 3,
+                  "source": "PROPOSED permitted platform ambience recording, pending",
+                  "bridge_ref": "bridge_platform_tone"
+                }
+              ]
+            },
+            "negative_constraints": []
+          },
+          "compiled_view": {
+            "profile_reference": null,
+            "positive_prompt": {
+              "subject_and_identity": {
+                "entities": [
+                  {
+                    "id": "subject_a",
+                    "type": "character",
+                    "description": "Fictional adult colleague A in navy jacket",
+                    "permanence": "PERSISTENT"
+                  },
+                  {
+                    "id": "subject_b",
+                    "type": "character",
+                    "description": "Fictional adult colleague B in tan coat",
+                    "permanence": "PERSISTENT"
+                  }
+                ],
+                "retention": []
+              },
+              "setting_and_time": {
+                "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+                "time_of_day": "morning",
+                "lighting": "soft overcast daylight"
+              },
+              "action_sequence": [
+                "notice_departure"
+              ],
+              "performance": [
+                "Both gaze at receding train"
+              ],
+              "camera": {
+                "size": "MEDIUM",
+                "angle": "EYE_LEVEL",
+                "focal_length": "50mm_equivalent",
+                "framing": "TWO_SHOT",
+                "focus": "subject_a and subject_b",
+                "depth_of_field": "MODERATE",
+                "motion_blur": "NATURAL",
+                "exposure": "LOCKED_TO_SCENE",
+                "lighting": "scene_bible:lighting",
+                "eyeline": "established partner eyeline, except initial train gaze",
+                "movement": {
+                  "type": "STATIC",
+                  "direction": "NONE",
+                  "phase": "HOLD"
+                },
+                "screen_direction": "LEFT_TO_RIGHT",
+                "axis_policy": "PRESERVE_180_AXIS",
+                "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+              },
+              "lighting_and_style": "naturalistic",
+              "audio_or_sync": {
+                "dialogue": [],
+                "audio": [
+                  {
+                    "id": "audio_tone_001",
+                    "shot_id": "shot_001",
+                    "layer": "ambience",
+                    "start_s": 0,
+                    "end_s": 3,
+                    "source": "PROPOSED permitted platform ambience recording, pending",
+                    "bridge_ref": "bridge_platform_tone"
+                  }
+                ]
+              },
+              "continuity": {
+                "start": "scene_bible:scene_001:initial",
+                "end": {
+                  "subject_a.emotion": "defensive",
+                  "subject_a.gaze": "departing_train",
+                  "subject_a.position": "camera_left",
+                  "subject_b.emotion": "frustrated",
+                  "subject_b.gaze": "departing_train",
+                  "subject_b.position": "camera_right",
+                  "train_001.state": "departing"
+                },
+                "changes": []
+              },
+              "constraints": {
+                "hard": [
+                  "Listener processes before reaction",
+                  "Preserve speaker identity and platform axis"
+                ],
+                "shot": [
+                  "con_reaction"
+                ]
+              },
+              "references": []
+            },
+            "text": "subject_and_identity: {\"entities\":[{\"description\":\"Fictional adult colleague A in navy jacket\",\"id\":\"subject_a\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"},{\"description\":\"Fictional adult colleague B in tan coat\",\"id\":\"subject_b\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"}],\"retention\":[]}\nsetting_and_time: {\"geography\":\"A camera-left, B camera-right, both behind safety line; departed train recedes in background\",\"lighting\":\"soft overcast daylight\",\"time_of_day\":\"morning\"}\naction_sequence: [\"notice_departure\"]\nperformance: [\"Both gaze at receding train\"]\ncamera: {\"angle\":\"EYE_LEVEL\",\"axis_policy\":\"PRESERVE_180_AXIS\",\"depth_of_field\":\"MODERATE\",\"edit_rhythm\":\"HOLD_THROUGH_PROCESSING\",\"exposure\":\"LOCKED_TO_SCENE\",\"eyeline\":\"established partner eyeline, except initial train gaze\",\"focal_length\":\"50mm_equivalent\",\"focus\":\"subject_a and subject_b\",\"framing\":\"TWO_SHOT\",\"lighting\":\"scene_bible:lighting\",\"motion_blur\":\"NATURAL\",\"movement\":{\"direction\":\"NONE\",\"phase\":\"HOLD\",\"type\":\"STATIC\"},\"screen_direction\":\"LEFT_TO_RIGHT\",\"size\":\"MEDIUM\"}\nlighting_and_style: \"naturalistic\"\naudio_or_sync: {\"audio\":[{\"bridge_ref\":\"bridge_platform_tone\",\"end_s\":3,\"id\":\"audio_tone_001\",\"layer\":\"ambience\",\"shot_id\":\"shot_001\",\"source\":\"PROPOSED permitted platform ambience recording, pending\",\"start_s\":0}],\"dialogue\":[]}\ncontinuity: {\"changes\":[],\"end\":{\"subject_a.emotion\":\"defensive\",\"subject_a.gaze\":\"departing_train\",\"subject_a.position\":\"camera_left\",\"subject_b.emotion\":\"frustrated\",\"subject_b.gaze\":\"departing_train\",\"subject_b.position\":\"camera_right\",\"train_001.state\":\"departing\"},\"start\":\"scene_bible:scene_001:initial\"}\nconstraints: {\"hard\":[\"Listener processes before reaction\",\"Preserve speaker identity and platform axis\"],\"shot\":[\"con_reaction\"]}\nreferences: []",
+            "compiled_omissions": [],
+            "deliberate_changes": [],
+            "unresolved": []
+          }
+        },
+        {
+          "schema_version": 1,
+          "shot_id": "shot_002",
+          "canonical_revision": "scene_001_rev1",
+          "profile_reference": null,
+          "sections": {
+            "subject_and_identity": {
+              "entities": [
+                {
+                  "id": "subject_a",
+                  "type": "character",
+                  "description": "Fictional adult colleague A in navy jacket",
+                  "permanence": "PERSISTENT"
+                },
+                {
+                  "id": "subject_b",
+                  "type": "character",
+                  "description": "Fictional adult colleague B in tan coat",
+                  "permanence": "PERSISTENT"
+                }
+              ],
+              "retention": []
+            },
+            "setting_and_time": {
+              "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+              "time_of_day": "morning",
+              "lighting": "soft overcast daylight"
+            },
+            "action_sequence": [
+              "speak_defensively",
+              "process_explanation",
+              "turn_to_partner"
+            ],
+            "performance": [
+              "A speaks 0.3\u20132.6 s; B only processes after the line ends"
+            ],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "MEDIUM_A",
+              "focus": "subject_a",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "lighting_and_style": "naturalistic",
+            "audio_or_sync": {
+              "dialogue": [
+                {
+                  "id": "dialogue_a",
+                  "shot_id": "shot_002",
+                  "speaker": "subject_a",
+                  "target_listener": "subject_b",
+                  "text": "I thought we still had time.",
+                  "start_s": 0.3,
+                  "end_s": 2.6,
+                  "delivery": "restrained defensive",
+                  "start_conditions": "Train departure noticed",
+                  "end_conditions": "A completes explanation",
+                  "required_reaction": "B processes after line end",
+                  "reaction_at_s": 3.0,
+                  "visible_speech": true,
+                  "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+                  "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+                }
+              ],
+              "audio": [
+                {
+                  "id": "audio_tone_002",
+                  "shot_id": "shot_002",
+                  "layer": "ambience",
+                  "start_s": 0,
+                  "end_s": 4,
+                  "source": "PROPOSED permitted platform ambience recording, pending",
+                  "bridge_ref": "bridge_platform_tone"
+                }
+              ]
+            },
+            "continuity": {
+              "start": "continuity:shot_001:end",
+              "end": {
+                "subject_a.emotion": "defensive",
+                "subject_a.gaze": "subject_b",
+                "subject_a.position": "camera_left",
+                "subject_b.emotion": "processing",
+                "subject_b.gaze": "subject_a",
+                "subject_b.position": "camera_right",
+                "train_001.state": "departing"
+              },
+              "changes": [
+                {
+                  "property": "subject_b.emotion",
+                  "prior": "frustrated",
+                  "next": "processing",
+                  "cause": "process_explanation"
+                },
+                {
+                  "property": "subject_a.gaze",
+                  "prior": "departing_train",
+                  "next": "subject_b",
+                  "cause": "turn_to_partner"
+                },
+                {
+                  "property": "subject_b.gaze",
+                  "prior": "departing_train",
+                  "next": "subject_a",
+                  "cause": "turn_to_partner"
+                }
+              ]
+            },
+            "constraints": {
+              "hard": [
+                "Listener processes before reaction",
+                "Preserve speaker identity and platform axis"
+              ],
+              "shot": [
+                "con_reaction"
+              ]
+            },
+            "references": []
+          },
+          "mappings": [
+            {
+              "canonical_section": "subject_and_identity",
+              "compiled_representation": "positive_prompt.subject_and_identity",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "setting_and_time",
+              "compiled_representation": "positive_prompt.setting_and_time",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "action_sequence",
+              "compiled_representation": "positive_prompt.action_sequence",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "performance",
+              "compiled_representation": "positive_prompt.performance",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "camera",
+              "compiled_representation": "positive_prompt.camera",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "lighting_and_style",
+              "compiled_representation": "positive_prompt.lighting_and_style",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "audio_or_sync",
+              "compiled_representation": "positive_prompt.audio_or_sync",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "continuity",
+              "compiled_representation": "positive_prompt.continuity",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "constraints",
+              "compiled_representation": "positive_prompt.constraints",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "references",
+              "compiled_representation": "positive_prompt.references",
+              "status": "PROPOSED"
+            }
+          ],
+          "omissions": [],
+          "presentation": {
+            "subject_definitions": {
+              "entities": [
+                {
+                  "id": "subject_a",
+                  "type": "character",
+                  "description": "Fictional adult colleague A in navy jacket",
+                  "permanence": "PERSISTENT"
+                },
+                {
+                  "id": "subject_b",
+                  "type": "character",
+                  "description": "Fictional adult colleague B in tan coat",
+                  "permanence": "PERSISTENT"
+                }
+              ],
+              "retention": []
+            },
+            "environment_definitions": {
+              "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+              "time_of_day": "morning",
+              "lighting": "soft overcast daylight"
+            },
+            "summary": "A explains defensively while B listens",
+            "retention_analysis": [],
+            "detailed_description": [
+              "speak_defensively",
+              "process_explanation",
+              "turn_to_partner"
+            ],
+            "global_physical_constraints": [
+              {
+                "constraint_id": "con_reaction",
+                "subject": "subject_a and subject_b",
+                "kind": "QA_ASSERTION",
+                "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+                "priority": "HIGH",
+                "scope": [
+                  "shot_001",
+                  "shot_002",
+                  "shot_003",
+                  "shot_004"
+                ],
+                "evidence": {
+                  "status": "PROPOSED",
+                  "claim_type": "DECISION",
+                  "confidence": "HIGH"
+                },
+                "validation": {
+                  "method": "audio_and_frame_timeline_review",
+                  "blocking": true
+                },
+                "fallback": "Separate reaction coverage",
+                "status": "PROPOSED"
+              }
+            ],
+            "cinematography": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "MEDIUM_A",
+              "focus": "subject_a",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "overall_soundscape": {
+              "dialogue": [
+                {
+                  "id": "dialogue_a",
+                  "shot_id": "shot_002",
+                  "speaker": "subject_a",
+                  "target_listener": "subject_b",
+                  "text": "I thought we still had time.",
+                  "start_s": 0.3,
+                  "end_s": 2.6,
+                  "delivery": "restrained defensive",
+                  "start_conditions": "Train departure noticed",
+                  "end_conditions": "A completes explanation",
+                  "required_reaction": "B processes after line end",
+                  "reaction_at_s": 3.0,
+                  "visible_speech": true,
+                  "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+                  "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+                }
+              ],
+              "audio": [
+                {
+                  "id": "audio_tone_002",
+                  "shot_id": "shot_002",
+                  "layer": "ambience",
+                  "start_s": 0,
+                  "end_s": 4,
+                  "source": "PROPOSED permitted platform ambience recording, pending",
+                  "bridge_ref": "bridge_platform_tone"
+                }
+              ]
+            },
+            "negative_constraints": []
+          },
+          "compiled_view": {
+            "profile_reference": null,
+            "positive_prompt": {
+              "subject_and_identity": {
+                "entities": [
+                  {
+                    "id": "subject_a",
+                    "type": "character",
+                    "description": "Fictional adult colleague A in navy jacket",
+                    "permanence": "PERSISTENT"
+                  },
+                  {
+                    "id": "subject_b",
+                    "type": "character",
+                    "description": "Fictional adult colleague B in tan coat",
+                    "permanence": "PERSISTENT"
+                  }
+                ],
+                "retention": []
+              },
+              "setting_and_time": {
+                "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+                "time_of_day": "morning",
+                "lighting": "soft overcast daylight"
+              },
+              "action_sequence": [
+                "speak_defensively",
+                "process_explanation",
+                "turn_to_partner"
+              ],
+              "performance": [
+                "A speaks 0.3\u20132.6 s; B only processes after the line ends"
+              ],
+              "camera": {
+                "size": "MEDIUM",
+                "angle": "EYE_LEVEL",
+                "focal_length": "50mm_equivalent",
+                "framing": "MEDIUM_A",
+                "focus": "subject_a",
+                "depth_of_field": "MODERATE",
+                "motion_blur": "NATURAL",
+                "exposure": "LOCKED_TO_SCENE",
+                "lighting": "scene_bible:lighting",
+                "eyeline": "established partner eyeline, except initial train gaze",
+                "movement": {
+                  "type": "STATIC",
+                  "direction": "NONE",
+                  "phase": "HOLD"
+                },
+                "screen_direction": "LEFT_TO_RIGHT",
+                "axis_policy": "PRESERVE_180_AXIS",
+                "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+              },
+              "lighting_and_style": "naturalistic",
+              "audio_or_sync": {
+                "dialogue": [
+                  {
+                    "id": "dialogue_a",
+                    "shot_id": "shot_002",
+                    "speaker": "subject_a",
+                    "target_listener": "subject_b",
+                    "text": "I thought we still had time.",
+                    "start_s": 0.3,
+                    "end_s": 2.6,
+                    "delivery": "restrained defensive",
+                    "start_conditions": "Train departure noticed",
+                    "end_conditions": "A completes explanation",
+                    "required_reaction": "B processes after line end",
+                    "reaction_at_s": 3.0,
+                    "visible_speech": true,
+                    "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+                    "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+                  }
+                ],
+                "audio": [
+                  {
+                    "id": "audio_tone_002",
+                    "shot_id": "shot_002",
+                    "layer": "ambience",
+                    "start_s": 0,
+                    "end_s": 4,
+                    "source": "PROPOSED permitted platform ambience recording, pending",
+                    "bridge_ref": "bridge_platform_tone"
+                  }
+                ]
+              },
+              "continuity": {
+                "start": "continuity:shot_001:end",
+                "end": {
+                  "subject_a.emotion": "defensive",
+                  "subject_a.gaze": "subject_b",
+                  "subject_a.position": "camera_left",
+                  "subject_b.emotion": "processing",
+                  "subject_b.gaze": "subject_a",
+                  "subject_b.position": "camera_right",
+                  "train_001.state": "departing"
+                },
+                "changes": [
+                  {
+                    "property": "subject_b.emotion",
+                    "prior": "frustrated",
+                    "next": "processing",
+                    "cause": "process_explanation"
+                  },
+                  {
+                    "property": "subject_a.gaze",
+                    "prior": "departing_train",
+                    "next": "subject_b",
+                    "cause": "turn_to_partner"
+                  },
+                  {
+                    "property": "subject_b.gaze",
+                    "prior": "departing_train",
+                    "next": "subject_a",
+                    "cause": "turn_to_partner"
+                  }
+                ]
+              },
+              "constraints": {
+                "hard": [
+                  "Listener processes before reaction",
+                  "Preserve speaker identity and platform axis"
+                ],
+                "shot": [
+                  "con_reaction"
+                ]
+              },
+              "references": []
+            },
+            "text": "subject_and_identity: {\"entities\":[{\"description\":\"Fictional adult colleague A in navy jacket\",\"id\":\"subject_a\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"},{\"description\":\"Fictional adult colleague B in tan coat\",\"id\":\"subject_b\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"}],\"retention\":[]}\nsetting_and_time: {\"geography\":\"A camera-left, B camera-right, both behind safety line; departed train recedes in background\",\"lighting\":\"soft overcast daylight\",\"time_of_day\":\"morning\"}\naction_sequence: [\"speak_defensively\",\"process_explanation\",\"turn_to_partner\"]\nperformance: [\"A speaks 0.3\u20132.6 s; B only processes after the line ends\"]\ncamera: {\"angle\":\"EYE_LEVEL\",\"axis_policy\":\"PRESERVE_180_AXIS\",\"depth_of_field\":\"MODERATE\",\"edit_rhythm\":\"HOLD_THROUGH_PROCESSING\",\"exposure\":\"LOCKED_TO_SCENE\",\"eyeline\":\"established partner eyeline, except initial train gaze\",\"focal_length\":\"50mm_equivalent\",\"focus\":\"subject_a\",\"framing\":\"MEDIUM_A\",\"lighting\":\"scene_bible:lighting\",\"motion_blur\":\"NATURAL\",\"movement\":{\"direction\":\"NONE\",\"phase\":\"HOLD\",\"type\":\"STATIC\"},\"screen_direction\":\"LEFT_TO_RIGHT\",\"size\":\"MEDIUM\"}\nlighting_and_style: \"naturalistic\"\naudio_or_sync: {\"audio\":[{\"bridge_ref\":\"bridge_platform_tone\",\"end_s\":4,\"id\":\"audio_tone_002\",\"layer\":\"ambience\",\"shot_id\":\"shot_002\",\"source\":\"PROPOSED permitted platform ambience recording, pending\",\"start_s\":0}],\"dialogue\":[{\"audio_source\":\"PROPOSED separately recorded original dialogue; file pending\",\"delivery\":\"restrained defensive\",\"end_conditions\":\"A completes explanation\",\"end_s\":2.6,\"id\":\"dialogue_a\",\"lip_sync_path\":\"PENDING separately verified visible speech sync stage; execution blocked\",\"reaction_at_s\":3.0,\"required_reaction\":\"B processes after line end\",\"shot_id\":\"shot_002\",\"speaker\":\"subject_a\",\"start_conditions\":\"Train departure noticed\",\"start_s\":0.3,\"target_listener\":\"subject_b\",\"text\":\"I thought we still had time.\",\"visible_speech\":true}]}\ncontinuity: {\"changes\":[{\"cause\":\"process_explanation\",\"next\":\"processing\",\"prior\":\"frustrated\",\"property\":\"subject_b.emotion\"},{\"cause\":\"turn_to_partner\",\"next\":\"subject_b\",\"prior\":\"departing_train\",\"property\":\"subject_a.gaze\"},{\"cause\":\"turn_to_partner\",\"next\":\"subject_a\",\"prior\":\"departing_train\",\"property\":\"subject_b.gaze\"}],\"end\":{\"subject_a.emotion\":\"defensive\",\"subject_a.gaze\":\"subject_b\",\"subject_a.position\":\"camera_left\",\"subject_b.emotion\":\"processing\",\"subject_b.gaze\":\"subject_a\",\"subject_b.position\":\"camera_right\",\"train_001.state\":\"departing\"},\"start\":\"continuity:shot_001:end\"}\nconstraints: {\"hard\":[\"Listener processes before reaction\",\"Preserve speaker identity and platform axis\"],\"shot\":[\"con_reaction\"]}\nreferences: []",
+            "compiled_omissions": [],
+            "deliberate_changes": [],
+            "unresolved": []
+          }
+        },
+        {
+          "schema_version": 1,
+          "shot_id": "shot_003",
+          "canonical_revision": "scene_001_rev1",
+          "profile_reference": null,
+          "sections": {
+            "subject_and_identity": {
+              "entities": [
+                {
+                  "id": "subject_a",
+                  "type": "character",
+                  "description": "Fictional adult colleague A in navy jacket",
+                  "permanence": "PERSISTENT"
+                },
+                {
+                  "id": "subject_b",
+                  "type": "character",
+                  "description": "Fictional adult colleague B in tan coat",
+                  "permanence": "PERSISTENT"
+                }
+              ],
+              "retention": []
+            },
+            "setting_and_time": {
+              "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+              "time_of_day": "morning",
+              "lighting": "soft overcast daylight"
+            },
+            "action_sequence": [
+              "offer_sympathy"
+            ],
+            "performance": [
+              "B softens jaw, speaks at 0.8\u20132.8 s; A listens"
+            ],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "MEDIUM_B",
+              "focus": "subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "lighting_and_style": "naturalistic",
+            "audio_or_sync": {
+              "dialogue": [
+                {
+                  "id": "dialogue_b",
+                  "shot_id": "shot_003",
+                  "speaker": "subject_b",
+                  "target_listener": "subject_a",
+                  "text": "You were trying to help. I know.",
+                  "start_s": 0.8,
+                  "end_s": 2.8,
+                  "delivery": "gentle sympathy",
+                  "start_conditions": "B has processed explanation",
+                  "end_conditions": "B completes reassurance",
+                  "required_reaction": "A relaxes in next shot",
+                  "visible_speech": true,
+                  "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+                  "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+                }
+              ],
+              "audio": [
+                {
+                  "id": "audio_tone_003",
+                  "shot_id": "shot_003",
+                  "layer": "ambience",
+                  "start_s": 0,
+                  "end_s": 4,
+                  "source": "PROPOSED permitted platform ambience recording, pending",
+                  "bridge_ref": "bridge_platform_tone"
+                }
+              ]
+            },
+            "continuity": {
+              "start": "continuity:shot_002:end",
+              "end": {
+                "subject_a.emotion": "defensive",
+                "subject_a.gaze": "subject_b",
+                "subject_a.position": "camera_left",
+                "subject_b.emotion": "sympathetic",
+                "subject_b.gaze": "subject_a",
+                "subject_b.position": "camera_right",
+                "train_001.state": "departing"
+              },
+              "changes": [
+                {
+                  "property": "subject_b.emotion",
+                  "prior": "processing",
+                  "next": "sympathetic",
+                  "cause": "offer_sympathy"
+                }
+              ]
+            },
+            "constraints": {
+              "hard": [
+                "Listener processes before reaction",
+                "Preserve speaker identity and platform axis"
+              ],
+              "shot": [
+                "con_reaction"
+              ]
+            },
+            "references": []
+          },
+          "mappings": [
+            {
+              "canonical_section": "subject_and_identity",
+              "compiled_representation": "positive_prompt.subject_and_identity",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "setting_and_time",
+              "compiled_representation": "positive_prompt.setting_and_time",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "action_sequence",
+              "compiled_representation": "positive_prompt.action_sequence",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "performance",
+              "compiled_representation": "positive_prompt.performance",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "camera",
+              "compiled_representation": "positive_prompt.camera",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "lighting_and_style",
+              "compiled_representation": "positive_prompt.lighting_and_style",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "audio_or_sync",
+              "compiled_representation": "positive_prompt.audio_or_sync",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "continuity",
+              "compiled_representation": "positive_prompt.continuity",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "constraints",
+              "compiled_representation": "positive_prompt.constraints",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "references",
+              "compiled_representation": "positive_prompt.references",
+              "status": "PROPOSED"
+            }
+          ],
+          "omissions": [],
+          "presentation": {
+            "subject_definitions": {
+              "entities": [
+                {
+                  "id": "subject_a",
+                  "type": "character",
+                  "description": "Fictional adult colleague A in navy jacket",
+                  "permanence": "PERSISTENT"
+                },
+                {
+                  "id": "subject_b",
+                  "type": "character",
+                  "description": "Fictional adult colleague B in tan coat",
+                  "permanence": "PERSISTENT"
+                }
+              ],
+              "retention": []
+            },
+            "environment_definitions": {
+              "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+              "time_of_day": "morning",
+              "lighting": "soft overcast daylight"
+            },
+            "summary": "B offers sympathy after processing",
+            "retention_analysis": [],
+            "detailed_description": [
+              "offer_sympathy"
+            ],
+            "global_physical_constraints": [
+              {
+                "constraint_id": "con_reaction",
+                "subject": "subject_a and subject_b",
+                "kind": "QA_ASSERTION",
+                "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+                "priority": "HIGH",
+                "scope": [
+                  "shot_001",
+                  "shot_002",
+                  "shot_003",
+                  "shot_004"
+                ],
+                "evidence": {
+                  "status": "PROPOSED",
+                  "claim_type": "DECISION",
+                  "confidence": "HIGH"
+                },
+                "validation": {
+                  "method": "audio_and_frame_timeline_review",
+                  "blocking": true
+                },
+                "fallback": "Separate reaction coverage",
+                "status": "PROPOSED"
+              }
+            ],
+            "cinematography": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "MEDIUM_B",
+              "focus": "subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "overall_soundscape": {
+              "dialogue": [
+                {
+                  "id": "dialogue_b",
+                  "shot_id": "shot_003",
+                  "speaker": "subject_b",
+                  "target_listener": "subject_a",
+                  "text": "You were trying to help. I know.",
+                  "start_s": 0.8,
+                  "end_s": 2.8,
+                  "delivery": "gentle sympathy",
+                  "start_conditions": "B has processed explanation",
+                  "end_conditions": "B completes reassurance",
+                  "required_reaction": "A relaxes in next shot",
+                  "visible_speech": true,
+                  "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+                  "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+                }
+              ],
+              "audio": [
+                {
+                  "id": "audio_tone_003",
+                  "shot_id": "shot_003",
+                  "layer": "ambience",
+                  "start_s": 0,
+                  "end_s": 4,
+                  "source": "PROPOSED permitted platform ambience recording, pending",
+                  "bridge_ref": "bridge_platform_tone"
+                }
+              ]
+            },
+            "negative_constraints": []
+          },
+          "compiled_view": {
+            "profile_reference": null,
+            "positive_prompt": {
+              "subject_and_identity": {
+                "entities": [
+                  {
+                    "id": "subject_a",
+                    "type": "character",
+                    "description": "Fictional adult colleague A in navy jacket",
+                    "permanence": "PERSISTENT"
+                  },
+                  {
+                    "id": "subject_b",
+                    "type": "character",
+                    "description": "Fictional adult colleague B in tan coat",
+                    "permanence": "PERSISTENT"
+                  }
+                ],
+                "retention": []
+              },
+              "setting_and_time": {
+                "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+                "time_of_day": "morning",
+                "lighting": "soft overcast daylight"
+              },
+              "action_sequence": [
+                "offer_sympathy"
+              ],
+              "performance": [
+                "B softens jaw, speaks at 0.8\u20132.8 s; A listens"
+              ],
+              "camera": {
+                "size": "MEDIUM",
+                "angle": "EYE_LEVEL",
+                "focal_length": "50mm_equivalent",
+                "framing": "MEDIUM_B",
+                "focus": "subject_b",
+                "depth_of_field": "MODERATE",
+                "motion_blur": "NATURAL",
+                "exposure": "LOCKED_TO_SCENE",
+                "lighting": "scene_bible:lighting",
+                "eyeline": "established partner eyeline, except initial train gaze",
+                "movement": {
+                  "type": "STATIC",
+                  "direction": "NONE",
+                  "phase": "HOLD"
+                },
+                "screen_direction": "LEFT_TO_RIGHT",
+                "axis_policy": "PRESERVE_180_AXIS",
+                "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+              },
+              "lighting_and_style": "naturalistic",
+              "audio_or_sync": {
+                "dialogue": [
+                  {
+                    "id": "dialogue_b",
+                    "shot_id": "shot_003",
+                    "speaker": "subject_b",
+                    "target_listener": "subject_a",
+                    "text": "You were trying to help. I know.",
+                    "start_s": 0.8,
+                    "end_s": 2.8,
+                    "delivery": "gentle sympathy",
+                    "start_conditions": "B has processed explanation",
+                    "end_conditions": "B completes reassurance",
+                    "required_reaction": "A relaxes in next shot",
+                    "visible_speech": true,
+                    "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+                    "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+                  }
+                ],
+                "audio": [
+                  {
+                    "id": "audio_tone_003",
+                    "shot_id": "shot_003",
+                    "layer": "ambience",
+                    "start_s": 0,
+                    "end_s": 4,
+                    "source": "PROPOSED permitted platform ambience recording, pending",
+                    "bridge_ref": "bridge_platform_tone"
+                  }
+                ]
+              },
+              "continuity": {
+                "start": "continuity:shot_002:end",
+                "end": {
+                  "subject_a.emotion": "defensive",
+                  "subject_a.gaze": "subject_b",
+                  "subject_a.position": "camera_left",
+                  "subject_b.emotion": "sympathetic",
+                  "subject_b.gaze": "subject_a",
+                  "subject_b.position": "camera_right",
+                  "train_001.state": "departing"
+                },
+                "changes": [
+                  {
+                    "property": "subject_b.emotion",
+                    "prior": "processing",
+                    "next": "sympathetic",
+                    "cause": "offer_sympathy"
+                  }
+                ]
+              },
+              "constraints": {
+                "hard": [
+                  "Listener processes before reaction",
+                  "Preserve speaker identity and platform axis"
+                ],
+                "shot": [
+                  "con_reaction"
+                ]
+              },
+              "references": []
+            },
+            "text": "subject_and_identity: {\"entities\":[{\"description\":\"Fictional adult colleague A in navy jacket\",\"id\":\"subject_a\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"},{\"description\":\"Fictional adult colleague B in tan coat\",\"id\":\"subject_b\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"}],\"retention\":[]}\nsetting_and_time: {\"geography\":\"A camera-left, B camera-right, both behind safety line; departed train recedes in background\",\"lighting\":\"soft overcast daylight\",\"time_of_day\":\"morning\"}\naction_sequence: [\"offer_sympathy\"]\nperformance: [\"B softens jaw, speaks at 0.8\u20132.8 s; A listens\"]\ncamera: {\"angle\":\"EYE_LEVEL\",\"axis_policy\":\"PRESERVE_180_AXIS\",\"depth_of_field\":\"MODERATE\",\"edit_rhythm\":\"HOLD_THROUGH_PROCESSING\",\"exposure\":\"LOCKED_TO_SCENE\",\"eyeline\":\"established partner eyeline, except initial train gaze\",\"focal_length\":\"50mm_equivalent\",\"focus\":\"subject_b\",\"framing\":\"MEDIUM_B\",\"lighting\":\"scene_bible:lighting\",\"motion_blur\":\"NATURAL\",\"movement\":{\"direction\":\"NONE\",\"phase\":\"HOLD\",\"type\":\"STATIC\"},\"screen_direction\":\"LEFT_TO_RIGHT\",\"size\":\"MEDIUM\"}\nlighting_and_style: \"naturalistic\"\naudio_or_sync: {\"audio\":[{\"bridge_ref\":\"bridge_platform_tone\",\"end_s\":4,\"id\":\"audio_tone_003\",\"layer\":\"ambience\",\"shot_id\":\"shot_003\",\"source\":\"PROPOSED permitted platform ambience recording, pending\",\"start_s\":0}],\"dialogue\":[{\"audio_source\":\"PROPOSED separately recorded original dialogue; file pending\",\"delivery\":\"gentle sympathy\",\"end_conditions\":\"B completes reassurance\",\"end_s\":2.8,\"id\":\"dialogue_b\",\"lip_sync_path\":\"PENDING separately verified visible speech sync stage; execution blocked\",\"required_reaction\":\"A relaxes in next shot\",\"shot_id\":\"shot_003\",\"speaker\":\"subject_b\",\"start_conditions\":\"B has processed explanation\",\"start_s\":0.8,\"target_listener\":\"subject_a\",\"text\":\"You were trying to help. I know.\",\"visible_speech\":true}]}\ncontinuity: {\"changes\":[{\"cause\":\"offer_sympathy\",\"next\":\"sympathetic\",\"prior\":\"processing\",\"property\":\"subject_b.emotion\"}],\"end\":{\"subject_a.emotion\":\"defensive\",\"subject_a.gaze\":\"subject_b\",\"subject_a.position\":\"camera_left\",\"subject_b.emotion\":\"sympathetic\",\"subject_b.gaze\":\"subject_a\",\"subject_b.position\":\"camera_right\",\"train_001.state\":\"departing\"},\"start\":\"continuity:shot_002:end\"}\nconstraints: {\"hard\":[\"Listener processes before reaction\",\"Preserve speaker identity and platform axis\"],\"shot\":[\"con_reaction\"]}\nreferences: []",
+            "compiled_omissions": [],
+            "deliberate_changes": [],
+            "unresolved": []
+          }
+        },
+        {
+          "schema_version": 1,
+          "shot_id": "shot_004",
+          "canonical_revision": "scene_001_rev1",
+          "profile_reference": null,
+          "sections": {
+            "subject_and_identity": {
+              "entities": [
+                {
+                  "id": "subject_a",
+                  "type": "character",
+                  "description": "Fictional adult colleague A in navy jacket",
+                  "permanence": "PERSISTENT"
+                },
+                {
+                  "id": "subject_b",
+                  "type": "character",
+                  "description": "Fictional adult colleague B in tan coat",
+                  "permanence": "PERSISTENT"
+                }
+              ],
+              "retention": []
+            },
+            "setting_and_time": {
+              "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+              "time_of_day": "morning",
+              "lighting": "soft overcast daylight"
+            },
+            "action_sequence": [
+              "relax"
+            ],
+            "performance": [
+              "A exhales and releases shoulder tension after B finishes"
+            ],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "TWO_SHOT",
+              "focus": "subject_a and subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "lighting_and_style": "naturalistic",
+            "audio_or_sync": {
+              "dialogue": [],
+              "audio": [
+                {
+                  "id": "audio_tone_004",
+                  "shot_id": "shot_004",
+                  "layer": "ambience",
+                  "start_s": 0,
+                  "end_s": 4,
+                  "source": "PROPOSED permitted platform ambience recording, pending",
+                  "bridge_ref": "bridge_platform_tone"
+                }
+              ]
+            },
+            "continuity": {
+              "start": "continuity:shot_003:end",
+              "end": {
+                "subject_a.emotion": "relieved",
+                "subject_a.gaze": "subject_b",
+                "subject_a.position": "camera_left",
+                "subject_b.emotion": "sympathetic",
+                "subject_b.gaze": "subject_a",
+                "subject_b.position": "camera_right",
+                "train_001.state": "departing"
+              },
+              "changes": [
+                {
+                  "property": "subject_a.emotion",
+                  "prior": "defensive",
+                  "next": "relieved",
+                  "cause": "relax"
+                }
+              ]
+            },
+            "constraints": {
+              "hard": [
+                "Listener processes before reaction",
+                "Preserve speaker identity and platform axis"
+              ],
+              "shot": [
+                "con_reaction"
+              ]
+            },
+            "references": []
+          },
+          "mappings": [
+            {
+              "canonical_section": "subject_and_identity",
+              "compiled_representation": "positive_prompt.subject_and_identity",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "setting_and_time",
+              "compiled_representation": "positive_prompt.setting_and_time",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "action_sequence",
+              "compiled_representation": "positive_prompt.action_sequence",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "performance",
+              "compiled_representation": "positive_prompt.performance",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "camera",
+              "compiled_representation": "positive_prompt.camera",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "lighting_and_style",
+              "compiled_representation": "positive_prompt.lighting_and_style",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "audio_or_sync",
+              "compiled_representation": "positive_prompt.audio_or_sync",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "continuity",
+              "compiled_representation": "positive_prompt.continuity",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "constraints",
+              "compiled_representation": "positive_prompt.constraints",
+              "status": "PROPOSED"
+            },
+            {
+              "canonical_section": "references",
+              "compiled_representation": "positive_prompt.references",
+              "status": "PROPOSED"
+            }
+          ],
+          "omissions": [],
+          "presentation": {
+            "subject_definitions": {
+              "entities": [
+                {
+                  "id": "subject_a",
+                  "type": "character",
+                  "description": "Fictional adult colleague A in navy jacket",
+                  "permanence": "PERSISTENT"
+                },
+                {
+                  "id": "subject_b",
+                  "type": "character",
+                  "description": "Fictional adult colleague B in tan coat",
+                  "permanence": "PERSISTENT"
+                }
+              ],
+              "retention": []
+            },
+            "environment_definitions": {
+              "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+              "time_of_day": "morning",
+              "lighting": "soft overcast daylight"
+            },
+            "summary": "A receives sympathy and relaxes",
+            "retention_analysis": [],
+            "detailed_description": [
+              "relax"
+            ],
+            "global_physical_constraints": [
+              {
+                "constraint_id": "con_reaction",
+                "subject": "subject_a and subject_b",
+                "kind": "QA_ASSERTION",
+                "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+                "priority": "HIGH",
+                "scope": [
+                  "shot_001",
+                  "shot_002",
+                  "shot_003",
+                  "shot_004"
+                ],
+                "evidence": {
+                  "status": "PROPOSED",
+                  "claim_type": "DECISION",
+                  "confidence": "HIGH"
+                },
+                "validation": {
+                  "method": "audio_and_frame_timeline_review",
+                  "blocking": true
+                },
+                "fallback": "Separate reaction coverage",
+                "status": "PROPOSED"
+              }
+            ],
+            "cinematography": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "TWO_SHOT",
+              "focus": "subject_a and subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "overall_soundscape": {
+              "dialogue": [],
+              "audio": [
+                {
+                  "id": "audio_tone_004",
+                  "shot_id": "shot_004",
+                  "layer": "ambience",
+                  "start_s": 0,
+                  "end_s": 4,
+                  "source": "PROPOSED permitted platform ambience recording, pending",
+                  "bridge_ref": "bridge_platform_tone"
+                }
+              ]
+            },
+            "negative_constraints": []
+          },
+          "compiled_view": {
+            "profile_reference": null,
+            "positive_prompt": {
+              "subject_and_identity": {
+                "entities": [
+                  {
+                    "id": "subject_a",
+                    "type": "character",
+                    "description": "Fictional adult colleague A in navy jacket",
+                    "permanence": "PERSISTENT"
+                  },
+                  {
+                    "id": "subject_b",
+                    "type": "character",
+                    "description": "Fictional adult colleague B in tan coat",
+                    "permanence": "PERSISTENT"
+                  }
+                ],
+                "retention": []
+              },
+              "setting_and_time": {
+                "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+                "time_of_day": "morning",
+                "lighting": "soft overcast daylight"
+              },
+              "action_sequence": [
+                "relax"
+              ],
+              "performance": [
+                "A exhales and releases shoulder tension after B finishes"
+              ],
+              "camera": {
+                "size": "MEDIUM",
+                "angle": "EYE_LEVEL",
+                "focal_length": "50mm_equivalent",
+                "framing": "TWO_SHOT",
+                "focus": "subject_a and subject_b",
+                "depth_of_field": "MODERATE",
+                "motion_blur": "NATURAL",
+                "exposure": "LOCKED_TO_SCENE",
+                "lighting": "scene_bible:lighting",
+                "eyeline": "established partner eyeline, except initial train gaze",
+                "movement": {
+                  "type": "STATIC",
+                  "direction": "NONE",
+                  "phase": "HOLD"
+                },
+                "screen_direction": "LEFT_TO_RIGHT",
+                "axis_policy": "PRESERVE_180_AXIS",
+                "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+              },
+              "lighting_and_style": "naturalistic",
+              "audio_or_sync": {
+                "dialogue": [],
+                "audio": [
+                  {
+                    "id": "audio_tone_004",
+                    "shot_id": "shot_004",
+                    "layer": "ambience",
+                    "start_s": 0,
+                    "end_s": 4,
+                    "source": "PROPOSED permitted platform ambience recording, pending",
+                    "bridge_ref": "bridge_platform_tone"
+                  }
+                ]
+              },
+              "continuity": {
+                "start": "continuity:shot_003:end",
+                "end": {
+                  "subject_a.emotion": "relieved",
+                  "subject_a.gaze": "subject_b",
+                  "subject_a.position": "camera_left",
+                  "subject_b.emotion": "sympathetic",
+                  "subject_b.gaze": "subject_a",
+                  "subject_b.position": "camera_right",
+                  "train_001.state": "departing"
+                },
+                "changes": [
+                  {
+                    "property": "subject_a.emotion",
+                    "prior": "defensive",
+                    "next": "relieved",
+                    "cause": "relax"
+                  }
+                ]
+              },
+              "constraints": {
+                "hard": [
+                  "Listener processes before reaction",
+                  "Preserve speaker identity and platform axis"
+                ],
+                "shot": [
+                  "con_reaction"
+                ]
+              },
+              "references": []
+            },
+            "text": "subject_and_identity: {\"entities\":[{\"description\":\"Fictional adult colleague A in navy jacket\",\"id\":\"subject_a\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"},{\"description\":\"Fictional adult colleague B in tan coat\",\"id\":\"subject_b\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"}],\"retention\":[]}\nsetting_and_time: {\"geography\":\"A camera-left, B camera-right, both behind safety line; departed train recedes in background\",\"lighting\":\"soft overcast daylight\",\"time_of_day\":\"morning\"}\naction_sequence: [\"relax\"]\nperformance: [\"A exhales and releases shoulder tension after B finishes\"]\ncamera: {\"angle\":\"EYE_LEVEL\",\"axis_policy\":\"PRESERVE_180_AXIS\",\"depth_of_field\":\"MODERATE\",\"edit_rhythm\":\"HOLD_THROUGH_PROCESSING\",\"exposure\":\"LOCKED_TO_SCENE\",\"eyeline\":\"established partner eyeline, except initial train gaze\",\"focal_length\":\"50mm_equivalent\",\"focus\":\"subject_a and subject_b\",\"framing\":\"TWO_SHOT\",\"lighting\":\"scene_bible:lighting\",\"motion_blur\":\"NATURAL\",\"movement\":{\"direction\":\"NONE\",\"phase\":\"HOLD\",\"type\":\"STATIC\"},\"screen_direction\":\"LEFT_TO_RIGHT\",\"size\":\"MEDIUM\"}\nlighting_and_style: \"naturalistic\"\naudio_or_sync: {\"audio\":[{\"bridge_ref\":\"bridge_platform_tone\",\"end_s\":4,\"id\":\"audio_tone_004\",\"layer\":\"ambience\",\"shot_id\":\"shot_004\",\"source\":\"PROPOSED permitted platform ambience recording, pending\",\"start_s\":0}],\"dialogue\":[]}\ncontinuity: {\"changes\":[{\"cause\":\"relax\",\"next\":\"relieved\",\"prior\":\"defensive\",\"property\":\"subject_a.emotion\"}],\"end\":{\"subject_a.emotion\":\"relieved\",\"subject_a.gaze\":\"subject_b\",\"subject_a.position\":\"camera_left\",\"subject_b.emotion\":\"sympathetic\",\"subject_b.gaze\":\"subject_a\",\"subject_b.position\":\"camera_right\",\"train_001.state\":\"departing\"},\"start\":\"continuity:shot_003:end\"}\nconstraints: {\"hard\":[\"Listener processes before reaction\",\"Preserve speaker identity and platform axis\"],\"shot\":[\"con_reaction\"]}\nreferences: []",
+            "compiled_omissions": [],
+            "deliberate_changes": [],
+            "unresolved": []
+          }
+        }
+      ]
+    }
+  },
+  "claim_limit": "CLI success is structural evidence only. Profile support, actual reference identity, acting, audio and synchronization are untested; PENDING strings are not evidence.",
+  "initial_failed_attempt": {
+    "request_id": "G-004",
+    "scope": "Independent authored 15-second four-shot treatment; no generation/runtime/network",
+    "temporary_directory": "/tmp/vge-forward-duh26dco",
+    "authored_treatment": {
+      "schema_version": 1,
+      "revision": 1,
+      "execution_mode": "PLAN_ONLY",
+      "scene_intent": {
+        "schema_version": 1,
+        "project_id": "proj_example",
+        "scene_id": "scene_001",
+        "title": "Missed train",
+        "objective": "Two colleagues move from defensiveness to sympathy after missing a train",
+        "duration": {
+          "target_seconds": 15
+        },
+        "target": {
+          "platform": "unselected",
+          "aspect_ratio": "16:9",
+          "delivery": "video"
+        },
+        "subjects": [
+          "subject_a",
+          "subject_b"
+        ],
+        "objects": [
+          "train_001"
+        ],
+        "environments": [
+          "environment_platform"
+        ],
+        "actions": [
+          "notice_departure",
+          "speak_defensively",
+          "process_explanation",
+          "offer_sympathy",
+          "relax"
+        ],
+        "dialogue_required": true,
+        "audio_required": true,
+        "style_preferences": [
+          "naturalistic"
+        ],
+        "hard_constraints": [
+          "Listener processes before reaction",
+          "Preserve speaker identity and platform axis"
+        ],
+        "preferences": [
+          "medium static coverage"
+        ],
+        "unknowns": [
+          "Model and reference support unselected",
+          "Dialogue is proposed original text",
+          "Voice production and lip sync stage pending"
+        ]
+      },
+      "scene_bible": {
+        "schema_version": 1,
+        "project_id": "proj_example",
+        "scene_id": "scene_001",
+        "revision": 1,
+        "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+        "time_of_day": "morning",
+        "lighting": "soft overcast daylight",
+        "visual_style": "naturalistic",
+        "camera_language": "establish geography, preserve axis, hold reactions",
+        "initial_state": {
+          "subject_a": {
+            "emotion": "defensive",
+            "gaze": "departing_train",
+            "position": "camera_left"
+          },
+          "subject_b": {
+            "emotion": "frustrated",
+            "gaze": "departing_train",
+            "position": "camera_right"
+          },
+          "train_001": {
+            "state": "departing"
+          }
+        },
+        "entities": [
+          {
+            "id": "subject_a",
+            "type": "character",
+            "description": "Fictional adult colleague A in navy jacket",
+            "permanence": "PERSISTENT"
+          },
+          {
+            "id": "subject_b",
+            "type": "character",
+            "description": "Fictional adult colleague B in tan coat",
+            "permanence": "PERSISTENT"
+          },
+          {
+            "id": "train_001",
+            "type": "vehicle",
+            "description": "Commuter train receding from platform",
+            "permanence": "PERSISTENT"
+          },
+          {
+            "id": "environment_platform",
+            "type": "environment",
+            "description": "Quiet platform with marked safety line",
+            "permanence": "PERSISTENT"
+          }
+        ]
+      },
+      "references": [],
+      "retention_rules": [],
+      "reference_conflicts": [],
+      "dialogue_timeline": [
+        {
+          "id": "dialogue_a",
+          "shot_id": "shot_002",
+          "speaker": "subject_a",
+          "target_listener": "subject_b",
+          "text": "I thought we still had time.",
+          "start_s": 0.3,
+          "end_s": 2.6,
+          "delivery": "restrained defensive",
+          "start_conditions": "Train departure noticed",
+          "end_conditions": "A completes explanation",
+          "required_reaction": "B processes after line end",
+          "reaction_at_s": 3.0,
+          "visible_speech": true,
+          "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+          "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+        },
+        {
+          "id": "dialogue_b",
+          "shot_id": "shot_003",
+          "speaker": "subject_b",
+          "target_listener": "subject_a",
+          "text": "You were trying to help. I know.",
+          "start_s": 0.8,
+          "end_s": 2.8,
+          "delivery": "gentle sympathy",
+          "start_conditions": "B has processed explanation",
+          "end_conditions": "B completes reassurance",
+          "required_reaction": "A relaxes in next shot",
+          "visible_speech": true,
+          "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+          "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+        }
+      ],
+      "audio_timeline": [
+        {
+          "id": "audio_tone_001",
+          "shot_id": "shot_001",
+          "layer": "ambience",
+          "start_s": 0,
+          "end_s": 3,
+          "source": "PROPOSED permitted platform ambience recording, pending",
+          "bridge_ref": "bridge_platform_tone"
+        },
+        {
+          "id": "audio_tone_002",
+          "shot_id": "shot_002",
+          "layer": "ambience",
+          "start_s": 0,
+          "end_s": 4,
+          "source": "PROPOSED permitted platform ambience recording, pending",
+          "bridge_ref": "bridge_platform_tone"
+        },
+        {
+          "id": "audio_tone_003",
+          "shot_id": "shot_003",
+          "layer": "ambience",
+          "start_s": 0,
+          "end_s": 4,
+          "source": "PROPOSED permitted platform ambience recording, pending",
+          "bridge_ref": "bridge_platform_tone"
+        },
+        {
+          "id": "audio_tone_004",
+          "shot_id": "shot_004",
+          "layer": "ambience",
+          "start_s": 0,
+          "end_s": 4,
+          "source": "PROPOSED permitted platform ambience recording, pending",
+          "bridge_ref": "bridge_platform_tone"
+        }
+      ],
+      "shots": [
+        {
+          "id": "shot_001",
+          "duration_s": 3,
+          "purpose": "Establish missed train and two colleagues",
+          "dependency_ids": [],
+          "active_subject_ids": [
+            "subject_a",
+            "subject_b"
+          ],
+          "supporting_subject_ids": [],
+          "action_primitives": [
+            "notice_departure"
+          ],
+          "state_changes": [],
+          "references": [],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "TWO_SHOT",
+            "focus": "subject_a and subject_b",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "established partner eyeline, except initial train gaze",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+          },
+          "generation_mode": "T2V",
+          "capability_requirements": [],
+          "constraints": [
+            "con_reaction"
+          ],
+          "acceptance_ids": [
+            "qa_identity",
+            "qa_axis",
+            "qa_reaction",
+            "qa_sync"
+          ],
+          "performance": [
+            "Both gaze at receding train"
+          ]
+        },
+        {
+          "id": "shot_002",
+          "duration_s": 4,
+          "purpose": "A explains defensively while B listens",
+          "dependency_ids": [
+            "shot_001"
+          ],
+          "active_subject_ids": [
+            "subject_a",
+            "subject_b"
+          ],
+          "supporting_subject_ids": [],
+          "action_primitives": [
+            "speak_defensively",
+            "process_explanation"
+          ],
+          "state_changes": [
+            {
+              "property": "subject_b.emotion",
+              "prior": "frustrated",
+              "next": "processing",
+              "cause": "process_explanation"
+            }
+          ],
+          "references": [],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "MEDIUM_A",
+            "focus": "subject_a",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "established partner eyeline, except initial train gaze",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+          },
+          "generation_mode": "T2V",
+          "capability_requirements": [
+            "visible_speech_sync"
+          ],
+          "constraints": [
+            "con_reaction"
+          ],
+          "acceptance_ids": [
+            "qa_identity",
+            "qa_axis",
+            "qa_reaction",
+            "qa_sync"
+          ],
+          "performance": [
+            "A speaks 0.3\u20132.6 s; B only processes after the line ends"
+          ]
+        },
+        {
+          "id": "shot_003",
+          "duration_s": 4,
+          "purpose": "B offers sympathy after processing",
+          "dependency_ids": [
+            "shot_002"
+          ],
+          "active_subject_ids": [
+            "subject_a",
+            "subject_b"
+          ],
+          "supporting_subject_ids": [],
+          "action_primitives": [
+            "offer_sympathy"
+          ],
+          "state_changes": [
+            {
+              "property": "subject_b.emotion",
+              "prior": "processing",
+              "next": "sympathetic",
+              "cause": "offer_sympathy"
+            }
+          ],
+          "references": [],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "MEDIUM_B",
+            "focus": "subject_b",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "established partner eyeline, except initial train gaze",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+          },
+          "generation_mode": "T2V",
+          "capability_requirements": [
+            "visible_speech_sync"
+          ],
+          "constraints": [
+            "con_reaction"
+          ],
+          "acceptance_ids": [
+            "qa_identity",
+            "qa_axis",
+            "qa_reaction",
+            "qa_sync"
+          ],
+          "performance": [
+            "B softens jaw, speaks at 0.8\u20132.8 s; A listens"
+          ]
+        },
+        {
+          "id": "shot_004",
+          "duration_s": 4,
+          "purpose": "A receives sympathy and relaxes",
+          "dependency_ids": [
+            "shot_003"
+          ],
+          "active_subject_ids": [
+            "subject_a",
+            "subject_b"
+          ],
+          "supporting_subject_ids": [],
+          "action_primitives": [
+            "relax"
+          ],
+          "state_changes": [
+            {
+              "property": "subject_a.emotion",
+              "prior": "defensive",
+              "next": "relieved",
+              "cause": "relax"
+            }
+          ],
+          "references": [],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "TWO_SHOT",
+            "focus": "subject_a and subject_b",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "established partner eyeline, except initial train gaze",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+          },
+          "generation_mode": "T2V",
+          "capability_requirements": [],
+          "constraints": [
+            "con_reaction"
+          ],
+          "acceptance_ids": [
+            "qa_identity",
+            "qa_axis",
+            "qa_reaction",
+            "qa_sync"
+          ],
+          "performance": [
+            "A exhales and releases shoulder tension after B finishes"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraint_id": "con_reaction",
+          "subject": "subject_a and subject_b",
+          "kind": "QA_ASSERTION",
+          "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+          "priority": "HIGH",
+          "scope": [
+            "shot_001",
+            "shot_002",
+            "shot_003",
+            "shot_004"
+          ],
+          "evidence": {
+            "status": "PROPOSED",
+            "claim_type": "DECISION",
+            "confidence": "HIGH"
+          },
+          "validation": {
+            "method": "audio_and_frame_timeline_review",
+            "blocking": true
+          },
+          "fallback": "Separate reaction coverage",
+          "status": "PROPOSED"
+        }
+      ],
+      "contact_graphs": [],
+      "generation_strategy": {
+        "mode": "independent canonical reference anchors",
+        "reanchor_every_shots": 3,
+        "reset_points": [
+          "shot_001",
+          "shot_004"
+        ],
+        "status": "PROPOSED",
+        "execution_blockers": [
+          "No verified visible_speech_sync feature evidence",
+          "Audio sources pending"
+        ]
+      },
+      "assembly_plan": {
+        "shot_ids": [
+          "shot_001",
+          "shot_002",
+          "shot_003",
+          "shot_004"
+        ],
+        "target_duration_s": 15,
+        "fps": "UNKNOWN",
+        "codec": "UNKNOWN",
+        "audio": "Dialogue over continuous platform ambience; inspect actual phonetic sync",
+        "editorial_status": "NOT_RUN"
+      }
+    },
+    "commands": [
+      {
+        "argv": [
+          "prepare",
+          "/tmp/vge-forward-duh26dco/treatment.json",
+          "--output",
+          "/tmp/vge-forward-duh26dco/plan.json"
+        ],
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "validate",
+          "/tmp/vge-forward-duh26dco/plan.json"
+        ],
+        "exit_code": 2,
+        "stdout": "{\n  \"status\": \"FAIL\",\n  \"scope\": \"STRUCTURAL_PLAN_ONLY\",\n  \"issues\": [\n    {\n      \"id\": \"ACCEPTANCE_CONTRACT\",\n      \"path\": \"shot_001\",\n      \"severity\": \"HIGH\",\n      \"outcome\": \"BLOCK\",\n      \"reason\": \"Unknown or duplicate required gate IDs\",\n      \"preserved_intent\": \"Keep the declared scene objective and hard constraints\",\n      \"evidence_gap\": \"Unknown or duplicate required gate IDs\",\n      \"evidence_required\": [\n        \"Supply the applicable canonical gates\"\n      ],\n      \"next_action\": \"Supply the applicable canonical gates\",\n      \"repair_route\": \"shot_001\",\n      \"gate\": \"QG-17\"\n    },\n    {\n      \"id\": \"ACCEPTANCE_CONTRACT\",\n      \"path\": \"shot_002\",\n      \"severity\": \"HIGH\",\n      \"outcome\": \"BLOCK\",\n      \"reason\": \"Unknown or duplicate required gate IDs\",\n      \"preserved_intent\": \"Keep the declared scene objective and hard constraints\",\n      \"evidence_gap\": \"Unknown or duplicate required gate IDs\",\n      \"evidence_required\": [\n        \"Supply the applicable canonical gates\"\n      ],\n      \"next_action\": \"Supply the applicable canonical gates\",\n      \"repair_route\": \"shot_002\",\n      \"gate\": \"QG-17\"\n    },\n    {\n      \"id\": \"ACCEPTANCE_CONTRACT\",\n      \"path\": \"shot_003\",\n      \"severity\": \"HIGH\",\n      \"outcome\": \"BLOCK\",\n      \"reason\": \"Unknown or duplicate required gate IDs\",\n      \"preserved_intent\": \"Keep the declared scene objective and hard constraints\",\n      \"evidence_gap\": \"Unknown or duplicate required gate IDs\",\n      \"evidence_required\": [\n        \"Supply the applicable canonical gates\"\n      ],\n      \"next_action\": \"Supply the applicable canonical gates\",\n      \"repair_route\": \"shot_003\",\n      \"gate\": \"QG-17\"\n    },\n    {\n      \"id\": \"ACCEPTANCE_CONTRACT\",\n      \"path\": \"shot_004\",\n      \"severity\": \"HIGH\",\n      \"outcome\": \"BLOCK\",\n      \"reason\": \"Unknown or duplicate required gate IDs\",\n      \"preserved_intent\": \"Keep the declared scene objective and hard constraints\",\n      \"evidence_gap\": \"Unknown or duplicate required gate IDs\",\n      \"evidence_required\": [\n        \"Supply the applicable canonical gates\"\n      ],\n      \"next_action\": \"Supply the applicable canonical gates\",\n      \"repair_route\": \"shot_004\",\n      \"gate\": \"QG-17\"\n    }\n  ],\n  \"shot_order\": [\n    \"shot_001\",\n    \"shot_002\",\n    \"shot_003\",\n    \"shot_004\"\n  ],\n  \"end_states\": {\n    \"shot_001\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"departing_train\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"frustrated\",\n      \"subject_b.gaze\": \"departing_train\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_002\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"departing_train\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"processing\",\n      \"subject_b.gaze\": \"departing_train\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_003\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"departing_train\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"sympathetic\",\n      \"subject_b.gaze\": \"departing_train\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_004\": {\n      \"subject_a.emotion\": \"relieved\",\n      \"subject_a.gaze\": \"departing_train\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"sympathetic\",\n      \"subject_b.gaze\": \"departing_train\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    }\n  },\n  \"limitations\": [\n    \"Does not verify visual identity, physics, editorial quality or model feasibility\"\n  ]\n}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "compile",
+          "/tmp/vge-forward-duh26dco/plan.json",
+          "--output",
+          "/tmp/vge-forward-duh26dco/prompts.json"
+        ],
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "{\"status\": \"BLOCKED\", \"error\": \"Plan has blocking issues; validate and repair before compilation\", \"next_action\": \"Inspect the named contract or boundary; do not retry a submission blindly\"}\n"
+      }
+    ],
+    "artifacts": {
+      "plan.json": {
+        "schema_version": 1,
+        "revision": 1,
+        "execution_mode": "PLAN_ONLY",
+        "scene_intent": {
+          "schema_version": 1,
+          "project_id": "proj_example",
+          "scene_id": "scene_001",
+          "title": "Missed train",
+          "objective": "Two colleagues move from defensiveness to sympathy after missing a train",
+          "duration": {
+            "target_seconds": 15
+          },
+          "target": {
+            "platform": "unselected",
+            "aspect_ratio": "16:9",
+            "delivery": "video"
+          },
+          "subjects": [
+            "subject_a",
+            "subject_b"
+          ],
+          "objects": [
+            "train_001"
+          ],
+          "environments": [
+            "environment_platform"
+          ],
+          "actions": [
+            "notice_departure",
+            "speak_defensively",
+            "process_explanation",
+            "offer_sympathy",
+            "relax"
+          ],
+          "dialogue_required": true,
+          "audio_required": true,
+          "style_preferences": [
+            "naturalistic"
+          ],
+          "hard_constraints": [
+            "Listener processes before reaction",
+            "Preserve speaker identity and platform axis"
+          ],
+          "preferences": [
+            "medium static coverage"
+          ],
+          "unknowns": [
+            "Model and reference support unselected",
+            "Dialogue is proposed original text",
+            "Voice production and lip sync stage pending"
+          ]
+        },
+        "scene_bible": {
+          "schema_version": 1,
+          "project_id": "proj_example",
+          "scene_id": "scene_001",
+          "revision": 1,
+          "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+          "time_of_day": "morning",
+          "lighting": "soft overcast daylight",
+          "visual_style": "naturalistic",
+          "camera_language": "establish geography, preserve axis, hold reactions",
+          "initial_state": {
+            "subject_a": {
+              "emotion": "defensive",
+              "gaze": "departing_train",
+              "position": "camera_left"
+            },
+            "subject_b": {
+              "emotion": "frustrated",
+              "gaze": "departing_train",
+              "position": "camera_right"
+            },
+            "train_001": {
+              "state": "departing"
+            }
+          },
+          "entities": [
+            {
+              "id": "subject_a",
+              "type": "character",
+              "description": "Fictional adult colleague A in navy jacket",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "subject_b",
+              "type": "character",
+              "description": "Fictional adult colleague B in tan coat",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "train_001",
+              "type": "vehicle",
+              "description": "Commuter train receding from platform",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "environment_platform",
+              "type": "environment",
+              "description": "Quiet platform with marked safety line",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "initial_state_ref": "scene_bible:scene_001:initial"
+        },
+        "references": [],
+        "retention_rules": [],
+        "reference_conflicts": [],
+        "dialogue_timeline": [
+          {
+            "id": "dialogue_a",
+            "shot_id": "shot_002",
+            "speaker": "subject_a",
+            "target_listener": "subject_b",
+            "text": "I thought we still had time.",
+            "start_s": 0.3,
+            "end_s": 2.6,
+            "delivery": "restrained defensive",
+            "start_conditions": "Train departure noticed",
+            "end_conditions": "A completes explanation",
+            "required_reaction": "B processes after line end",
+            "reaction_at_s": 3.0,
+            "visible_speech": true,
+            "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+            "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+          },
+          {
+            "id": "dialogue_b",
+            "shot_id": "shot_003",
+            "speaker": "subject_b",
+            "target_listener": "subject_a",
+            "text": "You were trying to help. I know.",
+            "start_s": 0.8,
+            "end_s": 2.8,
+            "delivery": "gentle sympathy",
+            "start_conditions": "B has processed explanation",
+            "end_conditions": "B completes reassurance",
+            "required_reaction": "A relaxes in next shot",
+            "visible_speech": true,
+            "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+            "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+          }
+        ],
+        "audio_timeline": [
+          {
+            "id": "audio_tone_001",
+            "shot_id": "shot_001",
+            "layer": "ambience",
+            "start_s": 0,
+            "end_s": 3,
+            "source": "PROPOSED permitted platform ambience recording, pending",
+            "bridge_ref": "bridge_platform_tone"
+          },
+          {
+            "id": "audio_tone_002",
+            "shot_id": "shot_002",
+            "layer": "ambience",
+            "start_s": 0,
+            "end_s": 4,
+            "source": "PROPOSED permitted platform ambience recording, pending",
+            "bridge_ref": "bridge_platform_tone"
+          },
+          {
+            "id": "audio_tone_003",
+            "shot_id": "shot_003",
+            "layer": "ambience",
+            "start_s": 0,
+            "end_s": 4,
+            "source": "PROPOSED permitted platform ambience recording, pending",
+            "bridge_ref": "bridge_platform_tone"
+          },
+          {
+            "id": "audio_tone_004",
+            "shot_id": "shot_004",
+            "layer": "ambience",
+            "start_s": 0,
+            "end_s": 4,
+            "source": "PROPOSED permitted platform ambience recording, pending",
+            "bridge_ref": "bridge_platform_tone"
+          }
+        ],
+        "shots": [
+          {
+            "id": "shot_001",
+            "duration_s": 3,
+            "purpose": "Establish missed train and two colleagues",
+            "dependency_ids": [],
+            "active_subject_ids": [
+              "subject_a",
+              "subject_b"
+            ],
+            "supporting_subject_ids": [],
+            "action_primitives": [
+              "notice_departure"
+            ],
+            "state_changes": [],
+            "references": [],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "TWO_SHOT",
+              "focus": "subject_a and subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "generation_mode": "T2V",
+            "capability_requirements": [],
+            "constraints": [
+              "con_reaction"
+            ],
+            "acceptance_ids": [
+              "qa_identity",
+              "qa_axis",
+              "qa_reaction",
+              "qa_sync"
+            ],
+            "performance": [
+              "Both gaze at receding train"
+            ],
+            "scene_id": "scene_001",
+            "revision": 1,
+            "lifecycle_status": "PLANNED",
+            "generation_artifact_ref": null,
+            "artifact_observation_ref": null,
+            "start_state_ref": "scene_bible:scene_001:initial",
+            "start_state_delta": {},
+            "end_state_delta": {}
+          },
+          {
+            "id": "shot_002",
+            "duration_s": 4,
+            "purpose": "A explains defensively while B listens",
+            "dependency_ids": [
+              "shot_001"
+            ],
+            "active_subject_ids": [
+              "subject_a",
+              "subject_b"
+            ],
+            "supporting_subject_ids": [],
+            "action_primitives": [
+              "speak_defensively",
+              "process_explanation"
+            ],
+            "state_changes": [
+              {
+                "property": "subject_b.emotion",
+                "prior": "frustrated",
+                "next": "processing",
+                "cause": "process_explanation"
+              }
+            ],
+            "references": [],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "MEDIUM_A",
+              "focus": "subject_a",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "generation_mode": "T2V",
+            "capability_requirements": [
+              "visible_speech_sync"
+            ],
+            "constraints": [
+              "con_reaction"
+            ],
+            "acceptance_ids": [
+              "qa_identity",
+              "qa_axis",
+              "qa_reaction",
+              "qa_sync"
+            ],
+            "performance": [
+              "A speaks 0.3\u20132.6 s; B only processes after the line ends"
+            ],
+            "scene_id": "scene_001",
+            "revision": 1,
+            "lifecycle_status": "PLANNED",
+            "generation_artifact_ref": null,
+            "artifact_observation_ref": null,
+            "start_state_ref": "continuity:shot_001:end",
+            "start_state_delta": {},
+            "end_state_delta": {
+              "subject_b.emotion": "processing"
+            }
+          },
+          {
+            "id": "shot_003",
+            "duration_s": 4,
+            "purpose": "B offers sympathy after processing",
+            "dependency_ids": [
+              "shot_002"
+            ],
+            "active_subject_ids": [
+              "subject_a",
+              "subject_b"
+            ],
+            "supporting_subject_ids": [],
+            "action_primitives": [
+              "offer_sympathy"
+            ],
+            "state_changes": [
+              {
+                "property": "subject_b.emotion",
+                "prior": "processing",
+                "next": "sympathetic",
+                "cause": "offer_sympathy"
+              }
+            ],
+            "references": [],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "MEDIUM_B",
+              "focus": "subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "generation_mode": "T2V",
+            "capability_requirements": [
+              "visible_speech_sync"
+            ],
+            "constraints": [
+              "con_reaction"
+            ],
+            "acceptance_ids": [
+              "qa_identity",
+              "qa_axis",
+              "qa_reaction",
+              "qa_sync"
+            ],
+            "performance": [
+              "B softens jaw, speaks at 0.8\u20132.8 s; A listens"
+            ],
+            "scene_id": "scene_001",
+            "revision": 1,
+            "lifecycle_status": "PLANNED",
+            "generation_artifact_ref": null,
+            "artifact_observation_ref": null,
+            "start_state_ref": "continuity:shot_002:end",
+            "start_state_delta": {},
+            "end_state_delta": {
+              "subject_b.emotion": "sympathetic"
+            }
+          },
+          {
+            "id": "shot_004",
+            "duration_s": 4,
+            "purpose": "A receives sympathy and relaxes",
+            "dependency_ids": [
+              "shot_003"
+            ],
+            "active_subject_ids": [
+              "subject_a",
+              "subject_b"
+            ],
+            "supporting_subject_ids": [],
+            "action_primitives": [
+              "relax"
+            ],
+            "state_changes": [
+              {
+                "property": "subject_a.emotion",
+                "prior": "defensive",
+                "next": "relieved",
+                "cause": "relax"
+              }
+            ],
+            "references": [],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "TWO_SHOT",
+              "focus": "subject_a and subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "generation_mode": "T2V",
+            "capability_requirements": [],
+            "constraints": [
+              "con_reaction"
+            ],
+            "acceptance_ids": [
+              "qa_identity",
+              "qa_axis",
+              "qa_reaction",
+              "qa_sync"
+            ],
+            "performance": [
+              "A exhales and releases shoulder tension after B finishes"
+            ],
+            "scene_id": "scene_001",
+            "revision": 1,
+            "lifecycle_status": "PLANNED",
+            "generation_artifact_ref": null,
+            "artifact_observation_ref": null,
+            "start_state_ref": "continuity:shot_003:end",
+            "start_state_delta": {},
+            "end_state_delta": {
+              "subject_a.emotion": "relieved"
+            }
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_id": "con_reaction",
+            "subject": "subject_a and subject_b",
+            "kind": "QA_ASSERTION",
+            "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003",
+              "shot_004"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "audio_and_frame_timeline_review",
+              "blocking": true
+            },
+            "fallback": "Separate reaction coverage",
+            "status": "PROPOSED"
+          }
+        ],
+        "contact_graphs": [],
+        "generation_strategy": {
+          "mode": "independent canonical reference anchors",
+          "reanchor_every_shots": 3,
+          "reset_points": [
+            "shot_001",
+            "shot_004"
+          ],
+          "status": "PROPOSED",
+          "execution_blockers": [
+            "No verified visible_speech_sync feature evidence",
+            "Audio sources pending"
+          ]
+        },
+        "assembly_plan": {
+          "shot_ids": [
+            "shot_001",
+            "shot_002",
+            "shot_003",
+            "shot_004"
+          ],
+          "target_duration_s": 15,
+          "fps": "UNKNOWN",
+          "codec": "UNKNOWN",
+          "audio": "Dialogue over continuous platform ambience; inspect actual phonetic sync",
+          "editorial_status": "NOT_RUN"
+        },
+        "shot_graph": {
+          "nodes": [
+            "shot_001",
+            "shot_002",
+            "shot_003",
+            "shot_004"
+          ],
+          "edges": [
+            {
+              "from": "shot_001",
+              "to": "shot_002",
+              "state_channel": "PLANNED"
+            },
+            {
+              "from": "shot_002",
+              "to": "shot_003",
+              "state_channel": "PLANNED"
+            },
+            {
+              "from": "shot_003",
+              "to": "shot_004",
+              "state_channel": "PLANNED"
+            }
+          ]
+        },
+        "narrative_timeline": [
+          {
+            "id": "beat_shot_001",
+            "shot_id": "shot_001",
+            "time": {
+              "start_s": 0.0,
+              "end_s": 3.0
+            },
+            "purpose": "Establish missed train and two colleagues",
+            "action": [
+              "notice_departure"
+            ],
+            "prerequisites": []
+          },
+          {
+            "id": "beat_shot_002",
+            "shot_id": "shot_002",
+            "time": {
+              "start_s": 3.0,
+              "end_s": 7.0
+            },
+            "purpose": "A explains defensively while B listens",
+            "action": [
+              "speak_defensively",
+              "process_explanation"
+            ],
+            "prerequisites": [
+              "shot_001"
+            ]
+          },
+          {
+            "id": "beat_shot_003",
+            "shot_id": "shot_003",
+            "time": {
+              "start_s": 7.0,
+              "end_s": 11.0
+            },
+            "purpose": "B offers sympathy after processing",
+            "action": [
+              "offer_sympathy"
+            ],
+            "prerequisites": [
+              "shot_002"
+            ]
+          },
+          {
+            "id": "beat_shot_004",
+            "shot_id": "shot_004",
+            "time": {
+              "start_s": 11.0,
+              "end_s": 15.0
+            },
+            "purpose": "A receives sympathy and relaxes",
+            "action": [
+              "relax"
+            ],
+            "prerequisites": [
+              "shot_003"
+            ]
+          }
+        ],
+        "reference_timeline": [
+          {
+            "shot_id": "shot_001",
+            "reference_ids": []
+          },
+          {
+            "shot_id": "shot_002",
+            "reference_ids": []
+          },
+          {
+            "shot_id": "shot_003",
+            "reference_ids": []
+          },
+          {
+            "shot_id": "shot_004",
+            "reference_ids": []
+          }
+        ],
+        "complexity": {
+          "identities": 2,
+          "references": 0,
+          "dialogue": 2,
+          "lip_sync": 2,
+          "interaction": 0,
+          "articulated_objects": 1,
+          "motion": 5,
+          "camera": 1,
+          "duration": 15,
+          "vfx": "UNKNOWN"
+        },
+        "presentation_mode": "PRODUCTION",
+        "continuity_states": [
+          {
+            "scope": "shot_001",
+            "state_channel": "PLANNED",
+            "inherited_from": "scene_bible:scene_001:initial",
+            "end_state": {
+              "subject_a.emotion": "defensive",
+              "subject_a.gaze": "departing_train",
+              "subject_a.position": "camera_left",
+              "subject_b.emotion": "frustrated",
+              "subject_b.gaze": "departing_train",
+              "subject_b.position": "camera_right",
+              "train_001.state": "departing"
+            }
+          },
+          {
+            "scope": "shot_002",
+            "state_channel": "PLANNED",
+            "inherited_from": "continuity:shot_001:end",
+            "end_state": {
+              "subject_a.emotion": "defensive",
+              "subject_a.gaze": "departing_train",
+              "subject_a.position": "camera_left",
+              "subject_b.emotion": "processing",
+              "subject_b.gaze": "departing_train",
+              "subject_b.position": "camera_right",
+              "train_001.state": "departing"
+            }
+          },
+          {
+            "scope": "shot_003",
+            "state_channel": "PLANNED",
+            "inherited_from": "continuity:shot_002:end",
+            "end_state": {
+              "subject_a.emotion": "defensive",
+              "subject_a.gaze": "departing_train",
+              "subject_a.position": "camera_left",
+              "subject_b.emotion": "sympathetic",
+              "subject_b.gaze": "departing_train",
+              "subject_b.position": "camera_right",
+              "train_001.state": "departing"
+            }
+          },
+          {
+            "scope": "shot_004",
+            "state_channel": "PLANNED",
+            "inherited_from": "continuity:shot_003:end",
+            "end_state": {
+              "subject_a.emotion": "relieved",
+              "subject_a.gaze": "departing_train",
+              "subject_a.position": "camera_left",
+              "subject_b.emotion": "sympathetic",
+              "subject_b.gaze": "departing_train",
+              "subject_b.position": "camera_right",
+              "train_001.state": "departing"
+            }
+          }
+        ],
+        "validation": {
+          "status": "FAIL",
+          "scope": "STRUCTURAL_PLAN_ONLY",
+          "issues": [
+            {
+              "id": "ACCEPTANCE_CONTRACT",
+              "path": "shot_001",
+              "severity": "HIGH",
+              "outcome": "BLOCK",
+              "reason": "Unknown or duplicate required gate IDs",
+              "preserved_intent": "Keep the declared scene objective and hard constraints",
+              "evidence_gap": "Unknown or duplicate required gate IDs",
+              "evidence_required": [
+                "Supply the applicable canonical gates"
+              ],
+              "next_action": "Supply the applicable canonical gates",
+              "repair_route": "shot_001",
+              "gate": "QG-17"
+            },
+            {
+              "id": "ACCEPTANCE_CONTRACT",
+              "path": "shot_002",
+              "severity": "HIGH",
+              "outcome": "BLOCK",
+              "reason": "Unknown or duplicate required gate IDs",
+              "preserved_intent": "Keep the declared scene objective and hard constraints",
+              "evidence_gap": "Unknown or duplicate required gate IDs",
+              "evidence_required": [
+                "Supply the applicable canonical gates"
+              ],
+              "next_action": "Supply the applicable canonical gates",
+              "repair_route": "shot_002",
+              "gate": "QG-17"
+            },
+            {
+              "id": "ACCEPTANCE_CONTRACT",
+              "path": "shot_003",
+              "severity": "HIGH",
+              "outcome": "BLOCK",
+              "reason": "Unknown or duplicate required gate IDs",
+              "preserved_intent": "Keep the declared scene objective and hard constraints",
+              "evidence_gap": "Unknown or duplicate required gate IDs",
+              "evidence_required": [
+                "Supply the applicable canonical gates"
+              ],
+              "next_action": "Supply the applicable canonical gates",
+              "repair_route": "shot_003",
+              "gate": "QG-17"
+            },
+            {
+              "id": "ACCEPTANCE_CONTRACT",
+              "path": "shot_004",
+              "severity": "HIGH",
+              "outcome": "BLOCK",
+              "reason": "Unknown or duplicate required gate IDs",
+              "preserved_intent": "Keep the declared scene objective and hard constraints",
+              "evidence_gap": "Unknown or duplicate required gate IDs",
+              "evidence_required": [
+                "Supply the applicable canonical gates"
+              ],
+              "next_action": "Supply the applicable canonical gates",
+              "repair_route": "shot_004",
+              "gate": "QG-17"
+            }
+          ],
+          "shot_order": [
+            "shot_001",
+            "shot_002",
+            "shot_003",
+            "shot_004"
+          ],
+          "end_states": {
+            "shot_001": {
+              "subject_a.emotion": "defensive",
+              "subject_a.gaze": "departing_train",
+              "subject_a.position": "camera_left",
+              "subject_b.emotion": "frustrated",
+              "subject_b.gaze": "departing_train",
+              "subject_b.position": "camera_right",
+              "train_001.state": "departing"
+            },
+            "shot_002": {
+              "subject_a.emotion": "defensive",
+              "subject_a.gaze": "departing_train",
+              "subject_a.position": "camera_left",
+              "subject_b.emotion": "processing",
+              "subject_b.gaze": "departing_train",
+              "subject_b.position": "camera_right",
+              "train_001.state": "departing"
+            },
+            "shot_003": {
+              "subject_a.emotion": "defensive",
+              "subject_a.gaze": "departing_train",
+              "subject_a.position": "camera_left",
+              "subject_b.emotion": "sympathetic",
+              "subject_b.gaze": "departing_train",
+              "subject_b.position": "camera_right",
+              "train_001.state": "departing"
+            },
+            "shot_004": {
+              "subject_a.emotion": "relieved",
+              "subject_a.gaze": "departing_train",
+              "subject_a.position": "camera_left",
+              "subject_b.emotion": "sympathetic",
+              "subject_b.gaze": "departing_train",
+              "subject_b.position": "camera_right",
+              "train_001.state": "departing"
+            }
+          },
+          "limitations": [
+            "Does not verify visual identity, physics, editorial quality or model feasibility"
+          ]
+        }
+      }
+    },
+    "claim_limit": "CLI success is structural evidence only. Profile support, actual reference identity, acting, audio and synchronization are untested; PENDING strings are not evidence.",
+    "initial_failed_attempt": {
+      "request_id": "G-004",
+      "scope": "Independent authored 15-second four-shot treatment; no generation/runtime/network",
+      "temporary_directory": "/tmp/vge-forward-ui2vn482",
+      "authored_treatment": {
+        "schema_version": 1,
+        "revision": 1,
+        "execution_mode": "PLAN_ONLY",
+        "scene_intent": {
+          "schema_version": 1,
+          "project_id": "proj_example",
+          "scene_id": "scene_001",
+          "title": "Missed train",
+          "objective": "Two colleagues move from defensiveness to sympathy after missing a train",
+          "duration": {
+            "target_seconds": 15
+          },
+          "target": {
+            "platform": "unselected",
+            "aspect_ratio": "16:9",
+            "delivery": "video"
+          },
+          "subjects": [
+            "subject_a",
+            "subject_b"
+          ],
+          "objects": [
+            "train_001"
+          ],
+          "environments": [
+            "environment_platform"
+          ],
+          "actions": [
+            "notice_departure",
+            "speak_defensively",
+            "process_explanation",
+            "offer_sympathy",
+            "relax"
+          ],
+          "dialogue_required": true,
+          "audio_required": true,
+          "style_preferences": [
+            "naturalistic"
+          ],
+          "hard_constraints": [
+            "Listener processes before reaction",
+            "Preserve speaker identity and platform axis"
+          ],
+          "preferences": [
+            "medium static coverage"
+          ],
+          "unknowns": [
+            "Model and reference support unselected",
+            "Dialogue is proposed original text",
+            "Voice production and lip sync stage pending"
+          ]
+        },
+        "scene_bible": {
+          "schema_version": 1,
+          "project_id": "proj_example",
+          "scene_id": "scene_001",
+          "revision": 1,
+          "geography": "A camera-left, B camera-right, both behind safety line; departed train recedes in background",
+          "time_of_day": "morning",
+          "lighting": "soft overcast daylight",
+          "visual_style": "naturalistic",
+          "camera_language": "establish geography, preserve axis, hold reactions",
+          "initial_state": {
+            "subject_a": {
+              "emotion": "defensive",
+              "gaze": "departing_train",
+              "position": "camera_left"
+            },
+            "subject_b": {
+              "emotion": "frustrated",
+              "gaze": "departing_train",
+              "position": "camera_right"
+            },
+            "train_001": {
+              "state": "departing"
+            }
+          },
+          "entities": [
+            {
+              "id": "subject_a",
+              "type": "character",
+              "description": "Fictional adult colleague A in navy jacket",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "subject_b",
+              "type": "character",
+              "description": "Fictional adult colleague B in tan coat",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "train_001",
+              "type": "vehicle",
+              "description": "Commuter train receding from platform",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "environment_platform",
+              "type": "environment",
+              "description": "Quiet platform with marked safety line",
+              "permanence": "PERSISTENT"
+            }
+          ]
+        },
+        "references": [],
+        "retention_rules": [],
+        "reference_conflicts": [],
+        "dialogue_timeline": [
+          {
+            "id": "dialogue_a",
+            "shot_id": "shot_002",
+            "speaker": "subject_a",
+            "target_listener": "subject_b",
+            "text": "I thought we still had time.",
+            "start_s": 0.3,
+            "end_s": 2.6,
+            "delivery": "restrained defensive",
+            "start_conditions": "Train departure noticed",
+            "end_conditions": "A completes explanation",
+            "required_reaction": "B processes after line end",
+            "reaction_at_s": 3.0,
+            "visible_speech": true,
+            "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+            "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+          },
+          {
+            "id": "dialogue_b",
+            "shot_id": "shot_003",
+            "speaker": "subject_b",
+            "target_listener": "subject_a",
+            "text": "You were trying to help. I know.",
+            "start_s": 0.8,
+            "end_s": 2.8,
+            "delivery": "gentle sympathy",
+            "start_conditions": "B has processed explanation",
+            "end_conditions": "B completes reassurance",
+            "required_reaction": "A relaxes in next shot",
+            "visible_speech": true,
+            "audio_source": "PROPOSED separately recorded original dialogue; file pending",
+            "lip_sync_path": "PENDING separately verified visible speech sync stage; execution blocked"
+          }
+        ],
+        "audio_timeline": [
+          {
+            "id": "audio_tone_001",
+            "shot_id": "shot_001",
+            "layer": "ambience",
+            "start_s": 0,
+            "end_s": 3,
+            "source": "PROPOSED permitted platform ambience recording, pending",
+            "bridge_ref": "bridge_platform_tone"
+          },
+          {
+            "id": "audio_tone_002",
+            "shot_id": "shot_002",
+            "layer": "ambience",
+            "start_s": 0,
+            "end_s": 4,
+            "source": "PROPOSED permitted platform ambience recording, pending",
+            "bridge_ref": "bridge_platform_tone"
+          },
+          {
+            "id": "audio_tone_003",
+            "shot_id": "shot_003",
+            "layer": "ambience",
+            "start_s": 0,
+            "end_s": 4,
+            "source": "PROPOSED permitted platform ambience recording, pending",
+            "bridge_ref": "bridge_platform_tone"
+          },
+          {
+            "id": "audio_tone_004",
+            "shot_id": "shot_004",
+            "layer": "ambience",
+            "start_s": 0,
+            "end_s": 4,
+            "source": "PROPOSED permitted platform ambience recording, pending",
+            "bridge_ref": "bridge_platform_tone"
+          }
+        ],
+        "shots": [
+          {
+            "id": "shot_001",
+            "duration_s": 3,
+            "purpose": "Establish missed train and two colleagues",
+            "dependency_ids": [],
+            "active_subject_ids": [
+              "subject_a",
+              "subject_b"
+            ],
+            "supporting_subject_ids": [],
+            "action_primitives": [
+              "notice_departure"
+            ],
+            "state_changes": [],
+            "references": [],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "TWO_SHOT",
+              "focus": "subject_a and subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "generation_mode": "T2V",
+            "capability_requirements": [],
+            "constraints": [
+              "con_reaction"
+            ],
+            "acceptance_ids": [
+              "qa_identity",
+              "qa_axis",
+              "qa_reaction",
+              "qa_sync"
+            ],
+            "performance": [
+              "Both gaze at receding train"
+            ]
+          },
+          {
+            "id": "shot_002",
+            "duration_s": 4,
+            "purpose": "A explains defensively while B listens",
+            "dependency_ids": [
+              "shot_001"
+            ],
+            "active_subject_ids": [
+              "subject_a",
+              "subject_b"
+            ],
+            "supporting_subject_ids": [],
+            "action_primitives": [
+              "speak_defensively",
+              "process_explanation"
+            ],
+            "state_changes": [
+              {
+                "property": "subject_b.emotion",
+                "prior": "frustrated",
+                "next": "processing",
+                "cause": "process_explanation"
+              }
+            ],
+            "references": [],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "MEDIUM_A",
+              "focus": "subject_a",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "generation_mode": "T2V",
+            "capability_requirements": [
+              "visible_speech_sync"
+            ],
+            "constraints": [
+              "con_reaction"
+            ],
+            "acceptance_ids": [
+              "qa_identity",
+              "qa_axis",
+              "qa_reaction",
+              "qa_sync"
+            ],
+            "performance": [
+              "A speaks 0.3\u20132.6 s; B only processes after the line ends"
+            ]
+          },
+          {
+            "id": "shot_003",
+            "duration_s": 4,
+            "purpose": "B offers sympathy after processing",
+            "dependency_ids": [
+              "shot_002"
+            ],
+            "active_subject_ids": [
+              "subject_a",
+              "subject_b"
+            ],
+            "supporting_subject_ids": [],
+            "action_primitives": [
+              "offer_sympathy"
+            ],
+            "state_changes": [
+              {
+                "property": "subject_b.emotion",
+                "prior": "processing",
+                "next": "sympathetic",
+                "cause": "offer_sympathy"
+              }
+            ],
+            "references": [],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "MEDIUM_B",
+              "focus": "subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "generation_mode": "T2V",
+            "capability_requirements": [
+              "visible_speech_sync"
+            ],
+            "constraints": [
+              "con_reaction"
+            ],
+            "acceptance_ids": [
+              "qa_identity",
+              "qa_axis",
+              "qa_reaction",
+              "qa_sync"
+            ],
+            "performance": [
+              "B softens jaw, speaks at 0.8\u20132.8 s; A listens"
+            ]
+          },
+          {
+            "id": "shot_004",
+            "duration_s": 4,
+            "purpose": "A receives sympathy and relaxes",
+            "dependency_ids": [
+              "shot_003"
+            ],
+            "active_subject_ids": [
+              "subject_a",
+              "subject_b"
+            ],
+            "supporting_subject_ids": [],
+            "action_primitives": [
+              "relax"
+            ],
+            "state_changes": [
+              {
+                "property": "subject_a.emotion",
+                "prior": "defensive",
+                "next": "relieved",
+                "cause": "relax"
+              }
+            ],
+            "references": [],
+            "camera": {
+              "size": "MEDIUM",
+              "angle": "EYE_LEVEL",
+              "focal_length": "50mm_equivalent",
+              "framing": "TWO_SHOT",
+              "focus": "subject_a and subject_b",
+              "depth_of_field": "MODERATE",
+              "motion_blur": "NATURAL",
+              "exposure": "LOCKED_TO_SCENE",
+              "lighting": "scene_bible:lighting",
+              "eyeline": "established partner eyeline, except initial train gaze",
+              "movement": {
+                "type": "STATIC",
+                "direction": "NONE",
+                "phase": "HOLD"
+              },
+              "screen_direction": "LEFT_TO_RIGHT",
+              "axis_policy": "PRESERVE_180_AXIS",
+              "edit_rhythm": "HOLD_THROUGH_PROCESSING"
+            },
+            "generation_mode": "T2V",
+            "capability_requirements": [],
+            "constraints": [
+              "con_reaction"
+            ],
+            "acceptance_ids": [
+              "qa_identity",
+              "qa_axis",
+              "qa_reaction",
+              "qa_sync"
+            ],
+            "performance": [
+              "A exhales and releases shoulder tension after B finishes"
+            ]
+          }
+        ],
+        "constraints": [
+          {
+            "constraint_id": "con_reaction",
+            "subject": "subject_a and subject_b",
+            "kind": "QA_ASSERTION",
+            "statement": "Listener processing and visible reaction follow the relevant line end; stable identities and screen positions",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003",
+              "shot_004"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "audio_and_frame_timeline_review",
+              "blocking": true
+            },
+            "fallback": "Separate reaction coverage",
+            "status": "PROPOSED"
+          }
+        ],
+        "contact_graphs": [],
+        "generation_strategy": {
+          "mode": "independent canonical reference anchors",
+          "maximum_chain_length": 3,
+          "reset_points": [
+            "shot_001",
+            "shot_004"
+          ],
+          "status": "PROPOSED",
+          "execution_blockers": [
+            "No verified visible_speech_sync feature evidence",
+            "Audio sources pending"
+          ]
+        },
+        "assembly_plan": {
+          "shot_order": [
+            "shot_001",
+            "shot_002",
+            "shot_003",
+            "shot_004"
+          ],
+          "target_duration_s": 15,
+          "fps": "UNKNOWN",
+          "codec": "UNKNOWN",
+          "audio": "Dialogue over continuous platform ambience; inspect actual phonetic sync",
+          "editorial_status": "NOT_RUN"
+        }
+      },
+      "commands": [
+        {
+          "argv": [
+            "prepare",
+            "/tmp/vge-forward-ui2vn482/treatment.json",
+            "--output",
+            "/tmp/vge-forward-ui2vn482/plan.json"
+          ],
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "{\"status\": \"BLOCKED\", \"error\": \"'shot_ids'\", \"next_action\": \"Inspect the named contract or boundary; do not retry a submission blindly\"}\n"
+        },
+        {
+          "argv": [
+            "validate",
+            "/tmp/vge-forward-ui2vn482/plan.json"
+          ],
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "{\"status\": \"BLOCKED\", \"error\": \"[Errno 2] No such file or directory: '/tmp/vge-forward-ui2vn482/plan.json'\", \"next_action\": \"Inspect the named contract or boundary; do not retry a submission blindly\"}\n"
+        },
+        {
+          "argv": [
+            "compile",
+            "/tmp/vge-forward-ui2vn482/plan.json",
+            "--output",
+            "/tmp/vge-forward-ui2vn482/prompts.json"
+          ],
+          "exit_code": 2,
+          "stdout": "",
+          "stderr": "{\"status\": \"BLOCKED\", \"error\": \"[Errno 2] No such file or directory: '/tmp/vge-forward-ui2vn482/plan.json'\", \"next_action\": \"Inspect the named contract or boundary; do not retry a submission blindly\"}\n"
+        }
+      ],
+      "artifacts": {},
+      "claim_limit": "CLI success is structural evidence only. Profile support, actual reference identity, acting, audio and synchronization are untested; PENDING strings are not evidence."
+    }
+  }
+}

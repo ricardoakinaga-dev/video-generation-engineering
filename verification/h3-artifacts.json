@@ -1,0 +1,24 @@
+[
+  {
+    "schema_version": 1,
+    "id": "art_cacd525eaf194d1184c0d55b4c0fbf2f",
+    "shot_id": "shot_h3_probe",
+    "execution_attempt_ref": "attempt_77d32a35cc46483e8dff02cb14ea9df2",
+    "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_cacd525eaf194d1184c0d55b4c0fbf2f.mp4",
+    "content_hash": "sha256:623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124",
+    "collected_at": "2026-09-08T13:06:57.049933+00:00",
+    "generation_status": "GENERATED",
+    "media": {
+      "kind": "images"
+    },
+    "runtime": {
+      "provider": "comfyui",
+      "endpoint": "http://127.0.0.1:8188",
+      "workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158"
+    },
+    "quality_review": {
+      "lifecycle": "NOT_STARTED",
+      "observation_ref": null
+    }
+  }
+]

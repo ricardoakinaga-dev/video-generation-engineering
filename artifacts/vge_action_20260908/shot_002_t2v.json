@@ -1,0 +1,184 @@
+{
+  "1": {
+    "class_type": "ClipProjLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+      "type": "auto",
+      "projection": "mmh3-4b-ClipProj-v3.1.safetensors",
+      "device": "cuda:0",
+      "mode": "dynamic"
+    }
+  },
+  "2": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "34": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "2",
+        0
+      ],
+      "lora_name": "minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_resized_avg_rank_21_bf16.safetensors",
+      "strength_model": 1.0
+    }
+  },
+  "3": {
+    "class_type": "MiniMaxH3SigmaShift",
+    "inputs": {
+      "model": [
+        "34",
+        0
+      ],
+      "shift_video": 12.0,
+      "shift_audio": 5.0
+    }
+  },
+  "4": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_int8_convrot.safetensors"
+    }
+  },
+  "5": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "6": {
+    "class_type": "MiniMaxH3ImageToVideo",
+    "inputs": {
+      "clip": [
+        "1",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ],
+      "prompt": "Cinematic live-action science-fiction action, grounded apocalyptic realism, no comic-book text. Continue the same fight with one adult man: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt. Keep his face and glasses consistent and do not duplicate him. Same devastated rainy city street, same blue-orange dusk light, same human-left/android-right action axis. Start with the android recoiling from a damaged glowing cyan chest core and the man balanced after his previous punch. The android swings one heavy left-arm strike across the frame. The man ducks beneath the arm, pivots once, and lands one clear right-foot kick on the android's damaged right knee joint. Show cause and effect: foot meets the knee joint, bright sparks burst, the android loses support and drops to one knee, while the man lands in a low ready stance. Exactly one man and one android, natural anatomy, one head, two arms and two legs each. Low three-quarter handheld lateral tracking camera, keep the knee contact readable, fast but controlled movement, rain, smoke, wet rubble and burning vehicles in the background. End with the android kneeling and the man facing it. Sound: rain, servo whine, metal impact, electric crackle and heavy footsteps; no dialogue, no music, no text. One continuous 5-second shot.",
+      "width": 384,
+      "height": 224,
+      "length": 124
+    }
+  },
+  "7": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "3",
+        0
+      ],
+      "conditioning": [
+        "6",
+        0
+      ]
+    }
+  },
+  "8": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "res_multistep"
+    }
+  },
+  "9": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": [
+        "3",
+        0
+      ],
+      "scheduler": "simple",
+      "steps": 4,
+      "denoise": 1.0
+    }
+  },
+  "10": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 20260910
+    }
+  },
+  "11": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "10",
+        0
+      ],
+      "guider": [
+        "7",
+        0
+      ],
+      "sampler": [
+        "8",
+        0
+      ],
+      "sigmas": [
+        "9",
+        0
+      ],
+      "latent_image": [
+        "6",
+        1
+      ]
+    }
+  },
+  "12": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ]
+    }
+  },
+  "13": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "5",
+        0
+      ]
+    }
+  },
+  "14": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "12",
+        0
+      ],
+      "audio": [
+        "13",
+        0
+      ],
+      "fps": 24.0
+    }
+  },
+  "15": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "14",
+        0
+      ],
+      "filename_prefix": "video/vge_action_t2v_shot_02",
+      "format": "mp4",
+      "format.codec": "h264"
+    }
+  }
+}

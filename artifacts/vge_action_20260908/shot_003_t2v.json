@@ -1,0 +1,184 @@
+{
+  "1": {
+    "class_type": "ClipProjLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+      "type": "auto",
+      "projection": "mmh3-4b-ClipProj-v3.1.safetensors",
+      "device": "cuda:0",
+      "mode": "dynamic"
+    }
+  },
+  "2": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "34": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "2",
+        0
+      ],
+      "lora_name": "minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_resized_avg_rank_21_bf16.safetensors",
+      "strength_model": 1.0
+    }
+  },
+  "3": {
+    "class_type": "MiniMaxH3SigmaShift",
+    "inputs": {
+      "model": [
+        "34",
+        0
+      ],
+      "shift_video": 12.0,
+      "shift_audio": 5.0
+    }
+  },
+  "4": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_int8_convrot.safetensors"
+    }
+  },
+  "5": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "6": {
+    "class_type": "MiniMaxH3ImageToVideo",
+    "inputs": {
+      "clip": [
+        "1",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ],
+      "prompt": "Cinematic live-action science-fiction action, grounded apocalyptic realism, no comic-book text. Final exchange of the same fight with one adult man: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt. Keep his face, glasses and wardrobe consistent; do not duplicate him. Same devastated rainy city street, same blue-orange dusk light, same human-left/android-right action axis. Start with the damaged android down on one knee and the man in a low ready stance facing it. The android lunges upward. The man rises and delivers one clear spinning left-foot kick to the android's armored torso. Show cause and effect: foot contact, a violent burst of sparks, the android crashes backward into a concrete barrier, dust and metal fragments fill the air, then the android becomes still. The man lands safely and holds a strong final guard in the foreground, breathing hard. Exactly one man and one android, natural anatomy, one head, two arms and two legs each. Low hero-angle handheld push and short arc around the human, keep the final impact readable, dramatic firelight through rain and smoke. End on the man standing alone in the wreckage while the disabled android lies in the background. Sound: rain, servo failure, metal impact, concrete crash, electric crackle and heavy footsteps; no dialogue, no music, no text. One continuous 5-second shot.",
+      "width": 384,
+      "height": 224,
+      "length": 124
+    }
+  },
+  "7": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "3",
+        0
+      ],
+      "conditioning": [
+        "6",
+        0
+      ]
+    }
+  },
+  "8": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "res_multistep"
+    }
+  },
+  "9": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": [
+        "3",
+        0
+      ],
+      "scheduler": "simple",
+      "steps": 4,
+      "denoise": 1.0
+    }
+  },
+  "10": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 20260911
+    }
+  },
+  "11": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "10",
+        0
+      ],
+      "guider": [
+        "7",
+        0
+      ],
+      "sampler": [
+        "8",
+        0
+      ],
+      "sigmas": [
+        "9",
+        0
+      ],
+      "latent_image": [
+        "6",
+        1
+      ]
+    }
+  },
+  "12": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ]
+    }
+  },
+  "13": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "5",
+        0
+      ]
+    }
+  },
+  "14": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "12",
+        0
+      ],
+      "audio": [
+        "13",
+        0
+      ],
+      "fps": 24.0
+    }
+  },
+  "15": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "14",
+        0
+      ],
+      "filename_prefix": "video/vge_action_t2v_shot_03",
+      "format": "mp4",
+      "format.codec": "h264"
+    }
+  }
+}

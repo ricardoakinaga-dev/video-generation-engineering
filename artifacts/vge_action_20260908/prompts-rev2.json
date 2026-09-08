@@ -1,0 +1,2023 @@
+{
+  "schema_version": 1,
+  "plan_hash": "sha256:54f590a41b019385ff24ce56a1320d89f4510f6732ed23c06de46e053432521e",
+  "execution_mode": "PLAN_ONLY",
+  "prompts": [
+    {
+      "schema_version": 1,
+      "shot_id": "shot_001",
+      "canonical_revision": "scene_human_vs_android_001_rev2",
+      "profile_reference": "comfyui-h3-local-probe-v1",
+      "sections": {
+        "subject_and_identity": {
+          "entities": [
+            {
+              "id": "subject_human",
+              "type": "character",
+              "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "subject_android",
+              "type": "character",
+              "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "retention": [
+            {
+              "entity_id": "subject_human",
+              "property": "face_glasses_hair_facial_hair",
+              "policy": "LOCKED",
+              "rationale": "These are the identity anchors visible in the supplied portrait.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "wardrobe.dark_charcoal_t_shirt",
+              "policy": "LOCKED",
+              "rationale": "Use the repeated dark shirt visible across the reference views.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Check wardrobe continuity between all three blocks."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "white_collage_background_and_layout",
+              "policy": "IGNORE",
+              "rationale": "The white collage is source layout, not scene geography or character identity.",
+              "anchor_refs": [],
+              "conflict_policy": "exclude",
+              "qa_obligation": "Do not reproduce the collage as the scene background."
+            }
+          ]
+        },
+        "setting_and_time": {
+          "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+          "time_of_day": "fim de tarde sob céu de tempestade",
+          "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+        },
+        "action_sequence": [
+          "approach",
+          "orient",
+          "duck",
+          "contact",
+          "punch",
+          "observe_result"
+        ],
+        "performance": [
+          "Human keeps eyes on the android, ducks under the punch, then recovers into a stable stance.",
+          "Android commits its weight to the punch and visibly loses balance after chest contact."
+        ],
+        "camera": {
+          "size": "MEDIUM_WIDE",
+          "angle": "EYE_LEVEL",
+          "focal_length": "35mm_equivalent",
+          "framing": "TWO_SHOT_FULL_TORSOS",
+          "focus": "subject_human_and_subject_android",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL_ACTION",
+          "exposure": "LOCKED_TO_DUSK_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "subject_android",
+          "movement": {
+            "type": "HANDHELD_TRACK",
+            "direction": "FORWARD_WITH_HUMAN",
+            "phase": "FOLLOW_CHARGE_THEN_HOLD_IMPACT"
+          },
+          "screen_direction": "ANDROID_RIGHT_TO_LEFT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "BUILD_THEN_IMPACT_HOLD"
+        },
+        "lighting_and_style": "ficção científica live-action, suja, realista e cinematográfica",
+        "audio_or_sync": {
+          "dialogue": [],
+          "audio": [
+            {
+              "id": "audio_shot_001_rain_impact",
+              "shot_id": "shot_001",
+              "layer": "effects",
+              "start_s": 0,
+              "end_s": 5,
+              "source": "generated_native_audio_pending_observation",
+              "cause": "punch"
+            }
+          ]
+        },
+        "continuity": {
+          "start": "scene_bible:scene_human_vs_android_001:initial",
+          "end": {
+            "subject_human.position": "screen_left",
+            "subject_human.pose": "balanced_after_strike",
+            "subject_human.wardrobe": "dark_charcoal_t_shirt",
+            "subject_human.attention": "subject_android",
+            "subject_android.position": "screen_right",
+            "subject_android.pose": "charging",
+            "subject_android.condition": "recoiling_chest_damaged",
+            "subject_android.attention": "subject_human",
+            "environment_apocalyptic_street.state": "rubble_smoke_rain_fire",
+            "environment_apocalyptic_street.axis": "human_left_android_right"
+          },
+          "changes": [
+            {
+              "property": "subject_android.condition",
+              "prior": "undamaged",
+              "next": "recoiling_chest_damaged",
+              "cause": "punch"
+            },
+            {
+              "property": "subject_human.pose",
+              "prior": "guarded_stance",
+              "next": "balanced_after_strike",
+              "cause": "punch"
+            }
+          ]
+        },
+        "constraints": {
+          "hard": [
+            "Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.",
+            "One human and one humanoid android; no duplicate bodies or extra limbs.",
+            "Show contact and visible reaction for each featured strike.",
+            "Final editorial duration is exactly 15 seconds at 24 fps."
+          ],
+          "shot": [
+            "con_identity",
+            "con_contact_001",
+            "con_anatomy",
+            "con_geography",
+            "con_audio"
+          ]
+        },
+        "references": [
+          "ref_human_portrait"
+        ]
+      },
+      "mappings": [
+        {
+          "canonical_section": "subject_and_identity",
+          "compiled_representation": "positive_prompt.subject_and_identity",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "setting_and_time",
+          "compiled_representation": "positive_prompt.setting_and_time",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "action_sequence",
+          "compiled_representation": "positive_prompt.action_sequence",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "performance",
+          "compiled_representation": "positive_prompt.performance",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "camera",
+          "compiled_representation": "positive_prompt.camera",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "lighting_and_style",
+          "compiled_representation": "positive_prompt.lighting_and_style",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "audio_or_sync",
+          "compiled_representation": "positive_prompt.audio_or_sync",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "continuity",
+          "compiled_representation": "positive_prompt.continuity",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "constraints",
+          "compiled_representation": "positive_prompt.constraints",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "references",
+          "compiled_representation": "positive_prompt.references",
+          "status": "PROPOSED"
+        }
+      ],
+      "omissions": [],
+      "presentation": {
+        "subject_definitions": {
+          "entities": [
+            {
+              "id": "subject_human",
+              "type": "character",
+              "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "subject_android",
+              "type": "character",
+              "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "retention": [
+            {
+              "entity_id": "subject_human",
+              "property": "face_glasses_hair_facial_hair",
+              "policy": "LOCKED",
+              "rationale": "These are the identity anchors visible in the supplied portrait.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "wardrobe.dark_charcoal_t_shirt",
+              "policy": "LOCKED",
+              "rationale": "Use the repeated dark shirt visible across the reference views.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Check wardrobe continuity between all three blocks."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "white_collage_background_and_layout",
+              "policy": "IGNORE",
+              "rationale": "The white collage is source layout, not scene geography or character identity.",
+              "anchor_refs": [],
+              "conflict_policy": "exclude",
+              "qa_obligation": "Do not reproduce the collage as the scene background."
+            }
+          ]
+        },
+        "environment_definitions": {
+          "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+          "time_of_day": "fim de tarde sob céu de tempestade",
+          "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+        },
+        "summary": "Establish the ruined street and show the first clear human-to-android impact.",
+        "retention_analysis": [
+          {
+            "entity_id": "subject_human",
+            "property": "face_glasses_hair_facial_hair",
+            "policy": "LOCKED",
+            "rationale": "These are the identity anchors visible in the supplied portrait.",
+            "anchor_refs": [
+              "ref_human_portrait"
+            ],
+            "conflict_policy": "reference_wins",
+            "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+          },
+          {
+            "entity_id": "subject_human",
+            "property": "wardrobe.dark_charcoal_t_shirt",
+            "policy": "LOCKED",
+            "rationale": "Use the repeated dark shirt visible across the reference views.",
+            "anchor_refs": [
+              "ref_human_portrait"
+            ],
+            "conflict_policy": "reference_wins",
+            "qa_obligation": "Check wardrobe continuity between all three blocks."
+          },
+          {
+            "entity_id": "subject_human",
+            "property": "white_collage_background_and_layout",
+            "policy": "IGNORE",
+            "rationale": "The white collage is source layout, not scene geography or character identity.",
+            "anchor_refs": [],
+            "conflict_policy": "exclude",
+            "qa_obligation": "Do not reproduce the collage as the scene background."
+          }
+        ],
+        "detailed_description": [
+          "approach",
+          "orient",
+          "duck",
+          "contact",
+          "punch",
+          "observe_result"
+        ],
+        "global_physical_constraints": [
+          {
+            "constraint_id": "con_identity",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "Face, rectangular glasses, short black hair, facial hair and dark shirt remain recognizably consistent across actual frames.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "frame_sequence_review_against_reference",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_WITH_CROPPED_FACE_ANCHOR_OR_USE_SEPARATE_COVERAGE",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_anatomy",
+            "subject": "subject_human_and_subject_android",
+            "kind": "QA_ASSERTION",
+            "statement": "Exactly one human and one android; each has one head, two arms and two legs; no fused limbs or duplicate bodies.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "frame_sequence_review",
+              "blocking": true
+            },
+            "fallback": "SHORTER_CONTACT_COVERAGE",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_geography",
+            "subject": "environment_apocalyptic_street",
+            "kind": "QA_ASSERTION",
+            "statement": "The same rainy, smoky street and left/right human-android axis remain legible at every segment join.",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "join_frame_and_sequence_review",
+              "blocking": true
+            },
+            "fallback": "REANCHOR_FROM_REFERENCE_AND_CUT_ON_IMPACT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_001",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The right fist visibly contacts the android chest core before sparks and recoil.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_CLOSER_CONTACT_SHOT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_002",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The kick visibly meets the android knee joint before the android drops to one knee.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_002"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_KNEE_CONTACT_INSERT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_003",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The spinning kick visibly contacts the android torso before the crash and dust reaction.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_FINAL_IMPACT_INSERT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_audio",
+            "subject": "scene_human_vs_android_001",
+            "kind": "QA_ASSERTION",
+            "statement": "Rain, fire, metal impacts, electric crackle and footsteps are present and aligned to visible actions; no dialogue or music.",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "MEDIUM"
+            },
+            "validation": {
+              "method": "audio_stream_probe_and_listening_review",
+              "blocking": false
+            },
+            "fallback": "ADD_SEPARATE_DIEGETIC_SOUND_MIX",
+            "status": "PROPOSED"
+          }
+        ],
+        "cinematography": {
+          "size": "MEDIUM_WIDE",
+          "angle": "EYE_LEVEL",
+          "focal_length": "35mm_equivalent",
+          "framing": "TWO_SHOT_FULL_TORSOS",
+          "focus": "subject_human_and_subject_android",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL_ACTION",
+          "exposure": "LOCKED_TO_DUSK_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "subject_android",
+          "movement": {
+            "type": "HANDHELD_TRACK",
+            "direction": "FORWARD_WITH_HUMAN",
+            "phase": "FOLLOW_CHARGE_THEN_HOLD_IMPACT"
+          },
+          "screen_direction": "ANDROID_RIGHT_TO_LEFT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "BUILD_THEN_IMPACT_HOLD"
+        },
+        "overall_soundscape": {
+          "dialogue": [],
+          "audio": [
+            {
+              "id": "audio_shot_001_rain_impact",
+              "shot_id": "shot_001",
+              "layer": "effects",
+              "start_s": 0,
+              "end_s": 5,
+              "source": "generated_native_audio_pending_observation",
+              "cause": "punch"
+            }
+          ]
+        },
+        "negative_constraints": []
+      },
+      "compiled_view": {
+        "profile_reference": "comfyui-h3-local-probe-v1",
+        "positive_prompt": {
+          "subject_and_identity": {
+            "entities": [
+              {
+                "id": "subject_human",
+                "type": "character",
+                "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+                "permanence": "PERSISTENT"
+              },
+              {
+                "id": "subject_android",
+                "type": "character",
+                "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+                "permanence": "PERSISTENT"
+              }
+            ],
+            "retention": [
+              {
+                "entity_id": "subject_human",
+                "property": "face_glasses_hair_facial_hair",
+                "policy": "LOCKED",
+                "rationale": "These are the identity anchors visible in the supplied portrait.",
+                "anchor_refs": [
+                  "ref_human_portrait"
+                ],
+                "conflict_policy": "reference_wins",
+                "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+              },
+              {
+                "entity_id": "subject_human",
+                "property": "wardrobe.dark_charcoal_t_shirt",
+                "policy": "LOCKED",
+                "rationale": "Use the repeated dark shirt visible across the reference views.",
+                "anchor_refs": [
+                  "ref_human_portrait"
+                ],
+                "conflict_policy": "reference_wins",
+                "qa_obligation": "Check wardrobe continuity between all three blocks."
+              },
+              {
+                "entity_id": "subject_human",
+                "property": "white_collage_background_and_layout",
+                "policy": "IGNORE",
+                "rationale": "The white collage is source layout, not scene geography or character identity.",
+                "anchor_refs": [],
+                "conflict_policy": "exclude",
+                "qa_obligation": "Do not reproduce the collage as the scene background."
+              }
+            ]
+          },
+          "setting_and_time": {
+            "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+            "time_of_day": "fim de tarde sob céu de tempestade",
+            "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+          },
+          "action_sequence": [
+            "approach",
+            "orient",
+            "duck",
+            "contact",
+            "punch",
+            "observe_result"
+          ],
+          "performance": [
+            "Human keeps eyes on the android, ducks under the punch, then recovers into a stable stance.",
+            "Android commits its weight to the punch and visibly loses balance after chest contact."
+          ],
+          "camera": {
+            "size": "MEDIUM_WIDE",
+            "angle": "EYE_LEVEL",
+            "focal_length": "35mm_equivalent",
+            "framing": "TWO_SHOT_FULL_TORSOS",
+            "focus": "subject_human_and_subject_android",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL_ACTION",
+            "exposure": "LOCKED_TO_DUSK_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "subject_android",
+            "movement": {
+              "type": "HANDHELD_TRACK",
+              "direction": "FORWARD_WITH_HUMAN",
+              "phase": "FOLLOW_CHARGE_THEN_HOLD_IMPACT"
+            },
+            "screen_direction": "ANDROID_RIGHT_TO_LEFT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "BUILD_THEN_IMPACT_HOLD"
+          },
+          "lighting_and_style": "ficção científica live-action, suja, realista e cinematográfica",
+          "audio_or_sync": {
+            "dialogue": [],
+            "audio": [
+              {
+                "id": "audio_shot_001_rain_impact",
+                "shot_id": "shot_001",
+                "layer": "effects",
+                "start_s": 0,
+                "end_s": 5,
+                "source": "generated_native_audio_pending_observation",
+                "cause": "punch"
+              }
+            ]
+          },
+          "continuity": {
+            "start": "scene_bible:scene_human_vs_android_001:initial",
+            "end": {
+              "subject_human.position": "screen_left",
+              "subject_human.pose": "balanced_after_strike",
+              "subject_human.wardrobe": "dark_charcoal_t_shirt",
+              "subject_human.attention": "subject_android",
+              "subject_android.position": "screen_right",
+              "subject_android.pose": "charging",
+              "subject_android.condition": "recoiling_chest_damaged",
+              "subject_android.attention": "subject_human",
+              "environment_apocalyptic_street.state": "rubble_smoke_rain_fire",
+              "environment_apocalyptic_street.axis": "human_left_android_right"
+            },
+            "changes": [
+              {
+                "property": "subject_android.condition",
+                "prior": "undamaged",
+                "next": "recoiling_chest_damaged",
+                "cause": "punch"
+              },
+              {
+                "property": "subject_human.pose",
+                "prior": "guarded_stance",
+                "next": "balanced_after_strike",
+                "cause": "punch"
+              }
+            ]
+          },
+          "constraints": {
+            "hard": [
+              "Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.",
+              "One human and one humanoid android; no duplicate bodies or extra limbs.",
+              "Show contact and visible reaction for each featured strike.",
+              "Final editorial duration is exactly 15 seconds at 24 fps."
+            ],
+            "shot": [
+              "con_identity",
+              "con_contact_001",
+              "con_anatomy",
+              "con_geography",
+              "con_audio"
+            ]
+          },
+          "references": [
+            "ref_human_portrait"
+          ]
+        },
+        "text": "subject_and_identity: {\"entities\":[{\"description\":\"Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.\",\"id\":\"subject_human\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"},{\"description\":\"Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.\",\"id\":\"subject_android\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"}],\"retention\":[{\"anchor_refs\":[\"ref_human_portrait\"],\"conflict_policy\":\"reference_wins\",\"entity_id\":\"subject_human\",\"policy\":\"LOCKED\",\"property\":\"face_glasses_hair_facial_hair\",\"qa_obligation\":\"Compare face, glasses, hair and facial hair in actual frames.\",\"rationale\":\"These are the identity anchors visible in the supplied portrait.\"},{\"anchor_refs\":[\"ref_human_portrait\"],\"conflict_policy\":\"reference_wins\",\"entity_id\":\"subject_human\",\"policy\":\"LOCKED\",\"property\":\"wardrobe.dark_charcoal_t_shirt\",\"qa_obligation\":\"Check wardrobe continuity between all three blocks.\",\"rationale\":\"Use the repeated dark shirt visible across the reference views.\"},{\"anchor_refs\":[],\"conflict_policy\":\"exclude\",\"entity_id\":\"subject_human\",\"policy\":\"IGNORE\",\"property\":\"white_collage_background_and_layout\",\"qa_obligation\":\"Do not reproduce the collage as the scene background.\",\"rationale\":\"The white collage is source layout, not scene geography or character identity.\"}]}\nsetting_and_time: {\"geography\":\"Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.\",\"lighting\":\"luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados\",\"time_of_day\":\"fim de tarde sob céu de tempestade\"}\naction_sequence: [\"approach\",\"orient\",\"duck\",\"contact\",\"punch\",\"observe_result\"]\nperformance: [\"Human keeps eyes on the android, ducks under the punch, then recovers into a stable stance.\",\"Android commits its weight to the punch and visibly loses balance after chest contact.\"]\ncamera: {\"angle\":\"EYE_LEVEL\",\"axis_policy\":\"PRESERVE_180_AXIS\",\"depth_of_field\":\"MODERATE\",\"edit_rhythm\":\"BUILD_THEN_IMPACT_HOLD\",\"exposure\":\"LOCKED_TO_DUSK_SCENE\",\"eyeline\":\"subject_android\",\"focal_length\":\"35mm_equivalent\",\"focus\":\"subject_human_and_subject_android\",\"framing\":\"TWO_SHOT_FULL_TORSOS\",\"lighting\":\"scene_bible:lighting\",\"motion_blur\":\"NATURAL_ACTION\",\"movement\":{\"direction\":\"FORWARD_WITH_HUMAN\",\"phase\":\"FOLLOW_CHARGE_THEN_HOLD_IMPACT\",\"type\":\"HANDHELD_TRACK\"},\"screen_direction\":\"ANDROID_RIGHT_TO_LEFT\",\"size\":\"MEDIUM_WIDE\"}\nlighting_and_style: \"ficção científica live-action, suja, realista e cinematográfica\"\naudio_or_sync: {\"audio\":[{\"cause\":\"punch\",\"end_s\":5,\"id\":\"audio_shot_001_rain_impact\",\"layer\":\"effects\",\"shot_id\":\"shot_001\",\"source\":\"generated_native_audio_pending_observation\",\"start_s\":0}],\"dialogue\":[]}\ncontinuity: {\"changes\":[{\"cause\":\"punch\",\"next\":\"recoiling_chest_damaged\",\"prior\":\"undamaged\",\"property\":\"subject_android.condition\"},{\"cause\":\"punch\",\"next\":\"balanced_after_strike\",\"prior\":\"guarded_stance\",\"property\":\"subject_human.pose\"}],\"end\":{\"environment_apocalyptic_street.axis\":\"human_left_android_right\",\"environment_apocalyptic_street.state\":\"rubble_smoke_rain_fire\",\"subject_android.attention\":\"subject_human\",\"subject_android.condition\":\"recoiling_chest_damaged\",\"subject_android.pose\":\"charging\",\"subject_android.position\":\"screen_right\",\"subject_human.attention\":\"subject_android\",\"subject_human.pose\":\"balanced_after_strike\",\"subject_human.position\":\"screen_left\",\"subject_human.wardrobe\":\"dark_charcoal_t_shirt\"},\"start\":\"scene_bible:scene_human_vs_android_001:initial\"}\nconstraints: {\"hard\":[\"Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.\",\"One human and one humanoid android; no duplicate bodies or extra limbs.\",\"Show contact and visible reaction for each featured strike.\",\"Final editorial duration is exactly 15 seconds at 24 fps.\"],\"shot\":[\"con_identity\",\"con_contact_001\",\"con_anatomy\",\"con_geography\",\"con_audio\"]}\nreferences: [\"ref_human_portrait\"]",
+        "compiled_omissions": [],
+        "deliberate_changes": [],
+        "unresolved": [
+          "Unsupported mode: R2V",
+          "Unconfirmed feature: R2V",
+          "Unconfirmed feature: reference_conditioning",
+          "Duration 5 outside [5.166666666666667, 5.166666666666667]"
+        ]
+      },
+      "compatibility": {
+        "status": "BLOCKED",
+        "profile_reference": "comfyui-h3-local-probe-v1",
+        "gaps": [
+          "Unsupported mode: R2V",
+          "Unconfirmed feature: R2V",
+          "Unconfirmed feature: reference_conditioning",
+          "Duration 5 outside [5.166666666666667, 5.166666666666667]"
+        ],
+        "fallback": "Preserve intent; propose shorter segments, a confirmed profile or separate audio/sync; obtain approval for weakened requirements"
+      }
+    },
+    {
+      "schema_version": 1,
+      "shot_id": "shot_002",
+      "canonical_revision": "scene_human_vs_android_001_rev2",
+      "profile_reference": "comfyui-h3-local-probe-v1",
+      "sections": {
+        "subject_and_identity": {
+          "entities": [
+            {
+              "id": "subject_human",
+              "type": "character",
+              "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "subject_android",
+              "type": "character",
+              "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "retention": [
+            {
+              "entity_id": "subject_human",
+              "property": "face_glasses_hair_facial_hair",
+              "policy": "LOCKED",
+              "rationale": "These are the identity anchors visible in the supplied portrait.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "wardrobe.dark_charcoal_t_shirt",
+              "policy": "LOCKED",
+              "rationale": "Use the repeated dark shirt visible across the reference views.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Check wardrobe continuity between all three blocks."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "white_collage_background_and_layout",
+              "policy": "IGNORE",
+              "rationale": "The white collage is source layout, not scene geography or character identity.",
+              "anchor_refs": [],
+              "conflict_policy": "exclude",
+              "qa_obligation": "Do not reproduce the collage as the scene background."
+            }
+          ]
+        },
+        "setting_and_time": {
+          "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+          "time_of_day": "fim de tarde sob céu de tempestade",
+          "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+        },
+        "action_sequence": [
+          "recover",
+          "swing",
+          "duck",
+          "contact",
+          "kick_joint",
+          "react"
+        ],
+        "performance": [
+          "Human tracks the android's shoulder, ducks, then pivots through one controlled kick.",
+          "Android compensates late and drops onto one knee after the joint fails."
+        ],
+        "camera": {
+          "size": "MEDIUM",
+          "angle": "LOW_THREE_QUARTER",
+          "focal_length": "40mm_equivalent",
+          "framing": "FULL_BODY_ACTION",
+          "focus": "contact_zone_then_human_face",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL_ACTION",
+          "exposure": "LOCKED_TO_DUSK_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "subject_android",
+          "movement": {
+            "type": "LATERAL_TRACK",
+            "direction": "LEFT_TO_RIGHT",
+            "phase": "FOLLOW_DODGE_THEN_TILT_TO_KNEE_CONTACT"
+          },
+          "screen_direction": "HUMAN_LEFT_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "QUICK_DODGE_THEN_IMPACT_HOLD"
+        },
+        "lighting_and_style": "ficção científica live-action, suja, realista e cinematográfica",
+        "audio_or_sync": {
+          "dialogue": [],
+          "audio": [
+            {
+              "id": "audio_shot_002_block_sparks",
+              "shot_id": "shot_002",
+              "layer": "effects",
+              "start_s": 0,
+              "end_s": 5,
+              "source": "generated_native_audio_pending_observation",
+              "cause": "kick_joint"
+            }
+          ]
+        },
+        "continuity": {
+          "start": "continuity:shot_001:end",
+          "end": {
+            "subject_human.position": "screen_left",
+            "subject_human.pose": "low_ready_stance",
+            "subject_human.wardrobe": "dark_charcoal_t_shirt",
+            "subject_human.attention": "subject_android",
+            "subject_android.position": "screen_right",
+            "subject_android.pose": "charging",
+            "subject_android.condition": "kneeling_leg_joint_damaged",
+            "subject_android.attention": "subject_human",
+            "environment_apocalyptic_street.state": "rubble_smoke_rain_fire",
+            "environment_apocalyptic_street.axis": "human_left_android_right"
+          },
+          "changes": [
+            {
+              "property": "subject_android.condition",
+              "prior": "recoiling_chest_damaged",
+              "next": "kneeling_leg_joint_damaged",
+              "cause": "kick_joint"
+            },
+            {
+              "property": "subject_human.pose",
+              "prior": "balanced_after_strike",
+              "next": "low_ready_stance",
+              "cause": "kick_joint"
+            }
+          ]
+        },
+        "constraints": {
+          "hard": [
+            "Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.",
+            "One human and one humanoid android; no duplicate bodies or extra limbs.",
+            "Show contact and visible reaction for each featured strike.",
+            "Final editorial duration is exactly 15 seconds at 24 fps."
+          ],
+          "shot": [
+            "con_identity",
+            "con_contact_002",
+            "con_anatomy",
+            "con_geography",
+            "con_audio"
+          ]
+        },
+        "references": [
+          "ref_human_portrait"
+        ]
+      },
+      "mappings": [
+        {
+          "canonical_section": "subject_and_identity",
+          "compiled_representation": "positive_prompt.subject_and_identity",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "setting_and_time",
+          "compiled_representation": "positive_prompt.setting_and_time",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "action_sequence",
+          "compiled_representation": "positive_prompt.action_sequence",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "performance",
+          "compiled_representation": "positive_prompt.performance",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "camera",
+          "compiled_representation": "positive_prompt.camera",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "lighting_and_style",
+          "compiled_representation": "positive_prompt.lighting_and_style",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "audio_or_sync",
+          "compiled_representation": "positive_prompt.audio_or_sync",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "continuity",
+          "compiled_representation": "positive_prompt.continuity",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "constraints",
+          "compiled_representation": "positive_prompt.constraints",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "references",
+          "compiled_representation": "positive_prompt.references",
+          "status": "PROPOSED"
+        }
+      ],
+      "omissions": [],
+      "presentation": {
+        "subject_definitions": {
+          "entities": [
+            {
+              "id": "subject_human",
+              "type": "character",
+              "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "subject_android",
+              "type": "character",
+              "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "retention": [
+            {
+              "entity_id": "subject_human",
+              "property": "face_glasses_hair_facial_hair",
+              "policy": "LOCKED",
+              "rationale": "These are the identity anchors visible in the supplied portrait.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "wardrobe.dark_charcoal_t_shirt",
+              "policy": "LOCKED",
+              "rationale": "Use the repeated dark shirt visible across the reference views.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Check wardrobe continuity between all three blocks."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "white_collage_background_and_layout",
+              "policy": "IGNORE",
+              "rationale": "The white collage is source layout, not scene geography or character identity.",
+              "anchor_refs": [],
+              "conflict_policy": "exclude",
+              "qa_obligation": "Do not reproduce the collage as the scene background."
+            }
+          ]
+        },
+        "environment_definitions": {
+          "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+          "time_of_day": "fim de tarde sob céu de tempestade",
+          "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+        },
+        "summary": "Escalate the fight with a readable dodge and a strike to the android's damaged leg joint.",
+        "retention_analysis": [
+          {
+            "entity_id": "subject_human",
+            "property": "face_glasses_hair_facial_hair",
+            "policy": "LOCKED",
+            "rationale": "These are the identity anchors visible in the supplied portrait.",
+            "anchor_refs": [
+              "ref_human_portrait"
+            ],
+            "conflict_policy": "reference_wins",
+            "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+          },
+          {
+            "entity_id": "subject_human",
+            "property": "wardrobe.dark_charcoal_t_shirt",
+            "policy": "LOCKED",
+            "rationale": "Use the repeated dark shirt visible across the reference views.",
+            "anchor_refs": [
+              "ref_human_portrait"
+            ],
+            "conflict_policy": "reference_wins",
+            "qa_obligation": "Check wardrobe continuity between all three blocks."
+          },
+          {
+            "entity_id": "subject_human",
+            "property": "white_collage_background_and_layout",
+            "policy": "IGNORE",
+            "rationale": "The white collage is source layout, not scene geography or character identity.",
+            "anchor_refs": [],
+            "conflict_policy": "exclude",
+            "qa_obligation": "Do not reproduce the collage as the scene background."
+          }
+        ],
+        "detailed_description": [
+          "recover",
+          "swing",
+          "duck",
+          "contact",
+          "kick_joint",
+          "react"
+        ],
+        "global_physical_constraints": [
+          {
+            "constraint_id": "con_identity",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "Face, rectangular glasses, short black hair, facial hair and dark shirt remain recognizably consistent across actual frames.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "frame_sequence_review_against_reference",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_WITH_CROPPED_FACE_ANCHOR_OR_USE_SEPARATE_COVERAGE",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_anatomy",
+            "subject": "subject_human_and_subject_android",
+            "kind": "QA_ASSERTION",
+            "statement": "Exactly one human and one android; each has one head, two arms and two legs; no fused limbs or duplicate bodies.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "frame_sequence_review",
+              "blocking": true
+            },
+            "fallback": "SHORTER_CONTACT_COVERAGE",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_geography",
+            "subject": "environment_apocalyptic_street",
+            "kind": "QA_ASSERTION",
+            "statement": "The same rainy, smoky street and left/right human-android axis remain legible at every segment join.",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "join_frame_and_sequence_review",
+              "blocking": true
+            },
+            "fallback": "REANCHOR_FROM_REFERENCE_AND_CUT_ON_IMPACT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_001",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The right fist visibly contacts the android chest core before sparks and recoil.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_CLOSER_CONTACT_SHOT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_002",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The kick visibly meets the android knee joint before the android drops to one knee.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_002"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_KNEE_CONTACT_INSERT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_003",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The spinning kick visibly contacts the android torso before the crash and dust reaction.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_FINAL_IMPACT_INSERT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_audio",
+            "subject": "scene_human_vs_android_001",
+            "kind": "QA_ASSERTION",
+            "statement": "Rain, fire, metal impacts, electric crackle and footsteps are present and aligned to visible actions; no dialogue or music.",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "MEDIUM"
+            },
+            "validation": {
+              "method": "audio_stream_probe_and_listening_review",
+              "blocking": false
+            },
+            "fallback": "ADD_SEPARATE_DIEGETIC_SOUND_MIX",
+            "status": "PROPOSED"
+          }
+        ],
+        "cinematography": {
+          "size": "MEDIUM",
+          "angle": "LOW_THREE_QUARTER",
+          "focal_length": "40mm_equivalent",
+          "framing": "FULL_BODY_ACTION",
+          "focus": "contact_zone_then_human_face",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL_ACTION",
+          "exposure": "LOCKED_TO_DUSK_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "subject_android",
+          "movement": {
+            "type": "LATERAL_TRACK",
+            "direction": "LEFT_TO_RIGHT",
+            "phase": "FOLLOW_DODGE_THEN_TILT_TO_KNEE_CONTACT"
+          },
+          "screen_direction": "HUMAN_LEFT_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "QUICK_DODGE_THEN_IMPACT_HOLD"
+        },
+        "overall_soundscape": {
+          "dialogue": [],
+          "audio": [
+            {
+              "id": "audio_shot_002_block_sparks",
+              "shot_id": "shot_002",
+              "layer": "effects",
+              "start_s": 0,
+              "end_s": 5,
+              "source": "generated_native_audio_pending_observation",
+              "cause": "kick_joint"
+            }
+          ]
+        },
+        "negative_constraints": []
+      },
+      "compiled_view": {
+        "profile_reference": "comfyui-h3-local-probe-v1",
+        "positive_prompt": {
+          "subject_and_identity": {
+            "entities": [
+              {
+                "id": "subject_human",
+                "type": "character",
+                "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+                "permanence": "PERSISTENT"
+              },
+              {
+                "id": "subject_android",
+                "type": "character",
+                "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+                "permanence": "PERSISTENT"
+              }
+            ],
+            "retention": [
+              {
+                "entity_id": "subject_human",
+                "property": "face_glasses_hair_facial_hair",
+                "policy": "LOCKED",
+                "rationale": "These are the identity anchors visible in the supplied portrait.",
+                "anchor_refs": [
+                  "ref_human_portrait"
+                ],
+                "conflict_policy": "reference_wins",
+                "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+              },
+              {
+                "entity_id": "subject_human",
+                "property": "wardrobe.dark_charcoal_t_shirt",
+                "policy": "LOCKED",
+                "rationale": "Use the repeated dark shirt visible across the reference views.",
+                "anchor_refs": [
+                  "ref_human_portrait"
+                ],
+                "conflict_policy": "reference_wins",
+                "qa_obligation": "Check wardrobe continuity between all three blocks."
+              },
+              {
+                "entity_id": "subject_human",
+                "property": "white_collage_background_and_layout",
+                "policy": "IGNORE",
+                "rationale": "The white collage is source layout, not scene geography or character identity.",
+                "anchor_refs": [],
+                "conflict_policy": "exclude",
+                "qa_obligation": "Do not reproduce the collage as the scene background."
+              }
+            ]
+          },
+          "setting_and_time": {
+            "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+            "time_of_day": "fim de tarde sob céu de tempestade",
+            "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+          },
+          "action_sequence": [
+            "recover",
+            "swing",
+            "duck",
+            "contact",
+            "kick_joint",
+            "react"
+          ],
+          "performance": [
+            "Human tracks the android's shoulder, ducks, then pivots through one controlled kick.",
+            "Android compensates late and drops onto one knee after the joint fails."
+          ],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "LOW_THREE_QUARTER",
+            "focal_length": "40mm_equivalent",
+            "framing": "FULL_BODY_ACTION",
+            "focus": "contact_zone_then_human_face",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL_ACTION",
+            "exposure": "LOCKED_TO_DUSK_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "subject_android",
+            "movement": {
+              "type": "LATERAL_TRACK",
+              "direction": "LEFT_TO_RIGHT",
+              "phase": "FOLLOW_DODGE_THEN_TILT_TO_KNEE_CONTACT"
+            },
+            "screen_direction": "HUMAN_LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "QUICK_DODGE_THEN_IMPACT_HOLD"
+          },
+          "lighting_and_style": "ficção científica live-action, suja, realista e cinematográfica",
+          "audio_or_sync": {
+            "dialogue": [],
+            "audio": [
+              {
+                "id": "audio_shot_002_block_sparks",
+                "shot_id": "shot_002",
+                "layer": "effects",
+                "start_s": 0,
+                "end_s": 5,
+                "source": "generated_native_audio_pending_observation",
+                "cause": "kick_joint"
+              }
+            ]
+          },
+          "continuity": {
+            "start": "continuity:shot_001:end",
+            "end": {
+              "subject_human.position": "screen_left",
+              "subject_human.pose": "low_ready_stance",
+              "subject_human.wardrobe": "dark_charcoal_t_shirt",
+              "subject_human.attention": "subject_android",
+              "subject_android.position": "screen_right",
+              "subject_android.pose": "charging",
+              "subject_android.condition": "kneeling_leg_joint_damaged",
+              "subject_android.attention": "subject_human",
+              "environment_apocalyptic_street.state": "rubble_smoke_rain_fire",
+              "environment_apocalyptic_street.axis": "human_left_android_right"
+            },
+            "changes": [
+              {
+                "property": "subject_android.condition",
+                "prior": "recoiling_chest_damaged",
+                "next": "kneeling_leg_joint_damaged",
+                "cause": "kick_joint"
+              },
+              {
+                "property": "subject_human.pose",
+                "prior": "balanced_after_strike",
+                "next": "low_ready_stance",
+                "cause": "kick_joint"
+              }
+            ]
+          },
+          "constraints": {
+            "hard": [
+              "Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.",
+              "One human and one humanoid android; no duplicate bodies or extra limbs.",
+              "Show contact and visible reaction for each featured strike.",
+              "Final editorial duration is exactly 15 seconds at 24 fps."
+            ],
+            "shot": [
+              "con_identity",
+              "con_contact_002",
+              "con_anatomy",
+              "con_geography",
+              "con_audio"
+            ]
+          },
+          "references": [
+            "ref_human_portrait"
+          ]
+        },
+        "text": "subject_and_identity: {\"entities\":[{\"description\":\"Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.\",\"id\":\"subject_human\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"},{\"description\":\"Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.\",\"id\":\"subject_android\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"}],\"retention\":[{\"anchor_refs\":[\"ref_human_portrait\"],\"conflict_policy\":\"reference_wins\",\"entity_id\":\"subject_human\",\"policy\":\"LOCKED\",\"property\":\"face_glasses_hair_facial_hair\",\"qa_obligation\":\"Compare face, glasses, hair and facial hair in actual frames.\",\"rationale\":\"These are the identity anchors visible in the supplied portrait.\"},{\"anchor_refs\":[\"ref_human_portrait\"],\"conflict_policy\":\"reference_wins\",\"entity_id\":\"subject_human\",\"policy\":\"LOCKED\",\"property\":\"wardrobe.dark_charcoal_t_shirt\",\"qa_obligation\":\"Check wardrobe continuity between all three blocks.\",\"rationale\":\"Use the repeated dark shirt visible across the reference views.\"},{\"anchor_refs\":[],\"conflict_policy\":\"exclude\",\"entity_id\":\"subject_human\",\"policy\":\"IGNORE\",\"property\":\"white_collage_background_and_layout\",\"qa_obligation\":\"Do not reproduce the collage as the scene background.\",\"rationale\":\"The white collage is source layout, not scene geography or character identity.\"}]}\nsetting_and_time: {\"geography\":\"Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.\",\"lighting\":\"luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados\",\"time_of_day\":\"fim de tarde sob céu de tempestade\"}\naction_sequence: [\"recover\",\"swing\",\"duck\",\"contact\",\"kick_joint\",\"react\"]\nperformance: [\"Human tracks the android's shoulder, ducks, then pivots through one controlled kick.\",\"Android compensates late and drops onto one knee after the joint fails.\"]\ncamera: {\"angle\":\"LOW_THREE_QUARTER\",\"axis_policy\":\"PRESERVE_180_AXIS\",\"depth_of_field\":\"MODERATE\",\"edit_rhythm\":\"QUICK_DODGE_THEN_IMPACT_HOLD\",\"exposure\":\"LOCKED_TO_DUSK_SCENE\",\"eyeline\":\"subject_android\",\"focal_length\":\"40mm_equivalent\",\"focus\":\"contact_zone_then_human_face\",\"framing\":\"FULL_BODY_ACTION\",\"lighting\":\"scene_bible:lighting\",\"motion_blur\":\"NATURAL_ACTION\",\"movement\":{\"direction\":\"LEFT_TO_RIGHT\",\"phase\":\"FOLLOW_DODGE_THEN_TILT_TO_KNEE_CONTACT\",\"type\":\"LATERAL_TRACK\"},\"screen_direction\":\"HUMAN_LEFT_TO_RIGHT\",\"size\":\"MEDIUM\"}\nlighting_and_style: \"ficção científica live-action, suja, realista e cinematográfica\"\naudio_or_sync: {\"audio\":[{\"cause\":\"kick_joint\",\"end_s\":5,\"id\":\"audio_shot_002_block_sparks\",\"layer\":\"effects\",\"shot_id\":\"shot_002\",\"source\":\"generated_native_audio_pending_observation\",\"start_s\":0}],\"dialogue\":[]}\ncontinuity: {\"changes\":[{\"cause\":\"kick_joint\",\"next\":\"kneeling_leg_joint_damaged\",\"prior\":\"recoiling_chest_damaged\",\"property\":\"subject_android.condition\"},{\"cause\":\"kick_joint\",\"next\":\"low_ready_stance\",\"prior\":\"balanced_after_strike\",\"property\":\"subject_human.pose\"}],\"end\":{\"environment_apocalyptic_street.axis\":\"human_left_android_right\",\"environment_apocalyptic_street.state\":\"rubble_smoke_rain_fire\",\"subject_android.attention\":\"subject_human\",\"subject_android.condition\":\"kneeling_leg_joint_damaged\",\"subject_android.pose\":\"charging\",\"subject_android.position\":\"screen_right\",\"subject_human.attention\":\"subject_android\",\"subject_human.pose\":\"low_ready_stance\",\"subject_human.position\":\"screen_left\",\"subject_human.wardrobe\":\"dark_charcoal_t_shirt\"},\"start\":\"continuity:shot_001:end\"}\nconstraints: {\"hard\":[\"Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.\",\"One human and one humanoid android; no duplicate bodies or extra limbs.\",\"Show contact and visible reaction for each featured strike.\",\"Final editorial duration is exactly 15 seconds at 24 fps.\"],\"shot\":[\"con_identity\",\"con_contact_002\",\"con_anatomy\",\"con_geography\",\"con_audio\"]}\nreferences: [\"ref_human_portrait\"]",
+        "compiled_omissions": [],
+        "deliberate_changes": [],
+        "unresolved": [
+          "Unsupported mode: R2V",
+          "Unconfirmed feature: R2V",
+          "Unconfirmed feature: reference_conditioning",
+          "Duration 5 outside [5.166666666666667, 5.166666666666667]"
+        ]
+      },
+      "compatibility": {
+        "status": "BLOCKED",
+        "profile_reference": "comfyui-h3-local-probe-v1",
+        "gaps": [
+          "Unsupported mode: R2V",
+          "Unconfirmed feature: R2V",
+          "Unconfirmed feature: reference_conditioning",
+          "Duration 5 outside [5.166666666666667, 5.166666666666667]"
+        ],
+        "fallback": "Preserve intent; propose shorter segments, a confirmed profile or separate audio/sync; obtain approval for weakened requirements"
+      }
+    },
+    {
+      "schema_version": 1,
+      "shot_id": "shot_003",
+      "canonical_revision": "scene_human_vs_android_001_rev2",
+      "profile_reference": "comfyui-h3-local-probe-v1",
+      "sections": {
+        "subject_and_identity": {
+          "entities": [
+            {
+              "id": "subject_human",
+              "type": "character",
+              "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "subject_android",
+              "type": "character",
+              "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "retention": [
+            {
+              "entity_id": "subject_human",
+              "property": "face_glasses_hair_facial_hair",
+              "policy": "LOCKED",
+              "rationale": "These are the identity anchors visible in the supplied portrait.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "wardrobe.dark_charcoal_t_shirt",
+              "policy": "LOCKED",
+              "rationale": "Use the repeated dark shirt visible across the reference views.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Check wardrobe continuity between all three blocks."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "white_collage_background_and_layout",
+              "policy": "IGNORE",
+              "rationale": "The white collage is source layout, not scene geography or character identity.",
+              "anchor_refs": [],
+              "conflict_policy": "exclude",
+              "qa_obligation": "Do not reproduce the collage as the scene background."
+            }
+          ]
+        },
+        "setting_and_time": {
+          "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+          "time_of_day": "fim de tarde sob céu de tempestade",
+          "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+        },
+        "action_sequence": [
+          "rise",
+          "charge",
+          "contact",
+          "spinning_kick",
+          "observe_result",
+          "release"
+        ],
+        "performance": [
+          "Human rises, commits to one spinning kick, then holds a controlled final guard without celebration text.",
+          "Android absorbs the kick, crashes into a concrete barrier and becomes still under dust and sparks."
+        ],
+        "camera": {
+          "size": "MEDIUM_WIDE",
+          "angle": "LOW_HERO_ANGLE",
+          "focal_length": "35mm_equivalent",
+          "framing": "HUMAN_FOREGROUND_ANDROID_BACKGROUND",
+          "focus": "impact_then_human_face",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL_ACTION",
+          "exposure": "LOCKED_TO_DUSK_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "subject_android",
+          "movement": {
+            "type": "PUSH_AND_ARC",
+            "direction": "FORWARD_AROUND_HUMAN",
+            "phase": "REVEAL_FINAL_KICK_THEN_SETTLE_ON_HERO"
+          },
+          "screen_direction": "HUMAN_CENTER_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "FINAL_IMPACT_THEN_TWO_SECOND_HOLD"
+        },
+        "lighting_and_style": "ficção científica live-action, suja, realista e cinematográfica",
+        "audio_or_sync": {
+          "dialogue": [],
+          "audio": [
+            {
+              "id": "audio_shot_003_kick_crash",
+              "shot_id": "shot_003",
+              "layer": "effects",
+              "start_s": 0,
+              "end_s": 5,
+              "source": "generated_native_audio_pending_observation",
+              "cause": "spinning_kick"
+            }
+          ]
+        },
+        "continuity": {
+          "start": "continuity:shot_002:end",
+          "end": {
+            "subject_human.position": "screen_left",
+            "subject_human.pose": "standing_final_guard",
+            "subject_human.wardrobe": "dark_charcoal_t_shirt",
+            "subject_human.attention": "subject_android",
+            "subject_android.position": "screen_right",
+            "subject_android.pose": "charging",
+            "subject_android.condition": "fallen_disabled_in_dust",
+            "subject_android.attention": "subject_human",
+            "environment_apocalyptic_street.state": "rubble_smoke_rain_fire",
+            "environment_apocalyptic_street.axis": "human_left_android_right"
+          },
+          "changes": [
+            {
+              "property": "subject_android.condition",
+              "prior": "kneeling_leg_joint_damaged",
+              "next": "fallen_disabled_in_dust",
+              "cause": "spinning_kick"
+            },
+            {
+              "property": "subject_human.pose",
+              "prior": "low_ready_stance",
+              "next": "standing_final_guard",
+              "cause": "spinning_kick"
+            }
+          ]
+        },
+        "constraints": {
+          "hard": [
+            "Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.",
+            "One human and one humanoid android; no duplicate bodies or extra limbs.",
+            "Show contact and visible reaction for each featured strike.",
+            "Final editorial duration is exactly 15 seconds at 24 fps."
+          ],
+          "shot": [
+            "con_identity",
+            "con_contact_003",
+            "con_anatomy",
+            "con_geography",
+            "con_audio"
+          ]
+        },
+        "references": [
+          "ref_human_portrait"
+        ]
+      },
+      "mappings": [
+        {
+          "canonical_section": "subject_and_identity",
+          "compiled_representation": "positive_prompt.subject_and_identity",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "setting_and_time",
+          "compiled_representation": "positive_prompt.setting_and_time",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "action_sequence",
+          "compiled_representation": "positive_prompt.action_sequence",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "performance",
+          "compiled_representation": "positive_prompt.performance",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "camera",
+          "compiled_representation": "positive_prompt.camera",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "lighting_and_style",
+          "compiled_representation": "positive_prompt.lighting_and_style",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "audio_or_sync",
+          "compiled_representation": "positive_prompt.audio_or_sync",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "continuity",
+          "compiled_representation": "positive_prompt.continuity",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "constraints",
+          "compiled_representation": "positive_prompt.constraints",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "references",
+          "compiled_representation": "positive_prompt.references",
+          "status": "PROPOSED"
+        }
+      ],
+      "omissions": [],
+      "presentation": {
+        "subject_definitions": {
+          "entities": [
+            {
+              "id": "subject_human",
+              "type": "character",
+              "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "subject_android",
+              "type": "character",
+              "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "retention": [
+            {
+              "entity_id": "subject_human",
+              "property": "face_glasses_hair_facial_hair",
+              "policy": "LOCKED",
+              "rationale": "These are the identity anchors visible in the supplied portrait.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "wardrobe.dark_charcoal_t_shirt",
+              "policy": "LOCKED",
+              "rationale": "Use the repeated dark shirt visible across the reference views.",
+              "anchor_refs": [
+                "ref_human_portrait"
+              ],
+              "conflict_policy": "reference_wins",
+              "qa_obligation": "Check wardrobe continuity between all three blocks."
+            },
+            {
+              "entity_id": "subject_human",
+              "property": "white_collage_background_and_layout",
+              "policy": "IGNORE",
+              "rationale": "The white collage is source layout, not scene geography or character identity.",
+              "anchor_refs": [],
+              "conflict_policy": "exclude",
+              "qa_obligation": "Do not reproduce the collage as the scene background."
+            }
+          ]
+        },
+        "environment_definitions": {
+          "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+          "time_of_day": "fim de tarde sob céu de tempestade",
+          "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+        },
+        "summary": "Deliver the final strike, resolve the fight and finish on the human standing in the smoke.",
+        "retention_analysis": [
+          {
+            "entity_id": "subject_human",
+            "property": "face_glasses_hair_facial_hair",
+            "policy": "LOCKED",
+            "rationale": "These are the identity anchors visible in the supplied portrait.",
+            "anchor_refs": [
+              "ref_human_portrait"
+            ],
+            "conflict_policy": "reference_wins",
+            "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+          },
+          {
+            "entity_id": "subject_human",
+            "property": "wardrobe.dark_charcoal_t_shirt",
+            "policy": "LOCKED",
+            "rationale": "Use the repeated dark shirt visible across the reference views.",
+            "anchor_refs": [
+              "ref_human_portrait"
+            ],
+            "conflict_policy": "reference_wins",
+            "qa_obligation": "Check wardrobe continuity between all three blocks."
+          },
+          {
+            "entity_id": "subject_human",
+            "property": "white_collage_background_and_layout",
+            "policy": "IGNORE",
+            "rationale": "The white collage is source layout, not scene geography or character identity.",
+            "anchor_refs": [],
+            "conflict_policy": "exclude",
+            "qa_obligation": "Do not reproduce the collage as the scene background."
+          }
+        ],
+        "detailed_description": [
+          "rise",
+          "charge",
+          "contact",
+          "spinning_kick",
+          "observe_result",
+          "release"
+        ],
+        "global_physical_constraints": [
+          {
+            "constraint_id": "con_identity",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "Face, rectangular glasses, short black hair, facial hair and dark shirt remain recognizably consistent across actual frames.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "frame_sequence_review_against_reference",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_WITH_CROPPED_FACE_ANCHOR_OR_USE_SEPARATE_COVERAGE",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_anatomy",
+            "subject": "subject_human_and_subject_android",
+            "kind": "QA_ASSERTION",
+            "statement": "Exactly one human and one android; each has one head, two arms and two legs; no fused limbs or duplicate bodies.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "frame_sequence_review",
+              "blocking": true
+            },
+            "fallback": "SHORTER_CONTACT_COVERAGE",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_geography",
+            "subject": "environment_apocalyptic_street",
+            "kind": "QA_ASSERTION",
+            "statement": "The same rainy, smoky street and left/right human-android axis remain legible at every segment join.",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "join_frame_and_sequence_review",
+              "blocking": true
+            },
+            "fallback": "REANCHOR_FROM_REFERENCE_AND_CUT_ON_IMPACT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_001",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The right fist visibly contacts the android chest core before sparks and recoil.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_001"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_CLOSER_CONTACT_SHOT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_002",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The kick visibly meets the android knee joint before the android drops to one knee.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_002"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_KNEE_CONTACT_INSERT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_contact_003",
+            "subject": "subject_human",
+            "kind": "QA_ASSERTION",
+            "statement": "The spinning kick visibly contacts the android torso before the crash and dust reaction.",
+            "priority": "CRITICAL",
+            "scope": [
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "impact_frame_review",
+              "blocking": true
+            },
+            "fallback": "REGENERATE_AS_FINAL_IMPACT_INSERT",
+            "status": "PROPOSED"
+          },
+          {
+            "constraint_id": "con_audio",
+            "subject": "scene_human_vs_android_001",
+            "kind": "QA_ASSERTION",
+            "statement": "Rain, fire, metal impacts, electric crackle and footsteps are present and aligned to visible actions; no dialogue or music.",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001",
+              "shot_002",
+              "shot_003"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "MEDIUM"
+            },
+            "validation": {
+              "method": "audio_stream_probe_and_listening_review",
+              "blocking": false
+            },
+            "fallback": "ADD_SEPARATE_DIEGETIC_SOUND_MIX",
+            "status": "PROPOSED"
+          }
+        ],
+        "cinematography": {
+          "size": "MEDIUM_WIDE",
+          "angle": "LOW_HERO_ANGLE",
+          "focal_length": "35mm_equivalent",
+          "framing": "HUMAN_FOREGROUND_ANDROID_BACKGROUND",
+          "focus": "impact_then_human_face",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL_ACTION",
+          "exposure": "LOCKED_TO_DUSK_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "subject_android",
+          "movement": {
+            "type": "PUSH_AND_ARC",
+            "direction": "FORWARD_AROUND_HUMAN",
+            "phase": "REVEAL_FINAL_KICK_THEN_SETTLE_ON_HERO"
+          },
+          "screen_direction": "HUMAN_CENTER_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "FINAL_IMPACT_THEN_TWO_SECOND_HOLD"
+        },
+        "overall_soundscape": {
+          "dialogue": [],
+          "audio": [
+            {
+              "id": "audio_shot_003_kick_crash",
+              "shot_id": "shot_003",
+              "layer": "effects",
+              "start_s": 0,
+              "end_s": 5,
+              "source": "generated_native_audio_pending_observation",
+              "cause": "spinning_kick"
+            }
+          ]
+        },
+        "negative_constraints": []
+      },
+      "compiled_view": {
+        "profile_reference": "comfyui-h3-local-probe-v1",
+        "positive_prompt": {
+          "subject_and_identity": {
+            "entities": [
+              {
+                "id": "subject_human",
+                "type": "character",
+                "description": "Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.",
+                "permanence": "PERSISTENT"
+              },
+              {
+                "id": "subject_android",
+                "type": "character",
+                "description": "Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.",
+                "permanence": "PERSISTENT"
+              }
+            ],
+            "retention": [
+              {
+                "entity_id": "subject_human",
+                "property": "face_glasses_hair_facial_hair",
+                "policy": "LOCKED",
+                "rationale": "These are the identity anchors visible in the supplied portrait.",
+                "anchor_refs": [
+                  "ref_human_portrait"
+                ],
+                "conflict_policy": "reference_wins",
+                "qa_obligation": "Compare face, glasses, hair and facial hair in actual frames."
+              },
+              {
+                "entity_id": "subject_human",
+                "property": "wardrobe.dark_charcoal_t_shirt",
+                "policy": "LOCKED",
+                "rationale": "Use the repeated dark shirt visible across the reference views.",
+                "anchor_refs": [
+                  "ref_human_portrait"
+                ],
+                "conflict_policy": "reference_wins",
+                "qa_obligation": "Check wardrobe continuity between all three blocks."
+              },
+              {
+                "entity_id": "subject_human",
+                "property": "white_collage_background_and_layout",
+                "policy": "IGNORE",
+                "rationale": "The white collage is source layout, not scene geography or character identity.",
+                "anchor_refs": [],
+                "conflict_policy": "exclude",
+                "qa_obligation": "Do not reproduce the collage as the scene background."
+              }
+            ]
+          },
+          "setting_and_time": {
+            "geography": "Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.",
+            "time_of_day": "fim de tarde sob céu de tempestade",
+            "lighting": "luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados"
+          },
+          "action_sequence": [
+            "rise",
+            "charge",
+            "contact",
+            "spinning_kick",
+            "observe_result",
+            "release"
+          ],
+          "performance": [
+            "Human rises, commits to one spinning kick, then holds a controlled final guard without celebration text.",
+            "Android absorbs the kick, crashes into a concrete barrier and becomes still under dust and sparks."
+          ],
+          "camera": {
+            "size": "MEDIUM_WIDE",
+            "angle": "LOW_HERO_ANGLE",
+            "focal_length": "35mm_equivalent",
+            "framing": "HUMAN_FOREGROUND_ANDROID_BACKGROUND",
+            "focus": "impact_then_human_face",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL_ACTION",
+            "exposure": "LOCKED_TO_DUSK_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "subject_android",
+            "movement": {
+              "type": "PUSH_AND_ARC",
+              "direction": "FORWARD_AROUND_HUMAN",
+              "phase": "REVEAL_FINAL_KICK_THEN_SETTLE_ON_HERO"
+            },
+            "screen_direction": "HUMAN_CENTER_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "FINAL_IMPACT_THEN_TWO_SECOND_HOLD"
+          },
+          "lighting_and_style": "ficção científica live-action, suja, realista e cinematográfica",
+          "audio_or_sync": {
+            "dialogue": [],
+            "audio": [
+              {
+                "id": "audio_shot_003_kick_crash",
+                "shot_id": "shot_003",
+                "layer": "effects",
+                "start_s": 0,
+                "end_s": 5,
+                "source": "generated_native_audio_pending_observation",
+                "cause": "spinning_kick"
+              }
+            ]
+          },
+          "continuity": {
+            "start": "continuity:shot_002:end",
+            "end": {
+              "subject_human.position": "screen_left",
+              "subject_human.pose": "standing_final_guard",
+              "subject_human.wardrobe": "dark_charcoal_t_shirt",
+              "subject_human.attention": "subject_android",
+              "subject_android.position": "screen_right",
+              "subject_android.pose": "charging",
+              "subject_android.condition": "fallen_disabled_in_dust",
+              "subject_android.attention": "subject_human",
+              "environment_apocalyptic_street.state": "rubble_smoke_rain_fire",
+              "environment_apocalyptic_street.axis": "human_left_android_right"
+            },
+            "changes": [
+              {
+                "property": "subject_android.condition",
+                "prior": "kneeling_leg_joint_damaged",
+                "next": "fallen_disabled_in_dust",
+                "cause": "spinning_kick"
+              },
+              {
+                "property": "subject_human.pose",
+                "prior": "low_ready_stance",
+                "next": "standing_final_guard",
+                "cause": "spinning_kick"
+              }
+            ]
+          },
+          "constraints": {
+            "hard": [
+              "Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.",
+              "One human and one humanoid android; no duplicate bodies or extra limbs.",
+              "Show contact and visible reaction for each featured strike.",
+              "Final editorial duration is exactly 15 seconds at 24 fps."
+            ],
+            "shot": [
+              "con_identity",
+              "con_contact_003",
+              "con_anatomy",
+              "con_geography",
+              "con_audio"
+            ]
+          },
+          "references": [
+            "ref_human_portrait"
+          ]
+        },
+        "text": "subject_and_identity: {\"entities\":[{\"description\":\"Adult man matching the supplied reference: short black hair, rectangular gold-rimmed glasses, light mustache and goatee, dark charcoal T-shirt; athletic but grounded movement.\",\"id\":\"subject_human\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"},{\"description\":\"Single humanoid combat android, brushed gunmetal armor, one glowing cyan chest core, heavy but mechanically plausible joints, no weapons.\",\"id\":\"subject_android\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"}],\"retention\":[{\"anchor_refs\":[\"ref_human_portrait\"],\"conflict_policy\":\"reference_wins\",\"entity_id\":\"subject_human\",\"policy\":\"LOCKED\",\"property\":\"face_glasses_hair_facial_hair\",\"qa_obligation\":\"Compare face, glasses, hair and facial hair in actual frames.\",\"rationale\":\"These are the identity anchors visible in the supplied portrait.\"},{\"anchor_refs\":[\"ref_human_portrait\"],\"conflict_policy\":\"reference_wins\",\"entity_id\":\"subject_human\",\"policy\":\"LOCKED\",\"property\":\"wardrobe.dark_charcoal_t_shirt\",\"qa_obligation\":\"Check wardrobe continuity between all three blocks.\",\"rationale\":\"Use the repeated dark shirt visible across the reference views.\"},{\"anchor_refs\":[],\"conflict_policy\":\"exclude\",\"entity_id\":\"subject_human\",\"policy\":\"IGNORE\",\"property\":\"white_collage_background_and_layout\",\"qa_obligation\":\"Do not reproduce the collage as the scene background.\",\"rationale\":\"The white collage is source layout, not scene geography or character identity.\"}]}\nsetting_and_time: {\"geography\":\"Rua destruída; humano à esquerda do quadro e android à direita no início; eixo de ação preservado; ambos avançam no mesmo plano.\",\"lighting\":\"luz azul fria do céu, fogo laranja de destroços e reflexos metálicos molhados\",\"time_of_day\":\"fim de tarde sob céu de tempestade\"}\naction_sequence: [\"rise\",\"charge\",\"contact\",\"spinning_kick\",\"observe_result\",\"release\"]\nperformance: [\"Human rises, commits to one spinning kick, then holds a controlled final guard without celebration text.\",\"Android absorbs the kick, crashes into a concrete barrier and becomes still under dust and sparks.\"]\ncamera: {\"angle\":\"LOW_HERO_ANGLE\",\"axis_policy\":\"PRESERVE_180_AXIS\",\"depth_of_field\":\"MODERATE\",\"edit_rhythm\":\"FINAL_IMPACT_THEN_TWO_SECOND_HOLD\",\"exposure\":\"LOCKED_TO_DUSK_SCENE\",\"eyeline\":\"subject_android\",\"focal_length\":\"35mm_equivalent\",\"focus\":\"impact_then_human_face\",\"framing\":\"HUMAN_FOREGROUND_ANDROID_BACKGROUND\",\"lighting\":\"scene_bible:lighting\",\"motion_blur\":\"NATURAL_ACTION\",\"movement\":{\"direction\":\"FORWARD_AROUND_HUMAN\",\"phase\":\"REVEAL_FINAL_KICK_THEN_SETTLE_ON_HERO\",\"type\":\"PUSH_AND_ARC\"},\"screen_direction\":\"HUMAN_CENTER_TO_RIGHT\",\"size\":\"MEDIUM_WIDE\"}\nlighting_and_style: \"ficção científica live-action, suja, realista e cinematográfica\"\naudio_or_sync: {\"audio\":[{\"cause\":\"spinning_kick\",\"end_s\":5,\"id\":\"audio_shot_003_kick_crash\",\"layer\":\"effects\",\"shot_id\":\"shot_003\",\"source\":\"generated_native_audio_pending_observation\",\"start_s\":0}],\"dialogue\":[]}\ncontinuity: {\"changes\":[{\"cause\":\"spinning_kick\",\"next\":\"fallen_disabled_in_dust\",\"prior\":\"kneeling_leg_joint_damaged\",\"property\":\"subject_android.condition\"},{\"cause\":\"spinning_kick\",\"next\":\"standing_final_guard\",\"prior\":\"low_ready_stance\",\"property\":\"subject_human.pose\"}],\"end\":{\"environment_apocalyptic_street.axis\":\"human_left_android_right\",\"environment_apocalyptic_street.state\":\"rubble_smoke_rain_fire\",\"subject_android.attention\":\"subject_human\",\"subject_android.condition\":\"fallen_disabled_in_dust\",\"subject_android.pose\":\"charging\",\"subject_android.position\":\"screen_right\",\"subject_human.attention\":\"subject_android\",\"subject_human.pose\":\"standing_final_guard\",\"subject_human.position\":\"screen_left\",\"subject_human.wardrobe\":\"dark_charcoal_t_shirt\"},\"start\":\"continuity:shot_002:end\"}\nconstraints: {\"hard\":[\"Use the supplied portrait only for the human face, glasses, hair, facial hair and dark shirt.\",\"One human and one humanoid android; no duplicate bodies or extra limbs.\",\"Show contact and visible reaction for each featured strike.\",\"Final editorial duration is exactly 15 seconds at 24 fps.\"],\"shot\":[\"con_identity\",\"con_contact_003\",\"con_anatomy\",\"con_geography\",\"con_audio\"]}\nreferences: [\"ref_human_portrait\"]",
+        "compiled_omissions": [],
+        "deliberate_changes": [],
+        "unresolved": [
+          "Unsupported mode: R2V",
+          "Unconfirmed feature: R2V",
+          "Unconfirmed feature: reference_conditioning",
+          "Duration 5 outside [5.166666666666667, 5.166666666666667]"
+        ]
+      },
+      "compatibility": {
+        "status": "BLOCKED",
+        "profile_reference": "comfyui-h3-local-probe-v1",
+        "gaps": [
+          "Unsupported mode: R2V",
+          "Unconfirmed feature: R2V",
+          "Unconfirmed feature: reference_conditioning",
+          "Duration 5 outside [5.166666666666667, 5.166666666666667]"
+        ],
+        "fallback": "Preserve intent; propose shorter segments, a confirmed profile or separate audio/sync; obtain approval for weakened requirements"
+      }
+    }
+  ]
+}

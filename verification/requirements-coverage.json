@@ -1,0 +1,1347 @@
+{
+  "schema_version": 1,
+  "requirements": 79,
+  "meaning": "Owner/evidence traceability, not 79 production acceptance verdicts",
+  "entries": [
+    {
+      "requirement_id": "R-INT-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Intake judgment needs authored requests; material unknowns cannot be resolved by schema alone."
+    },
+    {
+      "requirement_id": "R-INT-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Intake judgment needs authored requests; material unknowns cannot be resolved by schema alone."
+    },
+    {
+      "requirement_id": "R-INT-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Intake judgment needs authored requests; material unknowns cannot be resolved by schema alone."
+    },
+    {
+      "requirement_id": "R-INT-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Intake judgment needs authored requests; material unknowns cannot be resolved by schema alone."
+    },
+    {
+      "requirement_id": "R-REF-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Actual reference identity/geometry retention still needs artifact observations."
+    },
+    {
+      "requirement_id": "R-REF-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Actual reference identity/geometry retention still needs artifact observations."
+    },
+    {
+      "requirement_id": "R-REF-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Actual reference identity/geometry retention still needs artifact observations."
+    },
+    {
+      "requirement_id": "R-REF-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Actual reference identity/geometry retention still needs artifact observations."
+    },
+    {
+      "requirement_id": "R-GOV-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/safety-and-provenance.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "INSTRUCTIONS_AND_BOUNDARY_TESTS",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Consent validity is a human/provenance decision."
+    },
+    {
+      "requirement_id": "R-PLAN-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Long-form forward outputs are editorial proposals; no long-form media acceptance."
+    },
+    {
+      "requirement_id": "R-PLAN-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Long-form forward outputs are editorial proposals; no long-form media acceptance."
+    },
+    {
+      "requirement_id": "R-PLAN-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Long-form forward outputs are editorial proposals; no long-form media acceptance."
+    },
+    {
+      "requirement_id": "R-PLAN-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Long-form forward outputs are editorial proposals; no long-form media acceptance."
+    },
+    {
+      "requirement_id": "R-PLAN-05",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Long-form forward outputs are editorial proposals; no long-form media acceptance."
+    },
+    {
+      "requirement_id": "R-SCENE-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Rich scene meaning is authored by the agent; scripts check represented invariants."
+    },
+    {
+      "requirement_id": "R-SCENE-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Rich scene meaning is authored by the agent; scripts check represented invariants."
+    },
+    {
+      "requirement_id": "R-SCENE-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Rich scene meaning is authored by the agent; scripts check represented invariants."
+    },
+    {
+      "requirement_id": "R-SCENE-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Rich scene meaning is authored by the agent; scripts check represented invariants."
+    },
+    {
+      "requirement_id": "R-SCENE-05",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Rich scene meaning is authored by the agent; scripts check represented invariants."
+    },
+    {
+      "requirement_id": "R-SHOT-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Chaining/identity capabilities remain UNKNOWN unless exact probes confirm them."
+    },
+    {
+      "requirement_id": "R-SHOT-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Chaining/identity capabilities remain UNKNOWN unless exact probes confirm them."
+    },
+    {
+      "requirement_id": "R-SHOT-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Chaining/identity capabilities remain UNKNOWN unless exact probes confirm them."
+    },
+    {
+      "requirement_id": "R-SHOT-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Chaining/identity capabilities remain UNKNOWN unless exact probes confirm them."
+    },
+    {
+      "requirement_id": "R-SHOT-05",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Chaining/identity capabilities remain UNKNOWN unless exact probes confirm them."
+    },
+    {
+      "requirement_id": "R-SHOT-06",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Chaining/identity capabilities remain UNKNOWN unless exact probes confirm them."
+    },
+    {
+      "requirement_id": "R-SHOT-07",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Chaining/identity capabilities remain UNKNOWN unless exact probes confirm them."
+    },
+    {
+      "requirement_id": "R-DIR-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/directing-and-audio.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Physics, performance and lip-sync require full audiovisual observations; metadata cannot certify them."
+    },
+    {
+      "requirement_id": "R-DIR-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/directing-and-audio.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Physics, performance and lip-sync require full audiovisual observations; metadata cannot certify them."
+    },
+    {
+      "requirement_id": "R-DIR-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/directing-and-audio.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Physics, performance and lip-sync require full audiovisual observations; metadata cannot certify them."
+    },
+    {
+      "requirement_id": "R-DIR-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/directing-and-audio.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Physics, performance and lip-sync require full audiovisual observations; metadata cannot certify them."
+    },
+    {
+      "requirement_id": "R-DIR-05",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/directing-and-audio.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Physics, performance and lip-sync require full audiovisual observations; metadata cannot certify them."
+    },
+    {
+      "requirement_id": "R-DIR-06",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/directing-and-audio.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Physics, performance and lip-sync require full audiovisual observations; metadata cannot certify them."
+    },
+    {
+      "requirement_id": "R-DIR-07",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/directing-and-audio.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Physics, performance and lip-sync require full audiovisual observations; metadata cannot certify them."
+    },
+    {
+      "requirement_id": "R-CON-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/interaction-and-constraints.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Compiled JSON is a lossless prompt view; the agent authors model language and records its mapping."
+    },
+    {
+      "requirement_id": "R-CON-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/interaction-and-constraints.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Compiled JSON is a lossless prompt view; the agent authors model language and records its mapping."
+    },
+    {
+      "requirement_id": "R-CON-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/interaction-and-constraints.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Compiled JSON is a lossless prompt view; the agent authors model language and records its mapping."
+    },
+    {
+      "requirement_id": "R-CON-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/interaction-and-constraints.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py"
+      ],
+      "verification_scope": "SEMANTIC_AND_STRUCTURAL",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Compiled JSON is a lossless prompt view; the agent authors model language and records its mapping."
+    },
+    {
+      "requirement_id": "R-ADP-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/model-adaptation.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "SCOPED_RUNTIME_AND_CONTRACT_TESTS",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "H3 profile supports only the probed exact local workload. Candidate providers remain non-executable."
+    },
+    {
+      "requirement_id": "R-ADP-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/model-adaptation.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "SCOPED_RUNTIME_AND_CONTRACT_TESTS",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "H3 profile supports only the probed exact local workload. Candidate providers remain non-executable."
+    },
+    {
+      "requirement_id": "R-ADP-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/model-adaptation.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "SCOPED_RUNTIME_AND_CONTRACT_TESTS",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "H3 profile supports only the probed exact local workload. Candidate providers remain non-executable."
+    },
+    {
+      "requirement_id": "R-ADP-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/model-adaptation.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "SCOPED_RUNTIME_AND_CONTRACT_TESTS",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "H3 profile supports only the probed exact local workload. Candidate providers remain non-executable."
+    },
+    {
+      "requirement_id": "R-ADP-05",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/model-adaptation.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "SCOPED_RUNTIME_AND_CONTRACT_TESTS",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "H3 profile supports only the probed exact local workload. Candidate providers remain non-executable."
+    },
+    {
+      "requirement_id": "R-EXE-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/comfyui-execution.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py",
+        "verification/h3-final-history.json",
+        "verification/h3-final-artifacts.json"
+      ],
+      "verification_scope": "LOCAL_RUNTIME_AND_FAKE_PROVIDER",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Real local T2V tested; paid APIs, I2V, FLF, voice and reference modes not activated. No remote production acceptance."
+    },
+    {
+      "requirement_id": "R-EXE-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/comfyui-execution.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py",
+        "verification/h3-final-history.json",
+        "verification/h3-final-artifacts.json"
+      ],
+      "verification_scope": "LOCAL_RUNTIME_AND_FAKE_PROVIDER",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Real local T2V tested; paid APIs, I2V, FLF, voice and reference modes not activated. No remote production acceptance."
+    },
+    {
+      "requirement_id": "R-EXE-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/comfyui-execution.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py",
+        "verification/h3-final-history.json",
+        "verification/h3-final-artifacts.json"
+      ],
+      "verification_scope": "LOCAL_RUNTIME_AND_FAKE_PROVIDER",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Real local T2V tested; paid APIs, I2V, FLF, voice and reference modes not activated. No remote production acceptance."
+    },
+    {
+      "requirement_id": "R-EXE-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/comfyui-execution.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py",
+        "verification/h3-final-history.json",
+        "verification/h3-final-artifacts.json"
+      ],
+      "verification_scope": "LOCAL_RUNTIME_AND_FAKE_PROVIDER",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Real local T2V tested; paid APIs, I2V, FLF, voice and reference modes not activated. No remote production acceptance."
+    },
+    {
+      "requirement_id": "R-EXE-05",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/comfyui-execution.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py",
+        "verification/h3-final-history.json",
+        "verification/h3-final-artifacts.json"
+      ],
+      "verification_scope": "LOCAL_RUNTIME_AND_FAKE_PROVIDER",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Real local T2V tested; paid APIs, I2V, FLF, voice and reference modes not activated. No remote production acceptance."
+    },
+    {
+      "requirement_id": "R-EXE-06",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/comfyui-execution.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_provider.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py",
+        "verification/h3-final-history.json",
+        "verification/h3-final-artifacts.json"
+      ],
+      "verification_scope": "LOCAL_RUNTIME_AND_FAKE_PROVIDER",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Real local T2V tested; paid APIs, I2V, FLF, voice and reference modes not activated. No remote production acceptance."
+    },
+    {
+      "requirement_id": "R-QA-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/evaluation-and-repair.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "CONTRACT_TESTS_AND_BOUNDED_REVIEW",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Media quality remains PARTIAL/NOT_RUN as recorded; there is no universal semantic pass."
+    },
+    {
+      "requirement_id": "R-QA-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/evaluation-and-repair.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "CONTRACT_TESTS_AND_BOUNDED_REVIEW",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Media quality remains PARTIAL/NOT_RUN as recorded; there is no universal semantic pass."
+    },
+    {
+      "requirement_id": "R-QA-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/evaluation-and-repair.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "CONTRACT_TESTS_AND_BOUNDED_REVIEW",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Media quality remains PARTIAL/NOT_RUN as recorded; there is no universal semantic pass."
+    },
+    {
+      "requirement_id": "R-QA-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/evaluation-and-repair.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "CONTRACT_TESTS_AND_BOUNDED_REVIEW",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Media quality remains PARTIAL/NOT_RUN as recorded; there is no universal semantic pass."
+    },
+    {
+      "requirement_id": "R-QA-05",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/evaluation-and-repair.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "CONTRACT_TESTS_AND_BOUNDED_REVIEW",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Media quality remains PARTIAL/NOT_RUN as recorded; there is no universal semantic pass."
+    },
+    {
+      "requirement_id": "R-QA-06",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/evaluation-and-repair.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "CONTRACT_TESTS_AND_BOUNDED_REVIEW",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Media quality remains PARTIAL/NOT_RUN as recorded; there is no universal semantic pass."
+    },
+    {
+      "requirement_id": "R-LONG-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "STRUCTURAL_AND_FORWARD_PLANNING",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "60/90-second forward plans and continuous duration floors reviewed; full 60–120-second generated media not accepted."
+    },
+    {
+      "requirement_id": "R-LONG-02",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "STRUCTURAL_AND_FORWARD_PLANNING",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "60/90-second forward plans and continuous duration floors reviewed; full 60–120-second generated media not accepted."
+    },
+    {
+      "requirement_id": "R-LONG-03",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "STRUCTURAL_AND_FORWARD_PLANNING",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "60/90-second forward plans and continuous duration floors reviewed; full 60–120-second generated media not accepted."
+    },
+    {
+      "requirement_id": "R-LONG-04",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py"
+      ],
+      "verification_scope": "STRUCTURAL_AND_FORWARD_PLANNING",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "60/90-second forward plans and continuous duration floors reviewed; full 60–120-second generated media not accepted."
+    },
+    {
+      "requirement_id": "R-DOC-01",
+      "implementation_refs": [
+        "docs/requirements.md",
+        "docs/contracts.md",
+        "docs/00-index.md",
+        "docs/adr/ADR-011-skill-implementation-and-evidence.md"
+      ],
+      "evidence_refs": [
+        "audit-artifacts/reports/AUDIT-docs-2026-09-08-r5.md",
+        "verification/docs-final.json"
+      ],
+      "verification_scope": "HISTORICAL_DOC_AUDIT",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Phase 0 records remain historical; implementation is recorded in ADR-011 and IMPLEMENTATION.md."
+    },
+    {
+      "requirement_id": "R-DOC-02",
+      "implementation_refs": [
+        "docs/requirements.md",
+        "docs/contracts.md",
+        "docs/00-index.md",
+        "docs/adr/ADR-011-skill-implementation-and-evidence.md"
+      ],
+      "evidence_refs": [
+        "audit-artifacts/reports/AUDIT-docs-2026-09-08-r5.md",
+        "verification/docs-final.json"
+      ],
+      "verification_scope": "HISTORICAL_DOC_AUDIT",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Phase 0 records remain historical; implementation is recorded in ADR-011 and IMPLEMENTATION.md."
+    },
+    {
+      "requirement_id": "R-DOC-03",
+      "implementation_refs": [
+        "docs/requirements.md",
+        "docs/contracts.md",
+        "docs/00-index.md",
+        "docs/adr/ADR-011-skill-implementation-and-evidence.md"
+      ],
+      "evidence_refs": [
+        "audit-artifacts/reports/AUDIT-docs-2026-09-08-r5.md",
+        "verification/docs-final.json"
+      ],
+      "verification_scope": "HISTORICAL_DOC_AUDIT",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Phase 0 records remain historical; implementation is recorded in ADR-011 and IMPLEMENTATION.md."
+    },
+    {
+      "requirement_id": "R-DOC-04",
+      "implementation_refs": [
+        "docs/requirements.md",
+        "docs/contracts.md",
+        "docs/00-index.md",
+        "docs/adr/ADR-011-skill-implementation-and-evidence.md"
+      ],
+      "evidence_refs": [
+        "audit-artifacts/reports/AUDIT-docs-2026-09-08-r5.md",
+        "verification/docs-final.json"
+      ],
+      "verification_scope": "HISTORICAL_DOC_AUDIT",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Phase 0 records remain historical; implementation is recorded in ADR-011 and IMPLEMENTATION.md."
+    },
+    {
+      "requirement_id": "R-DOC-05",
+      "implementation_refs": [
+        "docs/requirements.md",
+        "docs/contracts.md",
+        "docs/00-index.md",
+        "docs/adr/ADR-011-skill-implementation-and-evidence.md"
+      ],
+      "evidence_refs": [
+        "audit-artifacts/reports/AUDIT-docs-2026-09-08-r5.md",
+        "verification/docs-final.json"
+      ],
+      "verification_scope": "HISTORICAL_DOC_AUDIT",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Phase 0 records remain historical; implementation is recorded in ADR-011 and IMPLEMENTATION.md."
+    },
+    {
+      "requirement_id": "R-DOC-06",
+      "implementation_refs": [
+        "docs/requirements.md",
+        "docs/contracts.md",
+        "docs/00-index.md",
+        "docs/adr/ADR-011-skill-implementation-and-evidence.md"
+      ],
+      "evidence_refs": [
+        "audit-artifacts/reports/AUDIT-docs-2026-09-08-r5.md",
+        "verification/docs-final.json"
+      ],
+      "verification_scope": "HISTORICAL_DOC_AUDIT",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Phase 0 records remain historical; implementation is recorded in ADR-011 and IMPLEMENTATION.md."
+    },
+    {
+      "requirement_id": "R-DOC-07",
+      "implementation_refs": [
+        "docs/requirements.md",
+        "docs/contracts.md",
+        "docs/00-index.md",
+        "docs/adr/ADR-011-skill-implementation-and-evidence.md"
+      ],
+      "evidence_refs": [
+        "audit-artifacts/reports/AUDIT-docs-2026-09-08-r5.md",
+        "verification/docs-final.json"
+      ],
+      "verification_scope": "HISTORICAL_DOC_AUDIT",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Phase 0 records remain historical; implementation is recorded in ADR-011 and IMPLEMENTATION.md."
+    },
+    {
+      "requirement_id": "R-DOC-08",
+      "implementation_refs": [
+        "docs/requirements.md",
+        "docs/contracts.md",
+        "docs/00-index.md",
+        "docs/adr/ADR-011-skill-implementation-and-evidence.md"
+      ],
+      "evidence_refs": [
+        "audit-artifacts/reports/AUDIT-docs-2026-09-08-r5.md",
+        "verification/docs-final.json"
+      ],
+      "verification_scope": "HISTORICAL_DOC_AUDIT",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Phase 0 records remain historical; implementation is recorded in ADR-011 and IMPLEMENTATION.md."
+    },
+    {
+      "requirement_id": "NFR-TRUTH-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-COHERENCE-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-ACTION-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-REPAIR-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-MAINT-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-CONTEXT-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-DET-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-EXT-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-EXPL-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-TEST-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-DEGRADE-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-DUP-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    },
+    {
+      "requirement_id": "NFR-RIGHTS-01",
+      "implementation_refs": [
+        ".agents/skills/video-generation-engineering/references/core-contracts.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_core.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_evidence.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+        ".agents/skills/video-generation-engineering/scripts/vge_media.py"
+      ],
+      "evidence_refs": [
+        "verification/forward-responses.json",
+        "verification/forward-responses-r2.json",
+        "tests/test_planning.py",
+        "tests/test_evidence_runtime_media.py",
+        "tests/test_extensions.py"
+      ],
+      "verification_scope": "MIXED_BOUNDED_EVIDENCE",
+      "status": "IMPLEMENTED_WITH_SCOPED_EVIDENCE",
+      "limitations": "Requirement mapping identifies owners and evidence; it is not automatic satisfaction of each semantic or media oracle."
+    }
+  ]
+}

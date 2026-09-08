@@ -1,0 +1,119 @@
+{
+  "observed_at": "2026-09-08T11:08:21.903171+00:00",
+  "scope": "structural documentation inspection; no runtime or external source validation",
+  "python": "3.12.3",
+  "pyyaml": "6.0.1",
+  "documents": 39,
+  "yaml_blocks": 45,
+  "yaml_errors": [],
+  "local_markdown_links": 376,
+  "local_link_errors": [],
+  "requirements": 79,
+  "missing_traceability_ids": [],
+  "implicit_yaml_booleans": [
+    {
+      "file": "docs/contracts.md",
+      "line": 204,
+      "literal": "off",
+      "resolved_type": "boolean"
+    },
+    {
+      "file": "docs/contracts.md",
+      "line": 220,
+      "literal": "off",
+      "resolved_type": "boolean"
+    },
+    {
+      "file": "docs/contracts.md",
+      "line": 311,
+      "literal": "off",
+      "resolved_type": "boolean"
+    }
+  ],
+  "profile_comparison": {
+    "same_id_revision": true,
+    "contract_modes": [
+      "T2V",
+      "I2V",
+      "FLF2V"
+    ],
+    "adapter_modes": [
+      "T2V",
+      "I2V",
+      "TI2V",
+      "FLF2V"
+    ],
+    "contract_limit_keys": [
+      "duration_s",
+      "frames",
+      "resolution",
+      "vram"
+    ],
+    "adapter_limit_keys": [
+      "duration_s",
+      "frame_count",
+      "resolution",
+      "vram"
+    ],
+    "contract_camera_keys": [
+      "evidence",
+      "syntax"
+    ],
+    "adapter_camera_keys": [
+      "status",
+      "syntax"
+    ]
+  },
+  "prompt_view_omissions": {
+    "contract_has_top_level": true,
+    "adapter_has_top_level": false,
+    "adapter_nested_only": true
+  },
+  "observation_example": {
+    "aggregate": "PARTIAL",
+    "checks": [
+      "PARTIAL"
+    ]
+  },
+  "docs_sha256": {
+    "docs/00-index.md": "47140ebcecca88d56002104c7942f67ba1368d3f2b7a78db11d72f8dca393104",
+    "docs/BLUEPRINT.md": "62c04a55fe991a8f094db47d661ab6fa70fbe20e26f0adbfda402eba78f6fc1d",
+    "docs/README.md": "72565df53ec33c1fcc5213c9b2d4c0b78a71ff8bb2b50ec9a879603cbd5f43f6",
+    "docs/acceptance.md": "38956bdc129f2380140a22bdb884c40aef4c8e7b8e91db073113b1f7c6a83bd8",
+    "docs/adr/ADR-001-documentation-first.md": "d7cbc35fd3260b94fb04fa5ec96aa64f275890e49b1b4fc95fc8c72bc716d47d",
+    "docs/adr/ADR-002-canonical-scene-model.md": "295a19b5aa40e0381e130fc4604abff2177d3268aab9ab92c94a3f7932f5c1df",
+    "docs/adr/ADR-003-model-agnostic-adapters.md": "c73f63e8a60127fa29f7a34fe9d7847b9ac657c71d7195edf13efe7289a68026",
+    "docs/adr/ADR-004-continuity-state-and-shot-graph.md": "a37d7547898257c0241e1bb37b107dc125b2a1b66e935dff2bfd5a3581c53d82",
+    "docs/adr/ADR-005-prompt-compiler.md": "2ab6ebcc89fda2e8161acfb444136679597ddbd2c19cc865ee945da2ae05f52d",
+    "docs/adr/ADR-006-long-form-decomposition.md": "bd0e33c508c0b0eea7a680ae761a28f4a41b35217a864c009b43d527cfac5135",
+    "docs/adr/ADR-007-dialogue-audio-separation.md": "f23ee7d8aadc139e05563da218ebad18d14d002a14f1efad84fbd72ac74a4c8c",
+    "docs/adr/ADR-008-pattern-library.md": "2fff5af2cd6b1941e838917a6f66dac3478cd53fb37c067e7bfad9fa563a8fb6",
+    "docs/adr/ADR-009-instructions-vs-tools.md": "95dcdfe9ccd1259b6ec854cc41f877e6a7607bc4702db57c5c59d993c20e7ce4",
+    "docs/adr/ADR-010-production-skill-structure.md": "8aa7f5fdef6483dc48e857c090319dfbab497cd7bab28eb34a29745e3aa1a058",
+    "docs/adversarial-scenarios.md": "fa158d1ace968b98852c629ab2399a64d3db9b3f555ae4094ccbb4cc99f96f70",
+    "docs/architecture.md": "2230310633fe17d34b3cc71029ebcb73c117fcd5bad9978ee0578f73cca578d2",
+    "docs/comfyui-execution.md": "c08e9c6ac93080e784ea896130d671da683f1fe458162d6c3c2e8abc6a9ab750",
+    "docs/constraints.md": "dcfafdf52c601d235107cfd88be053e7029eb7a9e41fc935a2c48cf50fa6d29a",
+    "docs/continuity-engine.md": "8bb3a20b94441381b78f0d5c2d9bafaaa01e94a002ecfbd257737b15517dc51d",
+    "docs/contracts.md": "7abf96672369417097415eda38db58fdc305904dc0a8ada6fa3c30d051b2cde7",
+    "docs/directing.md": "73d609cce5c564d963d208a08c88f0a7d71dc7677e56cde3e24f5aa1ba97184d",
+    "docs/domain-model.md": "91c3023fc243faff06274ffc28bcad38a99439f2526c1f3d246eac71768248ab",
+    "docs/failure-and-evals.md": "f3ef1bceb014a427179e5a94995dc0752c1fcc41703f325e937d1ac791190126",
+    "docs/golden-scenarios.md": "4b9875e53f57472732ae4e037829f548c55a2d26d5f6cb73c690e10028393873",
+    "docs/model-adaptation.md": "d4f46eb3299833c9480c13080a7df9d48a816a59996734ccb0f1cc50ce225316",
+    "docs/observability.md": "592d79ba437b35807aa8b462e8ecc8faa9874ff4b5d4ac98bf6879aca37b08a0",
+    "docs/open-questions.md": "9f37a2833f821c52834b20a95a34914df029deaa513bcc56931a18c1fe8c8deb",
+    "docs/pattern-library.md": "f5310aa5a7e47e183a13bbc02cd840f7b06c713e6248a8378bb07718296b6af0",
+    "docs/phase-0-report.md": "c8791a4d1aa7fa000bb6461978d621a50f86fa3f7603014d62e23ca57941d044",
+    "docs/progressive-disclosure.md": "8566b0fb31aecf1ddc2a758e50b65ba6a99ce98622ec1485a32d5518590b685c",
+    "docs/proposed-skill-structure.md": "c801f553181aa9f7bc021132382f9f7206572bad43c3f1f3fa8c945df9ec884e",
+    "docs/requirements.md": "afab273d718323a7ae3be668359b332b9ce8cc3d8f55b65828d46f0db6c42d4d",
+    "docs/research.md": "710e937c7b4650e661998cac668e2f5834d5334ab629c74f541d5900e100b704",
+    "docs/roadmap.md": "00d3b73e51851423f1c79282ecc99654d62a19191bf9b632f1fa007381f85ca2",
+    "docs/safety-boundaries.md": "552c4b77e082391bf778a57d085caecd4ca5b628aa45e94c00326456ca79dc3b",
+    "docs/scene-and-continuity.md": "6a235523a26d0d2fea8fc8a264be20ccbd466b29888ba06a91a127fad0fa3837",
+    "docs/state-model.md": "e42e544ff27f7a4d0a579163de802033ef005d68af1994fa08598a9e623ede2e",
+    "docs/traceability.md": "aea8cd9c5ae1466b77dc790839e589dcb074cd148402175c4a08d0c9fe19a605",
+    "docs/vision-and-scope.md": "057d929b065e02dfb1501cdfa98f0531458f264c7a33769074e59437fb8616a4"
+  }
+}

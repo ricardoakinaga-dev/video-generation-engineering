@@ -1,0 +1,54 @@
+{
+  "bar_id": "vge-implementation-20260908-r1",
+  "frozen_at": "2026-09-08T00:00:00-03:00",
+  "scope": "repository_skill_and_local_deterministic_boundaries",
+  "criteria": [
+    {
+      "id": "VGE-01",
+      "name": "canonical planning",
+      "pass_when": "Valid treatments preserve intent, duration floors, dependency order, state deltas, and canonical prompt sections without silent semantic changes."
+    },
+    {
+      "id": "VGE-02",
+      "name": "fail-closed contracts",
+      "pass_when": "Malformed, contradictory, unknown, stale, unsupported, or consent-incomplete inputs return actionable contract failures and never promote planned state to observed or accepted state."
+    },
+    {
+      "id": "VGE-03",
+      "name": "capability negotiation",
+      "pass_when": "Profile support is scoped per requested feature, expiry, mode, limits, controls, and evidence; candidates remain non-executable."
+    },
+    {
+      "id": "VGE-04",
+      "name": "ComfyUI boundary",
+      "pass_when": "API workflows, bindings, discovery, authorization, immutable pre-submit records, uncertainty, polling, collection, and provenance are enforced without blind retry."
+    },
+    {
+      "id": "VGE-05",
+      "name": "observation and assembly",
+      "pass_when": "Current content hashes, artifact/attempt links, required QA checks, media metadata, assembly order, and editorial limitations remain separate and explicit."
+    },
+    {
+      "id": "VGE-06",
+      "name": "safety and provenance",
+      "pass_when": "Sensitive references, credentials, paid/external calls, transfers, and disclosure/provenance boundaries fail closed and do not leak secrets into records or diagnostics."
+    },
+    {
+      "id": "VGE-07",
+      "name": "package and CLI usability",
+      "pass_when": "The package is independently discoverable, progressive-disclosure compliant, portable, JSON-valid, and exposes stable actionable CLI behavior."
+    },
+    {
+      "id": "VGE-08",
+      "name": "documentation alignment",
+      "pass_when": "Shipped behavior does not materially contradict the canonical docs; claims distinguish structural/software/media/provider evidence and limitations."
+    }
+  ],
+  "evidence_policy": {
+    "independent_critic_required": true,
+    "critic_must_be_read_only": true,
+    "mutation_sentinel": "verification/gauntlet-implementation-critic-pre.json",
+    "browser_visual_review": "NOT_APPLICABLE",
+    "universal_media_quality": "NOT_RUN"
+  }
+}

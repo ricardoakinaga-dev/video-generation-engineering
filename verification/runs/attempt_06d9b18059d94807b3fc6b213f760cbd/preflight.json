@@ -1,0 +1,19 @@
+{
+  "validation": {
+    "status": "PASS",
+    "issues": [],
+    "workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
+    "scope": "API_GRAPH_METADATA",
+    "limitations": [
+      "Execution, VRAM fit, hidden/dynamic node validation and visual quality require a runtime probe"
+    ]
+  },
+  "compatibility": {
+    "status": "SUPPORTED",
+    "profile_reference": "comfyui-h3-local-probe-v1",
+    "gaps": [],
+    "fallback": null
+  },
+  "discovery_hash": "sha256:26c6db5bedc3499e91bb3c4108c2c92f6983f541a00b67bdd0fc7ee3ac26a95e",
+  "probe_purpose": null
+}

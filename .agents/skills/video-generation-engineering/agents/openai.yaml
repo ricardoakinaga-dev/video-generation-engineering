@@ -1,0 +1,6 @@
+interface:
+  display_name: "Video Generation Engineering"
+  short_description: "Direct video scenes, continuity and ComfyUI execution"
+  default_prompt: "Use $video-generation-engineering to turn my video idea and references into a coherent shot plan, prompts, execution recipe and review criteria."
+policy:
+  allow_implicit_invocation: true

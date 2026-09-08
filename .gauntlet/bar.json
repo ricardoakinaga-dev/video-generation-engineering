@@ -1,0 +1,640 @@
+{
+  "criteria": [
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Greenfield workspace; documentation-only Phase 0.",
+      "dimension": "navigation",
+      "evidence_method": "Inspect docs/00-index.md and resolve every document link against the current docs tree.",
+      "id": "DOC-001",
+      "license_notes": "Acceptance requirement.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: Phase 0 deliverable structure and DOCUMENT 00",
+      "source_type": "USER",
+      "target": "docs/00-index.md is the navigation hub and explains purpose, map, reading order, source hierarchy, status, unresolved decisions, ADRs, and readiness.",
+      "validity_notes": "Does not require the suggested filenames when a deviation is explained.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Scope is evaluated from the user prompt, not implementation intent.",
+      "dimension": "scope",
+      "evidence_method": "Inspect the scope owner document and check each required topic against a checklist.",
+      "id": "DOC-002",
+      "license_notes": "Acceptance requirement.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: DOCUMENT 01 and PRIMARY OBJECTIVE",
+      "source_type": "USER",
+      "target": "Vision and scope define problem, users, workflows, mission, non-goals, success criteria, supported durations through approximately 120 seconds, inputs, outputs, ComfyUI/model/Codex relationships, and distinguish engineering director from prompt generator.",
+      "validity_notes": "Narrative completeness is reviewed structurally and semantically.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Current external claims may age and must be revalidated.",
+      "dimension": "evidence",
+      "evidence_method": "Audit docs/research.md and model references; verify OpenAI claims use an official OpenAI source.",
+      "id": "DOC-003",
+      "license_notes": "Use concise summaries and direct citations.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: RESEARCH REQUIREMENTS and SOURCE DISCIPLINE",
+      "source_type": "USER",
+      "target": "Important OpenAI/Codex, ComfyUI, model, research, and governance claims have source, access date, applicability/version, confidence, summary, and limitations; marketing claims are not treated as verified capability.",
+      "validity_notes": "No runtime probe is available in the greenfield workspace.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "IDs must remain stable across later implementation.",
+      "dimension": "requirements",
+      "evidence_method": "Parse requirement IDs and inspect normative keywords and NFR coverage.",
+      "id": "DOC-004",
+      "license_notes": "Acceptance requirement.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: REQUIREMENTS DOCUMENTATION",
+      "source_type": "USER",
+      "target": "Important requirements have stable IDs and MUST/SHOULD/MAY classification plus maintainability, context efficiency, determinism, extensibility, explainability, testability, graceful degradation, and low-duplication NFRs.",
+      "validity_notes": "Exact wording is advisory; behavior and coverage are required.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Avoid abstractions that do not own a decision or invariant.",
+      "dimension": "domain",
+      "evidence_method": "Inspect the domain model/contracts owner and compare the entity checklist to the prompt.",
+      "id": "DOC-005",
+      "license_notes": "Design documentation only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: DOMAIN MODEL and STATE MODEL",
+      "source_type": "USER",
+      "target": "Canonical entities cover Project, Scene, Subject, Character, Animal, Object, Vehicle, Environment, Reference, ReferenceAnchor, DialogueLine, PerformanceBeat, Interaction, MotionPrimitive, Shot, CameraState, AudioEvent, ContinuityState, Constraint, ModelProfile, ExecutionStep, and GenerationArtifact with responsibility, fields, lifecycle, relationships, and invariants.",
+      "validity_notes": "A consolidated domain contract is valid if it covers each named entity.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Long-form state propagation must be explicit.",
+      "dimension": "state",
+      "evidence_method": "Inspect contracts, Scene Bible, and continuity documents plus valid/invalid transition examples.",
+      "id": "DOC-006",
+      "license_notes": "Acceptance requirement.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: STATE MODEL and CONTINUITY ENGINE SPEC",
+      "source_type": "USER",
+      "target": "Immutable, persistent, transient, and derived state are explicit; continuity defines START_STATE, ACTION, END_STATE, STATE_DELTA, inheritance, conflict detection, repair, and valid/invalid transitions across the named domains.",
+      "validity_notes": "Static proof cannot establish actual generated continuity.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Retention is a QA target, not an unsupported stochastic guarantee.",
+      "dimension": "references",
+      "evidence_method": "Inspect Scene Bible/reference owners and validate a reference matrix example with conflicting references.",
+      "id": "DOC-007",
+      "license_notes": "Acceptance requirement.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: SCENE BIBLE SPEC and REFERENCE RETENTION",
+      "source_type": "USER",
+      "target": "Scene Bible necessity, contents/non-contents, identity/world anchors, wardrobe, vehicles, environment, time, relationships, voice, locks, prohibited drift, and a retention matrix covering LOCK/FLEX/DERIVED/IGNORE, conflicts, priorities, and degradation risk are explicit.",
+      "validity_notes": "The canonical vocabulary may normalize IGNORE to UNSPECIFIED when explained.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Do not assume one model reliably performs all four layers.",
+      "dimension": "performance",
+      "evidence_method": "Inspect dialogue/performance/audio/lip-sync documentation and check the non-speaking articulation invariant.",
+      "id": "DOC-008",
+      "license_notes": "Acceptance requirement.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: DIALOGUE SYSTEM, PERFORMANCE SYSTEM, and LIP-SYNC SYSTEM",
+      "source_type": "USER",
+      "target": "Script, visual performance, audio generation, and lip-sync are separate contracts covering speaker/listener, timing, pauses, gaze, reaction, voice identity, turn-taking, active speaker, mouth window, and fallback.",
+      "validity_notes": "Audio/lip-sync quality needs later artifact evaluation.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Avoid prompt-noise decomposition with no downstream decision value.",
+      "dimension": "physical direction",
+      "evidence_method": "Inspect interaction/motion documents and check human-human, human-animal, human-object, human-vehicle, animal-object, and vehicle-environment coverage.",
+      "id": "DOC-009",
+      "license_notes": "Design only.",
+      "priority": "high",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: INTERACTION SYSTEM and MOTION SYSTEM",
+      "source_type": "USER",
+      "target": "Interaction classes and contact-graph justification are documented; high-level actions decompose into motion primitives only where decomposition improves reliability, with a vehicle-entry example and declared limits.",
+      "validity_notes": "Physical plausibility is partially human/model-judged.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Camera choices must serve narrative purpose.",
+      "dimension": "cinematography",
+      "evidence_method": "Inspect cinematography/camera ownership and verify camera continuity is represented across dependent shots.",
+      "id": "DOC-010",
+      "license_notes": "Design only.",
+      "priority": "high",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: CINEMATOGRAPHY SYSTEM",
+      "source_type": "USER",
+      "target": "Shot purpose, size, angle, lens, framing, movement, composition, screen direction, 180-degree rule, eyelines, focus, motion blur, exposure, lighting, and edit rhythm are represented as narrative direction rather than aesthetic keyword stuffing.",
+      "validity_notes": "Aesthetic quality remains an editorial/manual concern.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Native audio must be confirmed per model/version.",
+      "dimension": "audio",
+      "evidence_method": "Inspect audio design and model capability documents; check a visible door closure ↔ sound event example.",
+      "id": "DOC-011",
+      "license_notes": "Acceptance requirement.",
+      "priority": "high",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: AUDIO SYSTEM",
+      "source_type": "USER",
+      "target": "Independent dialogue, voice, Foley, environment, room tone, vehicle, animal, music, and transition layers are planned with visible-event synchronization and model-specific support boundaries.",
+      "validity_notes": "No generated artifact is available in Phase 0.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Prose cannot be presented as enforcement.",
+      "dimension": "constraints",
+      "evidence_method": "Inspect constraint taxonomy and verify each family has guidance/control/assertion treatment and risk-shaped selection.",
+      "id": "DOC-012",
+      "license_notes": "Design only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: PHYSICS AND CONSTRAINTS",
+      "source_type": "USER",
+      "target": "Constraint taxonomy covers anatomy, hands, feet, animal anatomy, contact, collision, articulation, gravity, vehicle mechanics, wheels, suspension, road contact, reflections, lighting, and temporal consistency, split into global and shot-specific controls without negative-prompt bloat.",
+      "validity_notes": "Some assertions require media inspection or human review.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Prompt remains a compiled view, not the sole source of truth.",
+      "dimension": "compilation",
+      "evidence_method": "Inspect canonical contracts and compiler documentation; compare canonical fields to compiled mappings.",
+      "id": "DOC-013",
+      "license_notes": "Design only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: PROMPT COMPILATION",
+      "source_type": "USER",
+      "target": "A canonical intermediate representation supports the requested sections and compiles to a human-readable prompt and model-specific representation without changing intent or inventing capability; recommended changes are documented.",
+      "validity_notes": "No production compiler is created in Phase 0.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Repository support is distinct from ComfyUI integration support.",
+      "dimension": "capabilities",
+      "evidence_method": "Inspect model profile contract and research record; search for unsupported claims marked as confirmed without evidence.",
+      "id": "DOC-014",
+      "license_notes": "External capabilities summarized and cited.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: MODEL ADAPTER ARCHITECTURE",
+      "source_type": "USER",
+      "target": "Versioned model profiles identify all requested capability fields with source, date, confidence, supported/unsupported/unknown status, effective duration/controls, failure modes, and recommended strategy without guesses.",
+      "validity_notes": "Profiles require later executable probes.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Plan-only is the default Phase 0 boundary.",
+      "dimension": "execution boundary",
+      "evidence_method": "Inspect ComfyUI execution document and confirm no runtime queue, upload, credential use, or workflow generator was created.",
+      "id": "DOC-015",
+      "license_notes": "No external side effects.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: COMFYUI EXECUTION STRATEGY",
+      "source_type": "USER",
+      "target": "Planning is distinct from direct ComfyUI automation; outputs cover mode, references, duration, anchors, interpolation/upscale, audio/lip-sync, assembly, and explicit authorization/preflight boundaries.",
+      "validity_notes": "Runtime integration remains future work.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Do not represent long-form as one unbounded prompt.",
+      "dimension": "long-form",
+      "evidence_method": "Inspect long-form document and golden scenarios; verify each duration band has a decision and limitation.",
+      "id": "DOC-016",
+      "license_notes": "Design only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: LONG-FORM VIDEO ARCHITECTURE",
+      "source_type": "USER",
+      "target": "30, 60, 90, and 120-second use cases have reasoned shot/timeline/Scene Bible/continuity/dialogue/reference/assembly/error-recovery strategies; thresholds are justified rather than arbitrary.",
+      "validity_notes": "Actual model temporal limits require later profile probes.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Earliest preventable cause is distinguished from downstream symptoms.",
+      "dimension": "failure modeling",
+      "evidence_method": "Inspect failure taxonomy table and verify each prompt-listed family is represented with all seven fields or a clearly linked shared contract.",
+      "id": "DOC-017",
+      "license_notes": "Design only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: FAILURE TAXONOMY",
+      "source_type": "USER",
+      "target": "Important failures document failure, cause, detection, prevention, mitigation, repair, and eval, including all listed identity, anatomy, object/vehicle, contact, environment, camera, temporal, dialogue, lip-sync, voice, reaction, model, prompt, and reference-conflict classes.",
+      "validity_notes": "Failure signals may be structural, runtime, media, or human review.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "A required gate must be independently rejectable.",
+      "dimension": "acceptance",
+      "evidence_method": "Inspect quality-gate table and verify each gate has rejectable evidence and repair route.",
+      "id": "DOC-018",
+      "license_notes": "Design only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: QUALITY GATES",
+      "source_type": "USER",
+      "target": "Each listed gate defines purpose, input, pass criteria, fail examples, repair, and deterministic versus model/human judgment status.",
+      "validity_notes": "Artifact-quality gates cannot be fully run before implementation.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Harnesses must reject central known-bad cases.",
+      "dimension": "evals",
+      "evidence_method": "Inspect eval strategy, oracles, known-good/known-bad cases, and scoring policy.",
+      "id": "DOC-019",
+      "license_notes": "Design only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: EVALUATION STRATEGY",
+      "source_type": "USER",
+      "target": "Evaluation design covers unit-like contract, scenario, adversarial, regression, long-form continuity, and model-adapter evals; it favors behavior/invariants and avoids vanity scores.",
+      "validity_notes": "No production eval runner is required in Phase 0.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Fixtures should be future-evaluable without brittle exact wording.",
+      "dimension": "scenario coverage",
+      "evidence_method": "Count and inspect scenario records in the golden-scenarios owner; verify every required scenario and field.",
+      "id": "DOC-020",
+      "license_notes": "Design fixtures only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: GOLDEN SCENARIOS",
+      "source_type": "USER",
+      "target": "All 12 required golden scenarios are fully specified with input intent, references, risk analysis, expected decisions, continuity, decomposition, constraints, output class, and failure conditions.",
+      "validity_notes": "Actual rendered artifacts are future evidence.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Adversarial cases must not be normalized into silent assumptions.",
+      "dimension": "adversarial behavior",
+      "evidence_method": "Inspect adversarial-case table and verify each prompt-listed case has expected block, question, downgrade, or repair behavior.",
+      "id": "DOC-021",
+      "license_notes": "Design only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: ADVERSARIAL CASES",
+      "source_type": "USER",
+      "target": "Adversarial scenarios include ambiguity, conflicting references/wardrobe, impossible motion, overloaded actions, dialogue plus interaction, abrupt location change, long take, identity swap, vehicle inconsistency, unsupported feature, many subjects, and impossible camera movement with graceful expected behavior.",
+      "validity_notes": "Graceful behavior is later verified through scenario evals.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Use official OpenAI Skill guidance for package/discovery facts.",
+      "dimension": "context efficiency",
+      "evidence_method": "Inspect progressive-disclosure and future Skill structure docs; verify each proposed file has why/when/decision/breakage justification.",
+      "id": "DOC-022",
+      "license_notes": "Do not create production references in Phase 0.",
+      "priority": "high",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: PROGRESSIVE DISCLOSURE DESIGN",
+      "source_type": "USER",
+      "target": "An explicit routing matrix loads only relevant references for dialogue, vehicle, long-form, MiniMax, and simple short scenes; future resources are justified by decision value and absence impact.",
+      "validity_notes": "Context overhead is reasoned, not benchmarked yet.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Do not create trivial ADRs.",
+      "dimension": "architecture decisions",
+      "evidence_method": "Inspect docs/adr/ and check the required decision set and ADR fields.",
+      "id": "DOC-023",
+      "license_notes": "Design records only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: ADRs",
+      "source_type": "USER",
+      "target": "Major decisions have ADRs with status, context, decision, alternatives, consequences, risks, and validation evidence, including canonical model, documentation-first, model-agnostic core, continuity, compiler, long-form, dialogue/audio, pattern library, scripts/reasoning, and production reference structure.",
+      "validity_notes": "Validation evidence may be static in Phase 0 and must be labeled.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Expose useful evidence, not private reasoning transcripts.",
+      "dimension": "explainability",
+      "evidence_method": "Inspect observability document and verify a concrete diagnostic example with cause and decision evidence.",
+      "id": "DOC-024",
+      "license_notes": "Design only.",
+      "priority": "high",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: OBSERVABILITY / DEBUGGING",
+      "source_type": "USER",
+      "target": "The future system exposes concise decision evidence such as complexity, reasons, shot split, anchors, and repair route without dumping hidden chain-of-thought.",
+      "validity_notes": "Observability fields need implementation tests later.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Do not broaden platform policy from generic principles.",
+      "dimension": "safety",
+      "evidence_method": "Inspect security/safety/boundaries document and source table; verify human/authorization boundaries and no fabricated policy claims.",
+      "id": "DOC-025",
+      "license_notes": "Summarize authoritative policy only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: SAFETY / BOUNDARIES",
+      "source_type": "USER",
+      "target": "Safety architecture covers real-person generation, impersonation, copyrighted characters, unsafe content, sexual/minor content, deceptive media, privacy, and provider restrictions without inventing policy; provider-dependent rules cite authoritative sources and safety remains modular.",
+      "validity_notes": "Legal clearance remains outside this design.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Instruction-only is the default unless deterministic behavior justifies scripts.",
+      "dimension": "future packaging",
+      "evidence_method": "Inspect future structure document and confirm no production files exist in the workspace.",
+      "id": "DOC-026",
+      "license_notes": "Do not create the final Skill yet.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: FUTURE SKILL STRUCTURE",
+      "source_type": "USER",
+      "target": "The smallest effective future production Skill structure is proposed, justified file by file, and clearly separated from the Phase 0 docs; it aligns with official SKILL.md/progressive-disclosure guidance.",
+      "validity_notes": "Packaging is a recommendation pending Phase 1 authorization.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Consolidation is allowed when ownership and links remain explicit.",
+      "dimension": "documentation quality",
+      "evidence_method": "Run a document-quality checklist across the current docs tree and record exceptions with rationale.",
+      "id": "DOC-027",
+      "license_notes": "Design documentation only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: DOCUMENTATION QUALITY BAR",
+      "source_type": "USER",
+      "target": "Every major document states purpose, terminology, decisions, invariants, examples, failures, unresolved questions, related links, non-repetition, and verified-fact/design-hypothesis distinction; long docs have helpful contents.",
+      "validity_notes": "The quality bar is reviewed by an independent critic in Gauntlet.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "No duplicate canonical rules with conflicting meanings.",
+      "dimension": "integration",
+      "evidence_method": "Run automated cross-reference checks plus fresh integration review over the whole docs tree.",
+      "id": "DOC-028",
+      "license_notes": "Design only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: CROSS-DOCUMENT CONSISTENCY and TRACEABILITY",
+      "source_type": "USER",
+      "target": "Terminology, requirements, architecture names, entities, states, invariants, files, ADRs, model claims, thresholds, acceptance, and traceability form one coherent architecture from goal through future implementation component.",
+      "validity_notes": "Static consistency cannot prove provider/runtime behavior.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Phase 0 stops after reviewed documentation.",
+      "dimension": "phase acceptance",
+      "evidence_method": "Map each numbered acceptance item to an owner, current evidence, and limitation in the index/traceability/final report.",
+      "id": "DOC-029",
+      "license_notes": "Acceptance requirement.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: ACCEPTANCE CRITERIA FOR PHASE 0",
+      "source_type": "USER",
+      "target": "All 25 Phase 0 acceptance items are covered, including open questions, no material contradiction, and no production Skill started prematurely; the final report states readiness for Phase 1 without starting it.",
+      "validity_notes": "Phase 1 readiness may be READY WITH RISKS rather than unconditional READY.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Report must distinguish blockers from non-blockers.",
+      "dimension": "handoff",
+      "evidence_method": "Inspect docs/phase-0-report.md and compare each required report heading to the prompt.",
+      "id": "DOC-030",
+      "license_notes": "Design handoff only.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Master prompt: FINAL PHASE-0 REPORT",
+      "source_type": "USER",
+      "target": "A concise final Phase 0 report records architecture status, docs created, major decisions, accepted/modified/removed/added blueprint changes, critical risks, open questions, proposed Skill tree, implementation readiness, and explicit stop-before-Phase-1 language.",
+      "validity_notes": "Do not imply production readiness when runtime evidence is missing.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Non-production validation artifacts are permitted only when necessary and clearly labeled.",
+      "dimension": "scope safety",
+      "evidence_method": "Enumerate files outside control-plane state and inspect names/content for production artifacts.",
+      "id": "SAFE-001",
+      "license_notes": "Explicit user scope boundary.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "CRITICAL SCOPE BOUNDARY",
+      "source_type": "USER",
+      "target": "No production SKILL.md, agents/openai.yaml, production references/scripts/adapters/schemas, executable ComfyUI integration, or workflow generator is created.",
+      "validity_notes": "The docs tree itself is the requested deliverable.",
+      "version": "user-current"
+    },
+    {
+      "baseline": {
+        "actual": null,
+        "status": "NOT_RUN"
+      },
+      "conditions": "Execute mode; builders and critics must not approve their own work.",
+      "dimension": "quality process",
+      "evidence_method": "Inspect .gauntlet/bar.json, round records, critic packets/results, fingerprints, and final state; reject self-approval as independent evidence.",
+      "id": "GAUNTLET-001",
+      "license_notes": "Process guidance, not product content.",
+      "priority": "critical",
+      "required": true,
+      "snapshot_sha256": null,
+      "source": "Gauntlet Loop protocol and evidence guidance",
+      "source_type": "DERIVED",
+      "target": "Quality bar is frozen before implementation; at least one builder round, independent fresh-context critique, root-cause fix/retest for material gaps, integrated verification, and a distinct fresh final critic are recorded, with mutation sentinels where delegation is used.",
+      "validity_notes": "If fresh-context delegation is unavailable, verdict is capped at CONDITIONAL PASS.",
+      "version": "gauntlet-loop 1.0.0"
+    }
+  ],
+  "frozen_at": "2026-09-07T21:21:39-03:00",
+  "goal": "Create and review the complete Phase 0 documentation-first architecture for video-generation-engineering-vNext from the supplied master prompt and blueprint, stopping before production Skill implementation.",
+  "revision_log": [],
+  "schema_version": 1,
+  "sources": [
+    {
+      "license_notes": "User-provided prompt; use as requirements, do not copy external documentation wholesale.",
+      "location": "/home/ricardo/.codex/attachments/56780338-5d80-43a6-ad24-e6f956dc6622/pasted-text-1.txt",
+      "snapshot_sha256": "608ad3c1a7816b67a0024a57ea30577f24d3ea46776502d92948082c595177ee",
+      "type": "USER",
+      "version": "user-current"
+    },
+    {
+      "license_notes": "User-provided design hypothesis preserved in the workspace.",
+      "location": "docs/BLUEPRINT.md",
+      "snapshot_sha256": "62c04a55fe991a8f094db47d661ab6fa70fbe20e26f0adbfda402eba78f6fc1d",
+      "type": "REFERENCE",
+      "version": "workspace-current"
+    },
+    {
+      "license_notes": "Summarize and cite; do not copy page text beyond permitted quotation limits.",
+      "location": "https://developers.openai.com/codex/skills/",
+      "snapshot_sha256": null,
+      "type": "STANDARD",
+      "version": "accessed 2026-09-07; redirected to learn.chatgpt.com/docs/build-skills"
+    }
+  ],
+  "version": "v1"
+}

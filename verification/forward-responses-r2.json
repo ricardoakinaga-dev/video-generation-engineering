@@ -1,0 +1,820 @@
+{
+  "revision": 2,
+  "scope": "Revision pass in the same evaluator context; not a fresh-context independent critique. Raw selected requests re-read; baseline scenario docs and old response evidence not changed. Existing G004 authored treatment read only for requested unchanged rerun.",
+  "inspected_package_hashes_sha256": {
+    "SKILL.md": "c253402b89a5d8187356083added771cd4575cab6e86c5c8e905fb387994a51d",
+    "references/core-contracts.md": "c2a899498f1c7a88aeb573ff8170be34be765a303abcfeff353738d27415dd7d",
+    "references/continuity-and-long-form.md": "ffc54933d2da0e9bc629eb5e2e52423c7ab833179e9aa3d151cad174c88a1132",
+    "references/directing-and-audio.md": "2bf52dd5416b597f5e1b63131d6561b5504493989586afdbb7e0f046f904ec61",
+    "references/interaction-and-constraints.md": "fe3b84873c42533658070c1b660a8bf2c7b8cee1929607b2878d656b851ddfc1",
+    "references/model-adaptation.md": "6df498ee0047d912fd97ef49319f71c52dd537b4cada819d1038e81cee7a1da8",
+    "references/safety-and-provenance.md": "8a1411b985c2f93176dffa2d64d2f9f72ac21700c3b0b9005fe048f693320ed5",
+    "references/evaluation-and-repair.md": "dd29f8b57432553da3997085247a2310e74a0fc5afc5cd6be78cf5aa3a16391c"
+  },
+  "executed_script_hashes_sha256": {
+    "scripts/vge.py": "959b8882084c019bcaaeb33918d8798c81a3e2fc2357aa638f098f19eb222013",
+    "scripts/vge_core.py": "4af5e908d8bbc4b42807ba2611f73d3cfff7cfb26aa55dba8a53219fc8e0e2db",
+    "scripts/vge_evidence.py": "9b5566a52f81ae0ee133b6193d4d5405cc76c826203a4384bab09748f714f7c3",
+    "scripts/vge_media.py": "f397b686b5f2cb96c010b8876ca5a30ab4e463793be2d9ca5705945e27fc6717",
+    "scripts/vge_provider.py": "99a181f993930ade41f28efb11c72c01912e3dd4754950223ee5776897a34929",
+    "scripts/vge_runtime.py": "e01957837e6d6cffcfd091da72d8453d5452442a1f219f479c884f3da819e52e"
+  },
+  "responses": [
+    {
+      "id": "G-011",
+      "request": "A parent and teenager argue about leaving for school, discover a lost key in a car, reconcile, and drive away in sixty seconds.",
+      "execution_mode": "PLAN_ONLY",
+      "result_class": "SUPPORTED_PLAN",
+      "decision": "PROPOSED_TREATMENT",
+      "execution_status": "BLOCKED_PENDING_SCOPED_PREREQUISITES",
+      "reason": "All requested beats have concrete causal coverage; fifteen shots allocate the car mechanics separately.",
+      "preserved_intent": "Argument, key discovery in car, reconciliation and departure within sixty seconds.",
+      "evidence_gap": "Actual assets, car control geometry, voice files and feature support are unknown. These are production inputs, not omitted narrative actions.",
+      "evidence_required": "Inspect identity/wardrobe, kitchen/driveway/car and key anchors; approved audio sources; exact profile reference/contact/sync support and frame-grid compatibility.",
+      "next_action": "Bind inspected references and compile this sixty-second proposed treatment; negotiate each shot before any execution.",
+      "media_checks": "NOT_RUN",
+      "creative_proposals": [
+        "Fictional parent and teenager unless permitted identity references are supplied.",
+        "Unlocked compact car with push-button ignition; the discovered object is its key fob. If the actual car reference uses an ignition barrel, revise the ignition insert before binding.",
+        "Kitchen exit is immediately beside driveway; car passenger side faces house; clear path around its nose reaches driver side.",
+        "No bags or carried objects beyond key fob, keeping hand occupancy explicit."
+      ],
+      "scene_bible": {
+        "identities": "Parent P and teenager T stay distinct; unchanged wardrobe.",
+        "geography": "Kitchen exit → passenger side of parked car → clear path around nose → driver side. No axis crossing without front neutral view.",
+        "initial_state": "Both in kitchen; key fob on visible passenger seat; both car doors closed/unlocked; engine OFF; car parked; hands free.",
+        "lighting": "Consistent soft morning daylight, kitchen motivated by same exterior light."
+      },
+      "shots": [
+        {
+          "id": "shot_001",
+          "start_s": 0,
+          "end_s": 4,
+          "duration_s": 4,
+          "dependency_ids": [],
+          "purpose": "Establish urgency and missing key",
+          "action": "P checks time; T checks empty key hook.",
+          "boundary_state": "Both kitchen; key remains car seat, unknown to them.",
+          "camera": "Medium two-shot, P left/T right, 50 mm intent, static."
+        },
+        {
+          "id": "shot_002",
+          "start_s": 4,
+          "end_s": 10,
+          "duration_s": 6,
+          "dependency_ids": [
+            "shot_001"
+          ],
+          "purpose": "Argument with processing",
+          "action": "P: “We need to leave.” T processes, then: “I am looking for the key.” P holds frustrated breath.",
+          "boundary_state": "P impatient; T defensive. No key ownership change.",
+          "camera": "Matched singles on same axis; no overlapping speech."
+        },
+        {
+          "id": "shot_003",
+          "start_s": 10,
+          "end_s": 14,
+          "duration_s": 4,
+          "dependency_ids": [
+            "shot_002"
+          ],
+          "purpose": "Motivate location change",
+          "action": "T looks toward driveway, both cross visible kitchen exit; explicit cut completes the short walk to passenger window.",
+          "boundary_state": "Both at passenger side outside closed car.",
+          "camera": "Follow to doorway, cut to neutral front-quarter geography; elapsed short walk declared."
+        },
+        {
+          "id": "shot_004",
+          "start_s": 14,
+          "end_s": 17,
+          "duration_s": 3,
+          "dependency_ids": [
+            "shot_003"
+          ],
+          "purpose": "Discover key before emotional response",
+          "action": "T looks through window, sees key on seat, points; P follows gaze.",
+          "boundary_state": "Both now know location; key remains seat.",
+          "camera": "Gaze close-up → key insert through window → P noticing."
+        },
+        {
+          "id": "shot_005",
+          "start_s": 17,
+          "end_s": 21,
+          "duration_s": 4,
+          "dependency_ids": [
+            "shot_004"
+          ],
+          "purpose": "Open passenger door",
+          "action": "T reaches empty right hand to handle, grips, pulls hinged door fully open, releases handle.",
+          "boundary_state": "Passenger door open; T right hand free; P waiting clear.",
+          "camera": "Stable hand/hinge view with leg clearance."
+        },
+        {
+          "id": "shot_006",
+          "start_s": 21,
+          "end_s": 24,
+          "duration_s": 3,
+          "dependency_ids": [
+            "shot_005"
+          ],
+          "purpose": "Retrieve key",
+          "action": "T reaches to seat, grasps key fob, withdraws hand visibly.",
+          "boundary_state": "Key seat → T right hand; passenger door remains open.",
+          "camera": "Close view holds through grasp and withdrawal."
+        },
+        {
+          "id": "shot_007",
+          "start_s": 24,
+          "end_s": 30,
+          "duration_s": 6,
+          "dependency_ids": [
+            "shot_006"
+          ],
+          "purpose": "Reconcile after evidence",
+          "action": "P sees key and softens: “Sorry. I rushed you.” T processes and replies: “It is okay.”",
+          "boundary_state": "P apologetic → relieved; T defensive → reassured; key still T.",
+          "camera": "Two singles, quiet processing holds, same exterior axis."
+        },
+        {
+          "id": "shot_008",
+          "start_s": 30,
+          "end_s": 33,
+          "duration_s": 3,
+          "dependency_ids": [
+            "shot_007"
+          ],
+          "purpose": "Transfer key with clear release",
+          "action": "T extends key; P left hand grasps before T releases.",
+          "boundary_state": "Key T right → P left; T hands free; P right free.",
+          "camera": "Tight two-hand insert, no cut hiding release."
+        },
+        {
+          "id": "shot_009",
+          "start_s": 33,
+          "end_s": 39,
+          "duration_s": 6,
+          "dependency_ids": [
+            "shot_008"
+          ],
+          "purpose": "Reach driver side and open it",
+          "action": "P walks around car nose, free right hand contacts driver handle, opens door and releases handle.",
+          "boundary_state": "Driver door open; P outside driver seat, key in left hand; T waiting beside open passenger door.",
+          "camera": "Neutral frontal view re-establishes opposite side, then stable handle view."
+        },
+        {
+          "id": "shot_010",
+          "start_s": 39,
+          "end_s": 44,
+          "duration_s": 5,
+          "dependency_ids": [
+            "shot_009"
+          ],
+          "purpose": "Parent enters with readable support",
+          "action": "P turns, lowers onto driver seat, draws both legs in; key hand stays clear of door and body.",
+          "boundary_state": "P seated, both legs inside, driver door open, key in left hand.",
+          "camera": "Side medium holds until seated and limbs clear."
+        },
+        {
+          "id": "shot_011",
+          "start_s": 44,
+          "end_s": 48,
+          "duration_s": 4,
+          "dependency_ids": [
+            "shot_010"
+          ],
+          "purpose": "Teenager enters separately",
+          "action": "T turns into already-open passenger door, lowers onto seat and draws both legs in.",
+          "boundary_state": "Both seated with feet inside; both doors remain open.",
+          "camera": "Passenger-side medium; P unchanged offscreen."
+        },
+        {
+          "id": "shot_012",
+          "start_s": 48,
+          "end_s": 51,
+          "duration_s": 3,
+          "dependency_ids": [
+            "shot_011"
+          ],
+          "purpose": "Close doors only after clearance",
+          "action": "Two short inserts: T grasps inner pull and closes passenger door; P free right hand crosses to inner pull and closes driver door.",
+          "boundary_state": "Both doors closed and latched; key still P left.",
+          "camera": "Separate inner-pull views; latch events ordered, not implied simultaneous mechanics."
+        },
+        {
+          "id": "shot_013",
+          "start_s": 51,
+          "end_s": 56,
+          "duration_s": 5,
+          "dependency_ids": [
+            "shot_012"
+          ],
+          "purpose": "Secure occupants and free hands",
+          "action": "P places key in center tray, then both draw and buckle belts in held two-shot; P positions foot on brake.",
+          "boundary_state": "Key tray; both belted; P foot brake; engine OFF.",
+          "camera": "Interior two-shot; one simple repeated belt action per person."
+        },
+        {
+          "id": "shot_014",
+          "start_s": 56,
+          "end_s": 58,
+          "duration_s": 2,
+          "dependency_ids": [
+            "shot_013"
+          ],
+          "purpose": "Start after entry is complete",
+          "action": "P presses start button with right index finger; engine catches, then P selects Drive with the same free hand while foot stays on brake.",
+          "boundary_state": "Engine OFF → ON; gear Park → Drive; foot brake; both belted; doors closed; car stationary.",
+          "camera": "Two-second dedicated controls insert, visibly ordered button press and selector movement; ignition sound follows press."
+        },
+        {
+          "id": "shot_015",
+          "start_s": 58,
+          "end_s": 60,
+          "duration_s": 2,
+          "dependency_ids": [
+            "shot_014"
+          ],
+          "purpose": "Begin departure",
+          "action": "P looks along the established clear driveway and eases brake; car starts a slow straight roll away.",
+          "boundary_state": "Car moving away with both occupants, closed doors and key aboard.",
+          "camera": "Wide static exterior, wheels/road visible; no abrupt acceleration."
+        }
+      ],
+      "dialogue_timeline": [
+        {
+          "shot_id": "shot_002",
+          "speaker": "P",
+          "target_listener": "T",
+          "start_s": 0.3,
+          "end_s": 1.6,
+          "text": "We need to leave.",
+          "reaction_at_s": 2.0,
+          "intentional_overlap": false
+        },
+        {
+          "shot_id": "shot_002",
+          "speaker": "T",
+          "target_listener": "P",
+          "start_s": 2.5,
+          "end_s": 4.8,
+          "text": "I am looking for the key.",
+          "reaction_at_s": 5.3,
+          "intentional_overlap": false
+        },
+        {
+          "shot_id": "shot_007",
+          "speaker": "P",
+          "target_listener": "T",
+          "start_s": 0.3,
+          "end_s": 2.6,
+          "text": "Sorry. I rushed you.",
+          "reaction_at_s": 3.0,
+          "intentional_overlap": false
+        },
+        {
+          "shot_id": "shot_007",
+          "speaker": "T",
+          "target_listener": "P",
+          "start_s": 3.6,
+          "end_s": 4.8,
+          "text": "It is okay.",
+          "reaction_at_s": 5.2,
+          "intentional_overlap": false
+        }
+      ],
+      "reference_timeline": {
+        "identity_wardrobe": "Both characters all appearances; LOCKED once inspected.",
+        "kitchen": "shots 1–3 layout/light",
+        "driveway_car": "shots 3–15 location/hinges/handles/controls LOCKED",
+        "key": "shots 4,6–10,13 identity/shape LOCKED; location/ownership DERIVED",
+        "voice": "shots 2 and 7 approved sources only, separate from visual portraits"
+      },
+      "audio_timeline": {
+        "ambience": "Kitchen tone shots 1–3; separately timed driveway tone from exterior portion of shot 3 through shot 15, with explicit boundary bridge.",
+        "dialogue": "Proposed original lines at stated shot-relative intervals; separate recorded/produced tracks, visible-sync stage pending.",
+        "effects": "Footsteps 3/9; handle/hinge 5/9; key contact 6/8/13; latches 12; belts 13; ignition 14; engine/tires 15, all caused by corresponding visible actions.",
+        "music": "None proposed."
+      },
+      "generation_strategy": {
+        "type": "SHORT_SEGMENTS",
+        "reanchor_every_shots": 3,
+        "reset_shots": [
+          "shot_001",
+          "shot_003",
+          "shot_006",
+          "shot_009",
+          "shot_010",
+          "shot_013"
+        ],
+        "evidence_status": "PROPOSED",
+        "drift_budget": "No accepted identity, key ownership, door or occupant mismatch; review every join. Canonical assets anchor named properties; never recycle unaccepted frames."
+      },
+      "assembly_plan": {
+        "shot_ids": [
+          "shot_001",
+          "shot_002",
+          "shot_003",
+          "shot_004",
+          "shot_005",
+          "shot_006",
+          "shot_007",
+          "shot_008",
+          "shot_009",
+          "shot_010",
+          "shot_011",
+          "shot_012",
+          "shot_013",
+          "shot_014",
+          "shot_015"
+        ],
+        "target_duration_s": 60,
+        "fps": 24,
+        "codec": "h264",
+        "container": "mp4",
+        "format_status": "PROPOSED, subject to compatible frame-grid negotiation",
+        "audio_alignment": "REQUIRES_REVIEW",
+        "qa": "Verify discovery before apology, transfer before key placement/start, limbs before door closure, both belts before motion. Inspect actual faces, contact, support and sound; no media PASS inferred."
+      }
+    },
+    {
+      "id": "G-012",
+      "request": "A four-person rescue team with a dog, drone, damaged van, storm, radio dialogue, and a collapsing bridge must coordinate a rescue over ninety seconds.",
+      "execution_mode": "PLAN_ONLY",
+      "result_class": "SUPPORTED_PLAN",
+      "decision": "PROPOSED_TREATMENT",
+      "execution_status": "BLOCKED_PENDING_SCOPED_PREREQUISITES",
+      "reason": "The rescue has explicit roles, drone landing, introduced stretcher, lift/lower phases and connected safe-route geography.",
+      "preserved_intent": "Four-person team, dog, drone, damaged van, storm, radio coordination and collapsing bridge over ninety seconds.",
+      "evidence_gap": "Actual references, voices, weather/motion/VFX support absent. Proposed rescue target and geometry need creative review, not missing action insertion.",
+      "evidence_required": "Bind each role and visual anchor; confirm current drone/contact/storm/collapse and reference-conditioning capabilities; review actual frames/audio before acceptance.",
+      "next_action": "Compile three thirty-second segments with the covered landing, stretcher and support transitions; verify runtime support before execution.",
+      "media_checks": "NOT_RUN",
+      "creative_proposals": [
+        "One exhausted but ambulatory fictional adult casualty on near-bank bridge approach; no injury treatment claims or fifth rescuer.",
+        "Bridge central span collapses; team never crosses it. Near-bank evacuation lane connects casualty to van about six metres away and lies outside the collapse footprint.",
+        "Damaged van is immobile but supplies staging shelter; unfolded stretcher rests on ground beside it in the opening shot."
+      ],
+      "scene_bible": {
+        "roles": {
+          "A": "Commander, handheld radio, directs route and counts team",
+          "B": "Dog handler; left hand holds leash throughout",
+          "C": "Medic/rescuer; front stretcher grip",
+          "D": "Drone operator, then rear stretcher grip only after landing and controller release"
+        },
+        "initial_state": "Four rescuers by immobile van; dog with B; drone on clear pad, rotors stopped; controller on van hood; unfolded empty stretcher on ground; casualty stranded on visible safe near-bank approach.",
+        "geography": "Van staging left → six-metre clear near-bank lane → casualty right; collapsing span behind casualty, across a barrier/offset from lane.",
+        "world": "Consistent rain direction, overcast storm light and wet reflections; van damage and bridge topology persist."
+      },
+      "shots": [
+        {
+          "id": "shot_001",
+          "start_s": 0,
+          "end_s": 8,
+          "duration_s": 8,
+          "dependency_ids": [],
+          "purpose": "Establish roles, threat and all physical prerequisites",
+          "action": "Wide shows four team members, leashed dog, drone pad, controller on van hood, unfolded stretcher and damaged van; bridge cracks beyond safe lane.",
+          "boundary_state": "All introduced equipment has a known starting position.",
+          "camera": "Wide static 35 mm intent; hold long enough to read safe route."
+        },
+        {
+          "id": "shot_002",
+          "start_s": 8,
+          "end_s": 14,
+          "duration_s": 6,
+          "dependency_ids": [
+            "shot_001"
+          ],
+          "purpose": "Assign coordinated tasks",
+          "action": "A raises radio: “Scout the approach.” D looks to A then controller. B kneels beside dog, staying clear of pad.",
+          "boundary_state": "D has task; B dog-control unchanged; A radio returns to relaxed hand.",
+          "camera": "Medium A/D, insert B reaction after order."
+        },
+        {
+          "id": "shot_003",
+          "start_s": 14,
+          "end_s": 21,
+          "duration_s": 7,
+          "dependency_ids": [
+            "shot_002"
+          ],
+          "purpose": "Launch without conflicting hand tasks",
+          "action": "D picks controller from hood, thumbs launch; drone lifts from already established pad and stabilizes.",
+          "boundary_state": "D both hands on controller; drone airborne.",
+          "camera": "Controller/launch pad coverage; dog and people outside rotor clearance."
+        },
+        {
+          "id": "shot_004",
+          "start_s": 21,
+          "end_s": 26,
+          "duration_s": 5,
+          "dependency_ids": [
+            "shot_003"
+          ],
+          "purpose": "Scout casualty and danger",
+          "action": "Drone camera reveals casualty on near bank and widening central-span crack, showing connecting safe lane.",
+          "boundary_state": "Casualty located on safe route; bridge cracking before collapse.",
+          "camera": "Short motivated aerial reveal, retain bank/van orientation."
+        },
+        {
+          "id": "shot_005",
+          "start_s": 26,
+          "end_s": 30,
+          "duration_s": 4,
+          "dependency_ids": [
+            "shot_004"
+          ],
+          "purpose": "Report then acknowledge",
+          "action": "D keeps controller in both hands and speaks through headset: “Near bank. Clear route.” A hears and acknowledges, “Bring it down.”",
+          "boundary_state": "Landing instruction delivered; no controller hand freed yet.",
+          "camera": "D headset visible; cut to A processing then acknowledgment."
+        },
+        {
+          "id": "shot_006",
+          "start_s": 30,
+          "end_s": 36,
+          "duration_s": 6,
+          "dependency_ids": [
+            "shot_005"
+          ],
+          "purpose": "Land and explicitly free operator hands",
+          "action": "D commands descent; drone contacts clear pad, motors stop; D places controller on hood and releases both hands.",
+          "boundary_state": "Drone landed/rotors stopped; controller hood; D hands free.",
+          "camera": "Hold touchdown then stop, cut to controller release; no drone retrieval needed because pad is safe."
+        },
+        {
+          "id": "shot_007",
+          "start_s": 36,
+          "end_s": 42,
+          "duration_s": 6,
+          "dependency_ids": [
+            "shot_006"
+          ],
+          "purpose": "Dog leads handler to located casualty",
+          "action": "B and dog follow lane; dog stops and indicates casualty, B halts at leash length.",
+          "boundary_state": "B/dog at casualty, leash held; route traveled in established direction.",
+          "camera": "Side medium, canine anatomy/support visible."
+        },
+        {
+          "id": "shot_008",
+          "start_s": 42,
+          "end_s": 49,
+          "duration_s": 7,
+          "dependency_ids": [
+            "shot_007"
+          ],
+          "purpose": "Bring the already introduced stretcher",
+          "action": "C and D grasp opposite empty-stretcher ends, lift from staging ground, carry along six-metre lane, and lower next to casualty until supported before releasing.",
+          "boundary_state": "Stretcher ground staging → C/D carry → ground beside casualty; hands free after set-down.",
+          "camera": "Wide contact coverage with short explicit elapsed-walk cut; no teleport. A stays at staging route entrance."
+        },
+        {
+          "id": "shot_009",
+          "start_s": 49,
+          "end_s": 56,
+          "duration_s": 7,
+          "dependency_ids": [
+            "shot_008"
+          ],
+          "purpose": "Casualty boards with visible support",
+          "action": "C offers forearm support; exhausted ambulatory casualty sits onto grounded stretcher and brings legs up while D steadies frame. C releases support once casualty lies securely.",
+          "boundary_state": "Casualty supported by grounded stretcher; C/D hands free to change grip.",
+          "camera": "Medium side view, preserve weight/support; no medical diagnosis implied."
+        },
+        {
+          "id": "shot_010",
+          "start_s": 56,
+          "end_s": 60,
+          "duration_s": 4,
+          "dependency_ids": [
+            "shot_009"
+          ],
+          "purpose": "Coordinated lift",
+          "action": "C/D each take designated end grips, exchange gaze, lift together on C’s “Lift.” B holds dog clear.",
+          "boundary_state": "Casualty/stretcher borne by C front/D rear, level and clear of ground.",
+          "camera": "Static medium-wide holds grasp through lift."
+        },
+        {
+          "id": "shot_011",
+          "start_s": 60,
+          "end_s": 70,
+          "duration_s": 10,
+          "dependency_ids": [
+            "shot_010"
+          ],
+          "purpose": "Evacuate before collapse",
+          "action": "A walks ahead indicating clear lane with free hand, C/D carry six metres toward van; B/dog follow with leash slack outside stretcher lane.",
+          "boundary_state": "All near van; casualty continuously supported; drone remains landed behind protected staging edge.",
+          "camera": "Wide side follow with constant screen direction; no simultaneous operator task."
+        },
+        {
+          "id": "shot_012",
+          "start_s": 70,
+          "end_s": 77,
+          "duration_s": 7,
+          "dependency_ids": [
+            "shot_011"
+          ],
+          "purpose": "Show collapse and controlled response",
+          "action": "Central span breaks following established cracking; team sees/hears it from safe staging. C/D hold level grips, briefly stop, then continue last step; B keeps dog beside leg.",
+          "boundary_state": "Bridge collapsed; team on same safe near bank; support and ownership unchanged.",
+          "camera": "Separate structural wide and team reaction coverage, no cut implying they stood on failed span."
+        },
+        {
+          "id": "shot_013",
+          "start_s": 77,
+          "end_s": 84,
+          "duration_s": 7,
+          "dependency_ids": [
+            "shot_012"
+          ],
+          "purpose": "Lower and release only on support",
+          "action": "C/D lower stretcher beside van onto level ground, maintain grips until all feet contact, then release; C checks casualty responsiveness.",
+          "boundary_state": "Stretcher ground-supported; C/D hands free; casualty safe beside van.",
+          "camera": "Medium-wide holds contact; insert release after support."
+        },
+        {
+          "id": "shot_014",
+          "start_s": 84,
+          "end_s": 90,
+          "duration_s": 6,
+          "dependency_ids": [
+            "shot_013"
+          ],
+          "purpose": "Account for rescue outcome",
+          "action": "A visually counts four team members and casualty, checks dog beside B, then radios “Team and casualty safe.” Dog settles; hold final grouping.",
+          "boundary_state": "Four team members, one casualty and dog safe; drone landed, van stationary, bridge collapsed.",
+          "camera": "Wide resolves geography then A radio close; count precedes report."
+        }
+      ],
+      "dialogue_timeline": [
+        {
+          "shot_id": "shot_002",
+          "speaker": "A",
+          "target_listener": "D",
+          "start_s": 0.7,
+          "end_s": 2.2,
+          "text": "Scout the approach.",
+          "reaction_at_s": 2.7
+        },
+        {
+          "shot_id": "shot_005",
+          "speaker": "D",
+          "target_listener": "A",
+          "start_s": 0.1,
+          "end_s": 1.6,
+          "text": "Near bank. Clear route.",
+          "reaction_at_s": 1.9
+        },
+        {
+          "shot_id": "shot_005",
+          "speaker": "A",
+          "target_listener": "D",
+          "start_s": 2.2,
+          "end_s": 3.4,
+          "text": "Bring it down."
+        },
+        {
+          "shot_id": "shot_010",
+          "speaker": "C",
+          "target_listener": "D",
+          "start_s": 1.1,
+          "end_s": 1.6,
+          "text": "Lift.",
+          "reaction_at_s": 1.8
+        },
+        {
+          "shot_id": "shot_014",
+          "speaker": "A",
+          "target_listener": "radio_dispatch",
+          "start_s": 3.0,
+          "end_s": 5.0,
+          "text": "Team and casualty safe."
+        }
+      ],
+      "reference_timeline": {
+        "identity": "A/B/C/D separate LOCKED references in every appearance; casualty fictional non-identifying proposal.",
+        "dog": "S1/2/7/9–14 markings/species LOCKED, leash relationship DERIVED.",
+        "van": "S1/3/6/8/11–14 geometry and damage LOCKED.",
+        "drone": "S1/3/4/6 controlled asset/rotor geometry LOCKED; landed continuity after S6.",
+        "bridge": "S1/4/12/14 geography LOCKED, cracking→collapse authored transient state.",
+        "storm": "All shots direction/light LOCKED within allowed variation.",
+        "voices": "Radio/onsite lines bind approved sources separately; portraits do not anchor voice.",
+        "stretcher": "Introduced S1, moved S8 onward; geometry LOCKED to a new proposed prop reference."
+      },
+      "audio_timeline": {
+        "ambience": "Rain/wind each shot with explicit per-shot records bridged across all three segments; level dips around radio.",
+        "dialogue": "Five proposed lines timed above; A handheld radio, D hands-free headset; supplied/produced voice sources pending.",
+        "effects": "Drone launch/rotors S3–6, stop exactly on S6 motor event; footsteps S7/8/11; stretcher contact S8/9/10/13; crack precursors S1/4 then break/impact S12; dog collar movement follows actual movement.",
+        "music": "None required; no invented licensed score."
+      },
+      "generation_strategy": {
+        "type": "SHORT_SEGMENTS",
+        "segments": [
+          {
+            "start_s": 0,
+            "end_s": 30,
+            "shots": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "start_s": 30,
+            "end_s": 60,
+            "shots": [
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          {
+            "start_s": 60,
+            "end_s": 90,
+            "shots": [
+              11,
+              12,
+              13,
+              14
+            ]
+          }
+        ],
+        "reanchor_every_shots": 3,
+        "reset_shots": [
+          "shot_001",
+          "shot_004",
+          "shot_006",
+          "shot_008",
+          "shot_011",
+          "shot_012",
+          "shot_014"
+        ],
+        "evidence_status": "PROPOSED",
+        "drift_budget": "No unreviewed role, support, drone-state or safe-route mismatch; inspect every segment join and all lift/contact/collapse shots. Use canonical named-property anchors; model-specific conditioning unconfirmed."
+      },
+      "assembly_plan": {
+        "shot_ids": [
+          "shot_001",
+          "shot_002",
+          "shot_003",
+          "shot_004",
+          "shot_005",
+          "shot_006",
+          "shot_007",
+          "shot_008",
+          "shot_009",
+          "shot_010",
+          "shot_011",
+          "shot_012",
+          "shot_013",
+          "shot_014"
+        ],
+        "target_duration_s": 90,
+        "fps": 24,
+        "codec": "h264",
+        "container": "mp4",
+        "format_status": "PROPOSED pending profile frame grid",
+        "audio_alignment": "REQUIRES_REVIEW",
+        "qa": "Review four rescuer identities/roles; controller release before stretcher grip; preintroduced prop; support before release; dog/leash/rotor clearance; bridge failure footprint and van immobility; actual collapse physics and audible radio. No generated-media checks have run."
+      }
+    },
+    {
+      "id": "ADV-002",
+      "request": "Front portrait says blue jacket; wardrobe reference says red jacket",
+      "execution_mode": "PLAN_ONLY",
+      "result_class": "BLOCKED",
+      "decision": "ASK",
+      "execution_status": "BLOCKED_PENDING_SCOPED_PREREQUISITES",
+      "reason": "Blue portrait clothing and red wardrobe reference conflict; narrower scope suggests a proposal but does not establish user precedence.",
+      "preserved_intent": "Retain protagonist identity and a deliberately chosen jacket color.",
+      "evidence_gap": "Which supplied color governs is unspecified.",
+      "evidence_required": "User precedence for blue versus red, or already documented explicit priority.",
+      "next_action": "Ask: Which jacket color should govern, blue or red? Continue identity and scene planning with the wardrobe binding unresolved.",
+      "media_checks": "NOT_RUN",
+      "proposed_response": "Keep both source links and a named jacket-color conflict. Portrait may anchor face independently. Proposed red-from-wardrobe branch and blue-from-portrait branch remain separate; neither is silently promoted to LOCKED. Only color-dependent prompt compilation/execution is blocked."
+    },
+    {
+      "id": "ADV-006",
+      "request": "User requests a 60-second continuous take from a 5-second-only profile",
+      "execution_mode": "PLAN_ONLY",
+      "result_class": "DEGRADED_PLAN",
+      "decision": "DEGRADED",
+      "execution_status": "BLOCKED_PENDING_SCOPED_PREREQUISITES",
+      "reason": "The evidenced five-second limit cannot fulfill an unbroken sixty-second take, but segmented narrative coverage is plannable.",
+      "preserved_intent": "Preserve sixty seconds of action and continuity of subjects/world.",
+      "evidence_gap": "No longer-duration continuous capability or validated extension; segmentation changes the hard continuous-take requirement.",
+      "evidence_required": "Verified longer-capable profile/probe if continuity is non-negotiable; explicit acceptance of cuts before executing fallback.",
+      "next_action": "Offer twelve five-second shots now as an alternative, while keeping the originally requested continuous execution blocked.",
+      "media_checks": "NOT_RUN",
+      "proposed_response": "Use 12×5 s clips with causal start/end states, visible cuts at action boundaries and canonical resets at clips 1/4/7/10 plus any contact/location change. Preserve total 60 s with continuous audio and verify every join. Record weakened requirement: uninterrupted camera time. Do not claim hidden joins are a genuinely continuous take. Without acceptance of that change, pursue a verified longer-duration path."
+    },
+    {
+      "id": "ADV-007",
+      "request": "Camera performs a 270-degree axis crossing with no motivation",
+      "execution_mode": "PLAN_ONLY",
+      "result_class": "DEGRADED_PLAN",
+      "decision": "SPLIT",
+      "execution_status": "BLOCKED_PENDING_SCOPED_PREREQUISITES",
+      "reason": "The unexplained 270-degree orbit lacks a reveal and can reverse readable screen geography.",
+      "preserved_intent": "Retain a dramatic change of viewpoint and reveal scale.",
+      "evidence_gap": "No motivation, subject layout or demonstrated camera control.",
+      "evidence_required": "Named audience reveal, layout/eyelines and actual orbit capability if exact angle remains essential.",
+      "next_action": "Propose three motivated coverage units; retain original 270-degree motion as an explicitly unfulfilled alternative until its purpose is defined.",
+      "media_checks": "NOT_RUN",
+      "proposed_response": "Proposed coverage: establish subject A left and their attention target right; cut to neutral frontal gaze/reaction view; cut to the opposite-side reveal of what A notices, then re-establish both positions. This substitutes readable coverage for the unmotivated full orbit. If a continuous 270-degree move is essential, motivate it around A to reveal a specific previously hidden target and map the evolving axis before execution; do not infer a purpose as fact."
+    },
+    {
+      "id": "ADV-010",
+      "request": "Requested model feature “native audio + perfect lip-sync” has no profile evidence",
+      "execution_mode": "PLAN_ONLY",
+      "result_class": "DEGRADED_PLAN",
+      "decision": "DEGRADED",
+      "execution_status": "BLOCKED_PENDING_SCOPED_PREREQUISITES",
+      "reason": "Unknown native audio and sync support permit a separate-stage plan but no claim of perfect output.",
+      "preserved_intent": "Preserve dialogue, performance and convincing audiovisual alignment.",
+      "evidence_gap": "Native audio, visible-speech integration and phonetic accuracy unverified.",
+      "evidence_required": "Approved timed audio, exact verified sync input/output contract and actual face-visible/audio alignment observations.",
+      "next_action": "Plan separate audio production and sync with exact stage contracts; block native joint execution and keep unverified sync pending.",
+      "media_checks": "NOT_RUN",
+      "proposed_response": "First lock dialogue/speaker timing using supplied or approved original voice tracks. Generate face-visible listening/speaking coverage consistent with those intervals. Sync stage input: reviewed face video plus exact WAV dialogue and shot offsets; output: versioned synchronized video with original tracks preserved. Mux dialogue, ambience and caused effects separately, then inspect mouth timing and listen. If no sync path is supported, propose speaker audio over listener/object cutaways, explicitly weakening visible speaking. Perfect sync is replaced by reviewed observable tolerance, never promised."
+    },
+    {
+      "id": "ADV-013",
+      "request": "User requests a real person’s voice/face without consent/provenance",
+      "execution_mode": "PLAN_ONLY",
+      "result_class": "BLOCKED",
+      "decision": "BLOCK",
+      "execution_status": "BLOCKED_PENDING_SCOPED_PREREQUISITES",
+      "reason": "Requested real-person face/voice binding lacks scoped consent/provenance; unrelated fictional planning can continue.",
+      "preserved_intent": "Keep desired scene, emotional performance and dialogue.",
+      "evidence_gap": "Source and permission for this likeness, voice and intended audience/transfer are unknown.",
+      "evidence_required": "Scoped reference authority and intended permitted use; independent operator verification rather than self-certified fields.",
+      "next_action": "Hold only real-person bindings. Ask for relevant source/use authority; meanwhile author the scene with a fictional face and original non-imitative voice as a declared alternative.",
+      "media_checks": "NOT_RUN",
+      "proposed_response": "Mark face and voice authority UNKNOWN separately; do not infer permission from possession of a file or bind either to generation yet. Keep composition, timing and character objectives in the treatment. A fictional identity and licensed/original voice can preserve the scene without assuming the unavailable authority. No runtime, transfer or publication is authorized by this plan."
+    },
+    {
+      "id": "ADV-016",
+      "request": "“No hands errors, no physics errors” is provided as the only execution constraint",
+      "execution_mode": "PLAN_ONLY",
+      "result_class": "DEGRADED_PLAN",
+      "decision": "DEGRADED",
+      "execution_status": "BLOCKED_PENDING_SCOPED_PREREQUISITES",
+      "reason": "Blanket negatives are generation hints, not physical controls or observable acceptance contracts.",
+      "preserved_intent": "Reduce hand/anatomy and physics defects.",
+      "evidence_gap": "Specific scene, contacts, model and supported controls absent.",
+      "evidence_required": "Concrete action/participants plus exact runtime controls and actual contact/anatomy observations.",
+      "next_action": "Provide a risk-scoped constraint plan now; obtain only the scene details needed to instantiate its contacts before execution.",
+      "media_checks": "NOT_RUN",
+      "proposed_response": "Replace the blanket guarantee with: INPUT_REQUIREMENT for reference geometry; GENERATION_HINT for readable, separated contact phases; QA_ASSERTION that hands retain stable anatomy and props do not intersect or duplicate; QA_ASSERTION that grasp precedes lift/release and articulated motion follows the correct hinge; ASSEMBLY_RULE to hold contact visibly. For a handoff, propose approach → grasp → shared support → donor release; for a door, approach → handle contact → hinge rotation. These are conditional examples, not an invented user scene. Bind RUNTIME_CONTROL only if supported; failed contact gets one bounded repair proposal, not a promise of zero errors."
+    }
+  ],
+  "g004_cli_rerun": {
+    "request_id": "G-004",
+    "authored_treatment_unchanged_from": "verification/forward-plan-example.json:authored_treatment",
+    "treatment_sha256": "8e9b47d156bd3b9ac51b38c55f81d8de0777680b93029fcd5405b39402ba658b",
+    "temporary_directory": "/tmp/vge-forward-r2-9vxsoicv",
+    "commands": [
+      {
+        "argv": [
+          "prepare",
+          "/tmp/vge-forward-r2-9vxsoicv/treatment.json",
+          "--output",
+          "/tmp/vge-forward-r2-9vxsoicv/plan.json"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "validate",
+          "/tmp/vge-forward-r2-9vxsoicv/plan.json"
+        ],
+        "exit_code": 0,
+        "stdout": "{\n  \"status\": \"PASS\",\n  \"scope\": \"STRUCTURAL_PLAN_ONLY\",\n  \"issues\": [],\n  \"shot_order\": [\n    \"shot_001\",\n    \"shot_002\",\n    \"shot_003\",\n    \"shot_004\"\n  ],\n  \"end_states\": {\n    \"shot_001\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"departing_train\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"frustrated\",\n      \"subject_b.gaze\": \"departing_train\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_002\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"subject_b\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"processing\",\n      \"subject_b.gaze\": \"subject_a\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_003\": {\n      \"subject_a.emotion\": \"defensive\",\n      \"subject_a.gaze\": \"subject_b\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"sympathetic\",\n      \"subject_b.gaze\": \"subject_a\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    },\n    \"shot_004\": {\n      \"subject_a.emotion\": \"relieved\",\n      \"subject_a.gaze\": \"subject_b\",\n      \"subject_a.position\": \"camera_left\",\n      \"subject_b.emotion\": \"sympathetic\",\n      \"subject_b.gaze\": \"subject_a\",\n      \"subject_b.position\": \"camera_right\",\n      \"train_001.state\": \"departing\"\n    }\n  },\n  \"limitations\": [\n    \"Does not verify visual identity, physics, editorial quality or model feasibility\"\n  ]\n}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "compile",
+          "/tmp/vge-forward-r2-9vxsoicv/plan.json",
+          "--output",
+          "/tmp/vge-forward-r2-9vxsoicv/prompts.json"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "artifact_hashes": {
+      "plan.json": "b38e505548a0854f3d9411c3e1d7ef175ea02fe2091e67eb7136d318548cbb46",
+      "prompts.json": "515a869d9c494528cb68ac1f60a9627d946a7df13dfdbbd38af581ace53fcb76"
+    }
+  }
+}

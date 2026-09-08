@@ -1,0 +1,154 @@
+{
+  "observed_at": "2026-09-08T11:57:50.155617+00:00",
+  "scope": "structural documentation inspection; no runtime or external source validation",
+  "python": "3.12.3",
+  "pyyaml": "6.0.1",
+  "documents": 39,
+  "yaml_blocks": 48,
+  "yaml_errors": [],
+  "local_markdown_links": 378,
+  "local_link_errors": [],
+  "requirements": 79,
+  "missing_traceability_ids": [],
+  "implicit_yaml_booleans": [],
+  "profile_comparison": {
+    "same_id_revision": true,
+    "contract_modes": [
+      "T2V",
+      "I2V",
+      "TI2V",
+      "FLF2V"
+    ],
+    "adapter_modes": [
+      "T2V",
+      "I2V",
+      "TI2V",
+      "FLF2V"
+    ],
+    "contract_limit_keys": [
+      "duration_s",
+      "frame_count",
+      "resolution",
+      "vram"
+    ],
+    "adapter_limit_keys": [
+      "duration_s",
+      "frame_count",
+      "resolution",
+      "vram"
+    ],
+    "contract_camera_keys": [
+      "status",
+      "syntax"
+    ],
+    "adapter_camera_keys": [
+      "status",
+      "syntax"
+    ]
+  },
+  "prompt_view_omissions": {
+    "contract_has_top_level": true,
+    "adapter_has_top_level": true,
+    "adapter_nested_only": false
+  },
+  "observation_example": {
+    "aggregate": "PARTIAL",
+    "checks": [
+      "PARTIAL"
+    ]
+  },
+  "docs_sha256": {
+    "docs/00-index.md": "39774fe5e387925c63b2cae5312664aa949730f172cab89bb5bd783412df4147",
+    "docs/BLUEPRINT.md": "62c04a55fe991a8f094db47d661ab6fa70fbe20e26f0adbfda402eba78f6fc1d",
+    "docs/README.md": "3e161915e23934b205ac0d9c8bd0bf763d2a6bc5b0bffc7c7148c5670b68fa7b",
+    "docs/acceptance.md": "fdc830e6444394e75eb00b8281862032c2d3507ef54832d03a3349f31c578f44",
+    "docs/adr/ADR-001-documentation-first.md": "d7cbc35fd3260b94fb04fa5ec96aa64f275890e49b1b4fc95fc8c72bc716d47d",
+    "docs/adr/ADR-002-canonical-scene-model.md": "295a19b5aa40e0381e130fc4604abff2177d3268aab9ab92c94a3f7932f5c1df",
+    "docs/adr/ADR-003-model-agnostic-adapters.md": "c73f63e8a60127fa29f7a34fe9d7847b9ac657c71d7195edf13efe7289a68026",
+    "docs/adr/ADR-004-continuity-state-and-shot-graph.md": "a37d7547898257c0241e1bb37b107dc125b2a1b66e935dff2bfd5a3581c53d82",
+    "docs/adr/ADR-005-prompt-compiler.md": "2ab6ebcc89fda2e8161acfb444136679597ddbd2c19cc865ee945da2ae05f52d",
+    "docs/adr/ADR-006-long-form-decomposition.md": "bd0e33c508c0b0eea7a680ae761a28f4a41b35217a864c009b43d527cfac5135",
+    "docs/adr/ADR-007-dialogue-audio-separation.md": "f23ee7d8aadc139e05563da218ebad18d14d002a14f1efad84fbd72ac74a4c8c",
+    "docs/adr/ADR-008-pattern-library.md": "2fff5af2cd6b1941e838917a6f66dac3478cd53fb37c067e7bfad9fa563a8fb6",
+    "docs/adr/ADR-009-instructions-vs-tools.md": "95dcdfe9ccd1259b6ec854cc41f877e6a7607bc4702db57c5c59d993c20e7ce4",
+    "docs/adr/ADR-010-production-skill-structure.md": "8aa7f5fdef6483dc48e857c090319dfbab497cd7bab28eb34a29745e3aa1a058",
+    "docs/adversarial-scenarios.md": "fa158d1ace968b98852c629ab2399a64d3db9b3f555ae4094ccbb4cc99f96f70",
+    "docs/architecture.md": "ffd8e7775340235bacee51624a07ea5f619eba8fe82dd020348ea43df6a642e6",
+    "docs/comfyui-execution.md": "57c60fd2afefd84c4738ef49ac751ccabf3b7d1091de2d4806fe5c199e1faf7c",
+    "docs/constraints.md": "dcfafdf52c601d235107cfd88be053e7029eb7a9e41fc935a2c48cf50fa6d29a",
+    "docs/continuity-engine.md": "54f88418b5dec1111a5e84c2be0b4f9e9a661bda62da58eee0cac59de0ec29e8",
+    "docs/contracts.md": "c0c4aa8343fd9bd002a83686bf9782028332f2313864499fdff641be39f6c712",
+    "docs/directing.md": "73d609cce5c564d963d208a08c88f0a7d71dc7677e56cde3e24f5aa1ba97184d",
+    "docs/domain-model.md": "6e70f12acaba6d23296afc25982e2d61fed2a3ec5bf9e3edd0d195cc3a02800a",
+    "docs/failure-and-evals.md": "f3ef1bceb014a427179e5a94995dc0752c1fcc41703f325e937d1ac791190126",
+    "docs/golden-scenarios.md": "4b9875e53f57472732ae4e037829f548c55a2d26d5f6cb73c690e10028393873",
+    "docs/model-adaptation.md": "767acfb6acb7508f2b609e3e4ffe1b35c4cf5b788f55f09fe90ac53025e3d950",
+    "docs/observability.md": "592d79ba437b35807aa8b462e8ecc8faa9874ff4b5d4ac98bf6879aca37b08a0",
+    "docs/open-questions.md": "80e8957bac5ed98dc4bb660758282d54a3e7e3af44f599f61cc5ecad7e702a18",
+    "docs/pattern-library.md": "1c9ebf42ac82c63752b6a164153b82ff80cf981c4030dfc1a24d890aad0d6aa0",
+    "docs/phase-0-report.md": "93facfa96af9b6eda92aa87333ffe85aea3e2ead363cf7aa8b71b963b055ae1d",
+    "docs/progressive-disclosure.md": "8566b0fb31aecf1ddc2a758e50b65ba6a99ce98622ec1485a32d5518590b685c",
+    "docs/proposed-skill-structure.md": "c801f553181aa9f7bc021132382f9f7206572bad43c3f1f3fa8c945df9ec884e",
+    "docs/requirements.md": "ed121bc91c143aad118797fec75ca74c090cbfe6c1832d8de144a80aef7f1ebd",
+    "docs/research.md": "710e937c7b4650e661998cac668e2f5834d5334ab629c74f541d5900e100b704",
+    "docs/roadmap.md": "00d3b73e51851423f1c79282ecc99654d62a19191bf9b632f1fa007381f85ca2",
+    "docs/safety-boundaries.md": "552c4b77e082391bf778a57d085caecd4ca5b628aa45e94c00326456ca79dc3b",
+    "docs/scene-and-continuity.md": "7eee492ca0fdc7507d42670b1c7317d18bb30507d62fee8fa7814aeb57980d3f",
+    "docs/state-model.md": "0db64b0c32a3f3192b0550d783dabe3d1710e408980cb4c412102e62feceecbb",
+    "docs/traceability.md": "aea8cd9c5ae1466b77dc790839e589dcb074cd148402175c4a08d0c9fe19a605",
+    "docs/vision-and-scope.md": "37d8e85f848f5264e6aec8df292b4d6c4c03ab00b5324a350ea4271e0271b3e4"
+  },
+  "audit_revision": "r4",
+  "complete_profile_parity": true,
+  "collection_parity": true,
+  "collection_shape": {
+    "fields": [
+      "artifact_ref",
+      "collected_at",
+      "generation_status",
+      "id",
+      "media",
+      "quality_review",
+      "runtime",
+      "schema_version",
+      "shot_id"
+    ],
+    "runtime_fields": [
+      "endpoint",
+      "provider",
+      "workflow_hash"
+    ],
+    "artifact_ref": "outputs/shot_002_v01.mp4",
+    "workflow_hash": "sha256:pending"
+  },
+  "execution_observations": [
+    {
+      "id": "obs_shot_002_001",
+      "status": "NOT_RUN",
+      "missing_canonical_fields": [],
+      "has_timestamp": false,
+      "has_procedure": false,
+      "check_count": 0
+    },
+    {
+      "id": "obs_shot_002_001",
+      "status": "PARTIAL",
+      "missing_canonical_fields": [],
+      "has_timestamp": true,
+      "has_procedure": true,
+      "check_count": 1
+    }
+  ],
+  "changes_since_r3": [
+    "docs/00-index.md",
+    "docs/README.md",
+    "docs/acceptance.md",
+    "docs/architecture.md",
+    "docs/comfyui-execution.md",
+    "docs/continuity-engine.md",
+    "docs/contracts.md",
+    "docs/domain-model.md",
+    "docs/phase-0-report.md",
+    "docs/state-model.md"
+  ]
+}

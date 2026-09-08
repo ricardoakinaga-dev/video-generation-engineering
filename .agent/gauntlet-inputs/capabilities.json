@@ -1,0 +1,7 @@
+{
+  "fresh_context": true,
+  "filesystem_isolation": "shared workspace; critics read-only by contract with fingerprint sentinel",
+  "max_concurrency": 2,
+  "wait_supported": true,
+  "notes": "Lead edits; delegated critics must not mutate workspace or .gauntlet state."
+}

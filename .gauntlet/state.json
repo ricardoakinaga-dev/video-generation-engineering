@@ -1,0 +1,863 @@
+{
+  "artifact_fingerprint": {
+    "algorithm": "sha256-v1",
+    "captured_at": "2026-09-08T03:26:45Z",
+    "details": {
+      "files": [
+        {
+          "path": ".agent/PLANS.md",
+          "sha256": "2af081eac2b34cec2b03d016989e5e6aa197a519bc74cb0f768b0c2b44e5dbcc",
+          "size": 588,
+          "type": "file"
+        },
+        {
+          "path": ".agent/authority.jsonl",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": "file"
+        },
+        {
+          "path": ".agent/backlog.json",
+          "sha256": "3824babd204e336e4df6624d208e455e56796dfb053281a431e349ab504a4896",
+          "size": 1844,
+          "type": "file"
+        },
+        {
+          "path": ".agent/execution-log.jsonl",
+          "sha256": "026a189ab7f4545e70415c85ded33a3495cf78d81b8d328b01463e626189e358",
+          "size": 12254,
+          "type": "file"
+        },
+        {
+          "path": ".agent/gauntlet-inputs/bar.json",
+          "sha256": "38e5f8e0ae175b8d29c2d05327ec874536efe44aaf5be467dc02e52ad99d7ccd",
+          "size": 31275,
+          "type": "file"
+        },
+        {
+          "path": ".agent/gauntlet-inputs/budget.json",
+          "sha256": "4c7d8a964604ccc54c158e458b69f800f9e97e8c4d65e4bc4af37238004444c1",
+          "size": 203,
+          "type": "file"
+        },
+        {
+          "path": ".agent/gauntlet-inputs/capabilities.json",
+          "sha256": "bfbc6fcb0f619645888552c3b95cfe9893f957edf4df3ec20127fd1b11d45348",
+          "size": 271,
+          "type": "file"
+        },
+        {
+          "path": ".agent/plans/documentation-baseline.md",
+          "sha256": "46242c80a64aeec4cee207f60ab2bedc462915a81c0f4136cb77b18a83dec29f",
+          "size": 17030,
+          "type": "file"
+        },
+        {
+          "path": ".agent/plans/phase0-master-prompt.md",
+          "sha256": "b7d07e95f67c99ff0b94025d50296c24f477428a7e2e6e37c5ad11a8167a19bb",
+          "size": 7353,
+          "type": "file"
+        },
+        {
+          "path": ".agent/state.json",
+          "sha256": "268a547eaf642029948f5e2e430bba0c2ec230e7f9b7ab4bae4da3d42c19ee05",
+          "size": 1313,
+          "type": "file"
+        },
+        {
+          "path": ".agent/verification.jsonl",
+          "sha256": "36c4026ecae602ef7d70c62e0ee77808024df4a2eddda05c475688b6de2702f0",
+          "size": 10987,
+          "type": "file"
+        },
+        {
+          "path": "docs/00-index.md",
+          "sha256": "367d26b0fed812a787308e81c8653bd7af2d112802f2d8418e44a98e5bdf2f2f",
+          "size": 9454,
+          "type": "file"
+        },
+        {
+          "path": "docs/BLUEPRINT.md",
+          "sha256": "62c04a55fe991a8f094db47d661ab6fa70fbe20e26f0adbfda402eba78f6fc1d",
+          "size": 25438,
+          "type": "file"
+        },
+        {
+          "path": "docs/README.md",
+          "sha256": "8326b0902a94b0ad988a324efd7633733da1af07b6c9295b39ceec50689db5ab",
+          "size": 9677,
+          "type": "file"
+        },
+        {
+          "path": "docs/acceptance.md",
+          "sha256": "419c9b1a51214bbfdd281dfac60b93af22428b15a139be32ee448d9287111218",
+          "size": 16322,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-001-documentation-first.md",
+          "sha256": "d7cbc35fd3260b94fb04fa5ec96aa64f275890e49b1b4fc95fc8c72bc716d47d",
+          "size": 803,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-002-canonical-scene-model.md",
+          "sha256": "295a19b5aa40e0381e130fc4604abff2177d3268aab9ab92c94a3f7932f5c1df",
+          "size": 742,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-003-model-agnostic-adapters.md",
+          "sha256": "c73f63e8a60127fa29f7a34fe9d7847b9ac657c71d7195edf13efe7289a68026",
+          "size": 766,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-004-continuity-state-and-shot-graph.md",
+          "sha256": "a37d7547898257c0241e1bb37b107dc125b2a1b66e935dff2bfd5a3581c53d82",
+          "size": 831,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-005-prompt-compiler.md",
+          "sha256": "2ab6ebcc89fda2e8161acfb444136679597ddbd2c19cc865ee945da2ae05f52d",
+          "size": 781,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-006-long-form-decomposition.md",
+          "sha256": "bd0e33c508c0b0eea7a680ae761a28f4a41b35217a864c009b43d527cfac5135",
+          "size": 776,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-007-dialogue-audio-separation.md",
+          "sha256": "f23ee7d8aadc139e05563da218ebad18d14d002a14f1efad84fbd72ac74a4c8c",
+          "size": 840,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-008-pattern-library.md",
+          "sha256": "2fff5af2cd6b1941e838917a6f66dac3478cd53fb37c067e7bfad9fa563a8fb6",
+          "size": 741,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-009-instructions-vs-tools.md",
+          "sha256": "95dcdfe9ccd1259b6ec854cc41f877e6a7607bc4702db57c5c59d993c20e7ce4",
+          "size": 1049,
+          "type": "file"
+        },
+        {
+          "path": "docs/adr/ADR-010-production-skill-structure.md",
+          "sha256": "8aa7f5fdef6483dc48e857c090319dfbab497cd7bab28eb34a29745e3aa1a058",
+          "size": 1007,
+          "type": "file"
+        },
+        {
+          "path": "docs/adversarial-scenarios.md",
+          "sha256": "fa158d1ace968b98852c629ab2399a64d3db9b3f555ae4094ccbb4cc99f96f70",
+          "size": 8482,
+          "type": "file"
+        },
+        {
+          "path": "docs/architecture.md",
+          "sha256": "37a2dd87721f5fe121d29d521ffe0fe66eb987729c39b762b6ce329025956d24",
+          "size": 13917,
+          "type": "file"
+        },
+        {
+          "path": "docs/comfyui-execution.md",
+          "sha256": "c08e9c6ac93080e784ea896130d671da683f1fe458162d6c3c2e8abc6a9ab750",
+          "size": 7856,
+          "type": "file"
+        },
+        {
+          "path": "docs/constraints.md",
+          "sha256": "dcfafdf52c601d235107cfd88be053e7029eb7a9e41fc935a2c48cf50fa6d29a",
+          "size": 8145,
+          "type": "file"
+        },
+        {
+          "path": "docs/continuity-engine.md",
+          "sha256": "0aab1f03fd1e0d06c9502373a470f9d88ddb3a8f7ee571772f0c64213ed79680",
+          "size": 7118,
+          "type": "file"
+        },
+        {
+          "path": "docs/contracts.md",
+          "sha256": "66ea5eaa5a563303ead44c2106243413fceb6323f85be42ce464bdfcacd86fc9",
+          "size": 21586,
+          "type": "file"
+        },
+        {
+          "path": "docs/directing.md",
+          "sha256": "73d609cce5c564d963d208a08c88f0a7d71dc7677e56cde3e24f5aa1ba97184d",
+          "size": 8470,
+          "type": "file"
+        },
+        {
+          "path": "docs/domain-model.md",
+          "sha256": "91c3023fc243faff06274ffc28bcad38a99439f2526c1f3d246eac71768248ab",
+          "size": 9415,
+          "type": "file"
+        },
+        {
+          "path": "docs/failure-and-evals.md",
+          "sha256": "4f5ec98e18ecfd336cb045a13c5ad7a36fbbfbadbd20eda7e4830bf30d05d913",
+          "size": 20197,
+          "type": "file"
+        },
+        {
+          "path": "docs/golden-scenarios.md",
+          "sha256": "0ee75abbffc81c081d5cb096bff703bb34cfbc4eeee330ad22d72d4b41a63659",
+          "size": 19755,
+          "type": "file"
+        },
+        {
+          "path": "docs/model-adaptation.md",
+          "sha256": "b234f24750b109b2a28266b53fbc1c950d394ee77cd7c4d891785f2f6c80923d",
+          "size": 15171,
+          "type": "file"
+        },
+        {
+          "path": "docs/observability.md",
+          "sha256": "592d79ba437b35807aa8b462e8ecc8faa9874ff4b5d4ac98bf6879aca37b08a0",
+          "size": 4555,
+          "type": "file"
+        },
+        {
+          "path": "docs/open-questions.md",
+          "sha256": "a1017e399ac2a49d2bf24a48b59708c84ce483ef8928386b7f78df5156074798",
+          "size": 3058,
+          "type": "file"
+        },
+        {
+          "path": "docs/pattern-library.md",
+          "sha256": "f5310aa5a7e47e183a13bbc02cd840f7b06c713e6248a8378bb07718296b6af0",
+          "size": 4541,
+          "type": "file"
+        },
+        {
+          "path": "docs/phase-0-report.md",
+          "sha256": "53aeb50361a4f2965035e5a69c3e01141149a75ec1f21f23c1ce9ce858eca26b",
+          "size": 11559,
+          "type": "file"
+        },
+        {
+          "path": "docs/progressive-disclosure.md",
+          "sha256": "8566b0fb31aecf1ddc2a758e50b65ba6a99ce98622ec1485a32d5518590b685c",
+          "size": 4302,
+          "type": "file"
+        },
+        {
+          "path": "docs/proposed-skill-structure.md",
+          "sha256": "c801f553181aa9f7bc021132382f9f7206572bad43c3f1f3fa8c945df9ec884e",
+          "size": 4706,
+          "type": "file"
+        },
+        {
+          "path": "docs/requirements.md",
+          "sha256": "867cbf5a2785b810132d2b467f709e07a31ad329ea56265dbad1fad8d83c54d3",
+          "size": 18365,
+          "type": "file"
+        },
+        {
+          "path": "docs/research.md",
+          "sha256": "01c5333cb1672224d4ec387376d6c391386527fa644bf1be326ee6835568ebe0",
+          "size": 15609,
+          "type": "file"
+        },
+        {
+          "path": "docs/roadmap.md",
+          "sha256": "4f0df270613dce04816281f5867b973f576243b7c2922a105dee92ce030c858d",
+          "size": 5538,
+          "type": "file"
+        },
+        {
+          "path": "docs/safety-boundaries.md",
+          "sha256": "c534c4a59daa9a6ba91518d1713fbddff481fa52aa92b696128d8d94db6e938d",
+          "size": 5433,
+          "type": "file"
+        },
+        {
+          "path": "docs/scene-and-continuity.md",
+          "sha256": "f38fd0245cc0171b94b2e25d9e4a0fb2e50469ea34c6d4dfff0a722198420efc",
+          "size": 17233,
+          "type": "file"
+        },
+        {
+          "path": "docs/state-model.md",
+          "sha256": "e42e544ff27f7a4d0a579163de802033ef005d68af1994fa08598a9e623ede2e",
+          "size": 5132,
+          "type": "file"
+        },
+        {
+          "path": "docs/traceability.md",
+          "sha256": "1c03a096a14c0efb7871e3175c5cdf277e6329401b944ed1639a23b1796cbe83",
+          "size": 23133,
+          "type": "file"
+        },
+        {
+          "path": "docs/vision-and-scope.md",
+          "sha256": "0a01ab5b0fe0c7d098a6113ae6ee41b8a7b8fe316d20f72a5694586775e3f0d7",
+          "size": 6523,
+          "type": "file"
+        }
+      ],
+      "kind": "filesystem"
+    },
+    "digest": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+    "scope": "artifact"
+  },
+  "bar": {
+    "path": ".gauntlet/bar.json",
+    "sha256": "df8d917f039e9807f45132b4c5bd7387ff7080e9ec56713e12a069ee7b904ed2",
+    "version": "v1"
+  },
+  "blocker": "Runtime/media/provider probes remain intentionally out of scope for Phase 0.",
+  "budget": {
+    "max_agent_depth": 1,
+    "max_concurrency": 2,
+    "retry_policy": {
+      "deterministic": 0,
+      "flaky": 0,
+      "network": 1,
+      "preserve_first_failure": true
+    },
+    "time": null,
+    "tokens": null
+  },
+  "capabilities": {
+    "filesystem_isolation": "shared workspace; critics read-only by contract with fingerprint sentinel",
+    "fresh_context": true,
+    "max_concurrency": 2,
+    "notes": "Lead edits; delegated critics must not mutate workspace or .gauntlet state.",
+    "wait_supported": true
+  },
+  "created_at": "2026-09-08T00:25:35Z",
+  "current_gap": "All documentary criteria pass in the integrated audit; final critic must assess the pre-finish candidate, then the Lead writes finish.",
+  "evidence_freshness": "CURRENT",
+  "goal": {
+    "sha256": "a6aeba8b0599e2690f7df50ce89358bc0461487156290780258db41579d65b21",
+    "text": "Create and review the complete Phase 0 documentation-first architecture for video-generation-engineering-vNext from the supplied master prompt and blueprint, stopping before production Skill implementation."
+  },
+  "latest_verification": "Prior evidence is stale after explicit rebaseline.",
+  "mode": "execute",
+  "next_action": "Phase 1 requires explicit user authorization and resolution or acceptance of OQ-B-001 through OQ-B-004; do not create production Skill/runtime artifacts automatically.",
+  "phase": "STOP",
+  "repository": {
+    "head_at_init": null,
+    "root": "/home/ricardo/Área de trabalho/video-generation-engineering"
+  },
+  "round_count": 2,
+  "run_id": "vge-phase0-docs-20260907",
+  "schema_version": 2,
+  "status": "FINISHED",
+  "stop": {
+    "finished_at": "2026-09-08T03:46:54Z",
+    "next_gap": "Phase 1 requires explicit user authorization and resolution or acceptance of OQ-B-001 through OQ-B-004; do not create production Skill/runtime artifacts automatically.",
+    "reason": "Phase 0 documentation package passed the frozen 32-criterion bar, integrated static verification, and a distinct fresh-context final critic with clean mutation sentinels.",
+    "verdict": "PASS",
+    "verification": {
+      "criteria_results": [
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/00-index.md:25",
+          "executed": true,
+          "id": "DOC-001",
+          "outcome": "PASS: docs/00-index.md:25",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/vision-and-scope.md:7",
+          "executed": true,
+          "id": "DOC-002",
+          "outcome": "PASS: docs/vision-and-scope.md:7",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/research.md:52",
+          "executed": true,
+          "id": "DOC-003",
+          "outcome": "PASS: docs/research.md:52",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/requirements.md:34",
+          "executed": true,
+          "id": "DOC-004",
+          "outcome": "PASS: docs/requirements.md:34",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/domain-model.md:15",
+          "executed": true,
+          "id": "DOC-005",
+          "outcome": "PASS: docs/domain-model.md:15",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/continuity-engine.md:46",
+          "executed": true,
+          "id": "DOC-006",
+          "outcome": "PASS: docs/continuity-engine.md:46",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/scene-and-continuity.md:70",
+          "executed": true,
+          "id": "DOC-007",
+          "outcome": "PASS: docs/scene-and-continuity.md:70",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/directing.md:151",
+          "executed": true,
+          "id": "DOC-008",
+          "outcome": "PASS: docs/directing.md:151",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/directing.md:81",
+          "executed": true,
+          "id": "DOC-009",
+          "outcome": "PASS: docs/directing.md:81",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/directing.md:121",
+          "executed": true,
+          "id": "DOC-010",
+          "outcome": "PASS: docs/directing.md:121",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/directing.md:151",
+          "executed": true,
+          "id": "DOC-011",
+          "outcome": "PASS: docs/directing.md:151",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/constraints.md:30",
+          "executed": true,
+          "id": "DOC-012",
+          "outcome": "PASS: docs/constraints.md:30",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/model-adaptation.md:199",
+          "executed": true,
+          "id": "DOC-013",
+          "outcome": "PASS: docs/model-adaptation.md:199",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/model-adaptation.md:110",
+          "executed": true,
+          "id": "DOC-014",
+          "outcome": "PASS: docs/model-adaptation.md:110",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/comfyui-execution.md:18",
+          "executed": true,
+          "id": "DOC-015",
+          "outcome": "PASS: docs/comfyui-execution.md:18",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/scene-and-continuity.md:253",
+          "executed": true,
+          "id": "DOC-016",
+          "outcome": "PASS: docs/scene-and-continuity.md:253",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/failure-and-evals.md:47",
+          "executed": true,
+          "id": "DOC-017",
+          "outcome": "PASS: docs/failure-and-evals.md:47",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/acceptance.md:43",
+          "executed": true,
+          "id": "DOC-018",
+          "outcome": "PASS: docs/acceptance.md:43",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/failure-and-evals.md:190",
+          "executed": true,
+          "id": "DOC-019",
+          "outcome": "PASS: docs/failure-and-evals.md:190",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/golden-scenarios.md:40",
+          "executed": true,
+          "id": "DOC-020",
+          "outcome": "PASS: docs/golden-scenarios.md:40",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/adversarial-scenarios.md:26",
+          "executed": true,
+          "id": "DOC-021",
+          "outcome": "PASS: docs/adversarial-scenarios.md:26",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/progressive-disclosure.md:21",
+          "executed": true,
+          "id": "DOC-022",
+          "outcome": "PASS: docs/progressive-disclosure.md:21",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/00-index.md:83",
+          "executed": true,
+          "id": "DOC-023",
+          "outcome": "PASS: docs/00-index.md:83",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/observability.md:32",
+          "executed": true,
+          "id": "DOC-024",
+          "outcome": "PASS: docs/observability.md:32",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/safety-boundaries.md:11",
+          "executed": true,
+          "id": "DOC-025",
+          "outcome": "PASS: docs/safety-boundaries.md:11",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/proposed-skill-structure.md:31",
+          "executed": true,
+          "id": "DOC-026",
+          "outcome": "PASS: docs/proposed-skill-structure.md:31",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/acceptance.md:105",
+          "executed": true,
+          "id": "DOC-027",
+          "outcome": "PASS: docs/acceptance.md:105",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/traceability.md:120",
+          "executed": true,
+          "id": "DOC-028",
+          "outcome": "PASS: docs/traceability.md:120",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/acceptance.md:126",
+          "executed": true,
+          "id": "DOC-029",
+          "outcome": "PASS: docs/acceptance.md:126",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/phase-0-report.md:3",
+          "executed": true,
+          "id": "DOC-030",
+          "outcome": "PASS: docs/phase-0-report.md:3",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": "docs/00-index.md:113",
+          "executed": true,
+          "id": "SAFE-001",
+          "outcome": "PASS: docs/00-index.md:113",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        },
+        {
+          "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+          "command": "python3 integrated Phase 0 static audit plus owner-document inspection",
+          "ended_at": "2026-09-08T00:45:39-03:00",
+          "environment": "local workspace; Python 3 + PyYAML; documentation-only audit; no runtime or external side effects",
+          "evidence": ".gauntlet/state.json:347",
+          "executed": true,
+          "id": "GAUNTLET-001",
+          "outcome": "PASS: .gauntlet/state.json:347",
+          "producer": "Codex lead integrated verification",
+          "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+          "started_at": "2026-09-08T00:25:00-03:00",
+          "status": "PASS"
+        }
+      ],
+      "final_critic": {
+        "critic_id": "C8-Russell-20260908",
+        "decision": "APPROVE",
+        "evidence": "Russell returned PASS for all 32 frozen criteria and confirmed both mutation sentinels unchanged.",
+        "fork_turns": "none",
+        "include_state_post_fingerprint": "23ccd5d9fb5144b51607c72f76d12766d7366d73a211cee70d0b374a19cd3a13",
+        "include_state_pre_fingerprint": "23ccd5d9fb5144b51607c72f76d12766d7366d73a211cee70d0b374a19cd3a13",
+        "independence": "I1",
+        "largest_gap": "Runtime, model, media, provider, and rights probes remain intentionally NOT_RUN in Phase 0.",
+        "mechanism": "multi_agent_v1 fresh-context subagent; fork_context=false; sealed read-only packet",
+        "mutation_clean": true,
+        "post_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+        "pre_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+        "result_summary_sha256": "f55461c1d27d8adf767f6bc2196f7cc463f8ed458b44db4009cd28fc1be44e43",
+        "sealed_packet": true
+      },
+      "integrated_verification": {
+        "artifact_fingerprint": "fbf1509e7db30873e80b63f50ab5677eaa7a0deae4adfd2dda93d2403508ccb1",
+        "command": "python3 integrated Phase 0 static audit: links/anchors, YAML, coverage, canonical contracts, retention matrix, adversarial shape, Contents, report, blueprint hash, scope, and control-plane JSON",
+        "ended_at": "2026-09-08T00:45:39-03:00",
+        "environment": "local workspace; Python 3 + PyYAML; no runtime, model, media, provider, or external side effects",
+        "executed": true,
+        "outcome": "PASS: errors=0; 39 docs, 43 YAML blocks, 66 requirements, 13 NFRs, 17 gates, 22 entities, 12 golden, 17 adversarial, 25 P0 items, 39 expanded failure rows, 46 blueprint sections, 10 ADRs, FINAL_READY handoff, preserved BLUEPRINT baseline",
+        "producer": "Codex lead integrated verification",
+        "raw_result_sha256": "9b4a2321569d49b9d02977779a5129f5ebf7cbeddd2e521878f18659dd088405",
+        "started_at": "2026-09-08T00:25:00-03:00",
+        "status": "PASS"
+      },
+      "limitations": [
+        "No local ComfyUI/runtime/model/hardware/VRAM probe or execution was run.",
+        "No generated media artifact or visual, audio, lip-sync, physics, or continuity observation was evaluated.",
+        "No independent rights, consent, likeness, voice, provider-policy, or legal clearance was performed.",
+        "The workspace has no Git metadata; filesystem fingerprints are the integrity mechanism.",
+        "The installed Gauntlet package does not provide the attempted doctor.py helper."
+      ],
+      "resource_stop": false,
+      "run_id": "vge-phase0-docs-20260907",
+      "schema_version": 1,
+      "verdict": "PASS"
+    }
+  },
+  "updated_at": "2026-09-08T03:46:54Z",
+  "usage": {
+    "agent_depth_peak": 1,
+    "agent_peak": 1,
+    "elapsed_seconds": 1696,
+    "retries": 0,
+    "tokens": 0,
+    "tool_calls": 2
+  }
+}

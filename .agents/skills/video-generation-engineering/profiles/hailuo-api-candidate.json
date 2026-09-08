@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "id": "hailuo-api-candidate",
+  "provider": "minimax_api",
+  "runtime": "MiniMax API",
+  "runtime_version": "UNKNOWN",
+  "model": "MiniMax-Hailuo-2.3",
+  "integration_version": "2026-09-08-candidate",
+  "profile_revision": 1,
+  "status": "PROPOSED",
+  "evidence_refs": [
+    "https://platform.minimax.io/docs/api-reference/video-generation-i2v"
+  ],
+  "evidence": {
+    "status": "PROPOSED",
+    "claim_type": "FACT",
+    "confidence": "MEDIUM",
+    "source_refs": [
+      "https://platform.minimax.io/docs/api-reference/video-generation-i2v"
+    ],
+    "accessed_at": "2026-09-08"
+  },
+  "supports": {
+    "modes": [
+      "T2V",
+      "I2V"
+    ],
+    "inputs": [
+      "text",
+      "image"
+    ],
+    "outputs": [
+      "video"
+    ],
+    "audio": {
+      "native_generation": "UNKNOWN"
+    },
+    "camera_controls": {
+      "status": "UNKNOWN"
+    },
+    "identity_conditioning": "UNKNOWN"
+  },
+  "controls": [
+    "seed",
+    "width",
+    "height",
+    "frame_count",
+    "fps"
+  ],
+  "dependencies": {
+    "nodes": "UNKNOWN",
+    "model_assets": "UNKNOWN"
+  },
+  "limits": {
+    "duration_s": {
+      "min": null,
+      "max": null
+    },
+    "frame_count": {
+      "multiple": null,
+      "offset": 0
+    },
+    "resolution": {},
+    "fps": [],
+    "vram": null
+  },
+  "feature_evidence": {
+    "text_to_video": {
+      "status": "PROPOSED",
+      "source_ref": "https://platform.minimax.io/docs/api-reference/video-generation-i2v",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "source_only_not_local_execution"
+    },
+    "image_to_video": {
+      "status": "PROPOSED",
+      "source_ref": "https://platform.minimax.io/docs/api-reference/video-generation-i2v",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "source_only_not_local_execution"
+    },
+    "first_last_frame": {
+      "status": "UNKNOWN",
+      "source_ref": "https://platform.minimax.io/docs/api-reference/video-generation-i2v",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "source_only_not_local_execution"
+    },
+    "reference_conditioning": {
+      "status": "UNKNOWN",
+      "source_ref": "https://platform.minimax.io/docs/api-reference/video-generation-i2v",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "source_only_not_local_execution"
+    },
+    "audio_dialogue_lip_sync": {
+      "status": "UNKNOWN",
+      "source_ref": "https://platform.minimax.io/docs/api-reference/video-generation-i2v",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "source_only_not_local_execution"
+    },
+    "camera_controls": {
+      "status": "UNKNOWN",
+      "source_ref": "https://platform.minimax.io/docs/api-reference/video-generation-i2v",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "source_only_not_local_execution"
+    }
+  },
+  "known_failure_modes": [
+    "identity_drift",
+    "contact_error",
+    "unsupported_runtime"
+  ],
+  "recommended_strategy": {
+    "default": "plan_only_then_probe",
+    "long_form": "short_segments_with_canonical_reset"
+  },
+  "validity": {
+    "checked_at": "2026-09-08",
+    "expires_at": null,
+    "recheck_when": [
+      "runtime_update",
+      "model_update",
+      "workflow_change"
+    ]
+  }
+}

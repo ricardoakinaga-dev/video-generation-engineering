@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "scope": "COPY_OUTSIDE_REPOSITORY",
+  "metadata_validator": "skill-creator quick_validate.py: Skill is valid!",
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "/tmp/vge-portable-c4jts31j/video-generation-engineering/scripts/vge.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout": "usage: vge.py [-h]\n              {prepare,validate,compile,negotiate,aggregate,accept,assemble,repair-scope,hailuo-plan,hailuo-submit,hailuo-poll,probe,contact-sheet,discover,preflight,bind,submit,poll,collect}\n              ...\n\nPortable JSON CLI. Run --help; all writes create new files exclusively.\n\npositional arguments:\n  {prepare,validate,compile,negotiate,aggregate,accept,assemble,repair-scope,hailuo-plan,hailuo-submit,hailuo-poll,probe,contact-sheet,discover,preflight,bind,submit,poll,collect}\n\noptions:\n  -h, --help            show this help message and exit\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/vge-portable-c4jts31j/video-generation-engineering/scripts/vge.py",
+        "prepare",
+        "/tmp/vge-portable-c4jts31j/video-generation-engineering/assets/templates/treatment.json",
+        "--output",
+        "/tmp/vge-portable-c4jts31j/plan.json"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "/tmp/vge-portable-c4jts31j/video-generation-engineering/scripts/vge.py",
+        "compile",
+        "/tmp/vge-portable-c4jts31j/plan.json",
+        "--output",
+        "/tmp/vge-portable-c4jts31j/prompts.json"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

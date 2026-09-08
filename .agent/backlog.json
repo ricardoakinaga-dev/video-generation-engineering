@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "items": [
+    {
+      "id": "VGE-DOCS",
+      "title": "Design and validate the vNext generative-video Skill documentation",
+      "stage": "SPEC",
+      "priority": "P0",
+      "status": "DONE",
+      "origin": "docs/BLUEPRINT.md",
+      "dependencies": [],
+      "owner": "Codex",
+      "acceptance_summary": "Cross-linked docs architecture package with contracts, continuity, model capability boundaries, evals, and no production Skill implementation",
+      "evidence_refs": [
+        "docs/README.md",
+        "docs/requirements.md",
+        "docs/architecture.md",
+        "docs/contracts.md",
+        "docs/research.md",
+        "docs/scene-and-continuity.md",
+        "docs/directing.md",
+        "docs/constraints.md",
+        "docs/model-adaptation.md",
+        "docs/comfyui-execution.md",
+        "docs/failure-and-evals.md",
+        "docs/acceptance.md",
+        "docs/traceability.md",
+        "docs/roadmap.md"
+      ],
+      "next_action": null
+    },
+    {
+      "id": "VGE-P0-DOCS",
+      "title": "Create and validate Phase 0 documentation from the master prompt",
+      "stage": "SPEC",
+      "priority": "P0",
+      "status": "DONE",
+      "origin": ".agent/gauntlet-inputs/bar.json",
+      "dependencies": [
+        "VGE-DOCS"
+      ],
+      "owner": "Codex",
+      "acceptance_summary": "Frozen 32-criterion historical Gauntlet bar, eight original plus five second-review, two third-review, and one fourth-review provenance remediation, current static verification, complete docs tree, and no production Skill",
+      "evidence_refs": [
+        ".gauntlet/bar.json",
+        ".agent/plans/phase0-master-prompt.md",
+        "docs/00-index.md",
+        "docs/traceability.md",
+        "docs/phase-0-report.md"
+      ],
+      "next_action": null
+    },
+    {
+      "id": "VGE-IMPLEMENT",
+      "title": "Implement complete repository skill and verify boundaries",
+      "stage": "BUILD",
+      "priority": "P0",
+      "status": "DONE",
+      "origin": "user request 2026-09-08 full implementation",
+      "dependencies": [
+        "VGE-P0-DOCS"
+      ],
+      "owner": "Codex",
+      "acceptance_summary": "VGE-Q1 through VGE-Q8; media readiness separately measured",
+      "evidence_refs": [
+        "IMPLEMENTATION.md",
+        "verification/software-release.json",
+        "verification/requirements-coverage.json",
+        "verification/h3-final-history.json",
+        "verification/independent-code-review.json"
+      ],
+      "next_action": null
+    }
+  ]
+}

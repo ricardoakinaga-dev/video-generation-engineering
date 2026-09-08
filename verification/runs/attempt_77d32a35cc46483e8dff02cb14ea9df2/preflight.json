@@ -1,0 +1,22 @@
+{
+  "validation": {
+    "status": "PASS",
+    "issues": [],
+    "workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
+    "scope": "API_GRAPH_METADATA",
+    "limitations": [
+      "Execution, VRAM fit, hidden/dynamic node validation and visual quality require a runtime probe"
+    ]
+  },
+  "compatibility": {
+    "status": "BLOCKED",
+    "profile_reference": "comfyui-h3-local-probe-v1",
+    "gaps": [
+      "Profile is not confirmed for execution",
+      "Unconfirmed feature: text_to_video"
+    ],
+    "fallback": "Preserve intent; propose shorter segments, a confirmed profile or separate audio/sync; obtain approval for weakened requirements"
+  },
+  "discovery_hash": "sha256:f24f171e86b01ca9a4bc123545f94a9c104183094b235f543ec80e9a1452bdc4",
+  "probe_purpose": "Validate installed local H3 inference, output collection and audio encoding at 384x224,124 frames; no visual quality certification"
+}

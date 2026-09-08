@@ -1,0 +1,159 @@
+{
+  "attempt": {
+    "schema_version": 1,
+    "id": "attempt_77d32a35cc46483e8dff02cb14ea9df2",
+    "revision": 2,
+    "execution_plan_ref": "exec_h3_probe_20260908",
+    "shot_id": "shot_h3_probe",
+    "attempt_index": 1,
+    "status": "SUBMITTED",
+    "started_at": "2026-09-08T13:04:44.081375+00:00",
+    "ended_at": null,
+    "profile": {
+      "id": "comfyui-h3-local-probe-v1",
+      "revision": 1
+    },
+    "model": {
+      "id": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+      "version": "installed-sha256-01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+      "asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec"
+    },
+    "runtime": {
+      "provider": "comfyui",
+      "endpoint": "http://127.0.0.1:8188",
+      "version": "0.34.0",
+      "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674"
+    },
+    "workflow": {
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/runs/attempt_77d32a35cc46483e8dff02cb14ea9df2/workflow.json",
+      "content_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
+      "prompt_ref": "exec_h3_probe_20260908",
+      "queue_id": "a5987861-6920-4379-b379-c258ac1f1dba"
+    },
+    "nodes": [
+      {
+        "id": "1",
+        "type": "ClipProjLoader",
+        "version": "0.1.13"
+      },
+      {
+        "id": "2",
+        "type": "UNETLoader",
+        "version": "0.34.0"
+      },
+      {
+        "id": "34",
+        "type": "LoraLoaderModelOnly",
+        "version": "0.34.0"
+      },
+      {
+        "id": "3",
+        "type": "MiniMaxH3SigmaShift",
+        "version": "0.34.0"
+      },
+      {
+        "id": "4",
+        "type": "VAELoader",
+        "version": "0.34.0"
+      },
+      {
+        "id": "5",
+        "type": "VAELoader",
+        "version": "0.34.0"
+      },
+      {
+        "id": "6",
+        "type": "MiniMaxH3ImageToVideo",
+        "version": "0.34.0"
+      },
+      {
+        "id": "7",
+        "type": "BasicGuider",
+        "version": "0.34.0"
+      },
+      {
+        "id": "8",
+        "type": "KSamplerSelect",
+        "version": "0.34.0"
+      },
+      {
+        "id": "9",
+        "type": "BasicScheduler",
+        "version": "0.34.0"
+      },
+      {
+        "id": "10",
+        "type": "RandomNoise",
+        "version": "0.34.0"
+      },
+      {
+        "id": "11",
+        "type": "SamplerCustomAdvanced",
+        "version": "0.34.0"
+      },
+      {
+        "id": "12",
+        "type": "VAEDecode",
+        "version": "0.34.0"
+      },
+      {
+        "id": "13",
+        "type": "VAEDecodeAudio",
+        "version": "0.34.0"
+      },
+      {
+        "id": "14",
+        "type": "CreateVideo",
+        "version": "0.34.0"
+      },
+      {
+        "id": "15",
+        "type": "SaveVideo",
+        "version": "0.34.0"
+      }
+    ],
+    "inputs": [
+      {
+        "ref": "text_encoder",
+        "role": "text_encoder",
+        "content_hash": "sha256:54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094"
+      },
+      {
+        "ref": "clip_projection",
+        "role": "clip_projection",
+        "content_hash": "sha256:0184e5c8d666a131962506d21949c2d8a8c6f33445b7b5e347e9a7e0a5baa819"
+      },
+      {
+        "ref": "video_vae",
+        "role": "video_vae",
+        "content_hash": "sha256:9bb2d96f218c76babd85e0611b85ca8fb330a90546c01a0005e8a58a59593410"
+      },
+      {
+        "ref": "audio_vae",
+        "role": "audio_vae",
+        "content_hash": "sha256:8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48"
+      },
+      {
+        "ref": "lora",
+        "role": "lora",
+        "content_hash": "sha256:1b85da614014024a0c9507f12558917dcc69b6adb564e716324594f401723115"
+      }
+    ],
+    "parameters": {
+      "seed": 20260908,
+      "bindings": {
+        "width": 384,
+        "height": 224,
+        "frame_count": 124,
+        "fps": 24,
+        "seed": 20260908
+      }
+    },
+    "progress_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/runs/attempt_77d32a35cc46483e8dff02cb14ea9df2/events.jsonl",
+    "error_ref": null,
+    "unknown_fields": [],
+    "purpose": "CAPABILITY_PROBE",
+    "supersedes_hash": "sha256:ddd51a72ebbdeaa8c8721ad697e5671d9614fff7269a0505e7a356f850be0188"
+  },
+  "run_directory": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/runs/attempt_77d32a35cc46483e8dff02cb14ea9df2"
+}

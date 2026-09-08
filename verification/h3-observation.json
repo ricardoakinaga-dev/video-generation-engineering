@@ -1,0 +1,37 @@
+{
+  "id": "obs_h3_probe_001",
+  "shot_id": "shot_h3_probe",
+  "generation_artifact_ref": "art_cacd525eaf194d1184c0d55b4c0fbf2f",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_cacd525eaf194d1184c0d55b4c0fbf2f.mp4",
+  "observed_content_hash": "sha256:623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124",
+  "observed_at": "2026-09-08T13:10:57.822371+00:00",
+  "procedure": "ffprobe + SHA-256 + inspection of eight sampled frames",
+  "status": "PARTIAL",
+  "checks": [
+    {
+      "id": "QG-17",
+      "required": true,
+      "result": "PASS",
+      "observation": "Local generation completed; 124 frames at24FPS and AAC stereo collected with exact attempt provenance",
+      "evidence": "verification/h3-history.json; verification/h3-media-probe.json"
+    },
+    {
+      "id": "QG-08",
+      "required": true,
+      "result": "PARTIAL",
+      "observation": "Eight sampled frames show one lion moving right with broadly stable appearance; complete gait/contact correctness not established",
+      "evidence": "verification/media/h3-contact-sheet.jpg"
+    },
+    {
+      "id": "QG-14",
+      "required": true,
+      "result": "NOT_RUN",
+      "observation": "Audio stream present; listening and event alignment not performed",
+      "evidence": null
+    }
+  ],
+  "limitations": [
+    "Sparse frame inspection; unperformed audio/temporal review"
+  ],
+  "repair_route": "shot_h3_probe"
+}

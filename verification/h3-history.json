@@ -1,0 +1,252 @@
+{
+  "status": "SUCCEEDED",
+  "prompt_id": "a5987861-6920-4379-b379-c258ac1f1dba",
+  "history": {
+    "prompt": [
+      0,
+      "a5987861-6920-4379-b379-c258ac1f1dba",
+      {
+        "1": {
+          "class_type": "ClipProjLoader",
+          "inputs": {
+            "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+            "device": "cuda:0",
+            "mode": "dynamic",
+            "projection": "mmh3-4b-ClipProj-v3.1.safetensors",
+            "type": "auto"
+          }
+        },
+        "10": {
+          "class_type": "RandomNoise",
+          "inputs": {
+            "noise_seed": 20260908
+          }
+        },
+        "11": {
+          "class_type": "SamplerCustomAdvanced",
+          "inputs": {
+            "guider": [
+              "7",
+              0
+            ],
+            "latent_image": [
+              "6",
+              1
+            ],
+            "noise": [
+              "10",
+              0
+            ],
+            "sampler": [
+              "8",
+              0
+            ],
+            "sigmas": [
+              "9",
+              0
+            ]
+          }
+        },
+        "12": {
+          "class_type": "VAEDecode",
+          "inputs": {
+            "samples": [
+              "11",
+              0
+            ],
+            "vae": [
+              "4",
+              0
+            ]
+          }
+        },
+        "13": {
+          "class_type": "VAEDecodeAudio",
+          "inputs": {
+            "samples": [
+              "11",
+              0
+            ],
+            "vae": [
+              "5",
+              0
+            ]
+          }
+        },
+        "14": {
+          "class_type": "CreateVideo",
+          "inputs": {
+            "audio": [
+              "13",
+              0
+            ],
+            "fps": 24.0,
+            "images": [
+              "12",
+              0
+            ]
+          }
+        },
+        "15": {
+          "class_type": "SaveVideo",
+          "inputs": {
+            "codec": "auto",
+            "filename_prefix": "video/VGE_skill_probe_20260908",
+            "format": "mp4",
+            "video": [
+              "14",
+              0
+            ]
+          }
+        },
+        "2": {
+          "class_type": "UNETLoader",
+          "inputs": {
+            "unet_name": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+            "weight_dtype": "default"
+          }
+        },
+        "3": {
+          "class_type": "MiniMaxH3SigmaShift",
+          "inputs": {
+            "model": [
+              "34",
+              0
+            ],
+            "shift_audio": 5.0,
+            "shift_video": 12.0
+          }
+        },
+        "34": {
+          "class_type": "LoraLoaderModelOnly",
+          "inputs": {
+            "lora_name": "minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_resized_avg_rank_21_bf16.safetensors",
+            "model": [
+              "2",
+              0
+            ],
+            "strength_model": 1.0
+          }
+        },
+        "4": {
+          "class_type": "VAELoader",
+          "inputs": {
+            "vae_name": "minimax_h3_video_vae_int8_convrot.safetensors"
+          }
+        },
+        "5": {
+          "class_type": "VAELoader",
+          "inputs": {
+            "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+          }
+        },
+        "6": {
+          "class_type": "MiniMaxH3ImageToVideo",
+          "inputs": {
+            "clip": [
+              "1",
+              0
+            ],
+            "height": 224,
+            "length": 124,
+            "prompt": "A locked-off medium wide wildlife documentary shot of one adult lion walking slowly from left to right across a grassy clearing. Consistent four-legged anatomy, visible paws on the ground, soft morning light. One continuous shot. Sound: quiet breeze and soft footsteps, no music, no dialogue, no text.",
+            "vae": [
+              "4",
+              0
+            ],
+            "width": 384
+          }
+        },
+        "7": {
+          "class_type": "BasicGuider",
+          "inputs": {
+            "conditioning": [
+              "6",
+              0
+            ],
+            "model": [
+              "3",
+              0
+            ]
+          }
+        },
+        "8": {
+          "class_type": "KSamplerSelect",
+          "inputs": {
+            "sampler_name": "res_multistep"
+          }
+        },
+        "9": {
+          "class_type": "BasicScheduler",
+          "inputs": {
+            "denoise": 1.0,
+            "model": [
+              "3",
+              0
+            ],
+            "scheduler": "simple",
+            "steps": 4
+          }
+        }
+      },
+      {
+        "vge_attempt_id": "attempt_77d32a35cc46483e8dff02cb14ea9df2",
+        "client_id": "attempt_77d32a35cc46483e8dff02cb14ea9df2",
+        "create_time": 1788872684102
+      },
+      [
+        "15"
+      ]
+    ],
+    "outputs": {
+      "15": {
+        "images": [
+          {
+            "filename": "VGE_skill_probe_20260908_00001_.mp4",
+            "subfolder": "video",
+            "type": "output"
+          }
+        ],
+        "animated": [
+          true
+        ]
+      }
+    },
+    "status": {
+      "status_str": "success",
+      "completed": true,
+      "messages": [
+        [
+          "execution_start",
+          {
+            "prompt_id": "a5987861-6920-4379-b379-c258ac1f1dba",
+            "timestamp": 1788872684102
+          }
+        ],
+        [
+          "execution_cached",
+          {
+            "nodes": [],
+            "prompt_id": "a5987861-6920-4379-b379-c258ac1f1dba",
+            "timestamp": 1788872684105
+          }
+        ],
+        [
+          "execution_success",
+          {
+            "prompt_id": "a5987861-6920-4379-b379-c258ac1f1dba",
+            "timestamp": 1788872721050
+          }
+        ]
+      ]
+    },
+    "meta": {
+      "15": {
+        "node_id": "15",
+        "display_node": "15",
+        "parent_node": null,
+        "real_node_id": "15"
+      }
+    }
+  }
+}

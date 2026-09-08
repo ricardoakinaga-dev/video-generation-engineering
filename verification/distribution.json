@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "artifact": "dist/video-generation-engineering.zip",
+  "sha256": "b3490404990e6caa5d7f6a392cac4c10bc602743df42c77084c0827be11af55f",
+  "bytes": 60639,
+  "files": 22,
+  "verified_package_manifest_sha256": "aceeb11a336d6529f679fcb32eee56c2dfb0d39eb320a5e95de3a14eb7823f01",
+  "procedure": "ZIP CRC and each extracted byte hash compared with verified source manifest"
+}

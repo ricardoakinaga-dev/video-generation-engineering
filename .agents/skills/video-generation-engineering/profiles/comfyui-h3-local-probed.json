@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-h3-local-probe-v1",
+  "provider": "local_comfyui",
+  "runtime": "ComfyUI",
+  "runtime_version": "0.34.0",
+  "model": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+  "integration_version": "2026-09-08-candidate",
+  "profile_revision": 1,
+  "status": "CONFIRMED",
+  "evidence_refs": [
+    "evidence/h3-local-20260908.json"
+  ],
+  "evidence": {
+    "status": "CONFIRMED",
+    "claim_type": "FACT",
+    "confidence": "HIGH",
+    "source_refs": [
+      "evidence/h3-local-20260908.json"
+    ],
+    "observed_at": "2026-09-08T13:07:20.964232+00:00"
+  },
+  "supports": {
+    "modes": [
+      "T2V"
+    ],
+    "inputs": [
+      "text",
+      "image"
+    ],
+    "outputs": [
+      "video"
+    ],
+    "audio": {
+      "native_generation": "CONFIRMED"
+    },
+    "camera_controls": {
+      "status": "UNKNOWN"
+    },
+    "identity_conditioning": "UNKNOWN"
+  },
+  "controls": [
+    "seed",
+    "width",
+    "height",
+    "frame_count",
+    "fps"
+  ],
+  "dependencies": {
+    "nodes": {
+      "ClipProjLoader": "0.1.13",
+      "UNETLoader": "0.34.0",
+      "LoraLoaderModelOnly": "0.34.0",
+      "MiniMaxH3SigmaShift": "0.34.0",
+      "VAELoader": "0.34.0",
+      "MiniMaxH3ImageToVideo": "0.34.0",
+      "BasicGuider": "0.34.0",
+      "KSamplerSelect": "0.34.0",
+      "BasicScheduler": "0.34.0",
+      "RandomNoise": "0.34.0",
+      "SamplerCustomAdvanced": "0.34.0",
+      "VAEDecode": "0.34.0",
+      "VAEDecodeAudio": "0.34.0",
+      "CreateVideo": "0.34.0",
+      "SaveVideo": "0.34.0"
+    },
+    "model_assets": [
+      {
+        "ref": "text_encoder",
+        "content_hash": "sha256:54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094"
+      },
+      {
+        "ref": "clip_projection",
+        "content_hash": "sha256:0184e5c8d666a131962506d21949c2d8a8c6f33445b7b5e347e9a7e0a5baa819"
+      },
+      {
+        "ref": "video_vae",
+        "content_hash": "sha256:9bb2d96f218c76babd85e0611b85ca8fb330a90546c01a0005e8a58a59593410"
+      },
+      {
+        "ref": "audio_vae",
+        "content_hash": "sha256:8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48"
+      },
+      {
+        "ref": "lora",
+        "content_hash": "sha256:1b85da614014024a0c9507f12558917dcc69b6adb564e716324594f401723115"
+      }
+    ]
+  },
+  "limits": {
+    "duration_s": {
+      "min": 5.166666666666667,
+      "max": 5.166666666666667
+    },
+    "frame_count": {
+      "multiple": 17,
+      "offset": 5
+    },
+    "resolution": {
+      "width": {
+        "min": 384,
+        "max": 384,
+        "multiple": 32
+      },
+      "height": {
+        "min": 224,
+        "max": 224,
+        "multiple": 32
+      }
+    },
+    "fps": [
+      24
+    ],
+    "vram": {
+      "observed_device_bytes": 12884901888,
+      "inference_fit": "CONFIRMED_AT_PROBED_WORKLOAD"
+    }
+  },
+  "feature_evidence": {
+    "text_to_video": {
+      "status": "CONFIRMED",
+      "source_ref": "evidence/h3-local-20260908.json",
+      "probe_ref": "evidence/h3-local-20260908.json",
+      "checked_at": "2026-09-08",
+      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+    },
+    "native_audio_generation": {
+      "status": "CONFIRMED",
+      "source_ref": "evidence/h3-local-20260908.json",
+      "probe_ref": "evidence/h3-local-20260908.json",
+      "checked_at": "2026-09-08",
+      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+    },
+    "image_to_video": {
+      "status": "UNKNOWN",
+      "source_ref": "evidence/h3-local-20260908.json",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+    },
+    "first_last_frame": {
+      "status": "UNKNOWN",
+      "source_ref": "evidence/h3-local-20260908.json",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+    },
+    "reference_conditioning": {
+      "status": "UNKNOWN",
+      "source_ref": "evidence/h3-local-20260908.json",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+    },
+    "audio_dialogue_lip_sync": {
+      "status": "UNKNOWN",
+      "source_ref": "evidence/h3-local-20260908.json",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+    },
+    "camera_controls": {
+      "status": "UNKNOWN",
+      "source_ref": "evidence/h3-local-20260908.json",
+      "probe_ref": null,
+      "checked_at": "2026-09-08",
+      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+    }
+  },
+  "known_failure_modes": [
+    "unprobed_identity_retention",
+    "unprobed_contact",
+    "unprobed_lip_sync",
+    "unprobed_other_resolutions"
+  ],
+  "recommended_strategy": {
+    "default": "plan_only_then_probe",
+    "long_form": "short_segments_with_canonical_reset"
+  },
+  "validity": {
+    "checked_at": "2026-09-08",
+    "expires_at": "2026-09-15T00:00:00+00:00",
+    "recheck_when": [
+      "runtime_update",
+      "model_update",
+      "workflow_change"
+    ]
+  },
+  "workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
+  "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+  "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec"
+}
