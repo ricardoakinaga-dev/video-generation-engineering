@@ -87,9 +87,9 @@
     {
       "id": "VGE-TRIPLE-AAA-R2",
       "title": "Implement the user-supplied State-of-the-Art Triple-AAA closure",
-      "stage": "HANDOFF",
+      "stage": "BUILD",
       "priority": "P0",
-      "status": "DONE_WITH_RISKS",
+      "status": "BLOCKED",
       "origin": "docs/master-prompt-triple-aaa-r2.txt; user request 2026-09-08",
       "dependencies": [
         "VGE-TRIPLE-AAA-R1"
@@ -103,11 +103,13 @@
         "verification/software-triple-aaa-r16.json",
         "verification/distribution-triple-aaa-r2.json",
         "verification/triple-aaa-independent-critic-r6.md",
+        "verification/triple-aaa-independent-critic-r7.md",
+        "verification/triple-aaa-independent-critic-r8.md",
         "dist/video-generation-engineering-triple-aaa-r2.zip"
       ],
       "next_action": {
         "id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC",
-        "kind": "VERIFY",
+        "kind": "REVIEW",
         "summary": "Run a sealed fresh independent critic against the integrated R2 candidate",
         "target": "Frozen implementation, fixtures, profile, quality bar, report, matrix and distribution",
         "completion_signal": "Independent critic record includes scope fingerprint, mutation sentinel and verdict"

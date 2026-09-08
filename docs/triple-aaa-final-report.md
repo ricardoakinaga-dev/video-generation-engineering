@@ -87,6 +87,7 @@ The canonical model remains model-independent. Desired, planned and observed tru
 | Skill quick validation | PASS (`Skill is valid!`) |
 | Documentation checker | PASS; no broken local links or YAML blocks |
 | `tools/verify.py --output verification/software-triple-aaa-r16.json` | PASS; offline/package/mechanical scope only |
+| Framework `check_state.py` recovery audit | Current R2 pointer is canonical after repair; full ledger result remains `FAIL` because preserved pre-R2 records use legacy event/verification shapes, so no whole-ledger PASS is claimed |
 
 The tests are evidence of software contracts and synthetic/fake boundaries. They are not a substitute for accepted generated media.
 
@@ -150,7 +151,7 @@ The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only fo
 
 ## Independent Critic
 
-The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md). They were stopped after an operational timeout without a reviewer verdict, reviewer-owned pre/post fingerprints or a mutation sentinel. This is an explicit R2-22 blocker, not a PASS. A future reviewer must inspect the frozen scope and rerun its sentinel before any Triple-AAA promotion.
+The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md) and [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md). R7 and R8 were mutation-clean by Lead-owned sentinels, but each reviewer remained operationally running and returned no criterion-level verdict before being closed. This is an explicit R2-22 blocker, not a PASS. A future reviewer must inspect the frozen scope and return its own criterion results before any Triple-AAA promotion.
 
 ## Remaining Blockers
 
@@ -158,7 +159,7 @@ The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.m
 2. Execute and accept LF-002 with speaker/listener semantics, voice, performance, lip-sync, causal audio and assembly/listening review.
 3. Execute and accept LF-003 with recurring identity/wardrobe/object/environment/camera/audio continuity, repair and human editorial checkpoint.
 4. Run a real FLF probe and a second independent adapter/model differential, or preserve the capabilities as blocked.
-5. Obtain a completed fresh independent critic with reviewer-owned pre/post fingerprints and a passing mutation sentinel.
+5. Obtain a completed fresh independent critic with reviewer-owned pre/post fingerprints and a passing mutation sentinel; R6–R8 are operationally incomplete and are not acceptance evidence.
 
 ## Scores
 

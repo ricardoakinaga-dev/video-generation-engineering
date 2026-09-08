@@ -12,6 +12,12 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [x] (2026-09-08T18:55:36-03:00) Completed Phase A baseline: 118 tests, compileall, Skill validation, docs audit and offline verifier pass; local audiovisual limits remain.
 - [x] (2026-09-08T19:33:47-03:00) Implemented the smallest R2 contract, fixture, documentation and traceability closure; the complete suite and integrated package verifier pass.
 - [x] (2026-09-08T20:03:12-03:00) Closed with risk: three fresh critic attempts were operationally stopped without a verdict; record the blocker, preserve the exact frozen candidate, and hand off as `READY_WITH_RISKS`.
+- [ ] (2026-09-08T20:12:47-03:00) Recovery: the canonical framework checker exposed non-canonical R2 handoff enums and an ExecPlan action mismatch; repair the current pointers, then retry the fresh critic against the unchanged product candidate.
+- [ ] (2026-09-08T20:22:20-03:00) R7 blocked: `Singer` remained running through the operational wait window; the pre/post sentinel matched, but no criterion-level verdict was returned. Retry with a new identity and a smaller sealed packet.
+- [ ] (2026-09-08T20:24:30-03:00) R7 evidence and blocker were reconciled through the canonical ledgers; the next reviewer will receive a bounded packet focused on the frozen bar, current public entry points and current evidence.
+- [ ] (2026-09-08T20:30:36-03:00) R8 blocked: `Newton` remained running through the compact-packet wait window; the pre/post sentinel matched, but no criterion-level verdict was returned. Preserve R8 as incomplete review evidence.
+- [ ] (2026-09-08T20:32:15-03:00) Recovery: normalized current instruction-scope references to repository-relative paths accepted by the framework contract; preserved external skill paths in the session record, not in canonical state.
+- [x] (2026-09-08T20:34:56-03:00) Recovery: reconciled `state.json` with the blocked R2 backlog item and recorded the canonical recovery event; the fresh critic remains the explicit next action.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -28,6 +34,12 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - Observation: A production long-form PASS must validate the complete evidence graph, not merely resolve top-level references.
   Evidence: .agents/skills/video-generation-engineering/scripts/vge_quality.py and tests/test_quality.py.
   Impact: The validator now checks successful attempts, generated artifacts, PASS observations, distinct transitions, 14-dimension scorecards and editorially accepted assembly.
+- Recovery finding: the installed framework contracts do not include `HANDOFF` or `DONE_WITH_RISKS` as control-plane enums, and the active ExecPlan's first concrete step did not match its marker.
+  Evidence: `/home/ricardo/.agents/skills/engineering-framework/references/contracts.json`, `check_state.py`, `.agent/state.json`, `.agent/backlog.json` and this plan.
+  Impact: repair the current R2 pointer with canonical `BUILD`/`REVIEW`/`BLOCKED` values and preserve the historical non-canonical event as legacy chronology; it is not silently rewritten or promoted as current state.
+- Recovery finding: the R7 full-packet reviewer remained running without returning a result despite a clean sentinel.
+  Evidence: `verification/triple-aaa-independent-critic-r7.md`, `VER-20260908-AAA-R2-CRITIC-R7` and `EVT-VGE-AAA-R2-BLOCK-R7`.
+  Impact: change only the review-packet size and stop condition for the next distinct reviewer; do not weaken the bar or reuse R7 as acceptance.
 
 ## Decision Log
 
@@ -93,7 +105,7 @@ The canonical flow is intent → Scene Bible/scene plan → shot graph and state
 
 ### Milestone 4 — Reverify, critic, distribution
 
-- Outcome: fresh integrated verification, final documentation audit and rebuilt portable package pass; the fresh critic requirement is explicitly blocked operationally and has no acceptance verdict.
+- Outcome: fresh integrated verification, final documentation audit and rebuilt portable package pass; R7 was mutation-clean but operationally incomplete, so the fresh critic requirement remains open for a new bounded reviewer attempt.
 - Scope/dependencies: all previous milestones; no material changes after critic without re-review.
 - Demonstration: exact commands, fingerprints, ZIP/manifest/CWD checks.
 - Acceptance/evidence: R2-17, R2-22, R2-23, R2-25, R2-26.
@@ -106,11 +118,12 @@ Execute phases A–M in order: baseline; P0 defects; LF-001; dialogue/lip-sync/a
 
 From /home/ricardo/Área de trabalho/video-generation-engineering:
 
-1. [x] [VGE-TRIPLE-AAA-R2:IMPLEMENT-CLOSURE] Implement the smallest missing R2 contract/fixture/test and canonical documentation updates; preserve existing R1 behavior and evidence.
-2. [x] Run focused contract tests, full unittest, compile/Skill/docs/package checks and update verification ledgers with current evidence.
-3. [x] Perform a self-review against every R2 criterion and resolve material defects without weakening the bar.
-4. [blocked] [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] Three fresh read-only attempts exceeded the operational wait window without a verdict, reviewer-owned fingerprints or a mutation sentinel; retain the blocker for the next available reviewer.
-5. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; the package and documentation audit are current.
+1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] Run one bounded sealed read-only independent critic against the frozen candidate's bar, public entry points and current evidence, with a reviewer-owned fingerprint and mutation sentinel; do not edit product or control-plane files during the review.
+2. [x] [VGE-TRIPLE-AAA-R2:IMPLEMENT-CLOSURE] Implement the smallest missing R2 contract/fixture/test and canonical documentation updates; preserve existing R1 behavior and evidence.
+3. [x] Run focused contract tests, full unittest, compile/Skill/docs/package checks and update verification ledgers with current evidence.
+4. [x] Perform a self-review against every R2 criterion and resolve material defects without weakening the bar.
+5. [blocked] Prior fresh critic attempts, including R7 and R8, exceeded the operational wait window without a verdict; both sentinels matched, but this remains blocker evidence until step 1 completes.
+6. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; the package and documentation audit are current.
 
 ## Validation and Acceptance
 
@@ -143,5 +156,7 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - docs/triple-aaa-final-report.md: canonical final accounting and claims boundary.
 - verification/software-triple-aaa-r16.json: integrated current offline software evidence after the corrected validator.
 - verification/triple-aaa-independent-critic-r6.md: fresh read-only critic and mutation sentinel.
+- verification/triple-aaa-independent-critic-r7.md: fresh read-only R7 attempt; mutation-clean operational blocker.
+- verification/triple-aaa-independent-critic-r8.md: fresh read-only R8 attempt; mutation-clean operational blocker.
 
-Plan revision note, 2026-09-08T20:03:12-03:00: Implementation, documentation, full verification and fresh R2 distribution are complete. The independent review is an operational blocker, not acceptance evidence; the handoff remains `READY_WITH_RISKS` and `TRIPLE_AAA_PROVEN` is withheld. Any future reviewer must inspect the frozen candidate and record its own fingerprints and mutation sentinel before promotion.
+Plan revision note, 2026-09-08T20:30:36-03:00: R8 was stopped after the reviewer remained running without returning a verdict; the Lead-owned pre/post sentinel matched. The product candidate remains unchanged. R6–R8 are operationally incomplete, and no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.
