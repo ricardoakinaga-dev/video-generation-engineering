@@ -1,8 +1,8 @@
 # video-generation-engineering-vNext
 
-## Implemented package — 2026-09-08
+## Implemented package — 2026-09-08 (R2)
 
-The repository skill now exists at [SKILL.md](../.agents/skills/video-generation-engineering/SKILL.md). [Implementation results](../IMPLEMENTATION.md) record tested software, actual local ComfyUI execution and remaining media/provider limits. The Phase 0 design and historical gates below are preserved; they do not certify the implementation. See [ADR-011](adr/ADR-011-skill-implementation-and-evidence.md).
+The repository skill now exists at [SKILL.md](../.agents/skills/video-generation-engineering/SKILL.md). [Implementation results](../IMPLEMENTATION.md) record tested software, actual local ComfyUI execution and remaining media/provider limits. The R2 frozen prompt copy, quality bar, capability matrix, scorecard and closure report are the current release packet; historical gates remain preserved and do not certify unavailable production media. See [ADR-011](adr/ADR-011-skill-implementation-and-evidence.md) and [ADR-012](adr/ADR-012-triple-aaa-quality-boundary.md).
 
 ## Purpose
 
@@ -10,9 +10,9 @@ Provide the design source and historical boundary record for a model-agnostic ge
 
 ## Status
 
-The expanded Phase 0 documentation is `REMEDIATED_VERIFIED` following the original audit, its second review, its third review [`AUDIT-docs-2026-09-08-r3.md`](../audit-artifacts/reports/AUDIT-docs-2026-09-08-r3.md), its fourth review [`AUDIT-docs-2026-09-08-r4.md`](../audit-artifacts/reports/AUDIT-docs-2026-09-08-r4.md), and a fresh focused static re-audit. The prior Gauntlet `FINISHED/PASS` record is historical for the pre-remediation artifact; a new independent process verdict is not claimed here. That audit preceded the implementation now linked above.
+The expanded Phase 0 documentation is `REMEDIATED_VERIFIED`; the R2 implementation packet is `READY_WITH_RISKS`. The prior Gauntlet `FINISHED/PASS` record and R1 critic are historical. Current production evidence remains scoped to exact local artifacts, and the fresh R2 critic is recorded separately in `verification/`.
 
-Use [`00-index.md`](00-index.md) as the canonical navigation hub. No model runtime, ComfyUI endpoint, paid API, upload, or media-generation job is invoked by this documentation phase.
+Use [`00-index.md`](00-index.md) as the canonical navigation hub. Documentation and deterministic verification do not invoke a paid API, upload or new external generation job; the report retains prior local ComfyUI evidence with its exact scope.
 
 This package turns [`BLUEPRINT.md`](BLUEPRINT.md) into a testable design for a generative-video engineering director. The design is intentionally model-agnostic at its core and capability-specific only at the adapter boundary. It plans work for ComfyUI and compatible runtimes; it does not render video, run a workflow, edit a timeline, train a model, or guarantee a generated result.
 
@@ -30,7 +30,8 @@ This package turns [`BLUEPRINT.md`](BLUEPRINT.md) into a testable design for a g
 10. [`failure-and-evals.md`](failure-and-evals.md), [`golden-scenarios.md`](golden-scenarios.md), and [`adversarial-scenarios.md`](adversarial-scenarios.md) define failure, golden, red-team, and oracle coverage.
 11. [`acceptance.md`](acceptance.md) and [`traceability.md`](traceability.md) define gates, Phase 0 acceptance, and end-to-end coverage.
 12. [`observability.md`](observability.md), [`safety-boundaries.md`](safety-boundaries.md), and [`progressive-disclosure.md`](progressive-disclosure.md) define diagnostics, safety, authorization, and context routing.
-13. [`proposed-skill-structure.md`](proposed-skill-structure.md), [`open-questions.md`](open-questions.md), [`roadmap.md`](roadmap.md), and [`phase-0-report.md`](phase-0-report.md) preserve the Phase 0 handoff and its historical gates; the current implementation is linked at the top of each document.
+13. [`triple-aaa-validation.md`](triple-aaa-validation.md), [`capability-matrix-r1.md`](capability-matrix-r1.md), [`long-form-validation.md`](long-form-validation.md), [`triple-aaa-scorecard.md`](triple-aaa-scorecard.md) and [`triple-aaa-final-report.md`](triple-aaa-final-report.md) form the current R2 closure packet.
+14. [`proposed-skill-structure.md`](proposed-skill-structure.md), [`open-questions.md`](open-questions.md), [`roadmap.md`](roadmap.md), and [`phase-0-report.md`](phase-0-report.md) preserve the Phase 0 handoff and its historical gates; the current implementation is linked at the top of each document.
 
 ## Canonical ownership
 
@@ -112,7 +113,7 @@ The Phase 0 baseline originally described a future package containing a concise 
 
 ## Current limitations
 
-The workspace has no Git history and does not ship model weights or a renderer. The current implementation includes deterministic tests, workflow fixtures, a locally probed ComfyUI/H3 profile and synthetic media checks; those bounded results do not establish universal model feasibility or visual/audio/editorial quality. External paid execution, transfer, lip-sync and long-form artifact acceptance remain conditional.
+The repository history is not a production-quality authority, and the package does not ship model weights or a renderer. The current implementation includes deterministic tests, workflow fixtures, a locally probed ComfyUI/H3 profile and synthetic media checks; those bounded results do not establish universal model feasibility or visual/audio/editorial quality. External paid execution, transfer, lip-sync and long-form artifact acceptance remain conditional.
 
 ## Document contract
 

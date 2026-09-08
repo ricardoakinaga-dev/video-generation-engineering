@@ -31,8 +31,8 @@ Every adjacent-shot review scores these dimensions independently: identity, ward
 - Transition acceptance binds existing previous and next artifact bytes, previous artifact end state to next shot start state and a continuity scorecard. The smallest repair owner is selected from reference conditioning, continuity, cinematography, adapter, decomposition, dialogue, audio, performance or human review.
 - Re-anchor actions are `CONTINUE`, `RE_ANCHOR`, `RESET`, `REGENERATE` and `SPLIT`. Drift is observed evidence, not a prompt instruction.
 - First/last-frame support is feature-scoped. A capability probe must inspect endpoint identity, motion path, object state and delivered artifact; node metadata alone is not proof. Observed PASS contracts also carry the successful-attempt, shot-contract and generated-artifact provenance envelope.
-- Physics is represented as observable assertions across `APPROACH`, `PRE_CONTACT`, `CONTACT`, `FORCE_ARTICULATION`, `TRANSFER_MOTION`, `RELEASE` and `RESULT`.
-- Dialogue semantics, voice, performance, lip-sync and mix are independent observations. Audio layers have their own time intervals and causal source.
+- Physics is represented as observable assertions across `APPROACH`, `PRE_CONTACT`, `CONTACT`, `FORCE_OR_ARTICULATION`, `TRANSFER_OR_MOTION`, `RELEASE` and `RESULT`.
+- Dialogue semantics, voice, performance, lip-sync and mix are independent observations. Audio layers have their own time intervals, priority, mix role and causal source.
 - Repair is bounded by regeneration, attempt, runtime, cost and human-review budgets; unaffected siblings are preserved. Validation remains `PARTIAL` until an authorized execution ledger with measured usage, hash-bound evidence and successful-attempt/artifact provenance is attached.
 
 ## Commands

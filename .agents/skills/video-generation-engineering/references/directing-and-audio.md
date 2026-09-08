@@ -22,7 +22,7 @@ Each `dialogue_timeline` item contains `id`, `shot_id`, `speaker`, `target_liste
 
 ## Audio layers
 
-Keep dialogue/vocal performance, diegetic effects, ambience/room tone, score, and synchronization/mix metadata separate. An `audio_timeline` item has `id`, `shot_id`, `layer`, `start_s`, `end_s`, source and a cause for diegetic `effects`. The cause names a visible action primitive. Split cross-shot bridge records into timed pieces with an explicit bridge relationship. Record event offsets against visible latch/step/impact intervals; intentional offscreen or non-diegetic events state the exception.
+Keep dialogue/vocal performance, foley, ambience, room tone, vehicle, animal, score, transition, non-diegetic sound and silence separate. An `audio_timeline` item has `id`, `shot_id`, `layer`, `start_s`, `end_s`, source, cause, priority and mix role. The planning alias `effects` is normalized to `foley`; its cause names a visible action primitive. Split cross-shot bridge records into timed pieces with an explicit bridge relationship. Record event offsets against visible latch/step/impact intervals; intentional offscreen or non-diegetic events state the exception.
 
 Choose generated, supplied or separately produced audio per layer. Check source rights, channels/sample rate, duration, loudness target, room-tone continuity and synchronization. A source that is still unknown stays unknown; do not invent dialogue, a voice identity or a music license to fill a form. Supplied recordings may drive timing rather than be squeezed into arbitrary shot durations.
 

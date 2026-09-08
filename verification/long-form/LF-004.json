@@ -14,5 +14,31 @@
   "human_checkpoint_ref": "NOT_RUN",
   "status": "NOT_RUN",
   "production_evidence_complete": false,
-  "next_action": "Do not schedule until the shorter ladder is accepted"
+  "next_action": "Do not schedule until the shorter ladder is accepted",
+  "fixture": {
+    "fixture_status": "STRUCTURAL_ONLY",
+    "scenario": "Optional extended production with bounded branches and recovery checkpoints.",
+    "requirements": [
+      "alternative direct and split branches",
+      "recovery checkpoints",
+      "provenance manifest",
+      "human editorial review"
+    ],
+    "branches": [
+      "direct",
+      "split",
+      "anchor",
+      "human_review"
+    ],
+    "recovery_checkpoints": [
+      "after accepted boundary",
+      "after continuity conflict",
+      "before delivery"
+    ],
+    "editorial_gate": "NOT_RUN",
+    "known_bad": [
+      "giant prompt used instead of a bounded shot graph",
+      "recovery path overwrites an immutable failed attempt"
+    ]
+  }
 }

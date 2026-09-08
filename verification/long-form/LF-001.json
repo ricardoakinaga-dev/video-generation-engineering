@@ -12,5 +12,81 @@
   "status": "BLOCKED",
   "production_evidence_complete": false,
   "blockers": ["Local H3 confirmed envelope is 5.1667s per shot; no accepted two-shot physical interaction chain"],
-  "next_action": "Authorize and execute a bounded multi-shot local chain only after a confirmed reference/continuity-capable profile is available"
+  "next_action": "Authorize and execute a bounded multi-shot local chain only after a confirmed reference/continuity-capable profile is available",
+  "fixture": {
+    "fixture_status": "STRUCTURAL_ONLY",
+    "scenario": "An adult approaches a reference-locked vehicle, reaches the driver-side handle, opens the door, enters, settles into the seat and closes the door.",
+    "requirements": [
+      "subject identity",
+      "wardrobe",
+      "vehicle geometry and color",
+      "door articulation",
+      "hand-handle contact",
+      "body-door relation",
+      "body-seat relation",
+      "environment and lighting",
+      "causal action order",
+      "state propagation",
+      "multiple shots",
+      "re-anchor decision"
+    ],
+    "contact_phases": [
+      "APPROACH",
+      "PRE_CONTACT",
+      "CONTACT",
+      "FORCE_OR_ARTICULATION",
+      "TRANSFER_OR_MOTION",
+      "RELEASE",
+      "RESULT"
+    ],
+    "acceptance_dimensions": [
+      "SUBJECT_IDENTITY",
+      "WARDROBE",
+      "VEHICLE_GEOMETRY",
+      "VEHICLE_COLOR",
+      "DOOR_STATE",
+      "SUBJECT_POSITION",
+      "HAND_CONTACT",
+      "BODY_COLLISION",
+      "SEAT_STATE",
+      "ENVIRONMENT",
+      "LIGHT_DIRECTION",
+      "SCREEN_DIRECTION",
+      "TEMPORAL_ORDER"
+    ],
+    "shot_plan": [
+      {
+        "id": "LF001-S01",
+        "purpose": "Approach and establish vehicle geography",
+        "duration_s": 4,
+        "state_end": "subject_at_driver_handle; door_closed; vehicle_stationary"
+      },
+      {
+        "id": "LF001-S02",
+        "purpose": "Contact, articulation and entry",
+        "duration_s": 5,
+        "state_start": "subject_at_driver_handle; door_closed; vehicle_stationary",
+        "state_end": "subject_seated; door_open; vehicle_stationary"
+      },
+      {
+        "id": "LF001-S03",
+        "purpose": "Settle and close door",
+        "duration_s": 3,
+        "state_start": "subject_seated; door_open; vehicle_stationary",
+        "state_end": "subject_seated; door_closed; vehicle_stationary"
+      }
+    ],
+    "transition_requirements": [
+      "previous end state equals next start state",
+      "screen side and light direction remain stable unless motivated",
+      "each transition has artifact, observation and repair owner fields"
+    ],
+    "known_bad": [
+      "door closes before body enters",
+      "subject teleports from outside to seated",
+      "hand reaches handle after door articulation",
+      "vehicle moves before ignition or without road contact",
+      "right hand is simultaneously free and holding the handle"
+    ]
+  }
 }

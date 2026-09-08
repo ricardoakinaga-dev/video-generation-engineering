@@ -1,169 +1,110 @@
-# Triple-AAA production validation
+# Triple-AAA production validation — R2
 
-Status: `CLOSED_WITH_RISKS_R1`
+Status: `READY_WITH_RISKS`.
 
-This document is the normative implementation companion for [`triple-aaa-quality-bar-r1.json`](triple-aaa-quality-bar-r1.json). It closes the gap between a valid canonical plan and a claim about generated audiovisual media. The implementation is deliberately conservative: an unobserved property remains unobserved.
+This document is the normative implementation companion for the frozen [`triple-aaa-quality-bar-r2.json`](triple-aaa-quality-bar-r2.json). The exact user prompt is preserved in [`master-prompt-triple-aaa-r2.txt`](master-prompt-triple-aaa-r2.txt). Its SHA-256 is `sha256:8759fbd444abb0578fa5d7b852e4ff2ca9d1a0437913b9ace1a233dfbec16e51`. The bar freezes the acceptance contract; it does not manufacture unavailable runtime or semantic evidence.
 
-## 1. Baseline audit
+## 1. Scope and non-claims
 
-The pre-closure package already had a coherent canonical planning core, model-independent Scene Bible/shot/state contracts, ComfyUI submission safeguards, immutable attempt/artifact hashing, byte-level assembly and 102 passing software tests. The local runtime was observed at `127.0.0.1:8188` with ComfyUI `0.34.0`, H3 assets and a confirmed 5.1667-second H3 T2V/native-audio profile.
+The implementation turns intent into canonical scene/state data, shot dependencies, prompt sections, feature-scoped adaptation, ComfyUI execution records, collected artifacts, observations, transitions, repair decisions and assembly gates. It can prove deterministic software and exact local provenance. It cannot infer identity, physics, emotion, dialogue quality, lip-sync or editorial acceptance from a prompt, node list, contact sheet or ffprobe report.
 
-The audit found that the older checked-in H3 bundle is historical evidence, not current production acceptance: it lacks a complete shot contract hash, uses a plural media kind for an MP4, and does not carry semantic or transition acceptance. The old 15-second action material is also text-to-video despite a reference-conditioned intent. Those records remain unchanged; the new quality boundary reports them as `PARTIAL`, `NOT_OBSERVED` or `BLOCKED` rather than laundering history into PASS.
+The current release therefore uses `READY_WITH_RISKS`. `TRIPLE_AAA_PROVEN` is reserved for a fresh, production-backed package containing accepted LF-001, LF-002 and LF-003 evidence, multi-shot continuity, targeted repair, semantic/audio review, portable distribution and a fresh independent critic. No such proof is claimed here.
 
-Primary audit evidence: `verification/h3-final-context.json`, `verification/h3-final-artifacts.json`, `verification/h3-observation.json`, `artifacts/vge_action_20260908/plan-rev2.json`, and the Hegel read-only audit packet. Historical `.gauntlet/` evidence is not reused as the current verdict.
-
-## 2. Ownership and dependency direction
+## 2. End-to-end ownership
 
 ```text
-vge.py                      (JSON CLI composition only)
-  ├── vge_core.py           (canonical plan/state owner)
-  ├── vge_quality.py ──────► vge_core.py
-  ├── vge_evidence.py ─────► vge_core.py
-  ├── vge_media.py ────────► vge_core.py, vge_evidence.py, vge_quality.py
-  ├── vge_runtime.py ──────► vge_core.py, vge_evidence.py, vge_quality.py
-  └── vge_provider.py ─────► vge_core.py, vge_runtime.py
+intent → references → complexity → Scene Bible → story/time
+       → shot graph + continuity state → direction/constraints
+       → canonical prompt → feature-scoped adapter → ComfyUI preflight
+       → immutable attempt → collected artifact → media QA
+       → semantic observation → transition QA → repair/re-anchor
+       → assembly → editorial acceptance
 ```
 
-`vge_core.py` owns authored and derived plan truth. `vge_quality.py` never mutates a plan and never reads a provider. `vge_media.py` does not decide identity or story. `vge_runtime.py` may bind a workflow and collect bytes but cannot mark semantic quality accepted. The CLI exposes these owners without becoming a second contract implementation.
+`vge_core.py` owns authored and derived plan truth. `vge_quality.py` owns immutable quality contracts and never promotes a plan to observed truth. `vge_runtime.py` owns runtime discovery, workflow/device binding and queue reconciliation. `vge_evidence.py` owns attempts, artifacts and acceptance provenance. `vge_media.py` owns mechanical media QA and assembly mechanics. `vge.py` composes these owners; it is not a second domain model.
 
-The package remains standard-library-only. Production evidence, model files, local absolute paths and control-plane records remain outside the installable package payload.
+The truth domains remain separate:
+
+1. desired truth — what the creator wants;
+2. planned truth — canonical scene, shot, state, prompt and workflow decisions;
+3. observed truth — exact runtime facts, artifact bytes, semantic observations and human/editorial decisions.
+
+Only the third domain can support an artifact-quality claim.
 
 ## 3. Evidence contract
 
-Every executed quality observation carries:
+An observed quality record carries, at minimum:
 
-| Field | Rule |
-|---|---|
-| `artifact_id`, `artifact_ref`, `observed_content_hash` | exact collected artifact identity and bytes |
-| `shot_id` and, where relevant, canonical revision | binds evidence to the planned shot |
-| `category` | one of metadata, visual, temporal, audio, continuity, editorial |
-| `oracle` | explicit question and oracle kind (`METADATA`, `FRAME`, `SEQUENCE`, `AUDIO`, `HUMAN`, `ALGORITHMIC`, `RUNTIME`, `DOCUMENT`) |
-| `evidence` | non-empty exact frame/audio/report reference for PASS/FAIL/PARTIAL |
-| `confidence` | HIGH/MEDIUM/LOW/UNKNOWN; PASS cannot use UNKNOWN |
-| `limitations` | what the procedure cannot establish |
+- stable `project_id`/`scene_id`/`shot_id` lineage where applicable;
+- exact `artifact_id`, locator and SHA-256 content hash;
+- timestamp and executed procedure;
+- a category-specific oracle (`METADATA`, `FRAME`, `SEQUENCE`, `AUDIO`, `HUMAN`, `ALGORITHMIC`, `RUNTIME` or `DOCUMENT`);
+- evidence references with exact hashes for `PASS`, `FAIL` or `PARTIAL` checks;
+- confidence and limitations;
+- the immutable attempt, shot-contract and generated-artifact provenance envelope for observed PASS contracts.
 
-The accepted status set is `PASS`, `FAIL`, `PARTIAL`, `NOT_APPLICABLE`, `NOT_OBSERVED`, `NOT_RUN`, `UNKNOWN` and `BLOCKED`. Aggregation is monotonic toward risk: FAIL beats BLOCKED, which beats PARTIAL; PASS is impossible when required evidence is missing.
+`NOT_OBSERVED`, `UNKNOWN`, `NOT_RUN` and `BLOCKED` are meaningful results. A locator without bytes, a declared hash without a matching file, a prompt, or runtime node presence is not acceptance evidence. Overwriting a referenced path invalidates the affected record.
 
-Specialized observed PASS contracts (contact, dialogue, audio timeline, first/last frame, re-anchor and completed repair) additionally require a `provenance` envelope. It must resolve existing bytes for a successful immutable attempt, the exact shot contract and a generated artifact record/media pair; the record must cross-bind attempt ID, shot ID, contract hash, artifact ID, locator and media hash. A valid hash string or an arbitrary existing file is not sufficient.
+## 4. Canonical contracts implemented
 
-## 4. Shot and transition acceptance
+### Scene, shot, state and acceptance
 
-A shot contract contains its canonical shot ID/revision and required acceptance questions. Its generation acceptance is bound to one immutable execution attempt and one artifact hash. Editorial acceptance is a separate human or qualified semantic decision.
+The canonical plan retains Scene Bible entities, reference roles, locks, state deltas, causal beats, shot dependencies, camera geography, acceptance IDs and a repair owner. `START_STATE → ACTION → END_STATE` is required for material transitions. `validate_shot_acceptance()` now fails closed when an observation does not contain a result for every required acceptance check.
 
-An adjacent transition contains:
+Adjacent transition acceptance requires different shot IDs, different artifact IDs, distinct artifact locator/hash pairs, equal declared boundary state, a complete continuity scorecard and PASS observations for both artifacts. A generated boundary frame is not accepted merely because it is named as the next input.
 
-1. the previous shot/artifact binding;
-2. the next shot/artifact binding;
-3. the exact required state properties;
-4. previous end state and next start state, equal for every required property;
-5. a complete continuity scorecard for the next artifact;
-6. actual bytes for both adjacent artifacts;
-7. any known drift, repair owner and evidence references.
+### Continuity and semantic observation
 
-The smallest affected repair scope is the earliest changed shot and its descendants in the canonical DAG. Unaffected siblings are preserved and do not inherit stale acceptance.
+The 14 independent continuity dimensions are `identity`, `wardrobe`, `hair`, `object_state_ownership`, `vehicle`, `environment`, `lighting`, `screen_direction`, `camera_geography`, `gaze`, `emotional`, `dialogue`, `temporal` and `audio`. Each dimension has its own oracle/result/evidence. Mixed PASS and unobserved dimensions aggregate to `PARTIAL`; a prompt cannot substitute for evidence.
 
-## 5. Continuity scorecard
+### Physical interaction
 
-The following dimensions are independent obligations, not one aesthetic score:
+The canonical contact sequence is:
 
-| Dimension | Minimum oracle | Typical evidence |
+`APPROACH → PRE_CONTACT → CONTACT → FORCE_OR_ARTICULATION → TRANSFER_OR_MOTION → RELEASE → RESULT`.
+
+Each phase has timing, a visible assertion and, for observed status, an oracle and hash-bound evidence. `validate_contact_phases()` accepts the planning aliases `subject`/`target`/`effector`/`interaction_cause`/`success_criterion` and normalizes them to `actor`/`receiver`/`object_id`/`cause`/`expected_result`. Physics remains a QA assertion; prompt text is never proof.
+
+`validate_object_ownership()` requires explicit contact/shared contact and release for a change of owner. `validate_vehicle_state()` rejects a moving vehicle with an inactive engine, an open door or absent road contact, and requires a cause for declared state changes.
+
+### Dialogue, causality and audio
+
+Dialogue keeps semantics, voice, performance, lip-sync and mix as five independent channels. It retains speaker, listener, line aliases, intent, delivery, emotion, gaze, timing, pauses, reaction delay, voice reference and sync mode. Sustained listener mouthing is rejected unless explicitly scripted. Visible speech cannot use `NOT_APPLICABLE` for voice or lip-sync.
+
+The causal sequence is explicit: `STIMULUS → PROCESSING → REACTION → RESPONSE`. The validator rejects missing stages, duplicate stages, backwards ordering and unmarked overlaps.
+
+The canonical audio layers are `dialogue`, `foley`, `ambience`, `room_tone`, `vehicle`, `animal`, `music`, `transition`, `non_diegetic` and `silence`. Every scoped timeline accounts for each layer as required or `not_applicable`; each event has timing, source, cause, priority, mix role, oracle and evidence. The planning alias `effects` maps to `foley`. A present audio stream proves only stream presence, not intelligibility, causality, mix quality or lip-sync.
+
+### Profiles, adapters and ComfyUI
+
+Capability evidence is feature-scoped. Confirmed feature entries require observed parameters, selected device, artifact and semantic-observation references with exact hashes, in addition to source/probe records, runtime/node/model/workflow identity and profile provenance. Runtime, node inventory, model, workflow, device, resource, commit, dirty-state, custom-node or behavioral changes trigger re-probing.
+
+The prompt compiler preserves ten canonical sections and exposes omissions, contradictions and adapter loss. `adapter_differential()` compares adapters against the same canonical source; it is structural evidence only until each adapter has a real runtime/artifact probe.
+
+ComfyUI execution records bind the inspected graph, model, profile, device, parameters, queue ID, attempt, output and artifact bytes. Uncertain submission is reconciled by the same queue ID. Preflight and discovery do not become generation or semantic PASS.
+
+### Long-form, repair and assembly
+
+`validate_long_form_case()` accepts a production `PASS` only when every logical reference resolves, every attempt is `SUCCEEDED`, every artifact/observation/transition record is accepted and hash-bound, and the assembly record is editorially accepted. Placeholder references plus `production_evidence_complete=true` are rejected. Structural fixtures are intentionally separate from production evidence.
+
+Repair is bounded by regenerations, attempts, runtime, cost and human-review budgets. It preserves immutable failed attempts and unaffected siblings, then requires re-observation and downstream revalidation. Mechanical assembly checks media metadata and timing; editorial acceptance remains a separate gate.
+
+## 5. Independent gates and maturity
+
+| Gate | Current result | Boundary |
 |---|---|---|
-| identity | FRAME/HUMAN | reference/shot boundary frames |
-| wardrobe | FRAME/HUMAN | boundary frame pair |
-| hair | FRAME/HUMAN | boundary frame pair |
-| object state/ownership | FRAME/SEQUENCE | contact/result frames and ledger |
-| vehicle | FRAME/SEQUENCE | vehicle geometry/state frames |
-| environment | FRAME/HUMAN | establishing/boundary frames |
-| lighting | FRAME/SEQUENCE | exposure/colour boundary samples |
-| screen direction | SEQUENCE/HUMAN | motion path and axis notes |
-| camera geography | SEQUENCE/HUMAN | frame pair plus blocking map |
-| gaze | FRAME/SEQUENCE/HUMAN | face/gaze samples |
-| emotional | HUMAN/SEQUENCE | performance review notes |
-| dialogue | AUDIO/SEQUENCE/HUMAN | line timing, listener reaction, transcript |
-| temporal | SEQUENCE/ALGORITHMIC | timestamps, freeze/decode report |
-| audio | AUDIO/ALGORITHMIC/HUMAN | waveform/listening event evidence |
+| Architecture | `PASS (scoped)` | Ownership, canonical state, routing, safety and traceability are implemented. |
+| Verification | `PASS (scoped)` | 120 deterministic tests, compile/skill/docs checks, package verification and known-bad regressions. |
+| Production | `PARTIAL/BLOCKED` | Local H3 artifacts have exact provenance and mechanical QA; required LF cases, semantic dialogue/lip-sync and second adapter remain unaccepted. |
 
-Each record is `PASS`, `FAIL`, `PARTIAL`, `NOT_APPLICABLE` or `NOT_OBSERVED`. A contact sheet is a navigation aid, never the sole evidence for a temporal, semantic, physics or lip-sync PASS.
+Maturity is conservative: Level 0 intent, Level 1 structural plan, Level 2 deterministic verification, Level 3 runtime provenance, Level 4 audiovisual evaluation and Level 5 repeatable bounded production with a fresh critic. Current global maturity is Level 3 with bounded audiovisual observations; Level 5 is not claimed.
 
-## 6. Re-anchor and repair decisions
+## 6. Evaluation families
 
-`reanchor_decision()` emits one of:
+The executable regression suite covers canonical contracts, malformed inputs, state/graph mutations, contact/audio/dialogue known-bad cases, placeholder LF PASS rejection, profile evidence, transition identity, repair budgets, adapter omission, runtime fakes, provenance mismatch, media corruption/black/freeze and external-CWD operation. Real production evaluation remains separately marked in [`long-form-validation.md`](long-form-validation.md), [`capability-matrix-r1.md`](capability-matrix-r1.md) and the [final closure report](triple-aaa-final-report.md).
 
-- `CONTINUE`: required dimensions observed and accepted;
-- `RE_ANCHOR`: persistent identity/world state needs canonical reference/state conditioning;
-- `RESET`: observed state contradicts the canonical handoff;
-- `REGENERATE`: a localized camera, dialogue, audio or performance issue is repairable;
-- `SPLIT`: the feature is unavailable or drift spans too many causal dimensions.
+## 7. Safety and release rule
 
-The decision records reasons, evidence references, confidence, limitations, selected repair owner and changed shot set. Prompt wording alone cannot trigger a decision.
+No paid call, upload, voice clone, likeness transfer, publication or model-weight download is authorized by this closure. Credentials remain outside artifacts. Rights, consent and human review are mandatory before sensitive or external actions. A lower-level plan may not override the frozen bar or promote an unavailable feature.
 
-Repair plans require nonnegative limits for regenerations, attempts, runtime, cost and human-review escalation. A repair plan is `AWAITING_AUTHORIZATION` unless explicit authorization is present. It cannot target preserved siblings, silently weaken hard constraints or exceed its frozen budget. A `COMPLETE` execution ledger is accepted only with measured usage, completion evidence and the same successful-attempt/shot/artifact provenance envelope; declarations without a ledger remain partial.
-
-## 7. Physical interaction and first/last frame
-
-Contact contracts must enumerate, in order: `APPROACH`, `PRE_CONTACT`, `CONTACT`, `FORCE_ARTICULATION`, `TRANSFER_MOTION`, `RELEASE`, `RESULT`. Each phase has an interval, an observable assertion and a causal source. A declaration-only contact is `PARTIAL`; `PASS` requires a hash-bound artifact, oracle and evidence for every phase. Physics is a QA assertion; “the prompt says it” is not evidence.
-
-First/last-frame capability is scoped to a profile, workflow fingerprint and exact first/last input hashes. A confirmed probe must bind the delivered artifact to an existing byte hash and observe endpoint identity, motion path, object state and delivery through FRAME or SEQUENCE evidence whose references also carry exact hashes. Node metadata alone cannot activate the capability. Unsupported or unknown capability records cannot carry PASS checks.
-
-## 8. Dialogue, performance and audio
-
-Each dialogue line retains speaker, listener, text, intention, delivery, emotion, gaze, timing, pause and overlap policy. An observed dialogue contract binds to an existing artifact hash, and every observed channel carries hash-bound evidence. Its channels remain separate:
-
-1. semantic meaning;
-2. voice/source;
-3. actor performance;
-4. lip-sync;
-5. mix.
-
-Visible speech cannot mark lip-sync not applicable. Audio has its own timeline with dialogue, ambience, effects, music, silence and transition layers. Each event has start/end, source, cause, oracle and hash-bound evidence, while the explicit timeline binds an observed artifact and timestamp. The validator requires every canonical layer to be present or explicitly listed as `not_applicable`; an unscoped list is always `PARTIAL`. Audio stream presence proves only that a stream exists; it does not prove intelligibility, event causality or lip-sync.
-
-## 9. Model profiles and adapters
-
-Capability profiles are feature-scoped. A confirmed H3 T2V/native-audio observation does not imply R2V, I2V, FLF, reference conditioning, dialogue/lip-sync or camera-control support. `profile_fingerprint()` includes model/runtime/node/workflow/dependency/limit identity and is persisted/checked for confirmed profiles. Confirmed feature sources and probes must be existing files with declared hashes, and must be bound through `evidence_refs`. Re-probe triggers include runtime version, node inventory, workflow graph, model asset, resource context, runtime commit/dirty state, custom-node commits and observed behavioral changes.
-
-Prompt adaptation is loss-explicit. Density and lexical contradiction checks run before compression. Every adapter mapping is `PRESERVED` or `UNSUPPORTED`/`DEGRADED`; truncation without a declared omission or split is rejected. The adapter differential compares multiple adapters against the same canonical sections.
-
-## 10. ComfyUI and provenance
-
-Discovery records runtime version, full node inventory hash, observed resource inventory and node type inventory. Workflow validation checks API graph schema, links, output node and dynamic selections. `workflow_fingerprint()` additionally binds topology, node versions and generation-critical inputs. Submission is explicit and single-shot; the selected device must resolve to the observed inventory; uncertain outcomes reconcile the same queue ID. New attempts carry a full profile snapshot/content hash and a workflow content/fingerprint binding. Collection normalizes runtime output kinds (`images` → `image`, `videos` → `video`, etc.) and carries shot contract hash, workflow hash/fingerprint, profile revision, model hash, input hashes and artifact hash.
-
-Discovery or preflight never becomes a production PASS. Local runtime evidence is valid only for the exact endpoint, model assets, workflow and timestamp observed.
-
-## 11. Mechanical media QA and semantic QA
-
-`media-qa` runs SHA-256, ffprobe, bounded decode, audio/video duration comparison, black detection and freeze detection. It can report corruption or mechanical anomalies. It cannot prove identity, emotion, contact, physics, story, camera geography, dialogue, editorial quality or lip-sync.
-
-Semantic QA must name an oracle and retain frame/audio/sequence/human evidence against exact bytes. If no suitable oracle was run, use `NOT_OBSERVED` or `NOT_RUN`. A final assembly can be mechanically valid while editorial acceptance remains `NOT_RUN`.
-
-## 12. Long-form ladder and maturity
-
-| Case | Required claim |
-|---|---|
-| LF-001, 10–15s | one physical interaction, start/end state and complete contact evidence |
-| LF-002, 20–30s | dialogue plus interaction, five dialogue channels and audio timeline |
-| LF-003, 45–60s | dependent multi-shot production, continuity, transitions, repair budget and human checkpoint |
-| LF-004, 90–120s | optional branches, recovery checkpoints, provenance manifest and editorial review |
-
-The maturity model is conservative: Level 0 intent only; Level 1 structural plan; Level 2 deterministic verification; Level 3 runtime provenance; Level 4 audiovisual evaluation; Level 5 repeatable bounded production with an independent critic. The current closure may reach different levels for different scopes; one local 5-second inference cannot certify Level 5.
-
-## 13. Evaluation matrix
-
-| Family | Good case | Bad/metamorphic case | Gate |
-|---|---|---|---|
-| continuity | all 14 dimensions observed | remove one dimension; mutate boundary state | CONTRACTS |
-| transition | equal state and accepted scorecard | state mismatch; forged artifact hash | CONTRACTS |
-| FLF | four endpoint checks with frame evidence | metadata-only PASS | CONTRACTS |
-| dialogue/audio | separate channels and causal layers | visible speech with N/A lip-sync; negative time | CONTRACTS |
-| contact | seven ordered phases | overlap, reorder or missing result | CONTRACTS |
-| repair | descendants changed, siblings preserved | budget overflow or preserved target | CONTRACTS |
-| prompt/adapter | canonical sections preserved | contradiction or silent omission | VERIFICATION |
-| media | decodable aligned fixture | corrupt/black/frozen fixture | MEDIA |
-| runtime | exact workflow/profile fingerprint | changed node/model/resource | RUNTIME |
-| portability | external-CWD CLI/package | missing link, absolute internal dependency | DISTRIBUTION |
-| metamorphic/property-like | permutation-independent IDs and repeated hashes | duplicate dimensions, changed source hash | VERIFICATION |
-
-## 14. Safety and release rule
-
-No external transfer, paid provider, voice clone, likeness-sensitive reference or publication is authorized by this document. Rights, consent, disclosure and human review remain mandatory when those scopes are introduced. Local absolute paths are evidence metadata, not portable package dependencies.
-
-The final report must state architecture, verification and production scores independently. `TRIPLE_AAA_CANDIDATE` is permitted only when all three are PASS, the exact evidence is available, distribution is portable and a fresh independent critic accepts the frozen bar. Otherwise use `READY_WITH_RISKS`, `PARTIAL` or `BLOCKED` with explicit deductions.
+The final evidence package is [`triple-aaa-final-report.md`](triple-aaa-final-report.md), with the exact matrix in [`capability-matrix-r1.md`](capability-matrix-r1.md), scores in [`triple-aaa-scorecard.md`](triple-aaa-scorecard.md), long-form envelopes in [`../verification/long-form/`](../verification/long-form/) and the preserved source prompt in [`master-prompt-triple-aaa-r2.txt`](master-prompt-triple-aaa-r2.txt).

@@ -1,6 +1,6 @@
 # Traceability matrix
 
-This matrix connects the supplied blueprint, requirements, canonical owners, acceptance gates, and evaluation cases. It is intentionally explicit so later Skill implementation can be reviewed against the blueprint rather than against memory.
+This matrix connects the supplied blueprint, requirements, canonical owners, acceptance gates, and evaluation cases. It is intentionally explicit so the implemented Skill and the R2 closure can be reviewed against the prompt rather than against memory. The exact prompt copy and frozen bar are [`master-prompt-triple-aaa-r2.txt`](master-prompt-triple-aaa-r2.txt) and [`triple-aaa-quality-bar-r2.json`](triple-aaa-quality-bar-r2.json).
 
 ## Purpose and document contract
 
@@ -119,7 +119,7 @@ Status vocabulary:
 
 ## 5. End-to-end master-prompt traceability
 
-The following chain is the acceptance path for the current documentation goal. A range such as `R-INT-01..04` means every numbered requirement in that range inherits the row's owner, failure family, gate, eval/review path, and future implementation target unless a more specific row above overrides it.
+The following chain is the acceptance path for the current implementation. A range such as `R-INT-01..04` means every numbered requirement in that range inherits the row's owner, failure family, gate, eval/review path, and implementation target unless a more specific row above overrides it. Production rows remain evidence-limited; implementation coverage is not production acceptance.
 
 | User goal | Requirement(s) | Architecture component | Failure mode | Quality gate | Eval/review path | Future implementation component |
 |---|---|---|---|---|---|---|

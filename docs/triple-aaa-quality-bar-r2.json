@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "bar_id": "VGE-TRIPLE-AAA-R2",
+  "status": "FROZEN",
+  "authority": "USER_PROMPT",
+  "frozen_at": "2026-09-08T18:55:36-03:00",
+  "source_files": [
+    {
+      "path": "/home/ricardo/.codex/attachments/6140e868-d7b5-4aa0-a9db-6cd4aaca1ea4/pasted-text-1.txt",
+      "sha256": "8759fbd444abb0578fa5d7b852e4ff2ca9d1a0437913b9ace1a233dfbec16e51"
+    },
+    {
+      "path": "docs/master-prompt-triple-aaa-r2.txt",
+      "sha256": "8759fbd444abb0578fa5d7b852e4ff2ca9d1a0437913b9ace1a233dfbec16e51"
+    }
+  ],
+  "scope": {
+    "implementation": "The existing video-generation-engineering Skill, canonical planning core, quality/runtime/media/evidence helpers, tests, documentation, fixtures, local runtime evidence and portable distribution.",
+    "out_of_scope": [
+      "Paid cloud generation, private-data upload, publication or external transfer without explicit authorization",
+      "Downloading major model weights or presenting unavailable capability as available",
+      "Semantic, physics, dialogue, lip-sync or long-form claims without current artifact observation"
+    ]
+  },
+  "verdict_policy": {
+    "required_statuses": [
+      "PASS",
+      "FAIL",
+      "PARTIAL",
+      "NOT_APPLICABLE",
+      "NOT_OBSERVED",
+      "NOT_RUN",
+      "UNKNOWN",
+      "BLOCKED"
+    ],
+    "unsupported_pass_forbidden": true,
+    "architecture_verification_production_are_separate": true,
+    "triple_aaa_proven_requires": [
+      "strong architecture",
+      "strong deterministic verification",
+      "real production evidence",
+      "accepted LF-001 through LF-003",
+      "observed multi-shot continuity",
+      "tested repair path",
+      "semantic artifact QA PASS",
+      "fresh distribution",
+      "fresh independent critic"
+    ]
+  },
+  "criteria": [
+    {
+      "id": "R2-01",
+      "name": "Baseline and preservation",
+      "priority": "P0",
+      "acceptance": "Audit current code, tests, runtime, artifacts and docs before changes; preserve mature behavior and failed evidence."
+    },
+    {
+      "id": "R2-02",
+      "name": "Canonical production chain",
+      "priority": "P0",
+      "acceptance": "Intent, canonical scene, shot graph, state, adaptation, prompt, execution, artifact, observation, transition QA, repair and assembly remain distinct linked boundaries."
+    },
+    {
+      "id": "R2-03",
+      "name": "LF-001 physical interaction",
+      "priority": "P0",
+      "acceptance": "A 10–15 second vehicle-entry fixture has causal phases, 13 independent acceptance dimensions, adjacent transition contracts and honest runtime/artifact status."
+    },
+    {
+      "id": "R2-04",
+      "name": "LF-002 dialogue closure",
+      "priority": "P1",
+      "acceptance": "A 20–30 second two-adult dialogue fixture separates semantics, voice, performance, lip-sync and mix, with speaker/listener and reaction-causality checks plus a known-bad listener-mouthing case."
+    },
+    {
+      "id": "R2-05",
+      "name": "LF-003 long-form closure",
+      "priority": "P2",
+      "acceptance": "A 45–60 second multi-shot fixture includes Scene Bible, continuity ledger, recurring characters, wardrobe, dialogue, object/high-risk interaction, audio, assembly, repair and checkpoint fields."
+    },
+    {
+      "id": "R2-06",
+      "name": "LF-004 honesty",
+      "priority": "P3",
+      "acceptance": "The optional 90–120 second ladder case exposes branches, recovery, provenance and editorial status without pretending it ran."
+    },
+    {
+      "id": "R2-07",
+      "name": "Anchors and reference decay",
+      "priority": "P0",
+      "acceptance": "Canonical source anchors outrank generated frames; drift signals select CONTINUE, RE_ANCHOR, RESET, SPLIT or REGENERATE with a smallest owner."
+    },
+    {
+      "id": "R2-08",
+      "name": "FLF capability",
+      "priority": "P1",
+      "acceptance": "First-only, last-only, combined endpoint, identity, object, motion and delivery checks are modeled with CONFIRMED/PARTIAL/UNSUPPORTED/UNKNOWN statuses."
+    },
+    {
+      "id": "R2-09",
+      "name": "Feature-scoped model profiles",
+      "priority": "P0",
+      "acceptance": "Capabilities bind to runtime version, node inventory, workflow, model, device, resources, evidence, date and limits; relevant changes invalidate only affected scope."
+    },
+    {
+      "id": "R2-10",
+      "name": "Adapter differential",
+      "priority": "P1",
+      "acceptance": "The same canonical plan compiles through Adapter A and Adapter B; intent, entities, locks, causal order, shot/state semantics and acceptance stay invariant while syntax/runtime may differ."
+    },
+    {
+      "id": "R2-11",
+      "name": "Prompt compiler",
+      "priority": "P0",
+      "acceptance": "Canonical prompt views preserve required semantic sections, expose omissions and mappings, use risk-shaped density, reject contradictions and select scoped negative constraints."
+    },
+    {
+      "id": "R2-12",
+      "name": "Interaction, ownership and vehicle state",
+      "priority": "P0",
+      "acceptance": "Contact phases, owner-before/contact/shared-contact/release/owner-after, vehicle state and observable physics are explicit; prose never substitutes for artifact QA."
+    },
+    {
+      "id": "R2-13",
+      "name": "Audio causality",
+      "priority": "P1",
+      "acceptance": "Dialogue, foley, ambience, room tone, vehicle/animal, music, transition and non-diegetic layers have timed source/cause/mix records with explicit intentional absence."
+    },
+    {
+      "id": "R2-14",
+      "name": "Mechanical media QA",
+      "priority": "P0",
+      "acceptance": "Readable file, duration, FPS, resolution, frame count, codec, audio stream/duration, decode, black, freeze, A/V alignment and hash are checked separately from semantics."
+    },
+    {
+      "id": "R2-15",
+      "name": "Semantic observation and continuity",
+      "priority": "P0",
+      "acceptance": "Explicit oracle/evidence/status/confidence/limitations observations cover semantic categories and the 14 continuity dimensions against exact artifact bytes."
+    },
+    {
+      "id": "R2-16",
+      "name": "Targeted repair",
+      "priority": "P0",
+      "acceptance": "Detect → localize → owner → minimal repair → regenerate → reobserve → reassemble is bounded by attempts, runtime, cost and human checkpoints; immutable history and downstream revalidation are preserved."
+    },
+    {
+      "id": "R2-17",
+      "name": "ComfyUI preflight and resources",
+      "priority": "P1",
+      "acceptance": "Version, nodes, schemas, model files, workflow inputs, extensions, VRAM/RAM/device and fallback statuses are observed before authorized submission."
+    },
+    {
+      "id": "R2-18",
+      "name": "Assembly and editorial gates",
+      "priority": "P1",
+      "acceptance": "Assembly validates accepted segment artifacts, format/duration/audio invariants and keeps technical, semantic and editorial acceptance separate."
+    },
+    {
+      "id": "R2-19",
+      "name": "Maturity and verdict",
+      "priority": "P0",
+      "acceptance": "Levels 0–5 and the allowed verdicts distinguish structural, runtime, audiovisual, bounded-production and repeatable evidence; scores cannot launder a required failure."
+    },
+    {
+      "id": "R2-20",
+      "name": "Architecture and progressive disclosure",
+      "priority": "P0",
+      "acceptance": "Core contracts own canonical state; scripts own deterministic validation; agents own directing/judgment; SKILL.md stays concise and routes only relevant references."
+    },
+    {
+      "id": "R2-21",
+      "name": "Evaluation library",
+      "priority": "P1",
+      "acceptance": "Metamorphic, property and known-bad fixtures cover the listed graph, timing, ownership, speaker, reference, artifact, workflow, repair, long-form and A/V failures."
+    },
+    {
+      "id": "R2-22",
+      "name": "Fresh independent review",
+      "priority": "P0",
+      "acceptance": "A new reviewer inspects the final candidate after implementation; pre/post fingerprints cover Skill, references, scripts, profiles, tests and distribution; any material mutation invalidates the review."
+    },
+    {
+      "id": "R2-23",
+      "name": "Portable distribution",
+      "priority": "P1",
+      "acceptance": "Fresh ZIP integrity, secrets/path/weights/media/link checks, external-CWD script execution, scoped profiles and template portability are recorded with SHA-256."
+    },
+    {
+      "id": "R2-24",
+      "name": "Documentation and traceability",
+      "priority": "P0",
+      "acceptance": "Canonical docs, ADRs, capability matrix, ladder, scorecard, report and control plane trace user goal → requirement → contract → implementation → test → runtime → artifact → observation → claim."
+    },
+    {
+      "id": "R2-25",
+      "name": "Exact final accounting",
+      "priority": "P0",
+      "acceptance": "The final report includes exact test count/failures/errors/skips/groups, required headings, independent 0–100 scores and explicit claims/non-claims."
+    },
+    {
+      "id": "R2-26",
+      "name": "Phase order and safety",
+      "priority": "P0",
+      "acceptance": "Phases A–M are executed or honestly blocked; safe local runtime is used where possible and paid APIs, uploads, weights and publication remain unauthorized."
+    }
+  ],
+  "required_scores": [
+    "Architecture",
+    "Skill Design",
+    "Progressive Disclosure",
+    "Canonical Modeling",
+    "Continuity",
+    "Prompt Compilation",
+    "Model Adaptation",
+    "ComfyUI Runtime",
+    "Deterministic QA",
+    "Semantic Artifact QA",
+    "Dialogue/Performance",
+    "Lip-Sync/Audio",
+    "Long-Form Planning",
+    "Long-Form Production",
+    "Repairability",
+    "Provenance",
+    "Portability",
+    "Maintainability"
+  ],
+  "required_report_sections": [
+    "Final Verdict",
+    "Baseline",
+    "Gaps Found",
+    "Changes Made",
+    "Changes Rejected",
+    "Architecture State",
+    "Script Ownership",
+    "Tests",
+    "Runtime Evidence",
+    "Artifact Evidence",
+    "LF-001",
+    "LF-002",
+    "LF-003",
+    "LF-004",
+    "Dialogue / Lip-Sync / Audio",
+    "FLF / Re-Anchor",
+    "Adapter A",
+    "Adapter B",
+    "Capability Matrix",
+    "Progressive Disclosure",
+    "Portability",
+    "Independent Critic",
+    "Remaining Blockers",
+    "Scores",
+    "What Can Now Be Claimed",
+    "What Still Cannot Be Claimed"
+  ]
+}

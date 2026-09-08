@@ -1,28 +1,39 @@
-# Capability matrix — Triple-AAA closure R1
+# Capability matrix — Triple-AAA R2
 
-Observed scope: local ComfyUI at `127.0.0.1:8188`, runtime `0.34.0`, observed 2026-09-08. Values below are scoped to exact model assets, node inventory, workflow hash/fingerprint and hardware snapshot; they are not universal model claims.
+Observed scope: local ComfyUI at `127.0.0.1:8188`, runtime `0.34.0`, exact H3 assets/workflows and the dated evidence in `verification/`. A status is scoped to that profile; it is not a universal model claim. `PASS` in Structural means the contract exists and rejects malformed data. `PASS` in Runtime or Artifact means the corresponding evidence was actually executed and hash-bound.
 
-| Feature | H3 T2V profile | H3 R2V probe profile | Evidence / decision |
-|---|---|---|---|
-| text-to-video | `CONFIRMED` | not claimed | `profiles/comfyui-h3-local-probed.json`; exact 384×224/124-frame workflow |
-| native audio stream generation | `CONFIRMED` stream-level only | `UNKNOWN` pending probe | Stream presence is not listening, event causality or mix quality |
-| image-to-video | `UNKNOWN` | not claimed | No accepted I2V artifact in current scope |
-| reference conditioning / R2V | `UNKNOWN` | `UNKNOWN` until probe is collected and observed | `assets/workflows/h3-r2v-probe-api.json`, proposed profile revision 1 |
-| first/last frame | `UNKNOWN` | `UNKNOWN` | No accepted endpoint probe |
-| dialogue / voice / lip-sync | `UNKNOWN` | `UNKNOWN` | No generated dialogue artifact or phonetic oracle |
-| camera controls | `UNKNOWN` | `UNKNOWN` | Camera text is not a runtime control or visual proof |
-| 10–15s physical interaction | `BLOCKED` | `BLOCKED` | Exact H3 envelope is ~5.1667s; no accepted two-shot chain |
-| 20–30s dialogue + interaction | `BLOCKED` | `BLOCKED` | Dialogue/lip-sync capability and chain unobserved |
-| 45–60s demanding bounded production | `BLOCKED` | `BLOCKED` | No accepted dependent long-form artifact package |
-| 90–120s extended production | `BLOCKED` | `BLOCKED` | Optional ladder; no evidence |
-| second independent model | `BLOCKED_BY_EXTERNAL_CAPABILITY` | `BLOCKED_BY_EXTERNAL_CAPABILITY` | No Wan weights present locally; no external call authorized |
+| Capability | Structural | Runtime | Artifact | Long-form | Status |
+|---|---|---|---|---|---|
+| Scene planning | PASS | NOT_APPLICABLE | NOT_APPLICABLE | PARTIAL | PASS (scoped) |
+| Shot graph | PASS | NOT_APPLICABLE | NOT_APPLICABLE | PARTIAL | PASS (scoped) |
+| Continuity state/ledger | PASS | PARTIAL | PARTIAL | BLOCKED | PARTIAL |
+| Reference retention/re-anchor | PASS | UNKNOWN | PARTIAL | BLOCKED | PARTIAL |
+| Prompt compiler | PASS | NOT_APPLICABLE | NOT_APPLICABLE | PARTIAL | PASS (scoped) |
+| H3 T2V | PASS | CONFIRMED | PASS (mechanical) | BLOCKED | PARTIAL |
+| H3 R2V/I2V | PASS | PARTIAL | FAIL (semantic) | BLOCKED | PARTIAL |
+| First/last frame (FLF) | PASS | UNKNOWN | NOT_OBSERVED | BLOCKED | BLOCKED |
+| Dialogue planning | PASS | NOT_APPLICABLE | NOT_OBSERVED | BLOCKED | PARTIAL |
+| Voice generation | PASS | UNKNOWN | NOT_OBSERVED | BLOCKED | BLOCKED |
+| Lip-sync | PASS | UNKNOWN | NOT_OBSERVED | BLOCKED | BLOCKED |
+| Layered audio timeline | PASS | PARTIAL | NOT_OBSERVED | BLOCKED | PARTIAL |
+| Vehicle interaction | PASS | UNKNOWN | NOT_OBSERVED | BLOCKED | BLOCKED |
+| Artifact observation/semantic QA | PASS | PASS (contract) | PARTIAL | BLOCKED | PARTIAL |
+| Transition QA | PASS | NOT_APPLICABLE | PARTIAL | BLOCKED | PARTIAL |
+| Targeted repair | PASS | NOT_RUN | NOT_OBSERVED | BLOCKED | PARTIAL |
+| Assembly/editorial gate | PASS (mechanical) | PARTIAL | PASS (mechanical) | BLOCKED | PARTIAL |
+| LF-001 vehicle entry | PASS (fixture) | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
+| LF-002 dialogue + interaction | PASS (fixture) | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
+| LF-003 dependent multi-shot | PASS (fixture) | BLOCKED | BLOCKED | BLOCKED | BLOCKED |
+| LF-004 extended branches | PASS (fixture) | NOT_RUN | NOT_RUN | NOT_RUN | NOT_RUN |
+| Second independent adapter | PASS (differential contract) | BLOCKED | NOT_OBSERVED | BLOCKED | BLOCKED |
 
-## Exact local runtime observation
+## Exact local runtime evidence
 
-- ComfyUI: `0.34.0`; node inventory hash observed in the current run: `sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674`.
-- H3 R2V workflow hash: `sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6`.
-- H3 R2V workflow fingerprint: `sha256:1b455641a3d4c9e11b91cc1a92517d68fb7ced70c63b39f24367609429e9f9b1`.
-- H3 REF2VA asset hash: `sha256:de2c6c29c4ee702b45e48e40daae3834aeee58ab681c732d9152589a87c89910`.
-- Observed GPUs: two RTX 3060 devices; the probe was queued against the exact workflow and its actual queue ID is stored in `verification/h3-r2v-probe-runs/`.
+- H3 T2V profile: [`comfyui-h3-local-probed.json`](../.agents/skills/video-generation-engineering/profiles/comfyui-h3-local-probed.json), feature-scoped `text_to_video` and `native_audio_generation` are `CONFIRMED` only for the recorded runtime, model, workflow, device and parameters.
+- H3 T2V artifact: [`art_2898879072af4739b673efe71fafcc7e.mp4`](../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4), SHA-256 `623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124`, 384×224, 124 frames, 24 FPS, approximately 5.167 seconds.
+- H3 R2V artifact: [`art_c7a1437df976419b98c5f73a41234c2d.mp4`](../verification/h3-r2v-collected-r2/art_c7a1437df976419b98c5f73a41234c2d.mp4), SHA-256 `973c979e1e0c0bc49d9ef30a3b1a4ee10821891d85fe6bcf151dcc92b210e598`; mechanical QA passes, semantic observation fails the declared veterinary identity/environment.
+- The confirmed local profile requires exact source/probe, observed-parameter, device, artifact and observation hashes. It does not imply R2V, I2V, FLF, dialogue, voice or lip-sync.
 
-The R2V profile is not promoted to `CONFIRMED` merely because the node and model exist. Promotion requires a successful collected artifact plus endpoint/reference identity, motion, object state and media inspection records. If the probe times out or fails, the same queue ID is reconciled and the profile stays `UNKNOWN`/`BLOCKED`.
+## Decision
+
+The matrix supports planning, contracts, runtime provenance and mechanical media QA. It does not support a Triple-AAA production verdict. The missing rows are intentionally `UNKNOWN`, `BLOCKED`, `NOT_OBSERVED` or `PARTIAL` until an authorized execution produces the required evidence.

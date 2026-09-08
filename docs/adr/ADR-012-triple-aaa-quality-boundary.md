@@ -1,6 +1,6 @@
 # ADR-012 — Separate production evidence from canonical planning
 
-Status: Accepted for Triple-AAA closure R1
+Status: Accepted for Triple-AAA closure R2
 
 ## Context
 

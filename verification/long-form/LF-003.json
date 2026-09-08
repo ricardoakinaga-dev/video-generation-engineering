@@ -15,5 +15,72 @@
   "status": "BLOCKED",
   "production_evidence_complete": false,
   "blockers": ["No accepted dependent-shot production package, transition scorecards, bounded repair run or human checkpoint"],
-  "next_action": "Complete LF-001/LF-002 evidence first, then build a 45-second bounded case from accepted shot artifacts"
+  "next_action": "Complete LF-001/LF-002 evidence first, then build a 45-second bounded case from accepted shot artifacts",
+  "fixture": {
+    "fixture_status": "STRUCTURAL_ONLY",
+    "scenario": "Two recurring adults meet at a roadside cafe, converse, react to a message, move a persistent envelope, interact with a parked vehicle and resolve on a closing hero shot.",
+    "requirements": [
+      "two recurring characters",
+      "persistent wardrobe",
+      "dialogue and emotional progression",
+      "persistent envelope",
+      "high-risk handoff and vehicle interaction",
+      "camera coverage and axis",
+      "audio timeline",
+      "assembly",
+      "repair opportunity",
+      "human checkpoint"
+    ],
+    "scene_bible_fields": [
+      "characters",
+      "identity_anchors",
+      "wardrobe",
+      "relationships",
+      "environment",
+      "time_of_day",
+      "light_direction",
+      "persistent_objects",
+      "voice_identity",
+      "visual_style",
+      "camera_language",
+      "prohibited_drift"
+    ],
+    "continuity_fields": [
+      "identity",
+      "wardrobe",
+      "hair",
+      "position",
+      "pose",
+      "gaze",
+      "hand_occupancy",
+      "object_location",
+      "object_ownership",
+      "vehicle_state",
+      "environment",
+      "lighting",
+      "screen_direction",
+      "camera_geography",
+      "emotional_state",
+      "dialogue_state",
+      "audio_state",
+      "time"
+    ],
+    "shot_plan": [
+      "ESTABLISH",
+      "CONVERSATION",
+      "REACTION",
+      "MOVEMENT",
+      "OBJECT_OR_VEHICLE_INTERACTION",
+      "COVERAGE_CHANGE",
+      "RESOLUTION",
+      "CLOSING_HERO_SHOT"
+    ],
+    "known_bad": [
+      "wardrobe or identity drifts across a dependent shot",
+      "generated boundary frame becomes canonical without validation",
+      "persistent envelope teleports or changes owner without contact",
+      "lighting or screen direction flips without a motivated cut",
+      "repair changes an unaffected sibling without downstream revalidation"
+    ]
+  }
 }

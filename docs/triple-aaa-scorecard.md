@@ -1,22 +1,42 @@
-# Triple-AAA release scorecard
+# Triple-AAA independent scorecard — R2
 
-Gate-level statuses use `PASS`, `PARTIAL`, `BLOCKED`, `NOT_RUN` and `PENDING`. The phrase `PASS (scoped)` means that the gate passes its explicitly declared software/architecture scope; it is not a synonym for audiovisual production acceptance and it cannot promote the overall release.
+Scores are independent 0–100 readings of the frozen bar. They are not an aesthetic average and a strong software score cannot compensate for blocked production evidence. The detailed packet is [`triple-aaa-final-report.md`](triple-aaa-final-report.md).
 
-The three gates are independent and scored on their own evidence:
+## Gate scores
 
-| Gate | PASS requires | Current closure reading |
-|---|---|---|
-| Architecture | canonical ownership, one-way dependencies, progressive disclosure, safety boundary, traceability and ADR challenge | `PASS (scoped)` |
-| Verification | all deterministic tests, known-good/bad fixtures, runtime contract fakes, adapter differential, portability and distribution checks | `PASS (scoped)` |
-| Production | exact local/generated media, byte/decode QA, category-separated semantic/continuity/audio observations, transitions and editorial review for claimed ladder | `PARTIAL/BLOCKED` until unavailable capabilities and long-form artifacts are resolved |
+| Gate | Score | Result | Reason |
+|---|---:|---|---|
+| Architecture | 93 | PASS (scoped) | Canonical ownership, state separation, progressive disclosure, safety boundary and traceability are explicit and implemented. |
+| Verification | 92 | PASS (scoped) | 120 tests, fail-closed known-bad cases, compile/skill/docs/package checks and exact provenance contracts pass. |
+| Production | 21 | PARTIAL/BLOCKED | One local H3 T2V artifact and a failed R2V semantic observation exist; LF-001..003, dialogue/lip-sync, FLF, repair and second-adapter production proof do not. |
 
-## Maturity levels
+## Required independent pillars
 
-0. `INTENT_ONLY`: only a creative objective exists.
-1. `STRUCTURAL_PLAN`: canonical plan and graph validate.
-2. `DETERMINISTIC_VERIFICATION`: contracts and fixtures pass.
-3. `RUNTIME_PROVENANCE`: exact runtime/profile/workflow/attempt/artifact hashes are retained.
-4. `AUDIOVISUAL_EVALUATION`: inspected media has category-separated observations and human/qualified semantic oracles.
-5. `REPEATABLE_BOUNDED_PRODUCTION`: ladder case passes, repair budgets are respected, packaging is portable, and a fresh critic accepts the frozen bar.
+| Pillar | Score | Evidence basis | Deduction |
+|---|---:|---|---|
+| Architecture | 94 | `vge_core.py` owner, one-way quality/evidence/runtime boundaries, ADR-012 | Some target modules remain logical rather than separately packaged. |
+| Skill Design | 91 | concise `SKILL.md`, routing, safety and portable helper surface | Production claims remain scoped to current local evidence. |
+| Progressive Disclosure | 92 | trigger-to-reference routing and specialist references | Static routing still needs host-level validation across installations. |
+| Canonical Modeling | 94 | Scene Bible, shot/state DAG, aliases and typed status contracts | Full LF production schemas are fixtures until real cases are collected. |
+| Continuity | 86 | 14-dimension scorecard, transitions, state deltas and re-anchor decisions | No accepted multi-shot continuity package exists. |
+| Prompt Compilation | 88 | ten canonical sections, density/contradiction checks and explicit omissions | Text compilation cannot prove model behavior. |
+| Model Adaptation | 78 | feature-scoped profiles, expiry triggers and adapter differential | H3 R2V and a second real adapter remain unavailable/partial. |
+| ComfyUI Runtime | 76 | local discovery, preflight, queue reconciliation, exact H3 T2V/R2V provenance | Runtime evidence is dated/local and does not establish all requested features. |
+| Deterministic QA | 94 | 120 tests, malformed/known-bad regressions, compile and docs verification | Some semantic oracles still require external/human execution. |
+| Semantic Artifact QA | 58 | category-separated observation contracts and mechanical/semantic separation | No accepted LF semantic package; R2V semantic result is FAIL. |
+| Dialogue/Performance | 42 | speaker/listener, causality and channel contracts plus known-bad tests | No generated dialogue/performance artifact was accepted. |
+| Lip-Sync/Audio | 38 | five channels, ten audio layers, timing and mix-role contracts | Native audio stream is only stream-level evidence; no lip-sync/listening acceptance. |
+| Long-Form Planning | 88 | LF fixtures, duration floors, Scene Bible/ledger/repair requirements | Production envelopes are structurally complete but not executed. |
+| Long-Form Production | 18 | conservative blocked statuses and fail-closed validator | LF-001, LF-002 and LF-003 have no accepted production evidence. |
+| Repairability | 72 | owner routing, budgets, immutable attempt rules and downstream invalidation | No real detect→repair→reobserve→reassemble run is accepted. |
+| Provenance | 93 | exact hashes for profiles, attempts, artifacts, observations and transitions | Existing runtime evidence is limited to dated local scope. |
+| Portability | 92 | standard-library CLI, external-CWD checks and fresh R2 manifest/CRC | Portability does not prove provider or audiovisual capability. |
+| Maintainability | 84 | explicit owners, aliases, tests and progressive documentation | Repeated historical reports and R1 filenames remain compatibility debt. |
 
-The final label is `TRIPLE_AAA_CANDIDATE` only when all three gates are PASS. A strong architecture or software score never upgrades a blocked production score.
+## Maturity
+
+Current global maturity: `3 — RUNTIME_PROVENANCE`, with bounded audiovisual observations. Level 4 is not generally accepted because semantic evidence is incomplete; Level 5 requires repeatable accepted ladder production and a fresh critic.
+
+## Verdict policy
+
+`TRIPLE_AAA_PROVEN` requires production evidence, not only structural scores. The current verdict is `READY_WITH_RISKS`. `TRIPLE_AAA_CANDIDATE` is also withheld because LF-001..003 and the fresh post-integration critic have not passed.

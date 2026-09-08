@@ -2,11 +2,11 @@
 
 ## Implemented package — 2026-09-08
 
-The repository skill now exists at [SKILL.md](../.agents/skills/video-generation-engineering/SKILL.md). [Implementation results](../IMPLEMENTATION.md) record tested software, actual local ComfyUI execution and remaining media/provider limits. The Phase 0 design and historical gates below are preserved; they do not certify the implementation. See [ADR-011](adr/ADR-011-skill-implementation-and-evidence.md).
+The repository skill now exists at [SKILL.md](../.agents/skills/video-generation-engineering/SKILL.md). [Implementation results](../IMPLEMENTATION.md) record tested software, actual local ComfyUI execution and remaining media/provider limits. The R2 closure packet is [`triple-aaa-final-report.md`](triple-aaa-final-report.md); it does not promote unavailable production evidence. See [ADR-011](adr/ADR-011-skill-implementation-and-evidence.md) and [ADR-012](adr/ADR-012-triple-aaa-quality-boundary.md).
 
 ## Status
 
-This is the navigation hub for the documentation-first architecture of `video-generation-engineering-vNext`. The documentation is `REMEDIATED_VERIFIED` against the original findings and the second, third, and fourth reviews in [`AUDIT-docs-2026-09-08-r4.md`](../audit-artifacts/reports/AUDIT-docs-2026-09-08-r4.md) by a fresh focused static re-audit of this revision. The prior Gauntlet `FINISHED/PASS` record is historical and applies to the pre-remediation fingerprint, not to this revision. The current implementation closure is tracked by the frozen Triple-AAA bar and [`triple-aaa-final-report.md`](triple-aaa-final-report.md); its runtime/media limits remain explicit and it does not claim universal audiovisual quality.
+This is the navigation hub for the documentation-first architecture of `video-generation-engineering-vNext`. The documentation is `REMEDIATED_VERIFIED`; the current R2 implementation closure is `READY_WITH_RISKS`. The prior Gauntlet `FINISHED/PASS` record is historical and applies to the pre-remediation fingerprint, not to this revision. Runtime/media limits remain explicit and the package does not claim universal audiovisual quality.
 
 ## Purpose
 
@@ -61,8 +61,10 @@ No lower-level document may silently override a higher-level contract. External 
 | [`capability-matrix-r1.md`](capability-matrix-r1.md) | Exact local capability scope and blockers | Selecting a model or feature |
 | [`long-form-validation.md`](long-form-validation.md) | LF-001..LF-004 evidence envelope | Long-form generation or assembly |
 | [`triple-aaa-scorecard.md`](triple-aaa-scorecard.md) | Independent release gates and maturity | Final readiness decision |
-| [`triple-aaa-quality-bar-r1.json`](triple-aaa-quality-bar-r1.json) | Frozen user-prompt quality bar | Auditing this closure |
-| [`triple-aaa-final-report.md`](triple-aaa-final-report.md) | Current R1 gate scores, evidence and remaining blockers | Release handoff |
+| [`master-prompt-triple-aaa-r2.txt`](master-prompt-triple-aaa-r2.txt) | Exact preserved user prompt | Auditing prompt fidelity |
+| [`triple-aaa-quality-bar-r2.json`](triple-aaa-quality-bar-r2.json) | Frozen R2 quality bar and verdict policy | Auditing this closure |
+| [`triple-aaa-quality-bar-r1.json`](triple-aaa-quality-bar-r1.json) | Historical R1 quality bar | Comparing prior closure only |
+| [`triple-aaa-final-report.md`](triple-aaa-final-report.md) | Current R2 scores, evidence and remaining blockers | Release handoff |
 
 ## Recommended reading order
 
@@ -113,9 +115,9 @@ No lower-level document may silently override a higher-level contract. External 
 |---|---|---|
 | Product scope and requirements | Specified | Documentation inspection |
 | Canonical scene/state/continuity model | Specified | Contracts and scenario fixtures |
-| Model and ComfyUI capabilities | Profiled conservatively | Dated sources; runtime probes not run |
-| Failure and evaluation strategy | Specified | Golden/known-bad/adversarial fixtures |
-| Repository Skill package | Implemented and independently re-reviewing | Package tests, local ComfyUI evidence and current Gauntlet bar |
+| Model and ComfyUI capabilities | Profiled conservatively | Dated local runtime probes; feature-scoped confirmation only |
+| Failure and evaluation strategy | Implemented for deterministic boundaries | Golden/known-bad/adversarial structural fixtures plus runtime limits |
+| Repository Skill package | Implemented; R2 closure `READY_WITH_RISKS` | 120 tests, local ComfyUI evidence and frozen R2 bar |
 | Generated media quality | Mechanically evaluated; semantic acceptance remains partial | Exact H3 T2V/R2V artifacts, separated observations and long-form blockers |
 
 ## Deviations from the suggested tree

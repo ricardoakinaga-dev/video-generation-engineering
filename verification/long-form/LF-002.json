@@ -14,5 +14,55 @@
   "status": "BLOCKED",
   "production_evidence_complete": false,
   "blockers": ["No generated dialogue, voice, performance, lip-sync or mix evidence in the authorized local scope"],
-  "next_action": "Use a separately confirmed dialogue-capable profile and collect line-level audio/face evidence"
+  "next_action": "Use a separately confirmed dialogue-capable profile and collect line-level audio/face evidence",
+  "fixture": {
+    "fixture_status": "STRUCTURAL_ONLY",
+    "scenario": "Two adults hold a short question-and-response conversation; the listener processes and reacts before responding, then the responder handles a small object.",
+    "requirements": [
+      "two distinct identities",
+      "speaker and listener state",
+      "gaze and camera axis",
+      "reaction causality",
+      "object ownership and hand contact",
+      "dialogue timing and assembly",
+      "separate semantics, voice, performance, lip-sync and mix"
+    ],
+    "dialogue_channels": [
+      "semantics",
+      "voice",
+      "performance",
+      "lip_sync",
+      "mix"
+    ],
+    "causal_order": [
+      "STIMULUS",
+      "PROCESSING",
+      "REACTION",
+      "RESPONSE"
+    ],
+    "shot_plan": [
+      {
+        "id": "LF002-S01",
+        "purpose": "Establish two adults, axis and object ownership",
+        "duration_s": 5
+      },
+      {
+        "id": "LF002-S02",
+        "purpose": "Active speaker asks; listener processes and reacts",
+        "duration_s": 8
+      },
+      {
+        "id": "LF002-S03",
+        "purpose": "Listener responds and handles the object",
+        "duration_s": 7
+      }
+    ],
+    "known_bad": [
+      "listener mouths the active speaker line without explicit scripting",
+      "reaction precedes stimulus or processing",
+      "speaker swaps between shots",
+      "object ownership changes from proximity alone",
+      "visible speech is accepted without voice or lip-sync status"
+    ]
+  }
 }

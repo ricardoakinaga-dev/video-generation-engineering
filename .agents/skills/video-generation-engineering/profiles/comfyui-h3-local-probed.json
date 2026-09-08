@@ -124,7 +124,18 @@
       "probe_ref": "evidence/h3-local-20260908.json",
       "probe_content_hash": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
       "checked_at": "2026-09-08",
-      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+      "scope": "exact_workflow_only; output stream presence is not semantic quality",
+      "observed_parameters": {
+        "width": 384,
+        "height": 224,
+        "frame_count": 124,
+        "fps": 24
+      },
+      "selected_device": "cuda:0",
+      "artifact_ref": "../../../../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4",
+      "artifact_content_hash": "sha256:623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124",
+      "observation_ref": "../../../../verification/media-qa-h3-t2v-r1.json",
+      "observation_content_hash": "sha256:e2cd9515796d9b1a1bccee14707d2788a3b58ca9403b16eb00b91fcc9c7964be"
     },
     "native_audio_generation": {
       "status": "CONFIRMED",
@@ -133,7 +144,18 @@
       "probe_ref": "evidence/h3-local-20260908.json",
       "probe_content_hash": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
       "checked_at": "2026-09-08",
-      "scope": "exact_workflow_only; output stream presence is not semantic quality"
+      "scope": "exact_workflow_only; output stream presence is not semantic quality",
+      "observed_parameters": {
+        "width": 384,
+        "height": 224,
+        "frame_count": 124,
+        "fps": 24
+      },
+      "selected_device": "cuda:0",
+      "artifact_ref": "../../../../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4",
+      "artifact_content_hash": "sha256:623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124",
+      "observation_ref": "../../../../verification/media-qa-h3-t2v-r1.json",
+      "observation_content_hash": "sha256:e2cd9515796d9b1a1bccee14707d2788a3b58ca9403b16eb00b91fcc9c7964be"
     },
     "image_to_video": {
       "status": "UNKNOWN",

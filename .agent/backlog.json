@@ -83,6 +83,35 @@
       "acceptance_summary": "Frozen VGE-TRIPLE-AAA-R1 bar; deterministic quality contracts; local capability evidence; long-form envelopes; independent architecture/verification/production scoring; portable distribution; honest READY_WITH_RISKS final report",
       "evidence_refs": ["docs/triple-aaa-quality-bar-r1.json", "docs/triple-aaa-validation.md", ".agent/plans/triple-aaa-closure.md", "verification/software-triple-aaa-r13.json", "verification/distribution-triple-aaa-r1.json", "verification/triple-aaa-independent-critic-r5.md", "docs/triple-aaa-final-report.md"],
       "next_action": "Revalidate on provider, runtime, model, workflow, resource or behavioral change"
+    },
+    {
+      "id": "VGE-TRIPLE-AAA-R2",
+      "title": "Implement the user-supplied State-of-the-Art Triple-AAA closure",
+      "stage": "HANDOFF",
+      "priority": "P0",
+      "status": "DONE_WITH_RISKS",
+      "origin": "docs/master-prompt-triple-aaa-r2.txt; user request 2026-09-08",
+      "dependencies": [
+        "VGE-TRIPLE-AAA-R1"
+      ],
+      "owner": "Codex",
+      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, structural ladder fixtures, current matrix/report, fresh software/documentation evidence and portable distribution; independent critic remains operationally blocked and release is READY_WITH_RISKS",
+      "evidence_refs": [
+        "docs/master-prompt-triple-aaa-r2.txt",
+        "docs/triple-aaa-quality-bar-r2.json",
+        ".agent/plans/triple-aaa-r2-closure.md",
+        "verification/software-triple-aaa-r16.json",
+        "verification/distribution-triple-aaa-r2.json",
+        "verification/triple-aaa-independent-critic-r6.md",
+        "dist/video-generation-engineering-triple-aaa-r2.zip"
+      ],
+      "next_action": {
+        "id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC",
+        "kind": "VERIFY",
+        "summary": "Run a sealed fresh independent critic against the integrated R2 candidate",
+        "target": "Frozen implementation, fixtures, profile, quality bar, report, matrix and distribution",
+        "completion_signal": "Independent critic record includes scope fingerprint, mutation sentinel and verdict"
+      }
     }
   ]
 }

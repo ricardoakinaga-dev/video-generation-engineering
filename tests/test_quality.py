@@ -16,6 +16,7 @@ sys.path.insert(0, str(SKILL / "scripts"))
 from vge_core import ContractError, digest, file_hash
 from vge_media import media_qa, run
 from vge_quality import (
+    AUDIO_LAYERS,
     CONTACT_PHASES,
     CONTINUITY_DIMENSIONS,
     adapt_prompt,
@@ -26,16 +27,19 @@ from vge_quality import (
     profile_fingerprint,
     reanchor_decision,
     validate_audio_timeline,
+    validate_causal_sequence,
     validate_contact_phases,
     validate_continuity_scorecard,
     validate_dialogue_contract,
     validate_feature_profile,
     validate_first_last_frame,
     validate_long_form_case,
+    validate_object_ownership,
     validate_observation_contract,
     validate_semantic_observation,
     validate_repair_plan,
     validate_transition_contract,
+    validate_vehicle_state,
 )
 
 
@@ -53,8 +57,10 @@ def decision_evidence():
     return [{"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}]
 
 
-def quality_provenance(shot_id, artifact_id):
+def quality_provenance(shot_id, artifact_id, media_ref=None, media_hash=None):
     safe = re.sub(r"[^A-Za-z0-9_-]", "_", f"{shot_id}-{artifact_id}")
+    media_ref = str(QUALITY_ARTIFACT) if media_ref is None else str(media_ref)
+    media_hash = QUALITY_ARTIFACT_HASH if media_hash is None else media_hash
     shot_record = {"id": shot_id, "revision": 1, "acceptance_ids": ["QG-17"]}
     shot_ref = PROVENANCE_ROOT / f"{safe}-shot.json"
     shot_ref.write_text(json.dumps(shot_record, sort_keys=True), encoding="utf-8")
@@ -79,17 +85,17 @@ def quality_provenance(shot_id, artifact_id):
     attempt_ref = PROVENANCE_ROOT / f"{safe}-attempt.json"
     attempt_ref.write_text(json.dumps(attempt_record, sort_keys=True), encoding="utf-8")
     artifact_record = {"schema_version": 1, "id": artifact_id, "shot_id": shot_id,
-                       "execution_attempt_ref": attempt_id, "artifact_ref": str(QUALITY_ARTIFACT),
-                       "content_hash": QUALITY_ARTIFACT_HASH, "generation_status": "GENERATED",
+                       "execution_attempt_ref": attempt_id, "artifact_ref": media_ref,
+                       "content_hash": media_hash, "generation_status": "GENERATED",
                        "media": {"kind": "video"}}
     artifact_ref = PROVENANCE_ROOT / f"{safe}-artifact.json"
     artifact_ref.write_text(json.dumps(artifact_record, sort_keys=True), encoding="utf-8")
     return {"attempt": {"id": attempt_id, "ref": str(attempt_ref), "content_hash": file_hash(attempt_ref)},
             "shot": {"id": shot_id, "ref": str(shot_ref), "content_hash": file_hash(shot_ref),
                      "contract_hash": digest(shot_record)},
-            "artifact": {"id": artifact_id, "record_ref": str(artifact_ref),
-                         "record_content_hash": file_hash(artifact_ref), "media_ref": str(QUALITY_ARTIFACT),
-                         "media_content_hash": QUALITY_ARTIFACT_HASH}}
+                         "artifact": {"id": artifact_id, "record_ref": str(artifact_ref),
+                         "record_content_hash": file_hash(artifact_ref), "media_ref": media_ref,
+                         "media_content_hash": media_hash}}
 
 
 def oracle(kind="FRAME", question="Does the observed frame satisfy the declared assertion?"):
@@ -164,20 +170,58 @@ class QualityContractTests(unittest.TestCase):
             validate_continuity_scorecard(missing)
 
     def test_transition_binds_state_and_scorecard(self):
+        next_media = PROVENANCE_ROOT / "transition-next.mp4"
+        shutil.copyfile(QUALITY_ARTIFACT, next_media)
+        next_media_hash = file_hash(next_media)
+        previous_observation = observation()
+        next_observation = observation()
+        next_observation.update(id="obs_2", shot_id="shot_2", artifact_id="artifact_2",
+                                artifact_ref=str(next_media), observed_content_hash=next_media_hash,
+                                provenance=quality_provenance("shot_2", "artifact_2", next_media, next_media_hash))
+        for check in next_observation["checks"]:
+            check["evidence"] = [{"type": "FRAME", "ref": str(next_media), "content_hash": next_media_hash, "time_s": 0.5}]
+        next_scorecard = scorecard()
+        next_scorecard.update(artifact_ref=str(next_media), observed_content_hash=next_media_hash,
+                              provenance=quality_provenance("shot_2", "artifact_2", next_media, next_media_hash))
         contract = {"schema_version": 1, "id": "tr_1", "previous_shot_id": "shot_1", "next_shot_id": "shot_2",
                     "previous_artifact": {"shot_id": "shot_1", "artifact_id": "artifact_1", "artifact_ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH},
-                    "next_artifact": {"shot_id": "shot_2", "artifact_id": "artifact_2", "artifact_ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH},
+                    "next_artifact": {"shot_id": "shot_2", "artifact_id": "artifact_2", "artifact_ref": str(next_media), "content_hash": next_media_hash},
                     "required_state_properties": ["object.door", "subject.position"],
                     "previous_end_state": {"object.door": "open", "subject.position": "left"},
                     "next_start_state": {"object.door": "open", "subject.position": "left"},
-                    "continuity_scorecard": scorecard(), "status": "PASS"}
+                    "continuity_scorecard": next_scorecard,
+                    "previous_observation": previous_observation,
+                    "next_observation": next_observation,
+                    "status": "PASS"}
         self.assertTrue(validate_transition_contract(contract)["accepted"])
+        same_artifact = copy.deepcopy(contract)
+        same_artifact["next_artifact"]["artifact_ref"] = same_artifact["previous_artifact"]["artifact_ref"]
+        same_artifact["next_artifact"]["content_hash"] = same_artifact["previous_artifact"]["content_hash"]
+        with self.assertRaisesRegex(ContractError, "distinct previous and next artifact bytes"):
+            validate_transition_contract(same_artifact)
         contract["previous_artifact"]["artifact_ref"] = "/tmp/vge-previous-transition-does-not-exist.mp4"
         with self.assertRaisesRegex(ContractError, "existing artifact bytes"):
             validate_transition_contract(contract)
         contract["previous_artifact"]["artifact_ref"] = str(QUALITY_ARTIFACT)
         contract["next_start_state"]["object.door"] = "closed"
         with self.assertRaisesRegex(ContractError, "state mismatch"):
+            validate_transition_contract(contract)
+
+    def test_transition_pass_requires_both_observations(self):
+        next_media = PROVENANCE_ROOT / "transition-missing-observation-next.mp4"
+        shutil.copyfile(QUALITY_ARTIFACT, next_media)
+        next_media_hash = file_hash(next_media)
+        next_scorecard = scorecard()
+        next_scorecard.update(artifact_ref=str(next_media), observed_content_hash=next_media_hash,
+                              provenance=quality_provenance("shot_2", "artifact_2", next_media, next_media_hash))
+        contract = {"schema_version": 1, "id": "tr_missing_obs", "previous_shot_id": "shot_1", "next_shot_id": "shot_2",
+                    "previous_artifact": {"shot_id": "shot_1", "artifact_id": "artifact_1", "artifact_ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH},
+                    "next_artifact": {"shot_id": "shot_2", "artifact_id": "artifact_2", "artifact_ref": str(next_media), "content_hash": next_media_hash},
+                    "required_state_properties": ["object.door"],
+                    "previous_end_state": {"object.door": "open"},
+                    "next_start_state": {"object.door": "open"},
+                    "continuity_scorecard": next_scorecard, "status": "PASS"}
+        with self.assertRaisesRegex(ContractError, "both adjacent artifacts"):
             validate_transition_contract(contract)
 
     def test_reanchor_selects_smallest_owner_and_split_for_capability_gap(self):
@@ -199,6 +243,14 @@ class QualityContractTests(unittest.TestCase):
                   "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH, "provenance": quality_provenance("shot_flf", "artifact_flf"),
                   "checks": checks}
         self.assertTrue(validate_first_last_frame(record)["accepted"])
+        first_only = copy.deepcopy(record)
+        first_only["mode"] = "FIRST_ONLY"
+        first_only["inputs"].pop("last_frame")
+        self.assertTrue(validate_first_last_frame(first_only)["accepted"])
+        last_only = copy.deepcopy(record)
+        last_only["mode"] = "LAST_ONLY"
+        last_only["inputs"].pop("first_frame")
+        self.assertTrue(validate_first_last_frame(last_only)["accepted"])
         record["artifact_ref"] = "/tmp/vge-flf-artifact-does-not-exist.mp4"
         with self.assertRaisesRegex(ContractError, "existing artifact bytes"):
             validate_first_last_frame(record)
@@ -224,6 +276,14 @@ class QualityContractTests(unittest.TestCase):
                        observed_at=datetime.now(timezone.utc).isoformat(), procedure="Bound contact fixture inspection",
                        provenance=quality_provenance("shot_contact", "artifact_contact"))
         self.assertEqual("PASS", validate_contact_phases(contact)["status"])
+        alias_contact = copy.deepcopy(contact)
+        alias_contact.pop("actor")
+        alias_contact.pop("receiver")
+        alias_contact.pop("object_id")
+        alias_contact.pop("cause")
+        alias_contact.pop("expected_result")
+        alias_contact.update(subject="a", target="b", effector="door", interaction_cause="hand pushes", success_criterion="door open")
+        self.assertEqual("PASS", validate_contact_phases(alias_contact)["status"])
         saved_contact_provenance = contact.pop("provenance")
         with self.assertRaisesRegex(ContractError, "contact.provenance"):
             validate_contact_phases(contact)
@@ -248,8 +308,14 @@ class QualityContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "existing artifact bytes"):
             validate_dialogue_contract(dialogue)
         dialogue["artifact_ref"] = str(QUALITY_ARTIFACT)
-        events = [{"id": "a_" + layer, "layer": layer, "start_s": 1, "end_s": 2, "cause": "fixture", "source": layer + ".wav", "oracle": oracle("AUDIO"), "evidence": evidence()} for layer in ("dialogue", "ambience", "effects", "music", "silence", "transition")]
-        timeline = {"events": events, "required_layers": [item["layer"] for item in events], "not_applicable_layers": [], "shot_id": "shot_audio", "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH, "observed_at": datetime.now(timezone.utc).isoformat(), "procedure": "Bound audio timeline fixture inspection", "provenance": quality_provenance("shot_audio", "artifact_audio")}
+        events = [{"id": "a_" + layer, "layer": layer, "start_s": 1, "end_s": 2,
+                   "cause": "fixture", "source": layer + ".wav", "priority": "HIGH",
+                   "mix_role": "DIEGETIC" if layer != "silence" else "NONE",
+                   "oracle": oracle("AUDIO"), "evidence": evidence()} for layer in AUDIO_LAYERS]
+        timeline = {"events": events, "required_layers": [item["layer"] for item in events],
+                    "not_applicable_layers": [], "shot_id": "shot_audio", "artifact_ref": str(QUALITY_ARTIFACT),
+                    "artifact_content_hash": QUALITY_ARTIFACT_HASH, "observed_at": datetime.now(timezone.utc).isoformat(),
+                    "procedure": "Bound audio timeline fixture inspection", "provenance": quality_provenance("shot_audio", "artifact_audio")}
         self.assertEqual("PASS", validate_audio_timeline(timeline)["status"])
         saved_audio_provenance = timeline.pop("provenance")
         with self.assertRaisesRegex(ContractError, "audio_timeline.provenance"):
@@ -259,6 +325,8 @@ class QualityContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "existing artifact bytes"):
             validate_audio_timeline(timeline)
         self.assertEqual("PARTIAL", validate_audio_timeline([events[0]])["status"])
+        self.assertEqual("foley", validate_audio_timeline([{"id": "legacy_effect", "layer": "effects",
+                         "start_s": 1, "end_s": 2, "cause": "fixture", "source": "effects.wav"}])["layers"][0])
 
     def test_prompt_adapter_is_loss_explicit_and_differential(self):
         sections = {"identity": {"subject": "courier"}, "motion": {"action": "walk"}, "audio": {"dialogue": "Ready"}}
@@ -280,6 +348,10 @@ class QualityContractTests(unittest.TestCase):
         profile["evidence_refs"] = [str(probe_ref)]
         profile["feature_evidence"]["text_to_video"].update(source_ref=str(probe_ref), source_content_hash=file_hash(probe_ref),
                                                               probe_ref=str(probe_ref), probe_content_hash=file_hash(probe_ref))
+        profile["feature_evidence"]["text_to_video"].update(
+            observed_parameters={"width": 64, "height": 64, "frame_count": 24, "fps": 24},
+            selected_device="cuda:0", artifact_ref=str(QUALITY_ARTIFACT), artifact_content_hash=QUALITY_ARTIFACT_HASH,
+            observation_ref=str(probe_ref), observation_content_hash=file_hash(probe_ref))
         profile["profile_fingerprint"] = profile_fingerprint(profile)
         self.assertEqual("CONFIRMED", validate_feature_profile(profile, "text_to_video")["status"])
         forged_profile = copy.deepcopy(profile); forged_profile["selected_device"] = "UNKNOWN"
@@ -307,7 +379,53 @@ class QualityContractTests(unittest.TestCase):
         repair["execution_ledger"]["provenance"] = saved_repair_provenance
         case = {"schema_version": 1, "id": "LF-003", "target_duration_s": 45, "intent_ref": "intent", "plan_ref": "plan", "scene_bible_ref": "bible", "shot_graph_ref": "graph", "continuity_ref": "continuity", "evidence_ref": "evidence", "shot_ids": ["a", "b"], "audio_timeline_ref": "audio", "repair_budget_ref": "repair", "human_checkpoint_ref": "human", "status": "PARTIAL", "production_evidence_complete": False}
         self.assertEqual("PARTIAL", validate_long_form_case(case)["status"])
+        placeholder_pass = copy.deepcopy(case)
+        placeholder_pass.update(status="PASS", production_evidence_complete=True)
+        with self.assertRaisesRegex(ContractError, "existing file"):
+            validate_long_form_case(placeholder_pass)
         self.assertEqual(3, maturity_report({"structural": "PASS", "deterministic_tests": "PASS", "runtime_provenance": "PASS"})["level"])
+
+    def test_causality_ownership_vehicle_and_dialogue_known_bad_cases(self):
+        sequence = {"events": [
+            {"id": "stimulus", "stage": "STIMULUS", "start_s": 0, "end_s": 1},
+            {"id": "processing", "stage": "PROCESSING", "start_s": 1, "end_s": 2},
+            {"id": "reaction", "stage": "REACTION", "start_s": 2, "end_s": 3},
+            {"id": "response", "stage": "RESPONSE", "start_s": 3, "end_s": 4},
+        ]}
+        self.assertEqual("PASS", validate_causal_sequence(sequence)["status"])
+        bad_sequence = copy.deepcopy(sequence)
+        bad_sequence["events"][2]["start_s"] = 0.5
+        with self.assertRaisesRegex(ContractError, "stimulus.*processing.*reaction"):
+            validate_causal_sequence(bad_sequence)
+        ownership = {"schema_version": 1, "id": "ownership_ok", "object_id": "envelope",
+                     "owner_before": "a", "contact_state": "SHARED_CONTACT", "shared_contact": True,
+                     "release": True, "owner_after": "b", "cause": "a hands envelope to b"}
+        self.assertTrue(validate_object_ownership(ownership)["accepted"])
+        ownership["contact_state"] = "PROXIMITY"
+        ownership["shared_contact"] = False
+        with self.assertRaisesRegex(ContractError, "proximity alone"):
+            validate_object_ownership(ownership)
+        vehicle = {"schema_version": 1, "id": "vehicle_ok", "vehicle_id": "van",
+                   "applicable_fields": ["vehicle_position", "velocity_phase", "engine_state", "door_state", "road_contact", "occupants"],
+                   "state": {"vehicle_position": "curb", "velocity_phase": "STATIONARY", "engine_state": "OFF",
+                              "door_state": "CLOSED", "road_contact": True, "occupants": []}}
+        self.assertTrue(validate_vehicle_state(vehicle)["accepted"])
+        vehicle["state"]["velocity_phase"] = "MOVING"
+        with self.assertRaisesRegex(ContractError, "active engine"):
+            validate_vehicle_state(vehicle)
+        dialogue = {"schema_version": 1, "lines": [{"dialogue_id": "line_alias", "shot_id": "shot_1",
+                    "speaker": "a", "listener": "b", "line": "Ready.", "intent": "warn",
+                    "delivery": "quiet", "emotion": "focused", "start": 1, "end": 2,
+                    "pause_before": 0.2, "pause_after": 0.2, "overlap_policy": "none", "gaze_target": "listener",
+                    "pause_policy": "explicit",
+                    "voice_reference": "voice-a", "lip_sync_mode": "UNKNOWN", "channels": {
+                        channel: {"status": "UNKNOWN", "oracle": oracle("AUDIO" if channel in ("voice", "mix") else "FRAME"),
+                                  "reason": "not run", "evidence": []}
+                        for channel in ("semantics", "voice", "performance", "lip_sync", "mix")}}]}
+        self.assertEqual("NOT_OBSERVED", validate_dialogue_contract(dialogue)["status"])
+        dialogue["lines"][0]["listener_mouthing"] = True
+        with self.assertRaisesRegex(ContractError, "listener must not mouth"):
+            validate_dialogue_contract(dialogue)
 
     def test_confirmed_profile_and_continue_need_evidence(self):
         minimal = {"id": "minimal", "status": "CONFIRMED", "feature_evidence": {"text_to_video": {"status": "CONFIRMED"}}}
