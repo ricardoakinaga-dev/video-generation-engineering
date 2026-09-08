@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "LF-001-evidence",
+  "case_id": "LF-001",
+  "status": "BLOCKED",
+  "production_evidence_complete": false,
+  "available_records": [],
+  "required_records": ["plan", "scene_bible", "shot_graph", "continuity", "contact_phases", "boundary_frames", "artifact", "observation"],
+  "blockers": ["No accepted 10-15 second production chain; local confirmed H3 envelope is 5.1667 seconds per shot."],
+  "next_action": "Execute and inspect a bounded physical-interaction chain after the required capability profile is confirmed."
+}

@@ -6,7 +6,7 @@ The repository skill now exists at [SKILL.md](../.agents/skills/video-generation
 
 ## Status
 
-This is the navigation hub for the documentation-first architecture of `video-generation-engineering-vNext`. The documentation is `REMEDIATED_VERIFIED` against the original findings and the second, third, and fourth reviews in [`AUDIT-docs-2026-09-08-r4.md`](../audit-artifacts/reports/AUDIT-docs-2026-09-08-r4.md) by a fresh focused static re-audit of this revision. The prior Gauntlet `FINISHED/PASS` record is historical and applies to the pre-remediation fingerprint, not to this revision; no new independent Gauntlet verdict is claimed. The intended exit remains `READY WITH RISKS`: runtime/model evidence and artifact-quality evidence are future work.
+This is the navigation hub for the documentation-first architecture of `video-generation-engineering-vNext`. The documentation is `REMEDIATED_VERIFIED` against the original findings and the second, third, and fourth reviews in [`AUDIT-docs-2026-09-08-r4.md`](../audit-artifacts/reports/AUDIT-docs-2026-09-08-r4.md) by a fresh focused static re-audit of this revision. The prior Gauntlet `FINISHED/PASS` record is historical and applies to the pre-remediation fingerprint, not to this revision. The current implementation closure is tracked by the frozen Triple-AAA bar and [`triple-aaa-final-report.md`](triple-aaa-final-report.md); its runtime/media limits remain explicit and it does not claim universal audiovisual quality.
 
 ## Purpose
 
@@ -57,6 +57,12 @@ No lower-level document may silently override a higher-level contract. External 
 | [`roadmap.md`](roadmap.md) | Phased implementation sequence and gates | Planning later delivery |
 | [`open-questions.md`](open-questions.md) | Blockers and non-blocking decisions | Resolving remaining uncertainty |
 | [`phase-0-report.md`](phase-0-report.md) | Final status, decisions, risks, readiness, stop point | Handoff after this phase |
+| [`triple-aaa-validation.md`](triple-aaa-validation.md) | Production evidence contracts and architecture closure | Quality, runtime or release work |
+| [`capability-matrix-r1.md`](capability-matrix-r1.md) | Exact local capability scope and blockers | Selecting a model or feature |
+| [`long-form-validation.md`](long-form-validation.md) | LF-001..LF-004 evidence envelope | Long-form generation or assembly |
+| [`triple-aaa-scorecard.md`](triple-aaa-scorecard.md) | Independent release gates and maturity | Final readiness decision |
+| [`triple-aaa-quality-bar-r1.json`](triple-aaa-quality-bar-r1.json) | Frozen user-prompt quality bar | Auditing this closure |
+| [`triple-aaa-final-report.md`](triple-aaa-final-report.md) | Current R1 gate scores, evidence and remaining blockers | Release handoff |
 
 ## Recommended reading order
 
@@ -98,6 +104,8 @@ No lower-level document may silently override a higher-level contract. External 
 | [`ADR-008`](adr/ADR-008-pattern-library.md) | Evidence-driven pattern library |
 | [`ADR-009`](adr/ADR-009-instructions-vs-tools.md) | Instructions versus deterministic helpers |
 | [`ADR-010`](adr/ADR-010-production-skill-structure.md) | Minimal future production Skill structure |
+| [`ADR-011`](adr/ADR-011-skill-implementation-and-evidence.md) | Skill implementation and bounded evidence |
+| [`ADR-012`](adr/ADR-012-triple-aaa-quality-boundary.md) | Separate production evidence from canonical planning |
 
 ## Architecture status
 
@@ -108,13 +116,13 @@ No lower-level document may silently override a higher-level contract. External 
 | Model and ComfyUI capabilities | Profiled conservatively | Dated sources; runtime probes not run |
 | Failure and evaluation strategy | Specified | Golden/known-bad/adversarial fixtures |
 | Repository Skill package | Implemented and independently re-reviewing | Package tests, local ComfyUI evidence and current Gauntlet bar |
-| Generated media quality | Not evaluated | Requires future runtime/artifact tests |
+| Generated media quality | Mechanically evaluated; semantic acceptance remains partial | Exact H3 T2V/R2V artifacts, separated observations and long-form blockers |
 
 ## Deviations from the suggested tree
 
 The master prompt explicitly permits consolidation. This package keeps the existing coherent owners (`requirements`, `architecture`, `contracts`, `scene-and-continuity`, `directing`, `constraints`, `model-adaptation`, `comfyui-execution`, `research`, `failure-and-evals`, `acceptance`, `traceability`, and `roadmap`) and adds focused documents only where the prior baseline lacked a reviewable boundary. This avoids 30 thin files that duplicate state and terminology.
 
-The package-shape rationale is documented separately in [`proposed-skill-structure.md`](proposed-skill-structure.md); the Phase 0 docs are not copied into the executable package automatically. The current package has its own focused `references/` set and keeps research/audit material in this project tree.
+The package-shape rationale is documented separately in [`proposed-skill-structure.md`](proposed-skill-structure.md); the Phase 0 docs are not copied into the executable package automatically. The current package has its own focused `references/` set and keeps research/audit material in this project tree. The current Triple-AAA closure is tracked separately from the historical Phase 0 verdict; production evidence is scoped to exact local artifacts and is not inferred from this index.
 
 ## Implementation readiness
 
@@ -122,4 +130,4 @@ The historical Phase 0 content gate is complete enough to support the explicitly
 
 ## Verification pointer
 
-The historical documentation Gauntlet remains under `.gauntlet/`. The current implementation bar and its fresh fingerprints/critic packets are recorded under `verification/`; the project-level control plane remains under `.agent/`. These are process evidence, not production Skill content.
+The historical documentation Gauntlet remains under `.gauntlet/`. The current implementation bar, fingerprints, critic packets and release reports are recorded under `verification/`; the project-level control plane remains under `.agent/`. These are process evidence, not production Skill content.

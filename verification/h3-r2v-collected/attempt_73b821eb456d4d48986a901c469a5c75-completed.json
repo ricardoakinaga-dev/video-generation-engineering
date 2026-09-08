@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "id": "attempt_73b821eb456d4d48986a901c469a5c75",
+  "revision": 3,
+  "execution_plan_ref": "verification/h3-r2v-probe-plan.json",
+  "shot_id": "h3_r2v_probe_001",
+  "shot_contract_hash": "sha256:87fde2784ddd5a1d4fc02970f88467ea4cd58205f0b31d8ec88d827f10578abe",
+  "attempt_index": 1,
+  "status": "SUCCEEDED",
+  "started_at": "2026-09-08T18:23:50.623072+00:00",
+  "ended_at": "2026-09-08T18:35:49.588994+00:00",
+  "profile": {
+    "id": "comfyui-h3-r2v-local-probe-v1",
+    "revision": 1
+  },
+  "model": {
+    "id": "minimax_h3_ref2va_pruned_w4a8_mixed.safetensors",
+    "version": "local-20260908",
+    "asset_hash": "sha256:de2c6c29c4ee702b45e48e40daae3834aeee58ab681c732d9152589a87c89910"
+  },
+  "runtime": {
+    "provider": "comfyui",
+    "endpoint": "http://127.0.0.1:8188",
+    "version": "0.34.0",
+    "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674"
+  },
+  "workflow": {
+    "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/h3-r2v-probe-runs/attempt_73b821eb456d4d48986a901c469a5c75/workflow.json",
+    "content_hash": "sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6",
+    "fingerprint": "sha256:1b455641a3d4c9e11b91cc1a92517d68fb7ced70c63b39f24367609429e9f9b1",
+    "prompt_ref": "verification/h3-r2v-probe-plan.json",
+    "queue_id": "2d3020f1-94b2-4aee-b550-1f5379911862"
+  },
+  "nodes": [
+    {
+      "id": "1",
+      "type": "ClipProjLoader",
+      "version": "0.1.13"
+    },
+    {
+      "id": "2",
+      "type": "UNETLoader",
+      "version": "0.34.0"
+    },
+    {
+      "id": "3",
+      "type": "MiniMaxH3SigmaShift",
+      "version": "0.34.0"
+    },
+    {
+      "id": "4",
+      "type": "VAELoader",
+      "version": "0.34.0"
+    },
+    {
+      "id": "5",
+      "type": "VAELoader",
+      "version": "0.34.0"
+    },
+    {
+      "id": "35",
+      "type": "LoadImage",
+      "version": "0.34.0"
+    },
+    {
+      "id": "36",
+      "type": "LoadImage",
+      "version": "0.34.0"
+    },
+    {
+      "id": "37",
+      "type": "ImageScale",
+      "version": "0.34.0"
+    },
+    {
+      "id": "38",
+      "type": "ImageScale",
+      "version": "0.34.0"
+    },
+    {
+      "id": "6",
+      "type": "MiniMaxH3ReferenceToVideo",
+      "version": "0.34.0"
+    },
+    {
+      "id": "7",
+      "type": "BasicGuider",
+      "version": "0.34.0"
+    },
+    {
+      "id": "8",
+      "type": "KSamplerSelect",
+      "version": "0.34.0"
+    },
+    {
+      "id": "9",
+      "type": "BasicScheduler",
+      "version": "0.34.0"
+    },
+    {
+      "id": "10",
+      "type": "RandomNoise",
+      "version": "0.34.0"
+    },
+    {
+      "id": "11",
+      "type": "SamplerCustomAdvanced",
+      "version": "0.34.0"
+    },
+    {
+      "id": "12",
+      "type": "VAEDecode",
+      "version": "0.34.0"
+    },
+    {
+      "id": "13",
+      "type": "VAEDecodeAudio",
+      "version": "0.34.0"
+    },
+    {
+      "id": "14",
+      "type": "CreateVideo",
+      "version": "0.34.0"
+    },
+    {
+      "id": "15",
+      "type": "SaveVideo",
+      "version": "0.34.0"
+    }
+  ],
+  "inputs": [
+    {
+      "ref": "reference_subjects",
+      "role": "subject_reference",
+      "content_hash": "sha256:231a0eae508598eaa6b4fa1c604347dd0154e9c42571ac175139a573c2d796eb"
+    },
+    {
+      "ref": "reference_environment",
+      "role": "environment_reference",
+      "content_hash": "sha256:1ff73aef2ba62369e3ab9d441412cb219ee934fc78544207cf4ba30212e04af9"
+    }
+  ],
+  "parameters": {
+    "bindings": {}
+  },
+  "progress_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/h3-r2v-probe-runs/attempt_73b821eb456d4d48986a901c469a5c75/events.jsonl",
+  "error_ref": null,
+  "unknown_fields": [],
+  "purpose": "CAPABILITY_PROBE",
+  "supersedes_hash": "sha256:e1cae74e1f791e983284b2116db00452e5ea93d45fbb3f242d3414658146aadf"
+}

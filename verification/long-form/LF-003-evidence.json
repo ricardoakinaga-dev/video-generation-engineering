@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "LF-003-evidence",
+  "case_id": "LF-003",
+  "status": "BLOCKED",
+  "production_evidence_complete": false,
+  "available_records": [],
+  "required_records": ["LF-001", "LF-002", "dependent_shots", "transitions", "reanchor", "repair_budget", "human_checkpoint", "assembly"],
+  "blockers": ["No accepted multi-shot production package, transition scorecards, bounded repair run or editorial checkpoint exists."],
+  "next_action": "Complete the shorter ladder cases before scheduling a 45-60 second dependent package."
+}

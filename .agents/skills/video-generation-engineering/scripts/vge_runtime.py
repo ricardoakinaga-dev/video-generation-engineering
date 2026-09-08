@@ -13,6 +13,7 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler, ProxyHand
 
 from vge_core import ContractError, canonical, digest, file_hash, require, save, number, negotiate
 from vge_evidence import validate_observation
+from vge_quality import profile_expiration_triggers, profile_fingerprint
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -26,6 +27,13 @@ def _journal_uncertain(run, attempt_id, error):
         save(run / "submission-uncertain.json", {"attempt_id": attempt_id, "status": "UNKNOWN", "error": type(error).__name__, "next_action": "Inspect queue/history by extra_data.vge_attempt_id; never automatically resubmit"})
     except (OSError, TypeError, ValueError):
         pass
+
+
+def _append_event(path, event):
+    """Append a canonical JSONL runtime event without rewriting prior events."""
+    require(isinstance(event, dict) and event.get("schema_version") == 1, "Runtime event must be schema version 1")
+    with Path(path).open("a", encoding="utf-8") as handle:
+        handle.write(canonical(event) + "\n")
 
 
 def _runtime_name(value, label):
@@ -70,9 +78,129 @@ class ComfyClient:
     def discover(self):
         stats = self.request("/system_stats")
         nodes = self.request("/object_info")
+        system = stats.get("system", {}) if isinstance(stats, dict) else {}
+        devices = stats.get("devices", []) if isinstance(stats, dict) else []
+        if not isinstance(system, dict):
+            system = {}
+        if not isinstance(devices, list):
+            devices = []
+        resources = [{"id": str(index), "device_id": f"cuda:{device.get('index', index)}", "name": device.get("name", "UNKNOWN"),
+                      "type": device.get("type", "GPU"), "vram_total": device.get("vram_total"),
+                      "vram_free": device.get("vram_free"), "observed": True}
+                     for index, device in enumerate(devices) if isinstance(device, dict)]
+        node_types = sorted(key for key in nodes if isinstance(key, str)) if isinstance(nodes, dict) else []
         return {"schema_version": 1, "endpoint": self.endpoint, "observed_at": datetime.now(timezone.utc).isoformat(),
                 "system_stats": stats, "object_info": nodes, "node_inventory_hash": digest(nodes),
-                "limitations": ["Node metadata confirms availability, not successful model inference or media quality"]}
+                "runtime_version": system.get("comfyui_version", "UNKNOWN"),
+                "runtime_context": {"python_version": system.get("python_version", "UNKNOWN"),
+                                    "pytorch_version": system.get("pytorch_version", "UNKNOWN"),
+                                    "cuda_version": system.get("pytorch_version", "UNKNOWN").split("+")[-1] if isinstance(system.get("pytorch_version"), str) and "+" in system.get("pytorch_version", "") else "UNKNOWN",
+                                    "runtime_commit": system.get("runtime_commit", system.get("comfyui_commit", "UNKNOWN")),
+                                    "runtime_dirty": system.get("runtime_dirty", system.get("comfyui_dirty", "UNKNOWN")),
+                                    "custom_node_commits": system.get("custom_node_commits", {})},
+                "resource_inventory": resources,
+                "node_types": node_types,
+                "custom_node_inventory": {"status": "OBSERVED_NODE_TYPES_ONLY", "node_types": node_types},
+                "limitations": ["Node metadata confirms availability, not successful model inference or media quality",
+                                "ComfyUI API discovery does not enumerate every local model file; bind model hashes from the immutable profile/runtime context",
+                                "Resource values are observations, not a guarantee that a queued graph will fit"]}
+
+
+def workflow_fingerprint(workflow, node_info=None):
+    """Fingerprint graph topology plus node versions and generation-critical inputs."""
+    require(isinstance(workflow, dict) and workflow, "Workflow must be a nonempty object")
+    node_info = node_info if node_info is not None else {}
+    require(isinstance(node_info, dict), "node_info must be an object")
+    critical_names = ("ckpt_name", "model_name", "unet_name", "clip_name", "vae_name", "width", "height", "length",
+                      "fps", "seed", "steps", "cfg", "sampler_name", "scheduler", "prompt", "first_frame", "last_frame")
+    nodes = []
+    for node_id in sorted(workflow, key=str):
+        node = workflow[node_id]
+        require(isinstance(node, dict), f"Workflow node {node_id} must be an object")
+        class_type = node.get("class_type")
+        require(isinstance(class_type, str) and class_type, f"Workflow node {node_id} lacks class_type")
+        schema = node_info.get(class_type, {})
+        version = schema.get("version", schema.get("description_version", "UNKNOWN")) if isinstance(schema, dict) else "UNKNOWN"
+        inputs = node.get("inputs", {})
+        require(isinstance(inputs, dict), f"Workflow node {node_id}.inputs must be an object")
+        critical = {key: inputs[key] for key in sorted(inputs) if key in critical_names}
+        nodes.append({"id": str(node_id), "class_type": class_type, "version": version, "critical_inputs": critical})
+    return digest({"topology": workflow, "nodes": nodes})
+
+
+def resource_status(discovery, requirements=None):
+    """Classify observed local resources without pretending to predict execution."""
+    require(isinstance(discovery, dict), "discovery must be an object")
+    requirements = requirements or {}
+    require(isinstance(requirements, dict), "resource requirements must be an object")
+    observed = discovery.get("resource_inventory", [])
+    require(isinstance(observed, list), "discovery.resource_inventory must be an array")
+    min_vram = requirements.get("min_vram_bytes")
+    if min_vram is not None:
+        require(number(min_vram, True), "min_vram_bytes must be positive")
+    selected = requirements.get("device_id") or requirements.get("selected_device")
+    if selected is not None:
+        require(isinstance(selected, str) and selected, "selected device must be a nonempty string")
+        selected_records = [item for item in observed if isinstance(item, dict) and (item.get("device_id") == selected or item.get("id") == selected or str(item.get("name", "")).startswith(selected))]
+        known = [item for item in selected_records if isinstance(item.get("vram_free"), (int, float))]
+    else:
+        known = [item for item in observed if isinstance(item, dict) and isinstance(item.get("vram_free"), (int, float))]
+    if not known:
+        status = "UNKNOWN"
+        gaps = ["No comparable free-VRAM observation"]
+    elif min_vram is not None and max(item["vram_free"] for item in known) < min_vram:
+        status = "BLOCKED"
+        gaps = ["Observed free VRAM is below the declared minimum"]
+    elif min_vram is not None and max(item["vram_free"] for item in known) < min_vram * 1.2:
+        status = "DEGRADED"
+        gaps = ["Observed free VRAM has less than the declared safety margin"]
+    else:
+        status = "SUPPORTED"
+        gaps = []
+    return {"status": status, "selected_device": selected, "requirements": requirements, "observed_resources": known,
+            "gaps": gaps, "limitations": ["A resource snapshot is not an execution guarantee"]}
+
+
+def validate_profile_runtime(profile, discovery, workflow=None, feature=None, model_asset_hash=None):
+    """Check feature-scoped profile identity against a fresh runtime snapshot."""
+    require(isinstance(profile, dict), "profile must be an object")
+    require(isinstance(discovery, dict), "discovery must be an object")
+    selected_device = discovery.get("selected_device")
+    if not selected_device and isinstance(workflow, dict):
+        for node in workflow.values():
+            if not isinstance(node, dict) or not isinstance(node.get("inputs"), dict):
+                continue
+            candidate = node["inputs"].get("device")
+            if isinstance(candidate, str) and candidate:
+                selected_device = candidate
+                break
+    if not selected_device:
+        selected_device = profile.get("selected_device")
+    observed = {"runtime_version": discovery.get("runtime_version"), "node_inventory_hash": discovery.get("node_inventory_hash"),
+                "selected_device": selected_device}
+    stable_resources = [{key: item.get(key) for key in ("id", "device_id", "type", "vram_total")}
+                        for item in discovery.get("resource_inventory", []) if isinstance(item, dict)]
+    observed["resource_context_hash"] = digest(stable_resources)
+    runtime_context = discovery.get("runtime_context", {})
+    if isinstance(runtime_context, dict):
+        observed.update({key: runtime_context.get(key) for key in ("runtime_commit", "runtime_dirty", "custom_node_commits") if key in runtime_context})
+    observed_model_hash = model_asset_hash or discovery.get("model_asset_hash")
+    if observed_model_hash:
+        observed["model_asset_hash"] = observed_model_hash
+    if workflow is not None:
+        observed["workflow_hash"] = digest(workflow)
+        observed["workflow_fingerprint"] = workflow_fingerprint(workflow, discovery.get("object_info", {}))
+    if discovery.get("profile_fingerprint"):
+        observed["profile_fingerprint"] = discovery["profile_fingerprint"]
+    triggers = profile_expiration_triggers(profile, observed)
+    feature_report = None
+    if feature:
+        from vge_quality import validate_feature_profile
+        feature_report = validate_feature_profile(profile, feature, observed=observed)
+        triggers.extend(feature_report["reasons"])
+    return {"status": "EXPIRED" if triggers else "CURRENT", "profile_id": profile.get("id"),
+            "observed": observed, "expiration_triggers": sorted(set(triggers)), "feature": feature_report,
+            "limitations": ["Runtime identity checks do not establish successful inference or audiovisual quality"]}
 
 
 def validate_workflow(workflow, node_info):
@@ -106,10 +234,25 @@ def validate_workflow(workflow, node_info):
             if field not in inputs:
                 issues.append(f"{key}.{field}: required input missing")
         for field, value in inputs.items():
-            if field not in spec:
+            entry = spec.get(field)
+            if entry is None:
+                # ComfyUI's auto-grow inputs are materialized as names such as
+                # ref_images.ref_image_0 although only the group appears in
+                # object_info. Resolve the template before type-checking the link.
+                for group, candidate in spec.items():
+                    if not isinstance(candidate, (list, tuple)) or not candidate or candidate[0] != "COMFY_AUTOGROW_V3":
+                        continue
+                    options = candidate[1] if len(candidate) > 1 else {}
+                    template = options.get("template", {}) if isinstance(options, dict) else {}
+                    prefix = options.get("prefix", "") if isinstance(options, dict) else ""
+                    if isinstance(template, dict) and isinstance(prefix, str) and field.startswith(group + ".") and field.split(".", 1)[1].startswith(prefix):
+                        template_input = template.get("input", {}).get("required", {}) if isinstance(template.get("input", {}), dict) else {}
+                        if len(template_input) == 1:
+                            entry = next(iter(template_input.values()))
+                        break
+            if entry is None:
                 issues.append(f"{key}.{field}: unknown input")
                 continue
-            entry = spec[field]
             require(isinstance(field, str) and field and isinstance(entry, (list, tuple)) and entry, f"{key}.{field}: malformed node input metadata")
             kind = entry[0]
             options = entry[1] if len(entry) > 1 else {}
@@ -161,7 +304,9 @@ def validate_workflow(workflow, node_info):
         pending -= ready
     if not any(isinstance(n, dict) and isinstance(n.get("class_type"), str) and isinstance(node_info.get(n.get("class_type")), dict) and node_info[n.get("class_type")].get("output_node") for n in workflow.values()):
         issues.append("Workflow has no output node")
-    return {"status": "FAIL" if issues else "PASS", "issues": issues, "workflow_hash": digest(workflow), "scope": "API_GRAPH_METADATA", "limitations": ["Execution, VRAM fit, hidden/dynamic node validation and visual quality require a runtime probe"]}
+    return {"status": "FAIL" if issues else "PASS", "issues": issues, "workflow_hash": digest(workflow),
+            "workflow_fingerprint": workflow_fingerprint(workflow, node_info), "scope": "API_GRAPH_METADATA",
+            "limitations": ["Execution, VRAM fit, hidden/dynamic node validation and visual quality require a runtime probe"]}
 
 
 def bind_workflow(workflow, bindings, node_info):
@@ -201,6 +346,8 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
     require(shot.get("id") == context["shot_id"], "Context must resolve the exact shot")
     require(type(context_profile.get("revision")) is int and context_profile["revision"] > 0, "Invalid context profile revision")
     require(profile.get("id") == context_profile.get("id") and profile.get("profile_revision") == context_profile.get("revision"), "Profile identity/revision mismatch")
+    if context_profile.get("content_hash") is not None:
+        require(context_profile.get("content_hash") == digest(profile), "Caller profile content hash differs from the resolved profile record")
     compatibility = negotiate(shot, profile)
     if probe_mode:
         probe_budget = context.get("probe_budget", {})
@@ -252,6 +399,11 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
     require(isinstance(observed, dict) and isinstance(observed.get("system_stats"), dict) and isinstance(observed.get("object_info"), dict), "Runtime discovery response is malformed")
     system = observed["system_stats"].get("system", {})
     require(isinstance(system, dict), "Runtime system metadata is malformed")
+    resource_report = None
+    if "resource_requirements" in context:
+        resource_report = resource_status(observed, context.get("resource_requirements"))
+        allowed_degraded = context.get("allow_degraded_resources") is True and resource_report["status"] == "DEGRADED"
+        require(resource_report["status"] == "SUPPORTED" or allowed_degraded, "; ".join(resource_report["gaps"]) or "Selected runtime resource is not supported")
     runtime_version = profile.get("runtime_version")
     if not (probe_mode and runtime_version in (None, "", "UNKNOWN")):
         require(runtime_version == system.get("comfyui_version"), "Runtime version differs from confirmed profile")
@@ -260,6 +412,9 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
         require(isinstance(inventory_hash, str) and isinstance(observed.get("node_inventory_hash"), str) and inventory_hash == observed["node_inventory_hash"], "Node inventory differs from confirmed profile")
     validation = validate_workflow(workflow, observed["object_info"])
     require(validation["status"] == "PASS", "; ".join(validation["issues"]))
+    profile_workflow_fingerprint = profile.get("workflow_fingerprint")
+    if not (probe_mode and profile_workflow_fingerprint in (None, "", "UNKNOWN")) and profile_workflow_fingerprint is not None:
+        require(profile_workflow_fingerprint == validation["workflow_fingerprint"], "Workflow fingerprint differs from confirmed profile")
     # Context contains asset locations only locally; hashes are computed here, not trusted.
     inputs = []
     for asset in context["inputs"]:
@@ -296,15 +451,39 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
     require(isinstance(node_versions, dict), "node_versions must be an object")
     node_records = [{"id": key, "type": node["class_type"], "version": node_versions.get(node["class_type"])} for key, node in workflow.items()]
     unknown = (["runtime.version"] if not version else []) + [f"nodes.{i}.version" for i,n in enumerate(node_records) if not n["version"]]
+    selected_device = context.get("selected_device")
+    if selected_device is None:
+        for node in workflow.values():
+            if isinstance(node, dict) and node.get("class_type") == "ClipProjLoader" and isinstance(node.get("inputs"), dict):
+                selected_device = node["inputs"].get("device")
+                break
+    require(isinstance(selected_device, str) and selected_device and selected_device != "UNKNOWN", "A selected device must be declared")
+    profile_device = profile.get("selected_device")
+    if profile_device not in (None, "", "UNKNOWN", "UNPROBED"):
+        require(profile_device == selected_device, "Selected device differs from the resolved profile")
+    selected_records = [item for item in observed.get("resource_inventory", []) if isinstance(item, dict) and
+                        item.get("device_id") == selected_device]
+    require(selected_records, "Selected device is not present in the observed resource inventory")
+    stable_resources = [{key: item.get(key) for key in ("id", "device_id", "type", "vram_total")}
+                        for item in observed.get("resource_inventory", []) if isinstance(item, dict)]
+    resource_context_hash = digest(stable_resources)
+    profile_resource_hash = profile.get("resource_context_hash")
+    if not (probe_mode and profile_resource_hash in (None, "", "UNKNOWN", "UNPROBED")) and profile_resource_hash is not None:
+        require(profile_resource_hash == resource_context_hash, "Observed resources differ from the resolved profile")
+    profile_identity = copy.deepcopy(profile)
+    profile_identity["revision"] = context_profile["revision"]
+    profile_identity["content_hash"] = digest(profile)
     attempt = {"schema_version": 1, "id": attempt_id, "revision": 1, "execution_plan_ref": context["execution_plan_ref"], "shot_id": context["shot_id"], "shot_contract_hash": digest(shot), "attempt_index": context["attempt_index"], "status": "UNKNOWN",
-               "started_at": datetime.now(timezone.utc).isoformat(), "ended_at": None, "profile": context["profile"], "model": model,
-               "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "version": version, "node_inventory_hash": observed["node_inventory_hash"]},
-               "workflow": {"ref": str((run / "workflow.json").resolve()), "content_hash": digest(workflow), "prompt_ref": context["execution_plan_ref"], "queue_id": None},
+               "started_at": datetime.now(timezone.utc).isoformat(), "ended_at": None, "profile": profile_identity, "model": model,
+               "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "version": version, "node_inventory_hash": observed["node_inventory_hash"], "selected_device": selected_device, "resource_context_hash": resource_context_hash, "resource_snapshot": observed.get("resource_inventory", []), "resource_status": resource_report, "runtime_context": observed.get("runtime_context", {})},
+               "workflow": {"ref": str((run / "workflow.json").resolve()), "content_hash": digest(workflow), "fingerprint": validation["workflow_fingerprint"], "prompt_ref": context["execution_plan_ref"], "queue_id": None},
                "nodes": node_records, "inputs": inputs, "parameters": context["parameters"], "progress_ref": str((run / "events.jsonl").resolve()), "error_ref": None, "unknown_fields": unknown + ["workflow.queue_id"]}
     attempt["purpose"] = "CAPABILITY_PROBE" if probe_mode else "GENERATION"
     save(run / "workflow.json", workflow)
     save(run / "attempt-001.json", attempt)
     save(run / "preflight.json", {"validation": validation, "compatibility": compatibility, "discovery_hash": digest(observed), "probe_purpose": context.get("probe_purpose") if probe_mode else None})
+    _append_event(run / "events.jsonl", {"schema_version": 1, "event_id": "event-intent-recorded", "attempt_id": attempt_id,
+                                          "status": "INTENT_RECORDED", "observed_at": attempt["started_at"], "source": "vge_runtime.submit"})
     # Intent is durably stored before the only POST. A lost reply or journal
     # failure after the POST leaves an explicit best-effort UNKNOWN marker.
     try:
@@ -316,6 +495,9 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
         accepted["workflow"]["queue_id"] = response["prompt_id"]
         accepted["unknown_fields"] = unknown
         save(run / "attempt-002.json", accepted)
+        _append_event(run / "events.jsonl", {"schema_version": 1, "event_id": "event-submitted", "attempt_id": attempt_id,
+                                              "queue_id": response["prompt_id"], "status": "SUBMITTED",
+                                              "observed_at": datetime.now(timezone.utc).isoformat(), "source": "vge_runtime.submit"})
     except Exception as exc:
         _journal_uncertain(run, attempt_id, exc)
         if isinstance(exc, ContractError):
@@ -378,6 +560,11 @@ def collect(client, attempt, history, destination):
             entries = outputs.get(kind, [])
             require(isinstance(entries, list), f"Runtime {kind} outputs must be an array")
             for output in entries:
+                # ComfyUI's historical output bucket is not a media type: an
+                # MP4 may be returned under ``images``. Classify by the sealed
+                # filename extension and retain the runtime bucket separately.
+                suffix = Path(output.get("filename", "")).suffix.lower() if isinstance(output, dict) else ""
+                media_kind = "video" if suffix in (".mp4", ".mov", ".mkv", ".webm") else "gif" if suffix == ".gif" else "audio" if suffix in (".wav", ".mp3", ".flac", ".m4a", ".ogg") else "image"
                 require(isinstance(output, dict), "Runtime output record must be an object")
                 name = output.get("filename", "")
                 require(name and Path(name).name == name and "\\" not in name, "Unsafe runtime output filename")
@@ -391,7 +578,18 @@ def collect(client, attempt, history, destination):
                 path = out / (aid + Path(name).suffix)
                 with path.open("xb") as f:
                     f.write(body)
-                artifact = {"schema_version": 1, "id": aid, "shot_id": attempt["shot_id"], "execution_attempt_ref": attempt["id"], "artifact_ref": str(path.resolve()), "content_hash": file_hash(path), "collected_at": datetime.now(timezone.utc).isoformat(), "generation_status": "GENERATED", "media": {"kind": kind}, "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "workflow_hash": attempt["workflow"]["content_hash"]}, "quality_review": {"lifecycle": "NOT_STARTED", "observation_ref": None}}
+                artifact = {"schema_version": 1, "id": aid, "shot_id": attempt["shot_id"], "execution_attempt_ref": attempt["id"], "artifact_ref": str(path.resolve()), "content_hash": file_hash(path), "collected_at": datetime.now(timezone.utc).isoformat(), "generation_status": "GENERATED", "media": {"kind": media_kind, "runtime_output_kind": kind},
+                            # Keep the execution binding directly on the
+                            # immutable artifact record as well as in the
+                            # runtime envelope.  This makes the collected
+                            # record self-describing for independent review.
+                            "shot_contract_hash": attempt["shot_contract_hash"],
+                            "profile_id": attempt["profile"].get("id"),
+                            "profile_revision": attempt["profile"].get("revision"),
+                            "profile_content_hash": attempt["profile"].get("content_hash"),
+                            "model_asset_hash": attempt["model"].get("asset_hash"),
+                            "input_hashes": copy.deepcopy(attempt.get("inputs", [])),
+                            "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "workflow_hash": attempt["workflow"]["content_hash"], "workflow_fingerprint": attempt["workflow"].get("fingerprint"), "shot_contract_hash": attempt["shot_contract_hash"], "profile_id": attempt["profile"].get("id"), "profile_revision": attempt["profile"].get("revision"), "profile_content_hash": attempt["profile"].get("content_hash"), "model_asset_hash": attempt["model"].get("asset_hash"), "input_hashes": copy.deepcopy(attempt.get("inputs", [])), "selected_device": attempt["runtime"].get("selected_device"), "resource_context_hash": attempt["runtime"].get("resource_context_hash"), "runtime_context": copy.deepcopy(attempt["runtime"].get("runtime_context", {}))}, "quality_review": {"lifecycle": "NOT_STARTED", "observation_ref": None}}
                 save(out / (aid + ".json"), artifact)
                 records.append(artifact)
     require(records, "Job completed without collectible outputs")

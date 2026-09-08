@@ -12,6 +12,7 @@ from pathlib import Path
 
 from vge_core import ContractError, file_hash, number, require, save
 from vge_evidence import validate_observation
+from vge_quality import aggregate_quality
 
 
 def run(command, timeout=120):
@@ -41,6 +42,87 @@ def probe(path):
             "fps": fps, "video_streams": videos, "audio_streams": audios,
             "format": result["format"].get("format_name"), "status": "PARTIAL",
             "limitations": ["Metadata does not establish identity, lip-sync, contact, story or editorial quality"]}
+
+
+def _capture(command, timeout=120):
+    """Run a media inspection command without a shell and retain diagnostics."""
+    command = list(command)
+    require(bool(command), "Media command must not be empty")
+    if command[0] in ("ffmpeg", "ffprobe"):
+        name = command[0]
+        command[0] = os.environ.get("VGE_" + name.upper()) or shutil.which(name, path=os.defpath) or shutil.which(name) or name
+    try:
+        result = subprocess.run(command, capture_output=True, timeout=timeout, check=False)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise ContractError(f"Media tool failed: {type(exc).__name__}") from exc
+    return result.returncode, result.stdout, result.stderr.decode("utf-8", errors="replace")[-8000:]
+
+
+def _qa_evidence(path, content_hash, details):
+    return [{"type": "MEDIA_BYTES", "ref": str(path), "content_hash": content_hash, "details": details}]
+
+
+def media_qa(path, audio_required=False, allow_black=False, allow_freeze=False, timeout=180):
+    """Run deterministic byte/metadata/decode heuristics against one media artifact.
+
+    The result is intentionally limited: a PASS means the declared mechanical
+    checks passed, never that the scene has correct identity, acting, physics,
+    continuity, story or lip-sync.
+    """
+    path = Path(path).resolve(strict=True)
+    content_hash = file_hash(path)
+    checks = []
+    limitations = [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent",
+    ]
+
+    def check(check_id, category, result, question, details, reason=None):
+        item = {"id": check_id, "category": category, "result": result,
+                "oracle": {"kind": "METADATA" if category == "metadata" else "ALGORITHMIC", "question": question, "version": "ffmpeg-local"},
+                "confidence": "HIGH" if result in ("PASS", "FAIL") else "UNKNOWN",
+                "evidence": _qa_evidence(path, content_hash, details) if result in ("PASS", "FAIL", "PARTIAL") else [],
+                "limitations": list(limitations)}
+        if reason:
+            item["reason"] = reason
+        checks.append(item)
+
+    try:
+        metadata = probe(path)
+    except ContractError as exc:
+        check("decode_integrity", "metadata", "FAIL", "Can the container be parsed by ffprobe?", "ffprobe rejected the artifact", str(exc))
+        return {"schema_version": 1, "kind": "MEDIA_QA", "artifact_ref": str(path), "content_hash": content_hash,
+                "observed_at": datetime.now(timezone.utc).isoformat(), "procedure": "SHA-256, ffprobe and bounded ffmpeg decode heuristics",
+                "checks": checks, "status": "FAIL", "accepted": False, "limitations": limitations}
+
+    valid_video = len(metadata["video_streams"]) == 1 and metadata["duration_s"] > 0 and metadata["fps"] and metadata["video_streams"][0].get("width", 0) > 0 and metadata["video_streams"][0].get("height", 0) > 0
+    check("metadata_integrity", "metadata", "PASS" if valid_video else "FAIL", "Does the artifact expose one positive-duration video stream with dimensions and FPS?", "ffprobe stream/format metadata")
+    if metadata["audio_streams"]:
+        audio_duration = metadata["audio_streams"][0].get("duration")
+        try:
+            audio_duration = float(audio_duration) if audio_duration is not None else metadata["duration_s"]
+        except (TypeError, ValueError):
+            audio_duration = None
+        aligned = audio_duration is not None and abs(audio_duration - metadata["duration_s"]) <= max(1 / (metadata["fps"] or 24), 0.05)
+        check("audio_video_alignment", "audio", "PASS" if aligned else "FAIL", "Do declared audio and container durations align within one frame?", "ffprobe audio/video duration comparison")
+    else:
+        check("audio_video_alignment", "audio", "NOT_APPLICABLE" if not audio_required else "NOT_OBSERVED", "Is required audio present and aligned?", "No audio stream", "Audio stream is absent" if not audio_required else "Audio was required but no stream was observed")
+
+    # pix_th is a normalized luma threshold, not a percentage of black pixels.
+    # 0.10 catches genuinely near-black frames without classifying ordinary SDR
+    # material as black (0.98 would make almost every frame a false positive).
+    filter_graph = "blackdetect=d=0.5:pix_th=0.10,freezedetect=n=0.003:d=1"
+    code, _, diagnostics = _capture(["ffmpeg", "-nostdin", "-v", "info", "-i", str(path), "-vf", filter_graph, "-an", "-f", "null", "-"], timeout=timeout)
+    decoded = code == 0
+    check("decode_integrity", "temporal", "PASS" if decoded else "FAIL", "Can bounded ffmpeg decoding traverse the video?", "ffmpeg null decode" if decoded else diagnostics, None if decoded else "ffmpeg decode failed")
+    black_found = "black_start:" in diagnostics or "black_end:" in diagnostics
+    freeze_found = "freeze_start:" in diagnostics or "freeze_end:" in diagnostics
+    check("black_content", "visual", "PASS" if allow_black or not black_found else "FAIL", "Does the artifact avoid unintended black intervals?", "blackdetect output", None if allow_black or not black_found else "blackdetect reported a black interval")
+    check("frozen_content", "temporal", "PASS" if allow_freeze or not freeze_found else "FAIL", "Does the artifact avoid unintended frozen intervals?", "freezedetect output", None if allow_freeze or not freeze_found else "freezedetect reported a frozen interval")
+    status = aggregate_quality([{"result": item["result"]} for item in checks])
+    return {"schema_version": 1, "kind": "MEDIA_QA", "artifact_ref": str(path), "content_hash": content_hash,
+            "observed_at": datetime.now(timezone.utc).isoformat(), "procedure": "SHA-256, ffprobe and bounded ffmpeg decode heuristics",
+            "checks": checks, "status": status, "accepted": status == "PASS", "limitations": limitations}
 
 
 def assemble(manifest, output, preview=False):

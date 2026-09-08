@@ -13,7 +13,7 @@ import subprocess
 from test_planning import ROOT, SKILL, profile
 from vge_core import ContractError, digest, file_hash, load
 from vge_evidence import aggregate, validate_observation, lifecycle
-from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect
+from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect, resource_status, workflow_fingerprint, validate_profile_runtime
 from vge_media import run, probe, assemble, contact_sheet
 
 
@@ -151,7 +151,7 @@ class HTTPTests(unittest.TestCase):
         class Handler(BaseHTTPRequestHandler):
             def log_message(self,*args):pass
             def do_GET(self):
-                if self.path=='/system_stats':data={'system':{'comfyui_version':'1'}}
+                if self.path=='/system_stats':data={'system':{'comfyui_version':'1','python_version':'1','pytorch_version':'test+cu'},'devices':[{'index':0,'name':'fixture-gpu','type':'cuda','vram_total':1000,'vram_free':900}]}
                 elif self.path=='/object_info':data=NODE_INFO
                 elif self.path.startswith('/history/'):
                     data={'queue_1':{'prompt':[0,'queue_1',WORKFLOW,{},['2']],'status':{'completed':True,'status_str':'cancelled' if owner.cancelled else 'success'},'outputs':{'2':{'images':[{'filename':'../bad.png' if owner.badpath else 'test.png','subfolder':'','type':'output'}]}}}} if owner.complete else {}
@@ -170,16 +170,66 @@ class HTTPTests(unittest.TestCase):
         self.client=ComfyClient(f'http://127.0.0.1:{self.server.server_port}')
         p=profile();p.update(runtime_version='1',node_inventory_hash=digest(NODE_INFO),workflow_hash=digest(WORKFLOW),model='model_1',model_asset_hash=file_hash(self.model))
         shot={'id':'shot_1','revision':1,'acceptance_ids':['QG-17'],'duration_s':5,'generation_mode':'T2V','parameters':{},'dependency_ids':[]}
-        self.context={'execution_plan_ref':'exec_1','shot_id':'shot_1','attempt_index':1,'profile':{'id':p['id'],'revision':1},'profile_record':p,'shot':shot,
+        self.context={'execution_plan_ref':'exec_1','shot_id':'shot_1','attempt_index':1,'profile':{'id':p['id'],'revision':1},'profile_record':p,'shot':shot,'selected_device':'cuda:0',
                       'model':{'id':'model_1','version':'1','asset_path':str(self.model),'workflow_binding':{'node_id':'1','input':'model_name'}},'inputs':[],'parameters':{'bindings':{}},'node_versions':{'Source':'1','Save':'1'}}
     def send(self,authorized=True,probe_mode=False):return submit(self.client,WORKFLOW,self.context,Path(self.tmp.name)/'runs',authorized,probe_mode)
     def test_submit_poll_collect_real_http_boundary(self):
         submitted=self.send();self.assertEqual(1,self.posts)
         runpath=Path(submitted['run_directory']);self.assertTrue((runpath/'attempt-001.json').exists());self.assertTrue((runpath/'attempt-002.json').exists())
+        events=[json.loads(line) for line in (runpath/'events.jsonl').read_text().splitlines()]
+        self.assertEqual(['INTENT_RECORDED','SUBMITTED'], [event['status'] for event in events])
         history=poll(self.client,'queue_1',1,.01);self.assertEqual('SUCCEEDED',history['status'])
         artifacts=collect(self.client,submitted['attempt'],history,Path(self.tmp.name)/'artifacts')
         self.assertEqual(1,len(artifacts));self.assertEqual('NOT_STARTED',artifacts[0]['quality_review']['lifecycle'])
+        self.assertEqual('image',artifacts[0]['media']['kind'])
+        self.assertEqual(submitted['attempt']['shot_contract_hash'], artifacts[0]['runtime']['shot_contract_hash'])
+        self.assertEqual(submitted['attempt']['profile']['content_hash'], artifacts[0]['runtime']['profile_content_hash'])
+        self.assertEqual(submitted['attempt']['model']['asset_hash'], artifacts[0]['runtime']['model_asset_hash'])
+        self.assertEqual(submitted['attempt']['runtime']['resource_context_hash'], artifacts[0]['runtime']['resource_context_hash'])
+        self.assertEqual(submitted['attempt']['shot_contract_hash'], artifacts[0]['shot_contract_hash'])
+        self.assertEqual(submitted['attempt']['profile']['content_hash'], artifacts[0]['profile_content_hash'])
+        self.assertEqual(submitted['attempt']['model']['asset_hash'], artifacts[0]['model_asset_hash'])
+        self.assertEqual(submitted['attempt']['inputs'], artifacts[0]['input_hashes'])
+        self.assertTrue(submitted['attempt']['shot_contract_hash'].startswith('sha256:'))
+        self.assertEqual(workflow_fingerprint(WORKFLOW,NODE_INFO),submitted['attempt']['workflow']['fingerprint'])
+        self.assertEqual('cuda:0', submitted['attempt']['runtime']['selected_device'])
+        self.assertTrue(submitted['attempt']['runtime']['resource_context_hash'].startswith('sha256:'))
+        self.assertEqual('1', submitted['attempt']['runtime']['runtime_context']['python_version'])
+        profile_snapshot = dict(submitted['attempt']['profile']); declared_profile_hash = profile_snapshot.pop('content_hash'); profile_snapshot.pop('revision')
+        self.assertEqual(digest(profile_snapshot), declared_profile_hash)
         self.assertEqual(file_hash(artifacts[0]['artifact_ref']),artifacts[0]['content_hash'])
+
+    def test_resource_snapshot_is_conservative(self):
+        discovery={'resource_inventory':[{'id':'gpu0','vram_free':100},{'id':'gpu1','vram_free':200}]}
+        self.assertEqual('SUPPORTED',resource_status(discovery,{'min_vram_bytes':150})['status'])
+        self.assertEqual('BLOCKED',resource_status(discovery,{'min_vram_bytes':300})['status'])
+        self.assertEqual('UNKNOWN',resource_status({'resource_inventory':[]})['status'])
+        selected={'resource_inventory':[{'id':'0','device_id':'cuda:0','vram_free':100},{'id':'1','device_id':'cuda:1','vram_free':1000}]}
+        self.assertEqual('BLOCKED',resource_status(selected,{'device_id':'cuda:0','min_vram_bytes':200})['status'])
+    def test_selected_device_must_be_observed_before_post(self):
+        self.context['selected_device'] = 'cuda:1'
+        with self.assertRaisesRegex(ContractError, 'observed resource inventory'):
+            self.send()
+        self.assertEqual(0, self.posts)
+    def test_caller_profile_hash_must_match_resolved_record(self):
+        self.context['profile']['content_hash'] = digest('wrong-profile')
+        with self.assertRaisesRegex(ContractError, 'Caller profile content hash'):
+            self.send()
+        self.assertEqual(0, self.posts)
+    def test_profile_runtime_uses_external_drift_observations(self):
+        p = profile()
+        resources = [{'id': '0', 'device_id': 'cuda:0', 'type': 'cuda', 'vram_total': 1000}]
+        p.update(workflow_hash=digest(WORKFLOW), workflow_fingerprint=workflow_fingerprint(WORKFLOW, NODE_INFO),
+                 node_inventory_hash=digest(NODE_INFO), model_asset_hash=digest('model'), selected_device='cuda:0',
+                 resource_context_hash=digest(resources), runtime_commit='c1', runtime_dirty=False, custom_node_commits={'pack': 'v1'})
+        discovery = {'runtime_version': '1', 'node_inventory_hash': digest(NODE_INFO), 'resource_inventory': resources,
+                     'runtime_context': {'runtime_commit': 'c2', 'runtime_dirty': True, 'custom_node_commits': {'pack': 'v2'}},
+                     'model_asset_hash': digest('different-model'), 'object_info': NODE_INFO}
+        result = validate_profile_runtime(p, discovery, WORKFLOW)
+        self.assertEqual('EXPIRED', result['status'])
+        self.assertIn('model asset changed', result['expiration_triggers'])
+        self.assertIn('runtime commit changed', result['expiration_triggers'])
+        self.assertIn('custom-node commits changed', result['expiration_triggers'])
     def test_authorization_before_any_post(self):
         with self.assertRaises(ContractError):self.send(False)
         self.assertEqual(0,self.posts)

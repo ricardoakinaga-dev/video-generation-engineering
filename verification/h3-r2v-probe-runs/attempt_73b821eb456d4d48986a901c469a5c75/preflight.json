@@ -1,0 +1,23 @@
+{
+  "validation": {
+    "status": "PASS",
+    "issues": [],
+    "workflow_hash": "sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6",
+    "workflow_fingerprint": "sha256:1b455641a3d4c9e11b91cc1a92517d68fb7ced70c63b39f24367609429e9f9b1",
+    "scope": "API_GRAPH_METADATA",
+    "limitations": [
+      "Execution, VRAM fit, hidden/dynamic node validation and visual quality require a runtime probe"
+    ]
+  },
+  "compatibility": {
+    "status": "BLOCKED",
+    "profile_reference": "comfyui-h3-r2v-local-probe-v1",
+    "gaps": [
+      "Profile is not confirmed for execution",
+      "Unconfirmed feature: reference_conditioning"
+    ],
+    "fallback": "Preserve intent; propose shorter segments, a confirmed profile or separate audio/sync; obtain approval for weakened requirements"
+  },
+  "discovery_hash": "sha256:8527e6755eb10b5211daa705bcc77f2521beb4d8bc38a4c60ab66b3101892f33",
+  "probe_purpose": "One bounded local R2V capability probe to establish whether exact reference inputs, model and workflow execute and produce a collectable artifact."
+}

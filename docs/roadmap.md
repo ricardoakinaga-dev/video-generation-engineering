@@ -62,6 +62,12 @@ Add validated shot chaining, re-anchoring, assembly, audio/lip-sync paths, artif
 
 Entry criteria: `OQ-B-002` resolved for the artifact/media gates in scope. Exit criteria: long-form golden cases pass agreed quality thresholds, provenance is complete, and failure rates are measured on a frozen evaluation set.
 
+## Triple-AAA closure R1 — current implementation extension
+
+The current authorized package adds a deterministic quality boundary without collapsing the historical phases: category-separated semantic observations, 14-dimension continuity scorecards, transition/re-anchor contracts, first/last-frame probes, dialogue/audio/contact contracts, mechanical media QA, feature-scoped expiration, workflow fingerprints, bounded repair budgets, adapter differential reports, long-form envelopes and independent release scoring. The exact local H3 R2V probe is recorded as capability evidence only; unavailable second-model and full ladder evidence remain blocked.
+
+Exit criteria are frozen in [`triple-aaa-quality-bar-r1.json`](triple-aaa-quality-bar-r1.json) and the current final report. `TRIPLE_AAA_CANDIDATE` is not allowed while the production gate has unresolved media evidence.
+
 ## Phase transition failure modes
 
 | Failure | Detection | Repair/decision |

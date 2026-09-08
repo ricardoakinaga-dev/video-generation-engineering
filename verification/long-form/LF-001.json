@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "LF-001",
+  "target_duration_s": 10,
+  "intent_ref": "NOT_RUN",
+  "plan_ref": "NOT_RUN",
+  "scene_bible_ref": "NOT_RUN",
+  "shot_graph_ref": "NOT_RUN",
+  "continuity_ref": "NOT_RUN",
+  "evidence_ref": "verification/long-form/LF-001-evidence.json",
+  "shot_ids": ["NOT_RUN"],
+  "status": "BLOCKED",
+  "production_evidence_complete": false,
+  "blockers": ["Local H3 confirmed envelope is 5.1667s per shot; no accepted two-shot physical interaction chain"],
+  "next_action": "Authorize and execute a bounded multi-shot local chain only after a confirmed reference/continuity-capable profile is available"
+}

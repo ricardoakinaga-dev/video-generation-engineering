@@ -2,7 +2,7 @@
 
 Skill de direção e engenharia de vídeo generativo para Codex, instalada neste projeto em [.agents/skills/video-generation-engineering](.agents/skills/video-generation-engineering/SKILL.md).
 
-Transforma ideias e referências em planejamento de cenas, planos de filmagem, continuidade, prompts, execução ComfyUI e revisão de artefatos. O padrão é `PLAN_ONLY`; geração é uma ação explícita. A implementação inclui ferramentas Python para grafos/estado, compatibilidade, proveniência, execução e montagem de mídia.
+Transforma ideias e referências em planejamento de cenas, planos de filmagem, continuidade, prompts, execução ComfyUI e revisão de artefatos. O padrão é `PLAN_ONLY`; geração é uma ação explícita. A implementação inclui ferramentas Python para grafos/estado, compatibilidade, proveniência, execução, montagem de mídia e contratos de qualidade audiovisual.
 
 ## Usar no Codex
 
@@ -26,15 +26,17 @@ python3 .agents/skills/video-generation-engineering/scripts/vge.py prepare \
   --output /tmp/vge-example-plan.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py validate /tmp/vge-example-plan.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py compile /tmp/vge-example-plan.json
-python3 tools/verify.py
+python3 .agents/skills/video-generation-engineering/scripts/vge.py semantic observation.json
+python3 .agents/skills/video-generation-engineering/scripts/vge.py scorecard scorecard.json
+python3 tools/verify.py --output verification/software-triple-aaa-r13.json
 ```
 
 O planejador semântico é o agente que segue a skill; o script valida e deriva estruturas a partir de um tratamento já escrito. Uma validação estrutural não aprova um vídeo.
 
 ## Evidências e escopo
 
-Consulte [IMPLEMENTATION.md](IMPLEMENTATION.md) para resultados, cobertura e limites. O teste real local H3 e seus hashes estão em [verification/](verification/). O perfil H3 incluído vale para o ambiente e o workflow exatos que foram testados; mudanças exigem nova validação. Perfis candidatos não concedem capacidade executável.
+Consulte [IMPLEMENTATION.md](IMPLEMENTATION.md) para resultados, cobertura e limites. O teste real local H3 e seus hashes estão em [verification/](verification/). O perfil H3 incluído vale para o ambiente e o workflow exatos que foram testados; mudanças exigem nova validação. Perfis candidatos não concedem capacidade executável. A [matriz de capacidade](docs/capability-matrix-r1.md), a [validação Triple-AAA](docs/triple-aaa-validation.md) e o [relatório final](docs/triple-aaa-final-report.md) mantêm os gates independentes.
 
-As APIs pagas exigem autorização e credenciais próprias. Não foram usadas chamadas pagas na construção. Identidade, contato, lip-sync, áudio e edição final exigem procedimentos de mídia apropriados; a presença de um arquivo e seus metadados não provam qualidade de produção.
+As APIs pagas exigem autorização e credenciais próprias. Não foram usadas chamadas pagas na construção. A evidência local H3 T2V confirma apenas o escopo testado; a sonda H3 R2V executou, mas ficou `PARTIAL` após falhar semanticamente na retenção do sujeito/ambiente declarados. A mídia tem QA mecânico separado de identidade, contato, lip-sync, áudio e edição final; a presença de um arquivo e seus metadados não prova qualidade de produção.
 
 A especificação original continua em [docs/](docs/README.md), e as auditorias históricas em [audit-artifacts/](audit-artifacts/README.md).

@@ -1,0 +1,5 @@
+{
+  "status": "UNKNOWN",
+  "prompt_id": "2d3020f1-94b2-4aee-b550-1f5379911862",
+  "next_action": "Poll this same ID again; timeout does not cancel or authorize resubmission"
+}

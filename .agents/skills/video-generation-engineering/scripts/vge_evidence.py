@@ -2,7 +2,7 @@
 from datetime import datetime, timezone
 import re
 
-from vge_core import ContractError, file_hash, indexed, require, string_list
+from vge_core import ContractError, digest, file_hash, indexed, load, require, string_list
 
 
 def timestamp(value):
@@ -77,6 +77,18 @@ def validate_attempt(attempt):
         owner, field = path.split(".")
         require(attempt[owner].get(field) not in (None, "", "UNKNOWN"), f"Unknown required provenance: {path}")
     require(type(attempt["profile"]["revision"]) is int and attempt["profile"]["revision"] > 0, "Invalid profile revision")
+    if attempt.get("purpose") in ("CAPABILITY_PROBE", "GENERATION"):
+        declared_profile_hash = attempt["profile"].get("content_hash")
+        require(hash_value(declared_profile_hash), "Runtime attempt lacks exact profile content hash")
+        profile_snapshot = dict(attempt["profile"])
+        profile_snapshot.pop("content_hash", None)
+        profile_snapshot.pop("revision", None)
+        require(digest(profile_snapshot) == declared_profile_hash, "Runtime attempt profile snapshot hash mismatch")
+        require(hash_value(attempt["workflow"].get("content_hash")), "Runtime attempt lacks exact workflow content hash")
+        require(hash_value(attempt["workflow"].get("fingerprint")), "Runtime attempt lacks exact workflow fingerprint")
+        require(digest(load(attempt["workflow"].get("ref"))) == attempt["workflow"]["content_hash"], "Runtime workflow content changed since submission")
+        require(isinstance(attempt["runtime"].get("selected_device"), str) and attempt["runtime"]["selected_device"] not in ("", "UNKNOWN"), "Runtime attempt lacks selected device provenance")
+        require(hash_value(attempt["runtime"].get("resource_context_hash")), "Runtime attempt lacks resource context hash")
     for owner, field in (("model", "asset_hash"), ("runtime", "node_inventory_hash"), ("workflow", "content_hash")):
         require(hash_value(attempt[owner].get(field)), f"Invalid {owner}.{field}")
     require(isinstance(attempt.get("inputs"), list), "inputs must be explicit, including [] for text-only")

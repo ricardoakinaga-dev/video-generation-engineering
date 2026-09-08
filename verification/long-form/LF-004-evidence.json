@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "id": "LF-004-evidence",
+  "case_id": "LF-004",
+  "status": "NOT_RUN",
+  "production_evidence_complete": false,
+  "available_records": [],
+  "required_records": ["LF-003", "branches", "recovery_checkpoints", "provenance_manifest", "human_checkpoint", "editorial_review"],
+  "next_action": "Do not schedule the optional 90-120 second envelope before LF-001 through LF-003 are accepted."
+}

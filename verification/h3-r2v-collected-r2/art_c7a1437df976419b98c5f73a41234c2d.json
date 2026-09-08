@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "art_c7a1437df976419b98c5f73a41234c2d",
+  "shot_id": "h3_r2v_probe_001",
+  "execution_attempt_ref": "attempt_73b821eb456d4d48986a901c469a5c75",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/h3-r2v-collected-r2/art_c7a1437df976419b98c5f73a41234c2d.mp4",
+  "content_hash": "sha256:973c979e1e0c0bc49d9ef30a3b1a4ee10821891d85fe6bcf151dcc92b210e598",
+  "collected_at": "2026-09-08T18:36:23.063729+00:00",
+  "generation_status": "GENERATED",
+  "shot_contract_hash": "sha256:87fde2784ddd5a1d4fc02970f88467ea4cd58205f0b31d8ec88d827f10578abe",
+  "profile_id": "comfyui-h3-r2v-local-probe-v1",
+  "profile_revision": 1,
+  "profile_content_hash": "sha256:28aa0b59cc5ae020b42f394420e03216455f3a14285c1b2bba5b5cf3bbfa5a24",
+  "model_asset_hash": "sha256:de2c6c29c4ee702b45e48e40daae3834aeee58ab681c732d9152589a87c89910",
+  "input_hashes": [
+    {
+      "content_hash": "sha256:231a0eae508598eaa6b4fa1c604347dd0154e9c42571ac175139a573c2d796eb",
+      "ref": "reference_subjects",
+      "role": "subject_reference"
+    },
+    {
+      "content_hash": "sha256:1ff73aef2ba62369e3ab9d441412cb219ee934fc78544207cf4ba30212e04af9",
+      "ref": "reference_environment",
+      "role": "environment_reference"
+    }
+  ],
+  "media": {
+    "kind": "video",
+    "runtime_output_kind": "images"
+  },
+  "runtime": {
+    "provider": "comfyui",
+    "endpoint": "http://127.0.0.1:8188",
+    "workflow_hash": "sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6",
+    "workflow_fingerprint": "sha256:1b455641a3d4c9e11b91cc1a92517d68fb7ced70c63b39f24367609429e9f9b1",
+    "shot_contract_hash": "sha256:87fde2784ddd5a1d4fc02970f88467ea4cd58205f0b31d8ec88d827f10578abe",
+    "profile_id": "comfyui-h3-r2v-local-probe-v1",
+    "profile_revision": 1,
+    "profile_content_hash": "sha256:28aa0b59cc5ae020b42f394420e03216455f3a14285c1b2bba5b5cf3bbfa5a24",
+    "model_asset_hash": "sha256:de2c6c29c4ee702b45e48e40daae3834aeee58ab681c732d9152589a87c89910",
+    "input_hashes": [
+      {
+        "content_hash": "sha256:231a0eae508598eaa6b4fa1c604347dd0154e9c42571ac175139a573c2d796eb",
+        "ref": "reference_subjects",
+        "role": "subject_reference"
+      },
+      {
+        "content_hash": "sha256:1ff73aef2ba62369e3ab9d441412cb219ee934fc78544207cf4ba30212e04af9",
+        "ref": "reference_environment",
+        "role": "environment_reference"
+      }
+    ],
+    "selected_device": "cuda:0",
+    "resource_context_hash": "sha256:19c6069d09699aa2b4d2d457b4196944a82d2fe8224ad01c345aad77bc672d60",
+    "runtime_context_ref": "verification/h3-r2v-probe-runtime.json"
+  },
+  "quality_review": {
+    "lifecycle": "NOT_STARTED",
+    "observation_ref": null
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "obs-h3-r2v-20260908-r1",
+  "shot_id": "h3_r2v_probe_001",
+  "artifact_id": "art_c7a1437df976419b98c5f73a41234c2d",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/h3-r2v-collected-r2/art_c7a1437df976419b98c5f73a41234c2d.mp4",
+  "observed_content_hash": "sha256:973c979e1e0c0bc49d9ef30a3b1a4ee10821891d85fe6bcf151dcc92b210e598",
+  "observed_at": "2026-09-08T18:39:00-03:00",
+  "procedure": "Manual inspection of exact first/middle/last extracted frames and contact sheet, cross-checked with media-qa; no audio listening or model-based semantic oracle was used.",
+  "checks": [
+    {"id":"metadata_presence","category":"metadata","result":"PASS","oracle":{"kind":"METADATA","question":"Does the collected artifact exist with the sealed MP4 hash and a decodable video/audio container?","version":"media-qa-r1"},"confidence":"HIGH","evidence":[{"type":"MEDIA_QA","ref":"verification/h3-r2v-media-qa.json","content_hash":"sha256:eb114d21e45e4e4e069472a45979573b5d3a22879432c48a3a21e98aad6f2a8a"}],"limitations":["Container validity is not semantic quality"]},
+    {"id":"visual_reference_retention","category":"visual","result":"FAIL","oracle":{"kind":"HUMAN","question":"Does the generated shot preserve the declared subject set and the hospital environment from Picture 1 and Picture 2?","version":"manual-frame-review-r1"},"confidence":"HIGH","evidence":[{"type":"FRAME","ref":"verification/h3-r2v-frames/frame-000.jpg","content_hash":"sha256:5a61858763852a36b3d2011ecd5f280ae3135175ac9130de06c71cd319b3ca4d","time_s":0},{"type":"FRAME","ref":"verification/h3-r2v-frames/frame-120.jpg","content_hash":"sha256:d8c0fc0f64dbb9f836bd87d65fa0e36d69d6161905f1ca1bc5e2d45585cfbfdf","time_s":5}],"limitations":["The dog is broadly present, but the veterinarian, cat and bright veterinary-hospital environment declared by the references are absent; sparse manual samples do not establish all-frame identity"]},
+    {"id":"temporal_motion","category":"temporal","result":"PARTIAL","oracle":{"kind":"SEQUENCE","question":"Does the shot remain decodable and exhibit a coherent bounded motion without freeze or corruption?","version":"media-qa-plus-sparse-review-r1"},"confidence":"MEDIUM","evidence":[{"type":"FRAME_SEQUENCE","ref":"verification/h3-r2v-contact-sheet.jpg","content_hash":"sha256:fa8e9e36ab5217b066e27fed0f6afa38a2eb4069da6f7c7044afe6498687a6c5","time_s":0}],"limitations":["Only sparse frames were reviewed; no full-duration temporal semantic review was performed"]},
+    {"id":"audio_semantics","category":"audio","result":"NOT_OBSERVED","oracle":{"kind":"AUDIO","question":"Are the audio events intelligible, causally aligned and appropriate to the declared soundscape?","version":"not-run"},"confidence":"UNKNOWN","evidence":[],"reason":"A native stream was present, but no listening or waveform-event review was run.","limitations":["Audio stream presence is not audio semantic acceptance"]},
+    {"id":"continuity_reference_state","category":"continuity","result":"FAIL","oracle":{"kind":"HUMAN","question":"Does the generated artifact satisfy the declared reference-conditioned identity/environment continuity target?","version":"manual-frame-review-r1"},"confidence":"HIGH","evidence":[{"type":"CONTACT_SHEET","ref":"verification/h3-r2v-contact-sheet.jpg","content_hash":"sha256:fa8e9e36ab5217b066e27fed0f6afa38a2eb4069da6f7c7044afe6498687a6c5"}],"limitations":["This is a single-shot probe, so adjacent-shot transition continuity was not applicable; the declared within-shot reference retention target failed"]},
+    {"id":"editorial_acceptance","category":"editorial","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Is the shot acceptable for the intended production/editorial deliverable?","version":"not-run"},"confidence":"UNKNOWN","evidence":[],"reason":"No editorial review or approved deliverable decision was performed.","limitations":["Capability probe is not production acceptance"]}
+  ],
+  "status": "FAIL",
+  "limitations": ["Probe evidence is local and exact, but it is not a production acceptance artifact", "No dialogue/lip-sync or human editorial sign-off was performed"],
+  "repair_route": "reference_conditioning",
+  "next_action": "Keep reference conditioning at PARTIAL/UNPROVEN; adjust the reference workflow or model/profile and run a new bounded probe before any dependent chain."
+}

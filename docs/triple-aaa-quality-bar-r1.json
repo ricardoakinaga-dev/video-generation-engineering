@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "bar_id": "VGE-TRIPLE-AAA-R1",
+  "status": "FROZEN",
+  "authority": "USER_PROMPT",
+  "frozen_at": "2026-09-08T00:00:00-03:00",
+  "source_files": [
+    {
+      "path": "/home/ricardo/.codex/attachments/1c21e9b9-7968-42d0-ae85-02ce081d43e1/pasted-text-1.txt",
+      "sha256": "63073704973705625ebdcd429edd46da0c6fcb8229a1cdf91d77c1228698a7b8"
+    },
+    {
+      "path": "/home/ricardo/.codex/attachments/1c21e9b9-7968-42d0-ae85-02ce081d43e1/pasted-text-2.txt",
+      "sha256": "e14653726e695ddcfa483ba004e3e5d5f377c24c7b33addbeef1def7089ceec6"
+    }
+  ],
+  "scope": {
+    "implementation": "The executable video-generation-engineering Skill, deterministic helpers, tests, documentation, package validation and local evidence boundary.",
+    "out_of_scope": [
+      "Paid cloud generation, external uploads or transfers",
+      "Claiming semantic or audiovisual quality without inspected media evidence",
+      "Adding model weights or making unavailable providers appear available"
+    ]
+  },
+  "verdict_policy": {
+    "required_classes": ["PASS", "FAIL", "PARTIAL", "NOT_APPLICABLE", "NOT_OBSERVED", "NOT_RUN", "UNKNOWN", "BLOCKED"],
+    "unsupported_pass_forbidden": true,
+    "architecture_verification_production_are_separate": true,
+    "triple_aaa_candidate_requires": [
+      "architecture acceptance",
+      "software and contract verification",
+      "runtime and audiovisual evidence for the claimed scope",
+      "independent fresh critic acceptance",
+      "portable distribution validation"
+    ]
+  },
+  "criteria": [
+    {"id":"AAA-01","name":"Audit before change","acceptance":"Baseline, limitations, current architecture and evidence are recorded before implementation changes."},
+    {"id":"AAA-02","name":"Long-form ladder","acceptance":"LF-001 10-15s, LF-002 20-30s and LF-003 45-60s fixtures have explicit scope, plans, evidence and honest status; 90/120s rules remain explicit."},
+    {"id":"AAA-03","name":"Continuity scorecard","acceptance":"Identity, wardrobe, hair, object state/ownership, vehicle, environment, lighting, screen direction, camera geography, gaze, emotion, dialogue, temporal and audio dimensions are separately scored with evidence."},
+    {"id":"AAA-04","name":"Shot and transition contracts","acceptance":"Shot acceptance and adjacent transition contracts bind exact artifacts, previous end state and next start state."},
+    {"id":"AAA-05","name":"Canonical re-anchor","acceptance":"Drift decisions choose continue, re-anchor, reset, regenerate or split and identify the smallest repair owner."},
+    {"id":"AAA-06","name":"First/last frame","acceptance":"FLF is a scoped capability with endpoint, identity, object and motion checks; node presence alone is insufficient."},
+    {"id":"AAA-07","name":"Dialogue and performance","acceptance":"Semantics, voice, performance, lip-sync and mix are separate observations with timing and causal dialogue data."},
+    {"id":"AAA-08","name":"Audio causal timeline","acceptance":"Dialogue, ambience, effects, music, silence and transitions have independent time and cause mappings."},
+    {"id":"AAA-09","name":"Contact and physics","acceptance":"Contact phases are explicit and physics are QA assertions, not prompt-only guarantees."},
+    {"id":"AAA-10","name":"Feature-scoped profiles","acceptance":"Model/runtime profiles are scoped by feature and expire on version, node, model, workflow, resource or behavior changes."},
+    {"id":"AAA-11","name":"ComfyUI provenance","acceptance":"Discovery, workflow validation/fingerprint, immutable attempts, exact profile binding and artifact hashes are retained."},
+    {"id":"AAA-12","name":"Observation contract","acceptance":"Metadata, visual, temporal, audio, continuity and editorial observations are separate categories with oracle, evidence, confidence and limitations."},
+    {"id":"AAA-13","name":"Media QA","acceptance":"Deterministic checks detect corruption, black/frozen content, A/V mismatch and metadata anomalies without pretending to judge semantics."},
+    {"id":"AAA-14","name":"Semantic QA","acceptance":"A semantic check cannot PASS without an explicit oracle and evidence bound to an exact artifact."},
+    {"id":"AAA-15","name":"Bounded repair","acceptance":"Repair plans preserve unaffected siblings, minimize changed shots and enforce regeneration/attempt/cost/runtime/human budgets."},
+    {"id":"AAA-16","name":"Prompt adaptation","acceptance":"Prompt density, compression, contradiction detection and model-specific adapter mappings are observable and testable."},
+    {"id":"AAA-17","name":"Architecture cohesion","acceptance":"vge_core remains the canonical planning owner; quality, media, runtime and provider boundaries have one-way dependencies and ADR rationale."},
+    {"id":"AAA-18","name":"Progressive disclosure","acceptance":"The Skill routes only relevant domain references while exposing production evidence and safety boundaries."},
+    {"id":"AAA-19","name":"Evaluation library","acceptance":"Golden, known-bad, metamorphic/property-like, integration, portability, resource and observability fixtures exist or have explicit blocked status."},
+    {"id":"AAA-20","name":"Maturity model","acceptance":"Levels 0-5 distinguish plan, structural, runtime, audiovisual, bounded production and repeatable release maturity."},
+    {"id":"AAA-21","name":"Triple independent gates","acceptance":"Architecture, verification and production gates are scored independently with no score laundering."},
+    {"id":"AAA-22","name":"Local evidence","acceptance":"The exact local H3 evidence is identified; a second model is validated when available or marked blocked by external capability."},
+    {"id":"AAA-23","name":"Adapter differential","acceptance":"At least one adapter differential is deterministic and documents what is preserved, degraded or unsupported."},
+    {"id":"AAA-24","name":"Distribution","acceptance":"The packaged Skill is portable, self-contained, free of secrets and passes fresh link/manifest/CRC checks."},
+    {"id":"AAA-25","name":"Fresh adversarial review","acceptance":"A fresh-context critic reviews the frozen bar and current artifacts after implementation; fingerprint proves no critic mutation."},
+    {"id":"AAA-26","name":"Honest final report","acceptance":"Final report includes baselines, findings, changes, architecture, tests, runtime/media evidence, matrix, gaps, scores and status."}
+  ],
+  "scoring": {
+    "architecture": "PASS only when all architecture criteria in scope are documented and implemented without a direction violation.",
+    "verification": "PASS only when deterministic tests and package/distribution checks pass; unrun runtime checks remain unverified.",
+    "production": "PASS only for exact media/evidence artifacts that were actually generated, inspected and accepted.",
+    "overall": "TRIPLE_AAA_CANDIDATE requires all three gates PASS. Otherwise use READY_WITH_RISKS, PARTIAL or BLOCKED with deductions."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "art_d6c661511a94401c9e65ba530864c3ec",
+  "shot_id": "h3_r2v_probe_001",
+  "execution_attempt_ref": "attempt_73b821eb456d4d48986a901c469a5c75",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/h3-r2v-collected/art_d6c661511a94401c9e65ba530864c3ec.mp4",
+  "content_hash": "sha256:973c979e1e0c0bc49d9ef30a3b1a4ee10821891d85fe6bcf151dcc92b210e598",
+  "collected_at": "2026-09-08T18:35:49.593330+00:00",
+  "generation_status": "GENERATED",
+  "media": {
+    "kind": "image",
+    "runtime_output_kind": "images"
+  },
+  "runtime": {
+    "provider": "comfyui",
+    "endpoint": "http://127.0.0.1:8188",
+    "workflow_hash": "sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6",
+    "workflow_fingerprint": "sha256:1b455641a3d4c9e11b91cc1a92517d68fb7ced70c63b39f24367609429e9f9b1"
+  },
+  "quality_review": {
+    "lifecycle": "NOT_STARTED",
+    "observation_ref": null
+  }
+}

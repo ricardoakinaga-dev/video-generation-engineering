@@ -399,7 +399,7 @@ def validate(plan):
         parameters = object_value(shot.get("parameters", {}), f"{key}.parameters")
         required_dependency_properties = object_value(shot.get("required_dependency_properties", {}), f"{key}.required_dependency_properties")
         require(number(shot.get("duration_s"), True), f"{key}: invalid duration_s")
-        require(shot.get("generation_mode") in ("T2V", "I2V", "TI2V", "FLF2V"), f"{key}: invalid generation_mode")
+        require(shot.get("generation_mode") in ("T2V", "I2V", "TI2V", "FLF2V", "R2V"), f"{key}: invalid generation_mode")
         require(shot.get("risk") in ("CRITICAL", "HIGH", "MEDIUM", "LOW", "UNKNOWN"), f"{key}: invalid risk")
         elapsed += shot["duration_s"]
         if shot.get("scene_id") != intent.get("scene_id"):
@@ -840,7 +840,7 @@ def negotiate(shot, profile, now=None):
     require(isinstance(mode, str) and mode, "Shot generation_mode must be a nonempty string")
     if mode not in modes:
         gaps.append(f"Unsupported mode: {mode}")
-    mode_feature = {"T2V": "text_to_video", "I2V": "image_to_video", "FLF2V": "first_last_frame", "TI2V": "text_image_to_video"}.get(mode, mode)
+    mode_feature = {"T2V": "text_to_video", "I2V": "image_to_video", "FLF2V": "first_last_frame", "TI2V": "text_image_to_video", "R2V": "reference_conditioning"}.get(mode, mode)
     requirements = string_list(shot.get("capability_requirements", []), "Shot capability_requirements")
     if shot.get("references"):
         require(isinstance(shot.get("references"), list), "Shot references must be an array")
@@ -850,7 +850,7 @@ def negotiate(shot, profile, now=None):
     require(set(degradable_requirements) <= set(requirements), "Degradable capability must also be a declared capability requirement")
     evidence = profile.get("feature_evidence", {})
     require(isinstance(evidence, dict), "Profile feature_evidence must be an object")
-    allowed_evidence_statuses = ("CONFIRMED", "INFERRED", "PROPOSED", "UNKNOWN")
+    allowed_evidence_statuses = ("CONFIRMED", "PARTIAL", "INFERRED", "PROPOSED", "UNKNOWN", "EXPIRED", "UNSUPPORTED")
     for feature, record in evidence.items():
         require(isinstance(feature, str) and feature, "Profile feature names must be nonempty strings")
         require(isinstance(record, dict), f"Feature evidence must be an object: {feature}")

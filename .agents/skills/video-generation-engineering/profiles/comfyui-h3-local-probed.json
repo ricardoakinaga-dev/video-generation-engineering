@@ -120,14 +120,18 @@
     "text_to_video": {
       "status": "CONFIRMED",
       "source_ref": "evidence/h3-local-20260908.json",
+      "source_content_hash": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
       "probe_ref": "evidence/h3-local-20260908.json",
+      "probe_content_hash": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
       "checked_at": "2026-09-08",
       "scope": "exact_workflow_only; output stream presence is not semantic quality"
     },
     "native_audio_generation": {
       "status": "CONFIRMED",
       "source_ref": "evidence/h3-local-20260908.json",
+      "source_content_hash": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
       "probe_ref": "evidence/h3-local-20260908.json",
+      "probe_content_hash": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
       "checked_at": "2026-09-08",
       "scope": "exact_workflow_only; output stream presence is not semantic quality"
     },
@@ -187,6 +191,10 @@
     ]
   },
   "workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
+  "workflow_fingerprint": "sha256:cebda5b0f8d219f179476589cc59c033f6993bca4a4b43447bd9955e1a40d7da",
   "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
-  "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec"
+  "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+  "selected_device": "cuda:0",
+  "resource_context_hash": "sha256:19c6069d09699aa2b4d2d457b4196944a82d2fe8224ad01c345aad77bc672d60",
+  "profile_fingerprint": "sha256:1c13c861981886d46f0d54300d59965e53669ffc462fa83e5c52973b2eef7dca"
 }

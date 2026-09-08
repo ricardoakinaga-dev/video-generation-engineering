@@ -1,0 +1,297 @@
+{
+  "status": "SUCCEEDED",
+  "prompt_id": "2d3020f1-94b2-4aee-b550-1f5379911862",
+  "history": {
+    "prompt": [
+      6,
+      "2d3020f1-94b2-4aee-b550-1f5379911862",
+      {
+        "1": {
+          "class_type": "ClipProjLoader",
+          "inputs": {
+            "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+            "device": "cuda:0",
+            "mode": "dynamic",
+            "projection": "mmh3-4b-ClipProj-v3.1.safetensors",
+            "type": "auto"
+          }
+        },
+        "10": {
+          "class_type": "RandomNoise",
+          "inputs": {
+            "noise_seed": 20260908
+          }
+        },
+        "11": {
+          "class_type": "SamplerCustomAdvanced",
+          "inputs": {
+            "guider": [
+              "7",
+              0
+            ],
+            "latent_image": [
+              "6",
+              1
+            ],
+            "noise": [
+              "10",
+              0
+            ],
+            "sampler": [
+              "8",
+              0
+            ],
+            "sigmas": [
+              "9",
+              0
+            ]
+          }
+        },
+        "12": {
+          "class_type": "VAEDecode",
+          "inputs": {
+            "samples": [
+              "11",
+              0
+            ],
+            "vae": [
+              "4",
+              0
+            ]
+          }
+        },
+        "13": {
+          "class_type": "VAEDecodeAudio",
+          "inputs": {
+            "samples": [
+              "11",
+              0
+            ],
+            "vae": [
+              "5",
+              0
+            ]
+          }
+        },
+        "14": {
+          "class_type": "CreateVideo",
+          "inputs": {
+            "audio": [
+              "13",
+              0
+            ],
+            "fps": 24.0,
+            "images": [
+              "12",
+              0
+            ]
+          }
+        },
+        "15": {
+          "class_type": "SaveVideo",
+          "inputs": {
+            "codec": "auto",
+            "filename_prefix": "video/VGE_skill_r2v_probe_20260908",
+            "format": "mp4",
+            "video": [
+              "14",
+              0
+            ]
+          }
+        },
+        "2": {
+          "class_type": "UNETLoader",
+          "inputs": {
+            "unet_name": "minimax_h3_ref2va_pruned_w4a8_mixed.safetensors",
+            "weight_dtype": "default"
+          }
+        },
+        "3": {
+          "class_type": "MiniMaxH3SigmaShift",
+          "inputs": {
+            "model": [
+              "2",
+              0
+            ],
+            "shift_audio": 5.0,
+            "shift_video": 12.0
+          }
+        },
+        "35": {
+          "class_type": "LoadImage",
+          "inputs": {
+            "image": "fennec_corrigido_00002_.png"
+          }
+        },
+        "36": {
+          "class_type": "LoadImage",
+          "inputs": {
+            "image": "download.png"
+          }
+        },
+        "37": {
+          "class_type": "ImageScale",
+          "inputs": {
+            "crop": "disabled",
+            "height": 480,
+            "image": [
+              "35",
+              0
+            ],
+            "upscale_method": "lanczos",
+            "width": 480
+          }
+        },
+        "38": {
+          "class_type": "ImageScale",
+          "inputs": {
+            "crop": "center",
+            "height": 480,
+            "image": [
+              "36",
+              0
+            ],
+            "upscale_method": "lanczos",
+            "width": 832
+          }
+        },
+        "4": {
+          "class_type": "VAELoader",
+          "inputs": {
+            "vae_name": "minimax_h3_video_vae_int8_convrot.safetensors"
+          }
+        },
+        "5": {
+          "class_type": "VAELoader",
+          "inputs": {
+            "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+          }
+        },
+        "6": {
+          "class_type": "MiniMaxH3ReferenceToVideo",
+          "inputs": {
+            "audio_vae": [
+              "5",
+              0
+            ],
+            "clip": [
+              "1",
+              0
+            ],
+            "height": 480,
+            "length": 124,
+            "prompt": "<Subject 1> is the exact adult animal shown in <Picture 1>. <Environment 1> is the exact visual environment shown in <Picture 2>. A single continuous medium-wide shot: the subject remains stable while making one small, physically plausible movement in the environment. Preserve identity, wardrobe/fur, scale, lighting and geometry. No cuts, no extra subjects, no morphing, no text or logos. Quiet natural room tone, no dialogue, no music.",
+            "ref_image_size": "match",
+            "ref_images.ref_image_0": [
+              "37",
+              0
+            ],
+            "ref_images.ref_image_1": [
+              "38",
+              0
+            ],
+            "vae": [
+              "4",
+              0
+            ],
+            "width": 832
+          }
+        },
+        "7": {
+          "class_type": "BasicGuider",
+          "inputs": {
+            "conditioning": [
+              "6",
+              0
+            ],
+            "model": [
+              "3",
+              0
+            ]
+          }
+        },
+        "8": {
+          "class_type": "KSamplerSelect",
+          "inputs": {
+            "sampler_name": "res_multistep"
+          }
+        },
+        "9": {
+          "class_type": "BasicScheduler",
+          "inputs": {
+            "denoise": 1.0,
+            "model": [
+              "3",
+              0
+            ],
+            "scheduler": "simple",
+            "steps": 20
+          }
+        }
+      },
+      {
+        "vge_attempt_id": "attempt_73b821eb456d4d48986a901c469a5c75",
+        "client_id": "attempt_73b821eb456d4d48986a901c469a5c75",
+        "create_time": 1788891830655
+      },
+      [
+        "15"
+      ]
+    ],
+    "outputs": {
+      "15": {
+        "images": [
+          {
+            "filename": "VGE_skill_r2v_probe_20260908_00001_.mp4",
+            "subfolder": "video",
+            "type": "output"
+          }
+        ],
+        "animated": [
+          true
+        ]
+      }
+    },
+    "status": {
+      "status_str": "success",
+      "completed": true,
+      "messages": [
+        [
+          "execution_start",
+          {
+            "prompt_id": "2d3020f1-94b2-4aee-b550-1f5379911862",
+            "timestamp": 1788891830657
+          }
+        ],
+        [
+          "execution_cached",
+          {
+            "nodes": [
+              "1",
+              "4",
+              "5",
+              "8"
+            ],
+            "prompt_id": "2d3020f1-94b2-4aee-b550-1f5379911862",
+            "timestamp": 1788891830666
+          }
+        ],
+        [
+          "execution_success",
+          {
+            "prompt_id": "2d3020f1-94b2-4aee-b550-1f5379911862",
+            "timestamp": 1788892480145
+          }
+        ]
+      ]
+    },
+    "meta": {
+      "15": {
+        "node_id": "15",
+        "display_node": "15",
+        "parent_node": null,
+        "real_node_id": "15"
+      }
+    }
+  }
+}

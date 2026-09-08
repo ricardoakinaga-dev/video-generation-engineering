@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-h3-r2v-local-probe-v1",
+  "provider": "local_comfyui",
+  "runtime": "ComfyUI",
+  "runtime_version": "0.34.0",
+  "model": "minimax_h3_ref2va_pruned_w4a8_mixed.safetensors",
+  "integration_version": "2026-09-08-candidate",
+  "profile_revision": 1,
+  "status": "PROPOSED",
+  "evidence_refs": ["profiles/evidence/h3-r2v-local-20260908.json"],
+  "evidence": {"status": "PARTIAL", "claim_type": "CAPABILITY_PROBE_OBSERVED", "confidence": "MEDIUM", "source_refs": ["profiles/evidence/h3-r2v-local-20260908.json"], "observed_at": "2026-09-08T18:39:00-03:00"},
+  "supports": {
+    "modes": ["R2V"],
+    "inputs": ["text", "image"],
+    "outputs": ["video"],
+    "audio": {"native_generation": "UNKNOWN"},
+    "camera_controls": {"status": "UNKNOWN"},
+    "identity_conditioning": "UNKNOWN"
+  },
+  "controls": ["seed", "width", "height", "frame_count", "fps"],
+  "dependencies": {
+    "nodes": {"ClipProjLoader": "0.1.13", "UNETLoader": "0.34.0", "MiniMaxH3SigmaShift": "0.34.0", "VAELoader": "0.34.0", "LoadImage": "0.34.0", "ImageScale": "0.34.0", "MiniMaxH3ReferenceToVideo": "0.34.0", "BasicGuider": "0.34.0", "KSamplerSelect": "0.34.0", "BasicScheduler": "0.34.0", "RandomNoise": "0.34.0", "SamplerCustomAdvanced": "0.34.0", "VAEDecode": "0.34.0", "VAEDecodeAudio": "0.34.0", "CreateVideo": "0.34.0", "SaveVideo": "0.34.0"},
+    "model_assets": [
+      {"ref": "ref2va_model", "content_hash": "sha256:de2c6c29c4ee702b45e48e40daae3834aeee58ab681c732d9152589a87c89910"},
+      {"ref": "text_encoder", "content_hash": "sha256:54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094"},
+      {"ref": "clip_projection", "content_hash": "sha256:0184e5c8d666a131962506d21949c2d8a8c6f33445b7b5e347e9a7e0a5baa819"},
+      {"ref": "video_vae", "content_hash": "sha256:9bb2d96f218c76babd85e0611b85ca8fb330a90546c01a0005e8a58a59593410"},
+      {"ref": "audio_vae", "content_hash": "sha256:8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48"}
+    ]
+  },
+  "limits": {
+    "duration_s": {"min": 5.166666666666667, "max": 5.166666666666667},
+    "frame_count": {"multiple": 17, "offset": 5},
+    "resolution": {"width": {"min": 832, "max": 832, "multiple": 32}, "height": {"min": 480, "max": 480, "multiple": 32}},
+    "fps": [24],
+    "vram": {"observed_device_bytes": 12490440704, "inference_fit": "UNKNOWN_PENDING_PROBE"}
+  },
+  "workflow_hash": "sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6",
+  "workflow_fingerprint": "sha256:1b455641a3d4c9e11b91cc1a92517d68fb7ced70c63b39f24367609429e9f9b1",
+  "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+  "model_asset_hash": "sha256:de2c6c29c4ee702b45e48e40daae3834aeee58ab681c732d9152589a87c89910",
+  "selected_device": "cuda:0",
+  "resource_context_hash": "sha256:19c6069d09699aa2b4d2d457b4196944a82d2fe8224ad01c345aad77bc672d60",
+  "feature_evidence": {
+    "reference_conditioning": {"status": "PARTIAL", "source_ref": "profiles/evidence/h3-r2v-local-20260908.json", "probe_ref": "verification/h3-r2v-semantic-observation.json", "scope": "Exact R2V workflow executed; dog retention observed but declared hospital/subject set failed", "checked_at": "2026-09-08"},
+    "first_last_frame": {"status": "UNKNOWN", "source_ref": "profiles/evidence/h3-r2v-local-20260908.json", "probe_ref": null, "scope": "Not exercised by this workflow", "checked_at": "2026-09-08"},
+    "native_audio_generation": {"status": "UNKNOWN", "source_ref": "profiles/evidence/h3-r2v-local-20260908.json", "probe_ref": null, "scope": "R2V probe pending", "checked_at": "2026-09-08"},
+    "audio_dialogue_lip_sync": {"status": "UNKNOWN", "source_ref": "profiles/evidence/h3-r2v-local-20260908.json", "probe_ref": null, "scope": "Not exercised by this workflow", "checked_at": "2026-09-08"}
+  },
+  "known_failure_modes": ["unprobed_reference_identity", "unprobed_contact", "unprobed_audio_semantics", "unprobed_lip_sync", "tight_vram_margin"],
+  "recommended_strategy": {"default": "single_bounded_probe_then_observe", "long_form": "short_segments_with_canonical_reset"},
+  "validity": {"expires_at": "2026-09-15T23:59:59-03:00", "reprobe_on": ["runtime_version", "node_inventory_hash", "workflow_hash", "workflow_fingerprint", "model_asset_hash", "resource_change", "behavioral_change"]}
+}

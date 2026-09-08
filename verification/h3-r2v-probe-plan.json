@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "kind": "CAPABILITY_PROBE_PLAN",
+  "id": "h3-r2v-probe-plan",
+  "revision": 1,
+  "status": "EXECUTED",
+  "purpose": "One bounded local R2V capability probe; execution proves only that the sealed graph ran and produced a collectable artifact.",
+  "profile_ref": ".agents/skills/video-generation-engineering/profiles/comfyui-h3-r2v-local-probe-v1.json",
+  "profile_content_hash": "sha256:6ab037fe0f896ee9e79b24f08dec78970dde8b2e527a846c3afd76b3a555991a",
+  "workflow_ref": ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json",
+  "workflow_content_hash": "sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6",
+  "shot_contract": {
+    "id": "h3_r2v_probe_001",
+    "revision": 1,
+    "acceptance_ids": ["QG-15"],
+    "duration_s": 5.166666666666667,
+    "generation_mode": "R2V",
+    "parameters": {},
+    "dependency_ids": [],
+    "references": ["reference_subjects", "reference_environment"],
+    "capability_requirements": ["reference_conditioning"],
+    "degradable_capability_requirements": []
+  },
+  "shot_contract_hash": "sha256:87fde2784ddd5a1d4fc02970f88467ea4cd58205f0b31d8ec88d827f10578abe",
+  "inputs": [
+    {"ref": "reference_subjects", "role": "subject_reference", "content_hash": "sha256:231a0eae508598eaa6b4fa1c604347dd0154e9c42571ac175139a573c2d796eb"},
+    {"ref": "reference_environment", "role": "environment_reference", "content_hash": "sha256:1ff73aef2ba62369e3ab9d441412cb219ee934fc78544207cf4ba30212e04af9"}
+  ],
+  "limits": {"width": 832, "height": 480, "frame_count": 124, "fps": 24, "steps": 20},
+  "limitations": [
+    "Reference files are local runtime inputs and their semantic identity is not inferred from hashes.",
+    "Capability-probe evidence is not production acceptance."
+  ]
+}

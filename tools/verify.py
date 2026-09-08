@@ -19,6 +19,42 @@ ROOT=Path(__file__).resolve().parents[1]
 SKILL=ROOT/'.agents/skills/video-generation-engineering'
 
 
+def production_media_summary():
+    """Re-check checked-in media mechanically without promoting semantic quality."""
+    sys.path.insert(0, str(SKILL/'scripts'))
+    try:
+        from vge_media import media_qa
+    except Exception as exc:
+        return {"status": "BLOCKED", "error": type(exc).__name__, "artifacts": [],
+                "limitations": ["Quality module could not be imported"]}
+    artifacts = []
+    roots = [ROOT/'artifacts', ROOT/'verification']
+    for root in roots:
+        if not root.exists():
+            continue
+        for path in sorted(root.rglob('*')):
+            if not path.is_file() or path.suffix.lower() not in ('.mp4', '.mov', '.mkv', '.webm', '.gif'):
+                continue
+            try:
+                report = media_qa(path, allow_black=True)
+                artifacts.append({"path": str(path.relative_to(ROOT)), "content_hash": report["content_hash"],
+                                  "status": report["status"], "checks": {item["id"]: item["result"] for item in report["checks"]}})
+            except Exception as exc:
+                artifacts.append({"path": str(path.relative_to(ROOT)), "status": "BLOCKED", "error": type(exc).__name__})
+    if not artifacts:
+        status = "NOT_RUN"
+    elif any(item["status"] == "BLOCKED" for item in artifacts):
+        status = "BLOCKED"
+    elif any(item["status"] == "FAIL" for item in artifacts):
+        status = "PARTIAL"
+    elif any(item["status"] in ("PARTIAL", "NOT_OBSERVED") for item in artifacts):
+        status = "PARTIAL"
+    else:
+        status = "PASS"
+    return {"status": status, "artifacts": artifacts,
+            "limitations": ["This is mechanical media QA only; semantic identity, physics, emotion, story, continuity, editorial quality and lip-sync remain separate observations"]}
+
+
 def manifest():
     return {str(p.relative_to(SKILL)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(SKILL.rglob('*')) if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc'}
 
@@ -48,11 +84,15 @@ def main():
     if not result.wasSuccessful():errors.append('Behavior suite failed')
     after=manifest()
     if after!=before:errors.append('Product changed during verification')
+    quality = production_media_summary()
     report={'schema_version':1,'observed_at':started,'completed_at':datetime.now(timezone.utc).isoformat(),'status':'FAIL' if errors else 'PASS',
             'scope':'OFFLINE_PACKAGE_AND_EXECUTABLE_CONTRACTS','python':sys.version.split()[0],'tests_run':result.testsRun,'failures':len(result.failures),'errors':errors,'skipped':len(result.skipped),
             'local_package_links':links,'package_manifest_sha256':hashlib.sha256(json.dumps(after,sort_keys=True,separators=(',',':')).encode()).hexdigest(),
             'package_files_sha256':after,'test_output':stream.getvalue(),
-            'limitations':['Unit/integration tests and fake provider are not real paid-provider execution','Native synthetic media tests do not certify generated-media quality','Independent forward-use and real ComfyUI generation have separate dated evidence']}
+            'limitations':['Unit/integration tests and fake provider are not real paid-provider execution','Native synthetic media tests do not certify generated-media quality','Independent forward-use and real ComfyUI generation have separate dated evidence'],
+            'production_media_quality': quality,
+            'production_gate_status': 'PARTIAL' if quality['status'] not in ('PASS',) else 'MECHANICAL_ONLY',
+            'quality_policy': 'Mechanical media findings are reported separately from offline software status; semantic PASS requires category/oracle/evidence-bound observations.'}
     if args.output:
         p=Path(args.output);p.parent.mkdir(parents=True,exist_ok=True)
         with p.open('x') as f:json.dump(report,f,ensure_ascii=False,indent=2);f.write('\n')

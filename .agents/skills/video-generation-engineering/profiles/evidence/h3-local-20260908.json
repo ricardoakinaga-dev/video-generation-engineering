@@ -126,6 +126,7 @@
   ],
   "workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
   "queue_id": "a5987861-6920-4379-b379-c258ac1f1dba",
+  "artifact_ref": "../../../../../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4",
   "artifact_hash": "sha256:623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124",
   "duration_s": 5.167,
   "video": {

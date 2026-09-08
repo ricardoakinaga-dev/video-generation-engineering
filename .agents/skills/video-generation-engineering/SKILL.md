@@ -16,6 +16,7 @@ Turn the requested film into an actionable production package. Preserve the crea
 - **Selected model, unsupported feature, or prompt conversion:** read [model adaptation](references/model-adaptation.md). Source/version/probe evidence is scoped per feature.
 - **ComfyUI execution or workflow diagnosis:** read [execution](references/comfyui-execution.md). Discover the actual runtime before choosing or binding nodes.
 - **Review, regeneration, final assembly:** read [evaluation and repair](references/evaluation-and-repair.md).
+- **Production evidence, scorecards, long-form acceptance, or release readiness:** read [production quality](references/production-quality.md).
 - **Implementation, diagnosis or auditable decisions:** also read [decision observability](references/observability.md).
 - **Likeness/voice, restricted references, external transfer or publication:** read [safety and provenance](references/safety-and-provenance.md).
 
@@ -54,6 +55,8 @@ For execution, confirm target, mode and destination from the current request. Ex
 Record concrete runtime/model/node/workflow/input/parameter context per submission, then collect with an immutable attempt reference and output hash. On timeout, reconcile the same queue ID; do not submit again automatically. Model/runtime changes invalidate affected capability evidence. Use one bounded repair attempt by default; propose a new budget before further costly regeneration unless already authorized.
 
 Validate collected bytes and observed hashes before QA acceptance. Run metadata checks and inspect actual frames/audio where available. Use `NOT_RUN` for unperformed checks and `PARTIAL` when the evidence is incomplete. Generation acceptance and editorial acceptance are separate. A contact sheet or ffprobe result cannot prove physics, identity, emotion or lip-sync.
+
+Production quality is a separate evidence contract. Use `vge_quality.py` for category-separated observations, the 14-dimension continuity scorecard, adjacent-shot transition acceptance, re-anchor decisions, first/last-frame capability probes, dialogue/audio/contact contracts, adapter differentials and bounded repair plans. Use `vge_media.py media-qa` only for deterministic byte/metadata/decode heuristics. A `PASS` is valid only when its oracle, exact artifact hash and limitations are present; otherwise retain `NOT_OBSERVED`, `UNKNOWN`, `NOT_RUN`, `PARTIAL` or `BLOCKED`.
 
 ## Deliver
 

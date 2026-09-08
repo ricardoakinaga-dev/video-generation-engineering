@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "evidence-h3-r2v-local-20260908",
+  "kind": "CAPABILITY_PROBE",
+  "status": "PARTIAL",
+  "claim": "Measure exact local H3 REF2VA reference-conditioning execution; do not infer semantic identity from node presence.",
+  "runtime": {"provider": "local_comfyui", "endpoint": "http://127.0.0.1:8188", "version": "0.34.0", "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674"},
+  "model": {"id": "minimax_h3_ref2va_pruned_w4a8_mixed.safetensors", "asset_hash": "sha256:de2c6c29c4ee702b45e48e40daae3834aeee58ab681c732d9152589a87c89910"},
+  "workflow": {"ref": "assets/workflows/h3-r2v-probe-api.json", "content_hash": "sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6", "fingerprint": "sha256:1b455641a3d4c9e11b91cc1a92517d68fb7ced70c63b39f24367609429e9f9b1"},
+  "inputs": ["reference_subjects", "reference_environment"],
+  "queue_id": "2d3020f1-94b2-4aee-b550-1f5379911862",
+  "attempt_ref": "verification/h3-r2v-collected-r2/attempt_73b821eb456d4d48986a901c469a5c75-completed-r4.json",
+  "probe_plan_ref": "verification/h3-r2v-probe-plan.json",
+  "runtime_context_ref": "verification/h3-r2v-probe-runtime.json",
+  "completed_at": "2026-09-08T18:39:00-03:00",
+  "artifact_ref": "verification/h3-r2v-collected-r2/art_c7a1437df976419b98c5f73a41234c2d.mp4",
+  "artifact_hash": "sha256:973c979e1e0c0bc49d9ef30a3b1a4ee10821891d85fe6bcf151dcc92b210e598",
+  "feature_status": {"reference_conditioning": "PARTIAL", "native_audio_generation": "UNKNOWN", "identity_retention": "FAIL", "workflow_execution": "PASS"},
+  "limitations": ["One capability probe is not production acceptance", "Reference identity, motion, object state and media quality require artifact inspection after collection", "No second model or external provider was used"],
+  "next_action": "Keep the feature PARTIAL/UNPROVEN for the declared composite target; use a revised workflow/profile if identity and environment retention are required."
+}

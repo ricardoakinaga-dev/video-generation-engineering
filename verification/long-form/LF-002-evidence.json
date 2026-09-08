@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "id": "LF-002-evidence",
+  "case_id": "LF-002",
+  "status": "BLOCKED",
+  "production_evidence_complete": false,
+  "available_records": [],
+  "required_records": ["LF-001", "dialogue_semantics", "voice", "performance", "lip_sync", "mix", "audio_timeline"],
+  "blockers": ["No dialogue-capable generated artifact or line-level audio/face evidence is available in the authorized scope."],
+  "next_action": "Use a separately confirmed dialogue profile and collect every dialogue channel independently."
+}
