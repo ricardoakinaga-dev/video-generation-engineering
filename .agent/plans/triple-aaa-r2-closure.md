@@ -20,6 +20,7 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [x] (2026-09-08T20:34:56-03:00) Recovery: reconciled `state.json` with the blocked R2 backlog item and recorded the canonical recovery event; the fresh critic remains the explicit next action.
 - [x] (2026-09-08T20:59:18-03:00) Found and closed a concrete runtime gap: current ComfyUI `COMFY_DYNAMICCOMBO_V3` schemas require flat dotted child inputs; both bundled H3 workflows and the package validator now honor that contract, with live preflight and explicit profile expiration evidence.
 - [x] (2026-09-08T21:15:00-03:00) Closed the three highest-impact local audit gaps: twelve-dimensional semantic observations, granular media QA, and strict assembly/editorial contracts with regression coverage.
+- [ ] (2026-09-08T21:32:26-03:00) R10 blocked operationally: `Ohm` remained running through the bounded wait window and shut down without returning the required criterion-level matrix or verdict; the lead-owned Git tree sentinel matched.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -62,8 +63,8 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 
 - Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 127-test regression, package, portability and documentation checks pass within scope.
 - Preserved limits: LF-001/002/003 remain `BLOCKED`, LF-004 remains `NOT_RUN`, and semantic audiovisual, dialogue/lip-sync, FLF, second-adapter and real-repair claims remain unproven.
-- Fresh-review outcome: `verification/triple-aaa-independent-critic-r6.md` records three operationally stopped fresh attempts. No reviewer verdict, reviewer-owned pre/post fingerprint or mutation sentinel was available, so R2-22 remains open.
-- Smallest next action: run one completed fresh read-only critic against the current candidate; the dynamic-combo, semantic-QA, media-QA and assembly corrections invalidated the earlier R6–R9 review attempts, so the new review must own a new fingerprint and mutation sentinel.
+- Fresh-review outcome: R10 also ended operationally without a criterion-level response; `verification/triple-aaa-independent-critic-r10.md` records the stable committed tree and the incomplete review. No completed reviewer verdict or reviewer-owned pre/post fingerprint is available, so R2-22 remains open.
+- Smallest next action: run one completed fresh read-only critic against the current candidate; R10 also returned no matrix, so the reviewer must own a new fingerprint and mutation sentinel and return a terminal criterion-level verdict.
 
 ## Context and Orientation
 
@@ -120,11 +121,11 @@ Execute phases A–M in order: baseline; P0 defects; LF-001; dialogue/lip-sync/a
 
 From /home/ricardo/Área de trabalho/video-generation-engineering:
 
-1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] Run one bounded sealed read-only independent critic against the frozen candidate's bar, public entry points and current evidence, with a reviewer-owned fingerprint and mutation sentinel; do not edit product or control-plane files during the review.
+1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] Run one bounded sealed read-only independent critic against the frozen candidate's bar, public entry points and current evidence, with a reviewer-owned fingerprint and mutation sentinel; do not edit product or control-plane files during the review. R10 was operationally incomplete and does not satisfy this step.
 2. [x] [VGE-TRIPLE-AAA-R2:IMPLEMENT-CLOSURE] Implement the smallest missing R2 contract/fixture/test and canonical documentation updates; preserve existing R1 behavior and evidence.
 3. [x] Run focused contract tests, full unittest, compile/Skill/docs/package checks and update verification ledgers with current evidence.
 4. [x] Perform a self-review against every R2 criterion and resolve material defects without weakening the bar.
-5. [blocked] Prior fresh critic attempts, including R7 and R8, exceeded the operational wait window without a verdict; both sentinels matched, but this remains blocker evidence until step 1 completes.
+5. [blocked] Prior fresh critic attempts, including R7, R8 and R10, exceeded the operational wait window without a verdict; the lead-owned sentinels matched, but this remains blocker evidence until step 1 completes.
 6. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; the package and documentation audit are current.
 
 ## Validation and Acceptance
@@ -135,7 +136,7 @@ From /home/ricardo/Área de trabalho/video-generation-engineering:
 | R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r18.json |
 | R2-17/R2-23 | YES | current local runtime where safe, docs/package/CWD checks | actual scope is recorded; portable ZIP is fresh and clean | verification/, dist/ |
 | R2-19/R2-20/R2-25 | YES | docs/link audit, report/matrix inspection | required sections, scores, statuses and non-claims are present | docs/triple-aaa-final-report.md, docs/capability-matrix-r1.md |
-| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r6.md |
+| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r10.md |
 
 ## Risks and Human Decisions
 
@@ -162,5 +163,7 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - verification/triple-aaa-independent-critic-r6.md: fresh read-only critic and mutation sentinel.
 - verification/triple-aaa-independent-critic-r7.md: fresh read-only R7 attempt; mutation-clean operational blocker.
 - verification/triple-aaa-independent-critic-r8.md: fresh read-only R8 attempt; mutation-clean operational blocker.
+- verification/triple-aaa-independent-critic-r9.md: fresh read-only R9 audit of the pre-hardening snapshot; historical and not current acceptance.
+- verification/triple-aaa-independent-critic-r10.md: fresh read-only R10 attempt against d4a3d1e; operationally incomplete with a stable lead-owned sentinel.
 
-Plan revision note, 2026-09-08T21:23:04-03:00: R8 and the subsequent R9 audit were historical for earlier candidate snapshots; the reviewer attempts were incomplete or observed a dirty worktree. Subsequent dynamic-combo, semantic-QA, media-QA and assembly corrections changed the candidate and invalidated R6–R9 for current acceptance. The current preflight, profile expiration and 127-test verification are recorded, but no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.
+Plan revision note, 2026-09-08T21:32:26-03:00: R8 and R9 were historical for earlier candidate snapshots, and R10 shut down without a criterion-level response despite a stable current tree. The reviewer attempts are incomplete and cannot satisfy R2-22. The current preflight, profile expiration and 127-test verification are recorded, but no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.

@@ -108,6 +108,7 @@
         "verification/triple-aaa-independent-critic-r7.md",
         "verification/triple-aaa-independent-critic-r8.md",
         "verification/triple-aaa-independent-critic-r9.md",
+        "verification/triple-aaa-independent-critic-r10.md",
         "dist/video-generation-engineering-triple-aaa-r2.zip"
       ],
       "next_action": {

@@ -155,7 +155,7 @@ The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only fo
 
 ## Independent Critic
 
-The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md), [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md) and [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md). R7, R8 and R9 were mutation-clean for their respective snapshots, but each reviewer remained operationally incomplete or returned no current criterion-level acceptance; R9 also observed a dirty worktree after the latest corrections. The candidate subsequently received material runtime-validator, semantic-QA, media-QA and assembly corrections, so R6–R9 cannot govern the current candidate. This is an explicit R2-22 blocker, not a PASS. A current reviewer must inspect the clean committed scope and return its own criterion results before any Triple-AAA promotion.
+The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md), [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md), [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md) and [`triple-aaa-independent-critic-r10.md`](../verification/triple-aaa-independent-critic-r10.md). R7, R8 and R9 were mutation-clean for their respective snapshots, but each reviewer remained operationally incomplete or returned no current criterion-level acceptance; R9 also observed a dirty worktree after the latest corrections, and R10 shut down without returning a matrix or verdict despite a stable current tree. The candidate subsequently received material runtime-validator, semantic-QA, media-QA and assembly corrections, so R6–R10 cannot govern the current candidate. This is an explicit R2-22 blocker, not a PASS. A current reviewer must inspect the clean committed scope and return its own criterion results before any Triple-AAA promotion.
 
 ## Remaining Blockers
 
@@ -163,7 +163,7 @@ The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.m
 2. Execute and accept LF-002 with speaker/listener semantics, voice, performance, lip-sync, causal audio and assembly/listening review.
 3. Execute and accept LF-003 with recurring identity/wardrobe/object/environment/camera/audio continuity, repair and human editorial checkpoint.
 4. Run a real FLF probe and a second independent adapter/model differential, or preserve the capabilities as blocked.
-5. Obtain a completed fresh independent critic with reviewer-owned pre/post fingerprints and a passing mutation sentinel; R6–R9 are historical/incomplete and are not acceptance evidence.
+5. Obtain a completed fresh independent critic with reviewer-owned pre/post fingerprints and a passing mutation sentinel; R6–R10 are historical/incomplete and are not acceptance evidence.
 
 ## Scores
 
