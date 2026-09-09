@@ -213,17 +213,20 @@
         "verification/triple-aaa-independent-critic-r5.md",
         "verification/candidate-fingerprint-r5-final.json",
         "verification/comfyui-r4-live-state-20260909.json",
+        "verification/triple-aaa-independent-critic-r6.md",
+        "verification/candidate-fingerprint-r6-final.json",
     "verification/software-triple-aaa-r33.json",
     "verification/docs-current-r29.json",
+    "verification/distribution-triple-aaa-r8.json",
     "verification/distribution-triple-aaa-r7.json",
     ".agents/skills/video-generation-engineering/scripts/vge_quality.py"
       ],
       "next_action": {
-        "id": "VGE-TRIPLE-AAA-R4:R6-FRESH-CRITIC",
+        "id": "VGE-TRIPLE-AAA-R4:R6-COMMIT-PUSH",
         "kind": "VERIFY",
-        "summary": "Obtain a fresh non-inherited R6 critic after the live runtime evidence change",
-        "target": "Current R4 source/docs, live ComfyUI snapshot, R5 historical review and the new candidate fingerprint",
-        "completion_signal": "Reviewer returns a complete P0-P9 matrix with reviewer-owned before/after fingerprint and unchanged mutation sentinel; production claims remain bounded"
+        "summary": "Commit and push the post-R6 critic/distribution packet, then verify the remote tip",
+        "target": "Current R4 source/docs, live ComfyUI snapshot, R6 critic/fingerprint, R8 distribution and origin main",
+        "completion_signal": "Local final commit exists, origin/main matches it, worktree is clean, and R6 REJECT plus production blockers remain explicit"
       }
     }
   ]

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "candidate-fingerprint-r6-final",
+  "status": "FROZEN_AFTER_CRITIC",
+  "observed_at": "2026-09-09T22:22:50Z",
+  "manifest_sha256": "sha256:45b36a0027aaf28aab7d10e6bf8bb8de90dba3f9876e5917e89eb4470719f7cd",
+  "files": 405,
+  "reviewer_id": "R6-FRESH-INDEPENDENT-CRITIC-20260909-FRANKLIN",
+  "review_fingerprint_before": "sha256:45b36a0027aaf28aab7d10e6bf8bb8de90dba3f9876e5917e89eb4470719f7cd",
+  "review_fingerprint_after": "sha256:45b36a0027aaf28aab7d10e6bf8bb8de90dba3f9876e5917e89eb4470719f7cd",
+  "mutation_sentinel_path": ".gauntlet/bar.json",
+  "mutation_sentinel_before": "sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80",
+  "mutation_sentinel_after": "sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80",
+  "mutation_result": "PASS_UNCHANGED",
+  "excluded_post_critic_records": [
+    "verification/triple-aaa-independent-critic-r6.md",
+    "verification/candidate-fingerprint-r6-final.json",
+    "verification/distribution-triple-aaa-r8.json",
+    "dist/*.zip"
+  ]
+}

@@ -1,6 +1,6 @@
 # Triple-AAA Closure R4 — master prompt production closure
 
-<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:R6-FRESH-CRITIC -->
+<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:R6-COMMIT-PUSH -->
 
 ## Purpose
 
@@ -31,7 +31,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 
 ## Concrete Steps
 
-1. [VGE-TRIPLE-AAA-R4:R6-FRESH-CRITIC] — obtain a fresh non-inherited review after the live ComfyUI/runtime snapshot changed the candidate; preserve the existing `REJECT` production boundary. **IN PROGRESS.**
+1. [VGE-TRIPLE-AAA-R4:R6-COMMIT-PUSH] — commit and push the post-R6 critic/distribution packet, then verify the remote tip; preserve the R6 `REJECT` production boundary. **IN PROGRESS.**
 
 2. [VGE-TRIPLE-AAA-R4:FRESH-CRITIC] — obtain a fresh non-inherited read-only review of the post-cross-shot-gate candidate, with reviewer-owned fingerprint and mutation sentinel; preserve the current PARTIAL production boundary. **COMPLETE with R5 `REJECT`, matching fingerprint and unchanged sentinel.**
 
@@ -43,7 +43,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 
 6. Attempt only evidence-authorized repair/re-anchor, FLF and later ladders; preserve every failure and stop on resource/capability blockers. **COMPLETE as a disposition: repair is awaiting authorization; FLF/LF-002/LF-003/second adapter remain NOT_RUN/BLOCKED.**
 
-7. Update the R4 matrix, scorecard and final closure report, obtain the fresh critic, freeze distribution, commit and push. **R5 critic, post-critic R7 distribution and final remote handoff are complete.**
+7. Update the R4 matrix, scorecard and final closure report, obtain the fresh critic, freeze distribution, commit and push. **R6 critic and post-R6 R8 distribution are complete; final remote handoff is pending.**
 
 ## Execution order
 
@@ -55,7 +55,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 - [x] Attempt only evidence-authorized repair/re-anchor, FLF and later ladders; do not fabricate a failure to demonstrate repair.
 - [x] Update R4 matrix, scorecard and closure report with exact status and unsupported claims.
 - [x] Run fresh final critic with before/after fingerprint and mutation sentinel.
-- [x] Build final distribution and rerun the release gate after the critic.
+- [x] Build final R8 distribution and rerun the release gate after the R6 critic.
 - [ ] Commit, push and verify the remote tip.
 
 ## Recovery rules
@@ -72,7 +72,7 @@ The repository contains the saved prompt, R4 frozen bar, updated Skill/docs/test
 
 ## Final handoff
 
-The prior R4 closure packet was committed and pushed to the configured `origin/main`. A subsequent evidence audit found that transition acceptance lacked an explicit cross-shot comparison gate, so the package was reopened for a bounded contract hardening pass. R5 now supplies the fresh post-hardening critic (`REJECT`) with a matching fingerprint/sentinel; the final post-critic packet is ready for the next commit/push.
+The prior R4 closure packet was committed and pushed to the configured `origin/main`. A subsequent evidence audit found that transition acceptance lacked an explicit cross-shot comparison gate, then a live runtime snapshot was added after R5. R6 now supplies the fresh post-snapshot critic (`REJECT`) with a matching fingerprint/sentinel; R8 is frozen locally and the final post-R6 packet is ready for commit/push.
 
 ## Post-critic hardening continuation — 2026-09-09
 
@@ -80,9 +80,9 @@ The prior R4 closure packet was committed and pushed to the configured `origin/m
 - [x] Make `validate_transition_contract` fail closed when the comparison is missing, and keep `NOT_OBSERVED` comparisons below acceptance.
 - [x] Reconcile R4 T01/T02 evidence and documentation; T01 is now `PARTIAL`, T02 remains `FAIL`.
 - [x] Re-run focused/full tests, compileall, offline verification and current documentation audit.
-- [x] Rebuild the portable package as R7; obtain a new fresh non-inherited critic before final remote handoff.
+- [x] Rebuild the portable package as R8 after R6; obtain the fresh non-inherited R6 critic before final remote handoff.
 
-Current action: `VGE-TRIPLE-AAA-R4:R6-FRESH-CRITIC`. The audiovisual verdict remains `PARTIAL`; the live runtime snapshot strengthens P0 evidence but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
+Current action: `VGE-TRIPLE-AAA-R4:R6-COMMIT-PUSH`. The audiovisual verdict remains `PARTIAL`; the live runtime snapshot strengthens P0 evidence but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
 
 ## Purpose / Big Picture
 
@@ -96,7 +96,9 @@ Close the supplied R4 master prompt against the brownfield Skill while preservin
 - [x] (2026-09-09T22:09:00Z) Committed and pushed the final packet; the follow-up remote comparison is recorded below.
 - [x] (2026-09-09T22:12:28Z) Verified local `HEAD` and `origin/main` at `889b32e732573708fcc68d5eeac9985874a103aa`; worktree clean.
 - [x] (2026-09-09T22:14:29Z) Captured a read-only live ComfyUI/server/device/queue/workflow snapshot; no queue mutation or POST occurred.
-- [ ] (2026-09-09T22:16:20Z) Complete the fresh R6 critic and freeze a post-R6 distribution.
+- [x] (2026-09-09T22:22:50Z) Completed the fresh R6 critic: `REJECT`, 405-file fingerprint matched before/after, sentinel unchanged.
+- [x] (2026-09-09T22:23:58Z) Rebuilt R8 after R6; 143 tests, compile/Skill validation, CRC, manifest, scans and external-CWD smoke pass.
+- [ ] (2026-09-09T22:24:00Z) Commit/push the post-R6 packet and verify the remote tip.
 
 ## Surprises & Discoveries
 
@@ -136,15 +138,15 @@ Complete.
 
 ### M3 — Fresh critic and final remote handoff
 
-R5 critic and remote handoff are historical; the new live runtime evidence requires R6 fresh review before the next distribution freeze.
+R6 critic and R8 distribution are complete; the final remote handoff is pending and production remains `PARTIAL`.
 
 ## Plan of Work
 
-Review the live runtime evidence with a fresh critic, then preserve `READY_WITH_RISKS`/`PARTIAL` and the prior critic's `REJECT` unless stronger evidence changes that boundary.
+Commit/push the R6 packet and verify `origin/main`; preserve `READY_WITH_RISKS`/`PARTIAL` and the R6 critic's `REJECT` for audiovisual promotion.
 
 ## Validation and Acceptance
 
-Acceptance requires 143 tests, compileall, Skill/package validation, current docs audit, R7 distribution CRC/path/security scan, and a fresh non-inherited critic. Triple-AAA production additionally requires accepted LF-001/LF-002/LF-003, repair, FLF, second adapter and semantic/editorial evidence; those remain unmet.
+Acceptance requires 143 tests, compileall, Skill/package validation, current docs audit, R8 distribution CRC/path/security scan, and the fresh R6 non-inherited critic. Triple-AAA production additionally requires accepted LF-001/LF-002/LF-003, repair, FLF, second adapter and semantic/editorial evidence; those remain unmet.
 
 ## Risks and Human Decisions
 
@@ -156,4 +158,4 @@ Critic execution is read-only and may be repeated only against a newly fingerpri
 
 ## Artifacts and Evidence
 
-Current evidence: `verification/software-triple-aaa-r33.json`, `verification/docs-current-r29.json`, `verification/comfyui-r4-live-state-20260909.json`, `verification/distribution-triple-aaa-r7.json`, `verification/candidate-fingerprint-r5-final.json`, `verification/triple-aaa-independent-critic-r5.md`, `verification/long-form/LF-001-T01-r4-transition.json` and `verification/long-form/LF-001-T02-r4-transition.json`.
+Current evidence: `verification/software-triple-aaa-r33.json`, `verification/docs-current-r29.json`, `verification/comfyui-r4-live-state-20260909.json`, `verification/distribution-triple-aaa-r8.json`, `verification/candidate-fingerprint-r6-final.json`, `verification/triple-aaa-independent-critic-r6.md`, `verification/long-form/LF-001-T01-r4-transition.json` and `verification/long-form/LF-001-T02-r4-transition.json`.
