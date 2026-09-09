@@ -21,6 +21,8 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [x] (2026-09-08T20:59:18-03:00) Found and closed a concrete runtime gap: current ComfyUI `COMFY_DYNAMICCOMBO_V3` schemas require flat dotted child inputs; both bundled H3 workflows and the package validator now honor that contract, with live preflight and explicit profile expiration evidence.
 - [x] (2026-09-08T21:15:00-03:00) Closed the three highest-impact local audit gaps: twelve-dimensional semantic observations, granular media QA, and strict assembly/editorial contracts with regression coverage.
 - [ ] (2026-09-08T21:32:26-03:00) R10 blocked operationally: `Ohm` remained running through the bounded wait window and shut down without returning the required criterion-level matrix or verdict; the lead-owned Git tree sentinel matched.
+- [ ] (2026-09-08T22:09:56-03:00) R11 blocked operationally: `Jason` remained running through the bounded waits and shut down without returning the required criterion-level matrix or verdict; the lead-owned product tree remained clean and unchanged.
+- [x] (2026-09-08T22:14:42-03:00) Post-R11 documentation recheck passed: 46 documents, 50 YAML blocks, 465 local links, 80 requirements, no link/YAML/traceability errors; this does not change the independent-review or audiovisual-production blockers.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -61,10 +63,10 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 
 ## Outcomes & Retrospective
 
-- Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 127-test regression, package, portability and documentation checks pass within scope.
+- Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 133-test regression, package, portability and documentation checks pass within scope.
 - Preserved limits: LF-001/002/003 remain `BLOCKED`, LF-004 remains `NOT_RUN`, and semantic audiovisual, dialogue/lip-sync, FLF, second-adapter and real-repair claims remain unproven.
-- Fresh-review outcome: R10 also ended operationally without a criterion-level response; `verification/triple-aaa-independent-critic-r10.md` records the stable committed tree and the incomplete review. No completed reviewer verdict or reviewer-owned pre/post fingerprint is available, so R2-22 remains open.
-- Smallest next action: run one completed fresh read-only critic against the current candidate; R10 also returned no matrix, so the reviewer must own a new fingerprint and mutation sentinel and return a terminal criterion-level verdict.
+- Fresh-review outcome: R10 and R11 ended operationally without a criterion-level response; `verification/triple-aaa-independent-critic-r10.md` and `verification/triple-aaa-independent-critic-r11.md` record the stable committed trees and incomplete reviews. No completed reviewer verdict or reviewer-owned pre/post fingerprint is available, so R2-22 remains open.
+- Smallest next action: run one completed fresh read-only critic against the current candidate; R11 also returned no matrix, so the reviewer must own a new fingerprint and mutation sentinel and return a terminal criterion-level verdict.
 
 ## Context and Orientation
 
@@ -133,7 +135,7 @@ From /home/ricardo/Área de trabalho/video-generation-engineering:
 | Criterion | Required | Procedure/environment | Expected observation | Evidence destination |
 | --- | --- | --- | --- | --- |
 | R2-01/R2-24/R2-26 | YES | SHA-256/cmp, control-plane JSON and phase review | prompt/bar/history are traceable and safe | .agent/*, docs/triple-aaa-quality-bar-r2.json |
-| R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r18.json |
+| R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r20.json |
 | R2-17/R2-23 | YES | current local runtime where safe, docs/package/CWD checks | actual scope is recorded; portable ZIP is fresh and clean | verification/, dist/ |
 | R2-19/R2-20/R2-25 | YES | docs/link audit, report/matrix inspection | required sections, scores, statuses and non-claims are present | docs/triple-aaa-final-report.md, docs/capability-matrix-r1.md |
 | R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r10.md |
@@ -157,7 +159,7 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - docs/triple-aaa-quality-bar-r2.json: frozen R2 acceptance criteria and verdict policy.
 - verification/long-form/LF-001.json through LF-004.json: ladder status envelopes; blocked/not-run statuses are evidence of absence, not production PASS.
 - docs/triple-aaa-final-report.md: canonical final accounting and claims boundary.
-- verification/software-triple-aaa-r18.json: integrated offline software evidence after the dynamic-combo, semantic-QA, media-QA and assembly corrections.
+- verification/software-triple-aaa-r20.json: current offline software evidence after the routing, metamorphic and repair-gate corrections.
 - verification/comfyui-preflight-r2.json: current local live graph/schema preflight without generation.
 - verification/comfyui-profile-revalidation-r2.json: explicit expiration of the prior confirmed profile after workflow identity changed.
 - verification/triple-aaa-independent-critic-r6.md: fresh read-only critic and mutation sentinel.
@@ -165,5 +167,6 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - verification/triple-aaa-independent-critic-r8.md: fresh read-only R8 attempt; mutation-clean operational blocker.
 - verification/triple-aaa-independent-critic-r9.md: fresh read-only R9 audit of the pre-hardening snapshot; historical and not current acceptance.
 - verification/triple-aaa-independent-critic-r10.md: fresh read-only R10 attempt against d4a3d1e; operationally incomplete with a stable lead-owned sentinel.
+- verification/triple-aaa-independent-critic-r11.md: fresh read-only R11 attempt against c8c2f5f; operationally incomplete with a stable lead-owned product sentinel.
 
-Plan revision note, 2026-09-08T21:32:26-03:00: R8 and R9 were historical for earlier candidate snapshots, and R10 shut down without a criterion-level response despite a stable current tree. The reviewer attempts are incomplete and cannot satisfy R2-22. The current preflight, profile expiration and 127-test verification are recorded, but no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.
+Plan revision note, 2026-09-08T22:09:56-03:00: R8 and R9 were historical for earlier candidate snapshots, and R10 and R11 shut down without a criterion-level response despite stable product trees. The reviewer attempts are incomplete and cannot satisfy R2-22. The current preflight, profile expiration and 133-test verification are recorded, but no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.

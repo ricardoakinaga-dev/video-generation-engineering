@@ -23,13 +23,13 @@
     "docs/triple-aaa-quality-bar-r2.json"
   ],
   "last_gate_record": null,
-  "last_event_id": "EVT-VGE-AAA-R2-CORRECTION-DOCS-02",
-  "state_revision": 36,
+  "last_event_id": "EVT-VGE-AAA-R2-CORRECTION-DOCS-03",
+  "state_revision": 38,
   "next_gate": "VERIFIED",
   "active_action_id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC",
-  "blocked_by": ["R10 fresh reviewer shut down after the bounded wait without returning criterion-level results; no current reviewer acceptance exists"],
+  "blocked_by": ["R11 fresh reviewer shut down after bounded waits without returning criterion-level results; no current reviewer acceptance exists"],
   "human_approval_required": [],
-  "updated_at": "2026-09-08T21:35:01-03:00",
+  "updated_at": "2026-09-08T22:14:42-03:00",
   "remaining_capability_limits": [
     "Full audiovisual production acceptance",
     "Paid provider and external transfer authority",

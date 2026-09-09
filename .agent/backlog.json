@@ -101,6 +101,7 @@
         "docs/triple-aaa-quality-bar-r2.json",
         ".agent/plans/triple-aaa-r2-closure.md",
         "verification/software-triple-aaa-r18.json",
+        "verification/software-triple-aaa-r20.json",
         "verification/distribution-triple-aaa-r2.json",
         "verification/comfyui-preflight-r2.json",
         "verification/comfyui-profile-revalidation-r2.json",
@@ -109,6 +110,7 @@
         "verification/triple-aaa-independent-critic-r8.md",
         "verification/triple-aaa-independent-critic-r9.md",
         "verification/triple-aaa-independent-critic-r10.md",
+        "verification/triple-aaa-independent-critic-r11.md",
         "dist/video-generation-engineering-triple-aaa-r2.zip"
       ],
       "next_action": {
