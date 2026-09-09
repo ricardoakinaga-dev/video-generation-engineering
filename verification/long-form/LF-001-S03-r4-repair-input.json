@@ -1,0 +1,104 @@
+{
+  "plan": {
+    "schema_version": 1,
+    "id": "LF-001-r4-plan",
+    "case_id": "LF-001",
+    "target_duration_s": 15.0,
+    "duration_envelope": {
+      "generated_segment_duration_s": 5.166666666666667,
+      "planned_trimmed_duration_s": 5.0,
+      "assembly_duration_s": 15.0,
+      "trim_policy": "Trim each 124-frame source at 24fps to 120 frames before concatenation; retain source artifacts and hash every derived segment."
+    },
+    "scene_bible": {
+      "scene_id": "LF001-VEHICLE-ENTRY",
+      "subject": "one adult man with short black hair, rectangular glasses, a light mustache and goatee, dark charcoal shirt",
+      "vehicle": "one parked matte graphite compact hatchback",
+      "location": "wet residential curb",
+      "weather_lighting": "cool overcast light, light rain",
+      "camera": "locked driver-side medium-wide geography",
+      "audio": "native rain/foley/ambience only; no dialogue or music",
+      "continuity_policy": "preserve screen side, vehicle geography, door state and subject wardrobe; use accepted observed end state as each dependent start state"
+    },
+    "shots": [
+      {
+        "id": "LF001-S01",
+        "duration_s": 5.0,
+        "purpose": "approach and stop at the driver handle before contact",
+        "start_state": "subject_outside_screen_left; door_closed; vehicle_stationary",
+        "end_state": "subject_at_driver_handle; door_closed; vehicle_stationary; phase_PRE_CONTACT"
+      },
+      {
+        "id": "LF001-S02",
+        "duration_s": 5.0,
+        "purpose": "make handle contact, open the door and transfer the torso into the seat",
+        "start_state": "subject_at_driver_handle; door_closed; vehicle_stationary; phase_PRE_CONTACT",
+        "end_state": "subject_torso_entering; door_open; vehicle_stationary; phase_ENTRY"
+      },
+      {
+        "id": "LF001-S03",
+        "duration_s": 5.0,
+        "purpose": "settle into the driver seat and close the door",
+        "start_state": "subject_torso_entering; door_open; vehicle_stationary; phase_ENTRY",
+        "end_state": "subject_seated; door_closed; vehicle_stationary; phase_RESULT"
+      }
+    ],
+    "contact_phase_contract": [
+      "APPROACH",
+      "PRE_CONTACT",
+      "CONTACT",
+      "FORCE_OR_ARTICULATION",
+      "TRANSFER_OR_MOTION",
+      "RELEASE",
+      "RESULT"
+    ],
+    "transition_contract": {
+      "T01": {
+        "from": "LF001-S01",
+        "to": "LF001-S02",
+        "handoff": "PRE_CONTACT to CONTACT"
+      },
+      "T02": {
+        "from": "LF001-S02",
+        "to": "LF001-S03",
+        "handoff": "ENTRY to RESULT"
+      }
+    },
+    "resource_policy": {
+      "device_id": "cuda:1",
+      "min_free_vram_bytes": 2500000000,
+      "safety_margin": 1.2,
+      "pre_post_guard": "A fresh system_stats observation is required immediately before every POST; no blind retry after UNKNOWN."
+    },
+    "quality_policy": {
+      "semantic_oracle": "Human review of exact contact sheets plus mechanical media QA",
+      "continuity_oracle": "Human sampled-frame review; audio remains mechanical unless listening evidence is separately collected",
+      "promotion": "Do not promote LF-001 without S01/S02/S03 acceptance, both transitions, explicit trim/assembly evidence and truthful repair/re-anchor disposition."
+    }
+  },
+  "changed_shot_ids": [
+    "LF001-S03"
+  ],
+  "findings": [
+    {
+      "id": "F-LF001-S03-ARTIFACT",
+      "shot_id": "LF001-S03",
+      "repair_owner": "cinematography",
+      "reason": "Visible colored elongated artifacts in sampled S03 frames prevent full semantic/continuity acceptance."
+    },
+    {
+      "id": "F-LF001-S03-BOUNDARY",
+      "shot_id": "LF001-S03",
+      "repair_owner": "continuity",
+      "reason": "Re-anchor S03 at the accepted S02 entry state and revalidate the terminal state before promotion."
+    }
+  ],
+  "budget": {
+    "max_regenerations": 1,
+    "max_attempts": 1,
+    "max_runtime_s": 600,
+    "max_cost_usd": 0,
+    "human_review_threshold": 1,
+    "authorized": false
+  }
+}

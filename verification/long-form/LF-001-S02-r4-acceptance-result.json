@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "accepted": true,
+  "artifact_id": "art_c1c52b6492b04dc1847edbe3d028bab7",
+  "limitations": [
+    "Sampled-frame evidence supports the declared S02 endpoint but does not prove dense temporal behavior or cross-shot identity.",
+    "S03 settlement and the S02→S03 transition remain unobserved.",
+    "The graph is T2V without reference-image conditioning."
+  ]
+}

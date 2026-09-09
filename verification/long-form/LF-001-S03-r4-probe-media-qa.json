@@ -1,0 +1,459 @@
+{
+  "schema_version": 1,
+  "kind": "MEDIA_QA",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+  "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+  "observed_at": "2026-09-09T20:53:29.868850+00:00",
+  "procedure": "SHA-256, ffprobe and bounded ffmpeg decode heuristics",
+  "checks": [
+    {
+      "id": "artifact_hash",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Are the exact artifact bytes bound by SHA-256?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": {
+            "sha256": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167"
+          }
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "file_readable",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Can the media file be read and parsed?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "ffprobe parsed the artifact"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "metadata_integrity",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Does the artifact expose one positive-duration video stream with dimensions and FPS?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "ffprobe stream/format metadata"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "duration",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Does the artifact duration satisfy the declared contract?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": {
+            "observed_s": 5.167,
+            "expected_s": 5.166666666666667
+          }
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "fps",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Does the artifact FPS satisfy the declared contract?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": {
+            "observed": 24.0,
+            "expected": 24.0
+          }
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "resolution",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Does the artifact resolution satisfy the declared contract?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": {
+            "observed": [
+              384,
+              224
+            ],
+            "expected": [
+              384,
+              224
+            ]
+          }
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "frame_count",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Does the decoded frame count satisfy the declared contract?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": {
+            "observed": 124,
+            "expected": 124
+          }
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "codec",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Does the video codec satisfy the declared contract?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": {
+            "observed": "h264",
+            "expected": null
+          }
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "container",
+      "category": "metadata",
+      "result": "PASS",
+      "oracle": {
+        "kind": "METADATA",
+        "question": "Does the container satisfy the declared contract?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": {
+            "observed": "mov,mp4,m4a,3gp,3g2,mj2",
+            "expected": null
+          }
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "audio_stream",
+      "category": "audio",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Is the declared audio stream present?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "ffprobe audio stream metadata"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "audio_duration",
+      "category": "audio",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Does the audio stream expose a positive duration?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": {
+            "observed_s": 5.167
+          }
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "audio_video_alignment",
+      "category": "audio",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Do declared audio and container durations align within one frame?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "ffprobe audio/video duration comparison"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "av_duration_mismatch",
+      "category": "audio",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Do audio and video durations align within one frame?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "ffprobe audio/video duration comparison"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "decode_integrity",
+      "category": "temporal",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Can bounded ffmpeg decoding traverse the video?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "ffmpeg null decode"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "black_content",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Does the artifact avoid unintended black intervals?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "blackdetect output"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "black_frames",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Does the artifact avoid unintended black frames?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "blackdetect output"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "frozen_content",
+      "category": "temporal",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Does the artifact avoid unintended frozen intervals?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "freezedetect output"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    },
+    {
+      "id": "freeze_frames",
+      "category": "temporal",
+      "result": "PASS",
+      "oracle": {
+        "kind": "ALGORITHMIC",
+        "question": "Does the artifact avoid unintended freeze frames?",
+        "version": "ffmpeg-local"
+      },
+      "confidence": "HIGH",
+      "evidence": [
+        {
+          "type": "MEDIA_BYTES",
+          "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+          "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+          "details": "freezedetect output"
+        }
+      ],
+      "limitations": [
+        "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+        "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+      ]
+    }
+  ],
+  "frame_count": 124,
+  "status": "PASS",
+  "accepted": true,
+  "limitations": [
+    "Mechanical media QA cannot establish identity, emotion, physics, story, continuity or lip-sync",
+    "Black/freeze detection is heuristic and must be interpreted against the declared creative intent"
+  ]
+}

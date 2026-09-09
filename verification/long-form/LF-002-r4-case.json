@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "LF-002",
+  "target_duration_s": 20.0,
+  "intent_ref": "verification/long-form/LF-002-r4-dialogue-contract.json",
+  "plan_ref": "verification/long-form/LF-002.json",
+  "scene_bible_ref": "verification/long-form/LF-002.json",
+  "shot_graph_ref": "verification/long-form/LF-002.json",
+  "continuity_ref": "verification/long-form/LF-002.json",
+  "evidence_ref": "verification/long-form/LF-002-r4-dialogue-contract.json",
+  "shot_ids": ["LF002-S01", "LF002-S02", "LF002-S03"],
+  "audio_timeline_ref": "verification/long-form/LF-002-r4-audio-timeline.json",
+  "dialogue_contract_ref": "verification/long-form/LF-002-r4-dialogue-contract.json",
+  "status": "BLOCKED",
+  "production_evidence_complete": false,
+  "blockers": [
+    "No current profile confirms dialogue, voice, expressive performance or lip-sync",
+    "No line-level voice/audio artifact or listening review",
+    "No accepted dialogue-to-performance causal observation"
+  ],
+  "next_action": "Authorize and probe a dialogue-capable profile, then collect semantics, voice, performance, lip-sync and mix as separate channels."
+}

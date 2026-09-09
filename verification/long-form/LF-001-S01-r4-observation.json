@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "obs_lf001_s01_r4_production",
+  "shot_id": "LF001-S01",
+  "generation_artifact_ref": "art_730e6a3d284b4ce49b24a1dbdbc37a4d",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_730e6a3d284b4ce49b24a1dbdbc37a4d.mp4",
+  "observed_content_hash": "sha256:e10ddb65ec02b177b2247ec9418b8f7382ca546a7da25ef3a7312c160b22c076",
+  "observed_at": "2026-09-09T20:36:00+00:00",
+  "procedure": "Human review of the exact 16-frame contact sheet confirmed the declared sampled S01 endpoint: the adult is at the driver-side handle with the door closed and the vehicle stationary; the record does not claim later contact or entry.",
+  "checks": [
+    {
+      "id": "QG-01",
+      "required": true,
+      "result": "PASS",
+      "category": "visual",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the collected S01 artifact show the declared approach/pre-contact segment and a stable driver-side endpoint in the sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    }
+  ],
+  "status": "PASS",
+  "observed_end_state": {
+    "subject_position": "driver_side_at_handle",
+    "door_state": "closed",
+    "vehicle_state": "stationary",
+    "phase": "PRE_CONTACT"
+  },
+  "limitations": [
+    "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+    "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+    "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+  ],
+  "provenance": {
+    "attempt": {
+      "id": "attempt_e2ba123f3dcc4e618852f26564db0c06",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/attempt_e2ba123f3dcc4e618852f26564db0c06-completed.json",
+      "content_hash": "sha256:d42f098e71b29d756b4f9698e5840d2def7db7957ef446b3f57e0325efc98329"
+    },
+    "shot": {
+      "id": "LF001-S01",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S01-r4-shot.json",
+      "content_hash": "sha256:c05ba3398f2798f763c426e56422b10e5438169a47aab0020a437de6edd92ae9",
+      "contract_hash": "sha256:7cee4f342b96259411e9761712b18db04bb308200fd62a8ec34f45020a5a9c85"
+    },
+    "artifact": {
+      "id": "art_730e6a3d284b4ce49b24a1dbdbc37a4d",
+      "record_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_730e6a3d284b4ce49b24a1dbdbc37a4d.json",
+      "record_content_hash": "sha256:2a52ebacb04aad553704ee5d1630093e416342e6ba172bb741ce2b3cba1b073f",
+      "media_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_730e6a3d284b4ce49b24a1dbdbc37a4d.mp4",
+      "media_content_hash": "sha256:e10ddb65ec02b177b2247ec9418b8f7382ca546a7da25ef3a7312c160b22c076"
+    }
+  },
+  "artifact_id": "art_730e6a3d284b4ce49b24a1dbdbc37a4d",
+  "repair_route": "none_required"
+}

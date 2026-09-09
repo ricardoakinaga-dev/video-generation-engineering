@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "accepted": true,
+  "artifact_id": "art_c1c52b6492b04dc1847edbe3d028bab7",
+  "categories_observed": [
+    "audio",
+    "temporal",
+    "visual"
+  ],
+  "missing_categories": [],
+  "limitations": [
+    "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+    "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+    "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+  ],
+  "semantic_dimensions_observed": [
+    "camera",
+    "dialogue",
+    "environment",
+    "identity",
+    "interaction",
+    "lighting",
+    "lip_sync",
+    "object_retention",
+    "performance",
+    "physics",
+    "temporal_continuity",
+    "wardrobe"
+  ],
+  "missing_semantic_dimensions": []
+}

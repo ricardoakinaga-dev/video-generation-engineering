@@ -10,7 +10,7 @@ from vge_core import (
     route_references, detect_canonical_contradictions, select_negative_constraints,
 )
 from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect
-from vge_media import probe, assemble, contact_sheet, validate_assembly_manifest
+from vge_media import probe, assemble, contact_sheet, trim, validate_assembly_manifest
 from vge_evidence import aggregate, validate_observation
 from vge_provider import hailuo_request, hailuo_submit, hailuo_poll
 from vge_quality import (validate_continuity_scorecard, validate_transition_contract, validate_semantic_observation,
@@ -40,6 +40,7 @@ def main(argv=None):
     p = sub.add_parser("hailuo-poll");p.add_argument("task_id");p.add_argument("--timeout",type=float,default=60);p.add_argument("--output")
     p = sub.add_parser("probe"); p.add_argument("input"); p.add_argument("--output")
     p = sub.add_parser("contact-sheet"); p.add_argument("input"); p.add_argument("image"); p.add_argument("--frames", type=int, default=8)
+    p = sub.add_parser("trim", help="create an explicit derived media trim"); p.add_argument("input"); p.add_argument("output_path"); p.add_argument("--duration", type=float, required=True); p.add_argument("--report")
     p = sub.add_parser("media-qa"); p.add_argument("input"); p.add_argument("--output"); p.add_argument("--audio-required", action="store_true"); p.add_argument("--allow-black", action="store_true"); p.add_argument("--allow-freeze", action="store_true"); p.add_argument("--expected-duration", type=float); p.add_argument("--expected-fps", type=float); p.add_argument("--expected-width", type=int); p.add_argument("--expected-height", type=int); p.add_argument("--expected-frame-count", type=int); p.add_argument("--expected-codec"); p.add_argument("--expected-container")
     for name, help_text in (("scorecard", "continuity scorecard JSON"), ("transition", "adjacent transition JSON"),
                             ("semantic", "category-separated observation JSON"), ("shot-acceptance", "shot acceptance contract JSON"),
@@ -75,7 +76,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         cmd = args.command
-        data = load(args.input) if hasattr(args, "input") and cmd not in ("probe", "contact-sheet", "media-qa") else None
+        data = load(args.input) if hasattr(args, "input") and cmd not in ("probe", "contact-sheet", "media-qa", "trim") else None
         if cmd == "prepare": result = prepare(data)
         elif cmd == "validate": result = validate(data)
         elif cmd == "compile": result = compile_plan(data, load(args.profile) if args.profile else None)
@@ -89,6 +90,9 @@ def main(argv=None):
         elif cmd == "accept": result = validate_observation(data["observation"], data["artifact"], data["attempt"], data["shot"])
         elif cmd == "probe": result = probe(args.input)
         elif cmd == "contact-sheet": result = contact_sheet(args.input, args.image, args.frames)
+        elif cmd == "trim":
+            result = trim(args.input, args.output_path, args.duration)
+            if args.report: save(args.report, result)
         elif cmd == "media-qa":
             expected_resolution = [args.expected_width, args.expected_height] if args.expected_width is not None or args.expected_height is not None else None
             result = __import__("vge_media", fromlist=["media_qa"]).media_qa(

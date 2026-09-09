@@ -192,6 +192,33 @@
         "target": "Current R3 candidate, control-plane accounting and configured origin main",
         "completion_signal": "Local commit exists, origin/main resolves to the pushed commit, and post-push status is clean; no Triple-AAA production proof is claimed"
       }
+    },
+    {
+      "id": "VGE-TRIPLE-AAA-R4",
+      "title": "Implement and close the new master prompt for final Triple-AAA production closure",
+      "stage": "BUILD",
+      "priority": "P0",
+      "status": "VERIFY",
+      "origin": "docs/master-prompt-triple-aaa-final-production-closure-20260909.txt; user request 2026-09-09",
+      "dependencies": ["VGE-TRIPLE-AAA-R3"],
+      "owner": "Codex",
+      "acceptance_summary": "New prompt preserved with exact source/repository hashes, R4 bar frozen, fresh regression and runtime audit, bounded real production attempts where authorized, honest capability matrix/report, fresh independent critic and final distribution.",
+      "evidence_refs": [
+        "docs/master-prompt-triple-aaa-final-production-closure-20260909.txt",
+        "docs/triple-aaa-quality-bar-r4.json",
+        ".agent/plans/triple-aaa-r4-closure.md",
+        "docs/capability-matrix-r4.md",
+        "docs/triple-aaa-final-production-closure-r4.md",
+        "verification/triple-aaa-independent-critic-r4.md",
+        "verification/distribution-triple-aaa-r6.json"
+      ],
+      "next_action": {
+        "id": "VGE-TRIPLE-AAA-R4:COMMIT-PUSH",
+        "kind": "VERIFY",
+        "summary": "Commit and push the final R4 closure packet while preserving the independent REJECT verdict and partial production status",
+        "target": "Current R4 candidate, control-plane accounting and configured origin main",
+        "completion_signal": "Local commit exists, origin/main resolves to the pushed commit, and post-push status is clean; no Triple-AAA production proof is claimed"
+      }
     }
   ]
 }

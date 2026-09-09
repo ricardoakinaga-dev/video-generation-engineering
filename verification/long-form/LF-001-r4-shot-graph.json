@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "shot_graph_lf001_r4",
+  "scene_id": "LF001-VEHICLE-ENTRY",
+  "nodes": ["LF001-S01", "LF001-S02", "LF001-S03"],
+  "edges": [
+    {"from": "LF001-S01", "to": "LF001-S02", "state_channel": "OBSERVED_HANDOFF", "required_properties": ["subject_position", "door_state", "vehicle_state"]},
+    {"from": "LF001-S02", "to": "LF001-S03", "state_channel": "OBSERVED_HANDOFF_PENDING_ACCEPTANCE", "required_properties": ["subject_position", "door_state", "vehicle_state"]}
+  ],
+  "generation_order": ["LF001-S01", "LF001-S02", "LF001-S03"],
+  "production_boundary": "S03 is not promoted while its semantic/continuity status is PARTIAL."
+}

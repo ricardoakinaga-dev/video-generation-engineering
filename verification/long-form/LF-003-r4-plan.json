@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "id": "LF-003-r4-plan",
+  "revision": 1,
+  "case_id": "LF-003",
+  "target_duration_s": 50.0,
+  "duration_envelope": {"segment_count": 10, "segment_duration_s": 5.0, "assembly_policy": "trim and bind every accepted segment before editorial assembly"},
+  "scene_bible_ref": "verification/long-form/LF-003-r4-scene-bible.json",
+  "shot_graph_ref": "verification/long-form/LF-003-r4-shot-graph.json",
+  "continuity_ref": "verification/long-form/LF-003-r4-continuity.json",
+  "audio_timeline_ref": "verification/long-form/LF-003-r4-audio-timeline.json",
+  "repair_budget_ref": "verification/long-form/LF-003-r4-repair-budget.json",
+  "human_checkpoint_ref": "verification/long-form/LF-003-r4-human-checkpoint.json",
+  "status": "STRUCTURAL_ONLY",
+  "promotion_gate": "All ten shots, nine transitions, audio channels, repair ledger and human checkpoint must be accepted; no fixture satisfies this gate by itself."
+}

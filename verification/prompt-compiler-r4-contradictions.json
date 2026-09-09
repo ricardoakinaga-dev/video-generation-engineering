@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "contradictions": [],
+  "next_action": null,
+  "limitations": [
+    "This gate checks explicit canonical fields and bounded authored phrases; it is not an audiovisual oracle"
+  ]
+}

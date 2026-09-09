@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "canonical_hash": "sha256:a4e4a3c9243b20ae1b70040abc20d6b11108958331a9aede623bb57be1b08926",
+  "adapters": [
+    {
+      "adapter_id": "local-h3-t2v",
+      "source_hash": "sha256:a4e4a3c9243b20ae1b70040abc20d6b11108958331a9aede623bb57be1b08926",
+      "preserved_sections": [
+        "action_sequence",
+        "audio_or_sync",
+        "camera",
+        "constraints",
+        "continuity",
+        "lighting_and_style",
+        "performance",
+        "references",
+        "setting_and_time",
+        "subject_and_identity"
+      ],
+      "degraded_sections": [],
+      "status": "PASS",
+      "omissions": []
+    },
+    {
+      "adapter_id": "constrained-adapter",
+      "source_hash": "sha256:a4e4a3c9243b20ae1b70040abc20d6b11108958331a9aede623bb57be1b08926",
+      "preserved_sections": [
+        "action_sequence",
+        "camera",
+        "constraints",
+        "continuity",
+        "lighting_and_style",
+        "performance",
+        "references",
+        "setting_and_time",
+        "subject_and_identity"
+      ],
+      "degraded_sections": [
+        "audio_or_sync"
+      ],
+      "status": "DEGRADED",
+      "omissions": [
+        "audio_or_sync"
+      ]
+    }
+  ],
+  "status": "DEGRADED"
+}

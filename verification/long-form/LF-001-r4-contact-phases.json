@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "contact_phases_lf001_r4",
+  "required_phases": ["APPROACH", "PRE_CONTACT", "CONTACT", "FORCE_OR_ARTICULATION", "TRANSFER_OR_MOTION", "RELEASE", "RESULT"],
+  "observed": {
+    "LF001-S01": ["APPROACH", "PRE_CONTACT"],
+    "LF001-S02": ["CONTACT", "FORCE_OR_ARTICULATION", "TRANSFER_OR_MOTION"],
+    "LF001-S03": ["RELEASE", "RESULT"]
+  },
+  "status": "PARTIAL",
+  "limitations": ["Phase labels are sampled-frame observations; dense phase timing and causal micro-contacts are not proven.", "S03 artifacts prevent full production promotion."]
+}

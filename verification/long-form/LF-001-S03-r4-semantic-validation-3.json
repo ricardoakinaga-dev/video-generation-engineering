@@ -1,0 +1,31 @@
+{
+  "status": "PARTIAL",
+  "accepted": false,
+  "artifact_id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+  "categories_observed": [
+    "audio",
+    "temporal",
+    "visual"
+  ],
+  "missing_categories": [],
+  "limitations": [
+    "The settle/door-close action is readable in sampled frames, but colored elongated artifacts are visible and prevent full semantic acceptance.",
+    "S03 is the terminal generated segment; no downstream transition is claimed.",
+    "The graph is T2V without reference-image conditioning."
+  ],
+  "semantic_dimensions_observed": [
+    "camera",
+    "dialogue",
+    "environment",
+    "identity",
+    "interaction",
+    "lighting",
+    "lip_sync",
+    "object_retention",
+    "performance",
+    "physics",
+    "temporal_continuity",
+    "wardrobe"
+  ],
+  "missing_semantic_dimensions": []
+}

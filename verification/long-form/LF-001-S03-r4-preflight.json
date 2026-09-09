@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "issues": [],
+  "workflow_hash": "sha256:646cbc8147e7c486d8a649241145239142670e3ea6758496ffe19316e68cc30a",
+  "workflow_fingerprint": "sha256:2ef0ba7e266b5ab7eaf59e48670b8af0800b60b61311a33a2ccee225101b2921",
+  "scope": "API_GRAPH_METADATA",
+  "limitations": [
+    "Execution, VRAM fit, hidden/dynamic node validation and visual quality require a runtime probe"
+  ]
+}

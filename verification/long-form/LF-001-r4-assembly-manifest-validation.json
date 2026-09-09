@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "accepted": true,
+  "shot_count": 3,
+  "shot_order": [
+    "LF001-S01",
+    "LF001-S02",
+    "LF001-S03"
+  ],
+  "final_artifact_bound": false
+}

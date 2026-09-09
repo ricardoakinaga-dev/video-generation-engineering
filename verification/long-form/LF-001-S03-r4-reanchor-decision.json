@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "decision_id": "DEC-REANCHOR-LF001-S03",
+  "shot_id": "LF001-S03",
+  "action": "RE_ANCHOR",
+  "repair_owner": "continuity",
+  "changed_shot_ids": [
+    "LF001-S03"
+  ],
+  "preserve_downstream": false,
+  "reasons": [
+    "Continuity evidence is incomplete or partially failed"
+  ],
+  "evidence_refs": [
+    {
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+      "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+    },
+    {
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S03-r4-semantic-observation.json",
+      "content_hash": "sha256:53c78d1316e1556c9ccc0e1430e20dde0c349ee646c9fd12ac37ea2386aedf1f"
+    },
+    {
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S03-r4-continuity-scorecard.json",
+      "content_hash": "sha256:af44135e58b05eb4f7a8f960ee679a41b51714a17d61b9e796fe41a7ce359b01"
+    }
+  ],
+  "confidence": "MEDIUM",
+  "limitations": [
+    "The causal action is readable, but visible colored elongated artifacts prevent full acceptance.",
+    "The decision is bounded to sampled frames and does not prove dense temporal behavior.",
+    "Decision is only as strong as the supplied observations"
+  ]
+}

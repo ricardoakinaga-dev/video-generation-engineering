@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "shot_id": "LF001-S03",
+  "artifact_id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+  "failed_dimensions": [],
+  "partial_dimensions": ["object_state_ownership", "temporal"],
+  "unobserved_dimensions": [],
+  "observed_dimensions": ["identity", "wardrobe", "hair", "vehicle", "environment", "lighting", "screen_direction", "camera_geography", "gaze", "emotional", "dialogue", "audio"],
+  "capability_status": "CONFIRMED",
+  "state_contradiction": false,
+  "anchor_kind": "accepted_last_frame",
+  "generated_chain_depth": 1,
+  "evidence_refs": [
+    {"ref": "/home/ricardo/Área de trabalho/video-generation-engineering/artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg", "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"},
+    {"ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S03-r4-semantic-observation.json", "content_hash": "sha256:53c78d1316e1556c9ccc0e1430e20dde0c349ee646c9fd12ac37ea2386aedf1f"},
+    {"ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S03-r4-continuity-scorecard.json", "content_hash": "sha256:af44135e58b05eb4f7a8f960ee679a41b51714a17d61b9e796fe41a7ce359b01"}
+  ],
+  "provenance": {
+    "attempt": {"id": "attempt_328c345de305471faba150dd74f7b907", "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/attempt_328c345de305471faba150dd74f7b907-completed.json", "content_hash": "sha256:85ddbd0203e8e08b963ae047f7b8707576f21cc519ed3faae3f4e432d7313f93"},
+    "shot": {"id": "LF001-S03", "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S03-r4-shot.json", "content_hash": "sha256:79fcf54586c825a1864e7b4b9844c008ee4f03dfc5e829de5499a82a32bc68dc", "contract_hash": "sha256:c5646401c441048ea7b1f4739cc7de36f3c1340e339f1aeb4170eebc9a41b266"},
+    "artifact": {"id": "art_d4883362e5a74b9aa12e0514c9eab8d3", "record_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.json", "record_content_hash": "sha256:22800b952bd371b543b66883a1340eb64f3e44969b8af80da1ef70cd1c045a8c", "media_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.mp4", "media_content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167"}
+  },
+  "limitations": ["The causal action is readable, but visible colored elongated artifacts prevent full acceptance.", "The decision is bounded to sampled frames and does not prove dense temporal behavior."]
+}

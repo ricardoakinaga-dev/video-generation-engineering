@@ -1,0 +1,48 @@
+{
+  "validation": {
+    "status": "PASS",
+    "issues": [],
+    "workflow_hash": "sha256:f908e3740fbb6b93c2df4faa4445ce52822538f1f9e25480f05e1309922829ea",
+    "workflow_fingerprint": "sha256:0a9c010cada36dcefa0bb2a70268ea246af144a1e14e83eeda6565dfebb51a69",
+    "scope": "API_GRAPH_METADATA",
+    "limitations": [
+      "Execution, VRAM fit, hidden/dynamic node validation and visual quality require a runtime probe"
+    ]
+  },
+  "compatibility": {
+    "status": "SUPPORTED",
+    "profile_reference": "comfyui-h3-lf001-r4-s02-v2",
+    "gaps": [],
+    "fallback": null
+  },
+  "resource_status": {
+    "status": "SUPPORTED",
+    "selected_device": "cuda:1",
+    "requirements": {
+      "device_id": "cuda:1",
+      "min_free_vram_bytes": 2500000000,
+      "safety_margin": 1.2
+    },
+    "effective_min_free_vram_bytes": 2500000000,
+    "effective_required_free_vram_bytes": 3000000000.0,
+    "observed_free_vram_bytes": 12301172736,
+    "observed_resources": [
+      {
+        "id": "1",
+        "device_id": "cuda:1",
+        "name": "cuda:1 NVIDIA GeForce RTX 3060 : cudaMallocAsync",
+        "type": "cuda",
+        "vram_total": 12490440704,
+        "vram_free": 12301172736,
+        "observed": true
+      }
+    ],
+    "gaps": [],
+    "limitations": [
+      "A resource snapshot is not an execution guarantee",
+      "Free VRAM can change between this snapshot and runtime execution"
+    ]
+  },
+  "discovery_hash": "sha256:51252a2bd035e4282dec7c73c3b2af3a85d1a05349656598199bf1cb2cbebb04",
+  "probe_purpose": null
+}

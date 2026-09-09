@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "id": "obs_lf001_s02_r4_production",
+  "shot_id": "LF001-S02",
+  "generation_artifact_ref": "art_c1c52b6492b04dc1847edbe3d028bab7",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4",
+  "observed_content_hash": "sha256:9c2a699c7ce2aefc05c31b29602339bd59a981ebfc75e9ed64dc3474f350d094",
+  "observed_at": "2026-09-09T20:50:00+00:00",
+  "procedure": "Human review of the exact 16-frame S02 production contact sheet confirmed the sampled handle-contact, door-open and torso-entry endpoint; the record does not claim dense all-frame or cross-shot identity proof.",
+  "checks": [
+    {
+      "id": "QG-01",
+      "required": true,
+      "result": "PASS",
+      "category": "visual",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the collected S02 artifact show the declared hand-contact/door-open/entry segment in the sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Sampled-frame evidence supports the declared S02 endpoint but does not prove dense temporal behavior or cross-shot identity."
+      ]
+    },
+    {
+      "id": "QG-06",
+      "required": true,
+      "result": "PASS",
+      "category": "visual",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does hand contact precede door articulation and torso transfer in the sampled S02 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Sampled-frame evidence supports the declared S02 endpoint but does not prove dense temporal behavior or cross-shot identity."
+      ]
+    },
+    {
+      "id": "QG-07",
+      "required": true,
+      "result": "PASS",
+      "category": "temporal",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the sampled S02 action order remain decodable from contact through entry?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Sampled-frame evidence supports the declared S02 endpoint but does not prove dense temporal behavior or cross-shot identity."
+      ]
+    }
+  ],
+  "status": "PASS",
+  "observed_end_state": {
+    "subject_position": "torso_entering_driver_seat",
+    "door_state": "open",
+    "vehicle_state": "stationary",
+    "phase": "ENTRY"
+  },
+  "limitations": [
+    "Sampled-frame evidence supports the declared S02 endpoint but does not prove dense temporal behavior or cross-shot identity.",
+    "S03 settlement and the S02→S03 transition remain unobserved.",
+    "The graph is T2V without reference-image conditioning."
+  ],
+  "provenance": {
+    "attempt": {
+      "id": "attempt_837c51fbb5ea4ba9926f671638f70da4",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/attempt_837c51fbb5ea4ba9926f671638f70da4-completed.json",
+      "content_hash": "sha256:4876408eb4675aad57ff80035666de712614bb2b0fcaceacda2f8f32a1650938"
+    },
+    "shot": {
+      "id": "LF001-S02",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S02-r4-shot.json",
+      "content_hash": "sha256:d4cf08f2ea2243f2ce8426d1bda98361bf715a1c33263bfe8e5689eed3a98981",
+      "contract_hash": "sha256:635818a7adf0ff43612adc99ce8b6d2f7c331aa109e48f25d8522a4655405633"
+    },
+    "artifact": {
+      "id": "art_c1c52b6492b04dc1847edbe3d028bab7",
+      "record_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.json",
+      "record_content_hash": "sha256:b463854f636c85f47eaaf220ccbc22ce21dc5f90ea830f8f9d20739c23ee101f",
+      "media_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4",
+      "media_content_hash": "sha256:9c2a699c7ce2aefc05c31b29602339bd59a981ebfc75e9ed64dc3474f350d094"
+    }
+  },
+  "artifact_id": "art_c1c52b6492b04dc1847edbe3d028bab7",
+  "repair_route": "none_required"
+}

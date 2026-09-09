@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "adapter-differential-r4",
+  "canonical_state_ref": "verification/prompt-compiler-r4-canonical-state.json",
+  "canonical_hash": "sha256:a4e4a3c9243b20ae1b70040abc20d6b11108958331a9aede623bb57be1b08926",
+  "adapters": [
+    {"id": "local-h3-t2v", "kind": "REAL_RUNTIME_PROFILE", "status": "PROVEN_STRUCTURALLY", "runtime_artifact": "verification/profiles/comfyui-h3-lf001-r4-v2.json"},
+    {"id": "constrained-adapter", "kind": "STRUCTURAL_REFERENCE", "status": "DEGRADED", "preserved": ["identity", "setting", "action", "camera", "continuity", "constraints"], "omitted": ["audio_or_sync"]},
+    {"id": "second-real-adapter", "kind": "EXTERNAL_OR_ALTERNATE_RUNTIME", "status": "BLOCKED", "blocker": "No second authorized provider/runtime execution or current capability profile"}
+  ],
+  "differential_status": "PARTIAL",
+  "preserved_contract": "All adapters must consume the same validated canonical state; unsupported fields are explicit, never silently dropped.",
+  "limitations": ["The constrained adapter is a deterministic differential fixture, not evidence of a second renderer.", "No paid API, upload or large model download was used."]
+}

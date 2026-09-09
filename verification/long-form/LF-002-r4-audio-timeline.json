@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "LF-002-r4-audio-timeline",
+  "case_id": "LF-002",
+  "status": "NOT_RUN",
+  "required_layers": ["DIALOGUE", "VOICE", "FOLEY", "AMBIENCE", "MUSIC", "MIX"],
+  "events": [
+    {"id": "A01", "layer": "AMBIENCE", "start_s": 0.0, "end_s": 20.0, "cause": "roadside cafe room tone", "source": "planned location bed"},
+    {"id": "A02", "layer": "DIALOGUE", "start_s": 5.0, "end_s": 8.5, "cause": "LF002-L01 stimulus", "source": "planned voice line"},
+    {"id": "A03", "layer": "DIALOGUE", "start_s": 12.0, "end_s": 16.0, "cause": "LF002-L02 response", "source": "planned voice line"},
+    {"id": "A04", "layer": "FOLEY", "start_s": 16.0, "end_s": 18.0, "cause": "envelope contact", "source": "planned handoff foley"}
+  ],
+  "causal_mappings": [
+    {"audio_id": "A02", "visual_event": "speaker_turn_A", "required_alignment": "line start and visible articulation"},
+    {"audio_id": "A03", "visual_event": "speaker_turn_B", "required_alignment": "reaction precedes response"},
+    {"audio_id": "A04", "visual_event": "envelope_handoff", "required_alignment": "contact and release are visible"}
+  ],
+  "blockers": [
+    "No collected dialogue or voice bytes",
+    "No listening/mix observation",
+    "No accepted visual/audio causal alignment"
+  ],
+  "next_action": "Keep the timeline separate from the visual plan and validate each layer after an authorized run."
+}

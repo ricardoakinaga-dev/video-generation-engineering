@@ -14,7 +14,7 @@ from test_planning import ROOT, SKILL, profile
 from vge_core import ContractError, digest, file_hash, load
 from vge_evidence import aggregate, validate_observation, lifecycle
 from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect, resource_status, workflow_fingerprint, validate_profile_runtime
-from vge_media import run, probe, assemble, contact_sheet, validate_assembly_manifest
+from vge_media import run, probe, assemble, trim, contact_sheet, validate_assembly_manifest
 
 
 def evidence(path):
@@ -489,6 +489,14 @@ class MediaTests(unittest.TestCase):
     def test_contact_sheet(self):
         result=contact_sheet(self.video,self.path/'frames.jpg',4)
         self.assertTrue(Path(result['contact_sheet']).is_file())
+
+    def test_explicit_trim_binds_target_duration_and_source_hash(self):
+        output=self.path/'trimmed.mp4'
+        result=trim(self.video,output,0.5)
+        self.assertEqual('TRIMMED_MEDIA',result['kind'])
+        self.assertEqual('PASS',result['status'])
+        self.assertEqual(probe(self.video)['content_hash'],result['source']['content_hash'])
+        self.assertAlmostEqual(0.5,result['artifact']['duration_s'],places=2)
 
 
 if __name__=='__main__':unittest.main()

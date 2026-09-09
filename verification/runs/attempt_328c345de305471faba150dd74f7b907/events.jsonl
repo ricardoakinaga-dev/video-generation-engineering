@@ -1,0 +1,2 @@
+{"attempt_id":"attempt_328c345de305471faba150dd74f7b907","event_id":"event-intent-recorded","observed_at":"2026-09-09T20:54:46.298075+00:00","schema_version":1,"source":"vge_runtime.submit","status":"INTENT_RECORDED"}
+{"attempt_id":"attempt_328c345de305471faba150dd74f7b907","event_id":"event-submitted","observed_at":"2026-09-09T20:54:46.326511+00:00","queue_id":"db87ec0c-04c7-47ed-9cd3-c648f95353a7","schema_version":1,"source":"vge_runtime.submit","status":"SUBMITTED"}

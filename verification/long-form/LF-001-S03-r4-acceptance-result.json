@@ -1,0 +1,9 @@
+{
+  "status": "PARTIAL",
+  "accepted": false,
+  "artifact_id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+  "limitations": [
+    "The seated/door-closed endpoint is readable, but visible colored elongated artifacts prevent full acceptance.",
+    "No downstream transition is claimed."
+  ]
+}

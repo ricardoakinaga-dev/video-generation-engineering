@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-r4-baseline-20260909-a001",
+  "observed_at": "2026-09-09T20:23:39.507040+00:00",
+  "scope": "R4_BASELINE_PROFILE_AND_RESOURCE_REVALIDATION",
+  "runtime": {
+    "provider": "comfyui",
+    "endpoint": "http://127.0.0.1:8188",
+    "version": "0.34.0",
+    "runtime_context": {
+      "python_version": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+      "pytorch_version": "2.14.0+cu130",
+      "cuda_version": "cu130",
+      "runtime_commit": "UNKNOWN",
+      "runtime_dirty": "UNKNOWN",
+      "custom_node_commits": {}
+    }
+  },
+  "workflow": {
+    "path": ".agents/skills/video-generation-engineering/assets/workflows/h3-smoke-api.json",
+    "sha256": "sha256:d87b023a58c671d79483fb6215f765c09f8e6ad41ed00cf264105d7f52a58ff5",
+    "fingerprint": "sha256:780377c3e9451e6366e1056707e8d468b75e1f469aee08078b155ad9b65e5cf4",
+    "validation": "PASS"
+  },
+  "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+  "resource_inventory": [
+    {"id":"0","device_id":"cuda:0","name":"cuda:0 NVIDIA GeForce RTX 3060 : cudaMallocAsync","type":"cuda","vram_total":12482576384,"vram_free":11718819840,"observed":true},
+    {"id":"1","device_id":"cuda:1","name":"cuda:1 NVIDIA GeForce RTX 3060 : cudaMallocAsync","type":"cuda","vram_total":12490440704,"vram_free":12357926912,"observed":true}
+  ],
+  "queue": {"running": 0, "pending": 0, "owned_jobs": [], "foreign_jobs_cancelled": 0},
+  "decision": "ALLOW_FOR_PROFILE_REVALIDATION_ONLY",
+  "limitations": [
+    "Snapshot is not an inference guarantee",
+    "Exact selected device and resource floor must be revalidated immediately before every POST",
+    "Older cuda:0 profile is not reused for this changed workflow hash"
+  ]
+}

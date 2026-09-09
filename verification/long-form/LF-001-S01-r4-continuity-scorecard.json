@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "id": "continuity_lf001_s01_r4_production",
+  "shot_id": "LF001-S01",
+  "artifact_id": "art_730e6a3d284b4ce49b24a1dbdbc37a4d",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_730e6a3d284b4ce49b24a1dbdbc37a4d.mp4",
+  "observed_content_hash": "sha256:e10ddb65ec02b177b2247ec9418b8f7382ca546a7da25ef3a7312c160b22c076",
+  "observed_at": "2026-09-09T20:36:00+00:00",
+  "dimensions": [
+    {
+      "dimension": "identity",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is subject identity stable in sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "wardrobe",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is wardrobe stable in sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "hair",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is hair stable in sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "object_state_ownership",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is vehicle/door state stable and owned by the declared pre-contact action?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "vehicle",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is the same matte graphite vehicle geography readable?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "environment",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is the curb environment coherent?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "lighting",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is cool overcast lighting stable?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "screen_direction",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the subject approach from the declared screen side?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "camera_geography",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is driver-side handle geography readable?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "gaze",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does gaze remain directed toward the vehicle?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "emotional",
+      "result": "NOT_APPLICABLE",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is emotional continuity applicable before dialogue?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "HIGH",
+      "reason": "The declared S01 contract has no dialogue/emotional continuity requirement.",
+      "evidence": [],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "dialogue",
+      "result": "NOT_APPLICABLE",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is dialogue continuity applicable to this no-dialogue shot?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "HIGH",
+      "reason": "The declared S01 contract has no dialogue/emotional continuity requirement.",
+      "evidence": [],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "temporal",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is sampled temporal motion coherent?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S01-production-contact-sheet.jpg",
+          "content_hash": "sha256:403013df21a5a405b88156a306d0be754d73382c80d2f09f4f645c96d5480bb0"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    },
+    {
+      "dimension": "audio",
+      "result": "PARTIAL",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is audio semantically accepted beyond stream presence?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "LOW",
+      "evidence": [
+        {
+          "type": "MEDIA_QA",
+          "ref": "verification/long-form/LF-001-S01-r4-production-media-qa.json",
+          "content_hash": "sha256:ad733d38eb345e6f4de70a52afe392280f074662a21669b3d0581bef44f6c5cb"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+        "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+        "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+      ]
+    }
+  ],
+  "status": "PARTIAL",
+  "limitations": [
+    "S01 sampled continuity is bounded and partial; no adjacent transition exists yet.",
+    "Audio is mechanical-only; no listening or mix acceptance was performed."
+  ]
+}

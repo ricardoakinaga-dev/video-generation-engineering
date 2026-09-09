@@ -1,0 +1,445 @@
+{
+  "schema_version": 1,
+  "revision": 1,
+  "execution_mode": "PLAN_ONLY",
+  "scene_intent": {
+    "schema_version": 1,
+    "project_id": "proj_example",
+    "scene_id": "scene_001",
+    "title": "A door opens",
+    "objective": "Show a fictional courier opening a stationary van door with readable contact",
+    "duration": {
+      "target_seconds": 6
+    },
+    "target": {
+      "platform": "unselected",
+      "aspect_ratio": "16:9",
+      "delivery": "video"
+    },
+    "subjects": [
+      "subject_courier"
+    ],
+    "objects": [
+      "vehicle_van"
+    ],
+    "environments": [
+      "environment_driveway"
+    ],
+    "actions": [
+      "reach",
+      "contact",
+      "pull"
+    ],
+    "dialogue_required": false,
+    "audio_required": false,
+    "style_preferences": [
+      "naturalistic"
+    ],
+    "hard_constraints": [
+      "Show hand contact before door rotation"
+    ],
+    "preferences": [
+      "medium static coverage"
+    ],
+    "unknowns": [
+      "Target model not selected"
+    ]
+  },
+  "scene_bible": {
+    "schema_version": 1,
+    "project_id": "proj_example",
+    "scene_id": "scene_001",
+    "revision": 1,
+    "scope": "CONTIGUOUS_SEQUENCE",
+    "geography": "driveway; courier left, van right",
+    "time_of_day": "morning",
+    "lighting": "soft daylight from camera left",
+    "visual_style": "naturalistic",
+    "camera_language": "hold through contact",
+    "relationships": [],
+    "continuity_rules": [],
+    "prohibited_drift": [],
+    "initial_state": {
+      "subject_courier": {
+        "position": "beside_van",
+        "right_hand": "free"
+      },
+      "vehicle_van": {
+        "door": "closed",
+        "ignition": "OFF"
+      }
+    },
+    "entities": [
+      {
+        "id": "subject_courier",
+        "type": "character",
+        "description": "Fictional adult courier in a plain blue jacket",
+        "permanence": "PERSISTENT"
+      },
+      {
+        "id": "vehicle_van",
+        "type": "vehicle",
+        "description": "Plain grey van without brand marks",
+        "permanence": "PERSISTENT"
+      },
+      {
+        "id": "environment_driveway",
+        "type": "environment",
+        "description": "Quiet driveway",
+        "permanence": "PERSISTENT"
+      }
+    ],
+    "initial_state_ref": "scene_bible:scene_001:initial"
+  },
+  "references": [],
+  "retention_rules": [],
+  "reference_conflicts": [],
+  "dialogue_timeline": [],
+  "audio_timeline": [],
+  "shots": [
+    {
+      "id": "shot_001",
+      "duration_s": 6,
+      "purpose": "Make contact and door articulation legible",
+      "dependency_ids": [],
+      "active_subject_ids": [
+        "subject_courier"
+      ],
+      "supporting_subject_ids": [],
+      "action_primitives": [
+        "reach",
+        "contact",
+        "pull"
+      ],
+      "state_changes": [
+        {
+          "property": "subject_courier.right_hand",
+          "prior": "free",
+          "next": "door_handle",
+          "cause": "contact"
+        },
+        {
+          "property": "vehicle_van.door",
+          "prior": "closed",
+          "next": "open",
+          "cause": "pull"
+        }
+      ],
+      "references": [],
+      "camera": {
+        "size": "MEDIUM",
+        "angle": "EYE_LEVEL",
+        "focal_length": "50mm_equivalent",
+        "framing": "HAND_AND_DOOR",
+        "focus": "subject_courier.right_hand",
+        "depth_of_field": "MODERATE",
+        "motion_blur": "NATURAL",
+        "exposure": "LOCKED_TO_SCENE",
+        "lighting": "scene_bible:lighting",
+        "eyeline": "vehicle_van",
+        "movement": {
+          "type": "STATIC",
+          "direction": "NONE",
+          "phase": "HOLD_CONTACT"
+        },
+        "screen_direction": "LEFT_TO_RIGHT",
+        "axis_policy": "PRESERVE_180_AXIS",
+        "edit_rhythm": "HOLD_THROUGH_CONTACT"
+      },
+      "generation_mode": "T2V",
+      "risk": "HIGH",
+      "capability_requirements": [],
+      "constraints": [
+        "con_contact"
+      ],
+      "acceptance_ids": [
+        "QG-07",
+        "QG-08",
+        "QG-09",
+        "QG-17"
+      ],
+      "performance": [
+        "Eyes settle on the handle before reaching"
+      ],
+      "contact_graph_ref": "contact_shot_001",
+      "scene_id": "scene_001",
+      "revision": 1,
+      "lifecycle_status": "PLANNED",
+      "generation_artifact_ref": null,
+      "artifact_observation_ref": null,
+      "start_state_ref": "scene_bible:scene_001:initial",
+      "start_state_delta": {},
+      "end_state_delta": {
+        "subject_courier.right_hand": "door_handle",
+        "vehicle_van.door": "open"
+      }
+    }
+  ],
+  "constraints": [
+    {
+      "constraint_id": "con_contact",
+      "subject": "subject_courier",
+      "kind": "QA_ASSERTION",
+      "statement": "Visible hand contact precedes door rotation",
+      "priority": "HIGH",
+      "scope": [
+        "shot_001"
+      ],
+      "evidence": {
+        "status": "PROPOSED",
+        "claim_type": "DECISION",
+        "confidence": "HIGH"
+      },
+      "validation": {
+        "method": "frame_sequence_review",
+        "blocking": true
+      },
+      "fallback": "SPLIT_CONTACT",
+      "status": "PROPOSED"
+    }
+  ],
+  "contact_graphs": [
+    {
+      "id": "contact_shot_001",
+      "shot_id": "shot_001",
+      "actor": "subject_courier",
+      "target": "vehicle_van",
+      "effector": "right_hand",
+      "phases": [
+        "reach",
+        "contact",
+        "pull"
+      ],
+      "success_criterion": "Hand stays on handle as door rotates"
+    }
+  ],
+  "shot_graph": {
+    "nodes": [
+      "shot_001"
+    ],
+    "edges": []
+  },
+  "assembly_plan": {
+    "shot_ids": [
+      "shot_001"
+    ],
+    "target_duration_s": 6,
+    "fps": null,
+    "codec": null,
+    "container": null,
+    "audio_alignment": "REQUIRES_REVIEW"
+  },
+  "generation_strategy": {
+    "type": "SHORT_SEGMENTS",
+    "reanchor_every_shots": 3,
+    "evidence_status": "PROPOSED",
+    "drift_budget": "PROJECT_REVIEW_REQUIRED"
+  },
+  "narrative_timeline": [
+    {
+      "id": "beat_shot_001",
+      "shot_id": "shot_001",
+      "time": {
+        "start_s": 0.0,
+        "end_s": 6.0
+      },
+      "purpose": "Make contact and door articulation legible",
+      "action": [
+        "reach",
+        "contact",
+        "pull"
+      ],
+      "prerequisites": []
+    }
+  ],
+  "reference_timeline": [
+    {
+      "shot_id": "shot_001",
+      "reference_ids": []
+    }
+  ],
+  "complexity": {
+    "identities": 1,
+    "references": 0,
+    "dialogue": 0,
+    "lip_sync": 0,
+    "interaction": 1,
+    "articulated_objects": 1,
+    "motion": 3,
+    "camera": 1,
+    "camera_movement": 0,
+    "dependency_edges": 0,
+    "duration": 6,
+    "vfx": "UNKNOWN"
+  },
+  "presentation_mode": "PRODUCTION",
+  "reference_route": {
+    "schema_version": 1,
+    "status": "STRUCTURAL",
+    "presentation_mode": "PRODUCTION",
+    "required_references": [
+      {
+        "id": "core",
+        "path": "references/core-contracts.md",
+        "reasons": [
+          "Required for every authored scene contract"
+        ]
+      },
+      {
+        "id": "continuity",
+        "path": "references/continuity-and-long-form.md",
+        "reasons": [
+          "Multi-shot, dialogue or physical state requires explicit continuity guidance"
+        ]
+      },
+      {
+        "id": "directing_audio",
+        "path": "references/directing-and-audio.md",
+        "reasons": [
+          "Camera, purpose and performance decisions are present in every scene"
+        ]
+      },
+      {
+        "id": "interaction_constraints",
+        "path": "references/interaction-and-constraints.md",
+        "reasons": [
+          "Contact, articulation or vehicle/animal mechanics are in scope"
+        ]
+      },
+      {
+        "id": "evaluation_repair",
+        "path": "references/evaluation-and-repair.md",
+        "reasons": [
+          "Acceptance and bounded repair are required even for a simple shot"
+        ]
+      },
+      {
+        "id": "observability",
+        "path": "references/observability.md",
+        "reasons": [
+          "Routing and unresolved decisions need concise inspectable diagnostics"
+        ]
+      }
+    ],
+    "excluded_references": [
+      {
+        "id": "model_adaptation",
+        "path": "references/model-adaptation.md",
+        "reason": "No selected model, non-T2V mode or capability requirement"
+      },
+      {
+        "id": "comfyui_execution",
+        "path": "references/comfyui-execution.md",
+        "reason": "No explicit ComfyUI/runtime execution target"
+      },
+      {
+        "id": "production_quality",
+        "path": "references/production-quality.md",
+        "reason": "No long-form production-quality signal"
+      },
+      {
+        "id": "safety_provenance",
+        "path": "references/safety-and-provenance.md",
+        "reason": "No explicit rights, consent, likeness, voice or transfer risk"
+      }
+    ],
+    "signals": {
+      "duration_s": 6,
+      "shot_count": 1,
+      "dialogue": false,
+      "audio": false,
+      "moving_camera": false,
+      "interaction": true,
+      "long_form": false,
+      "model_selection_or_capability": false,
+      "comfyui_execution": false,
+      "production_quality": false,
+      "safety_or_provenance": false
+    },
+    "limitations": [
+      "This is a deterministic context-loading recommendation, not proof that a host loaded the files",
+      "Reference routing does not establish model capability, runtime availability or media quality"
+    ]
+  },
+  "decision_diagnostics": [
+    {
+      "decision_id": "DEC-ROUTE-proj_example-scene_001-R1",
+      "stage": "complexity_routing",
+      "input_scope": "proj_example:scene_001:rev1",
+      "result": "PRODUCTION",
+      "reasons": [
+        "contact/interaction phases need causal coverage"
+      ],
+      "evidence_refs": [
+        "R-PLAN-01",
+        "R-PLAN-02",
+        "QG-04"
+      ],
+      "alternatives": [
+        "FAST",
+        "CINEMATIC",
+        "PRODUCTION",
+        "DIRECTOR"
+      ],
+      "next_action": "Load the routed references and resolve any blocked complexity gate",
+      "confidence": "HIGH",
+      "limitations": [
+        "Routing is structural; it does not prove model feasibility or media quality"
+      ]
+    }
+  ],
+  "continuity_states": [
+    {
+      "scope": "shot_001",
+      "state_channel": "PLANNED",
+      "inherited_from": "scene_bible:scene_001:initial",
+      "end_state": {
+        "subject_courier.position": "beside_van",
+        "subject_courier.right_hand": "door_handle",
+        "vehicle_van.door": "open",
+        "vehicle_van.ignition": "OFF"
+      }
+    }
+  ],
+  "validation": {
+    "status": "PASS",
+    "scope": "STRUCTURAL_PLAN_ONLY",
+    "issues": [],
+    "diagnostics": [
+      {
+        "decision_id": "DEC-PLAN-proj_example-scene_001-R1",
+        "stage": "plan_validation",
+        "input_scope": "proj_example:scene_001:rev1",
+        "result": "PASS",
+        "reasons": [
+          "Declared structural and causal invariants passed"
+        ],
+        "evidence_refs": [
+          "QG-01",
+          "QG-03",
+          "QG-07"
+        ],
+        "alternatives": [],
+        "next_action": "Compile the plan or negotiate a versioned capability profile",
+        "confidence": "HIGH",
+        "limitations": [
+          "Structural validation only; no runtime, media, identity, physics or editorial judgment"
+        ]
+      }
+    ],
+    "shot_order": [
+      "shot_001"
+    ],
+    "end_states": {
+      "shot_001": {
+        "subject_courier.position": "beside_van",
+        "subject_courier.right_hand": "door_handle",
+        "vehicle_van.door": "open",
+        "vehicle_van.ignition": "OFF"
+      }
+    },
+    "limitations": [
+      "Does not verify visual identity, physics, editorial quality or model feasibility"
+    ]
+  }
+}

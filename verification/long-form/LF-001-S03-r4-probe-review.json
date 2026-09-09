@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "review_lf001_s03_r4_probe",
+  "shot_id": "LF001-S03",
+  "attempt_id": "attempt_6aebffeb07a841a192ca25bb4e7370d1",
+  "artifact_id": "art_5406209d13524392a854296bf1191974",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_5406209d13524392a854296bf1191974.mp4",
+  "artifact_content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+  "status": "PARTIAL",
+  "observed_at": "2026-09-09T20:54:00+00:00",
+  "procedure": "Human review of the exact 16-frame S03 probe contact sheet plus mechanical media QA.",
+  "findings": {
+    "action": "The sampled sequence is decodable: the subject is inside the driver side and the door closes to a seated state.",
+    "artifact": "Colored elongated foreground artifacts are visible in sampled frames, especially near the opening and closing portions of the sequence.",
+    "continuity": "Vehicle geography remains readable in the sample, but cross-shot identity/appearance retention remains unproven.",
+    "audio": "Only mechanical stream/alignment was observed; no listening or mix acceptance was performed."
+  },
+  "evidence": [
+    {"type": "CONTACT_SHEET", "ref": "artifacts/lf001_r4_20260909/LF001-S03-probe-contact-sheet.jpg", "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"},
+    {"type": "MEDIA_QA", "ref": "verification/long-form/LF-001-S03-r4-probe-media-qa.json", "content_hash": "sha256:f371fb6e1f3f5357338e03fb1a6668ea8a21f4aac3a1244bda57c384ab1a797f"}
+  ],
+  "decision": "Proceed with exactly one normal production submission to capture the production-scoped artifact; accept only if the same artifact class passes the final semantic/continuity review. No retry is authorized from this finding alone.",
+  "repair_route": "REGENERATE_OR_REANCHOR_IF_PRODUCTION_REVIEW_FAILS",
+  "limitations": ["Sparse samples do not prove dense temporal quality.", "This review is not a final shot acceptance."]
+}

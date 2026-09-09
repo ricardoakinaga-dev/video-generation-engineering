@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "LF-003-r4-repair-budget",
+  "case_id": "LF-003",
+  "status": "STRUCTURAL_ONLY",
+  "max_regenerations": 2,
+  "max_attempts": 4,
+  "max_runtime_s": 1800,
+  "max_cost_usd": 0,
+  "human_review_threshold": 1,
+  "authorization": "REQUIRED_BEFORE_EXECUTION",
+  "policy": "No repair may overwrite an immutable attempt; every downstream edge must be revalidated."
+}

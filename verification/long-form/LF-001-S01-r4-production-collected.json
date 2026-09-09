@@ -1,0 +1,101 @@
+[
+  {
+    "schema_version": 1,
+    "id": "art_730e6a3d284b4ce49b24a1dbdbc37a4d",
+    "shot_id": "LF001-S01",
+    "execution_attempt_ref": "attempt_e2ba123f3dcc4e618852f26564db0c06",
+    "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_730e6a3d284b4ce49b24a1dbdbc37a4d.mp4",
+    "content_hash": "sha256:e10ddb65ec02b177b2247ec9418b8f7382ca546a7da25ef3a7312c160b22c076",
+    "collected_at": "2026-09-09T20:34:25.336824+00:00",
+    "generation_status": "GENERATED",
+    "media": {
+      "kind": "video",
+      "runtime_output_kind": "images"
+    },
+    "shot_contract_hash": "sha256:7cee4f342b96259411e9761712b18db04bb308200fd62a8ec34f45020a5a9c85",
+    "profile_id": "comfyui-h3-lf001-r4-v2",
+    "profile_revision": 2,
+    "profile_content_hash": "sha256:9d4f0ea0d4efb0698701b103c4dcb48c2ff678dcfe2c18861060a0fc0bd1a353",
+    "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+    "input_hashes": [
+      {
+        "ref": "text_encoder",
+        "role": "text_encoder",
+        "content_hash": "sha256:54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094"
+      },
+      {
+        "ref": "clip_projection",
+        "role": "clip_projection",
+        "content_hash": "sha256:0184e5c8d666a131962506d21949c2d8a8c6f33445b7b5e347e9a7e0a5baa819"
+      },
+      {
+        "ref": "video_vae",
+        "role": "video_vae",
+        "content_hash": "sha256:9bb2d96f218c76babd85e0611b85ca8fb330a90546c01a0005e8a58a59593410"
+      },
+      {
+        "ref": "audio_vae",
+        "role": "audio_vae",
+        "content_hash": "sha256:8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48"
+      },
+      {
+        "ref": "lora",
+        "role": "lora",
+        "content_hash": "sha256:1b85da614014024a0c9507f12558917dcc69b6adb564e716324594f401723115"
+      }
+    ],
+    "runtime": {
+      "provider": "comfyui",
+      "endpoint": "http://127.0.0.1:8188",
+      "workflow_hash": "sha256:9c59a616585e4ec7667e4d59c24a3d9913ad1619770e57f57a06aa083024faa9",
+      "runtime_history_workflow_hash": "sha256:03f1517d3e3b5f2e87d629923dd69ffd6a9e6cb2af34e307319e719ff7ad8da5",
+      "workflow_fingerprint": "sha256:54a39383a642aca1de71d070e70089318e87aa839b29e29e9ad9f6972f9f3146",
+      "shot_contract_hash": "sha256:7cee4f342b96259411e9761712b18db04bb308200fd62a8ec34f45020a5a9c85",
+      "profile_id": "comfyui-h3-lf001-r4-v2",
+      "profile_revision": 2,
+      "profile_content_hash": "sha256:9d4f0ea0d4efb0698701b103c4dcb48c2ff678dcfe2c18861060a0fc0bd1a353",
+      "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+      "input_hashes": [
+        {
+          "ref": "text_encoder",
+          "role": "text_encoder",
+          "content_hash": "sha256:54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094"
+        },
+        {
+          "ref": "clip_projection",
+          "role": "clip_projection",
+          "content_hash": "sha256:0184e5c8d666a131962506d21949c2d8a8c6f33445b7b5e347e9a7e0a5baa819"
+        },
+        {
+          "ref": "video_vae",
+          "role": "video_vae",
+          "content_hash": "sha256:9bb2d96f218c76babd85e0611b85ca8fb330a90546c01a0005e8a58a59593410"
+        },
+        {
+          "ref": "audio_vae",
+          "role": "audio_vae",
+          "content_hash": "sha256:8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48"
+        },
+        {
+          "ref": "lora",
+          "role": "lora",
+          "content_hash": "sha256:1b85da614014024a0c9507f12558917dcc69b6adb564e716324594f401723115"
+        }
+      ],
+      "selected_device": "cuda:1",
+      "resource_context_hash": "sha256:19c6069d09699aa2b4d2d457b4196944a82d2fe8224ad01c345aad77bc672d60",
+      "runtime_context": {
+        "python_version": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+        "pytorch_version": "2.14.0+cu130",
+        "cuda_version": "cu130",
+        "runtime_commit": "UNKNOWN",
+        "runtime_dirty": "UNKNOWN",
+        "custom_node_commits": {}
+      }
+    },
+    "quality_review": {
+      "lifecycle": "NOT_STARTED",
+      "observation_ref": null
+    }
+  }
+]

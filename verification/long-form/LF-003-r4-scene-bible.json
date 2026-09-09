@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "id": "LF-003-r4-scene-bible",
+  "case_id": "LF-003",
+  "status": "STRUCTURAL_ONLY",
+  "characters": ["ADULT_A", "ADULT_B"],
+  "identity_anchors": ["face geometry", "hair", "voice identity", "wardrobe palette"],
+  "persistent_objects": ["sealed envelope", "matte graphite hatchback"],
+  "environment": "wet roadside cafe and parked vehicle",
+  "time_and_light": "single overcast afternoon; screen direction locked",
+  "prohibited_drift": ["identity swap", "wardrobe reset", "envelope teleportation", "unmotivated axis flip", "vehicle state contradiction"]
+}

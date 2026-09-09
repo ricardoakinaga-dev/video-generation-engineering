@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "id": "LF-002-r4-dialogue-contract",
+  "case_id": "LF-002",
+  "status": "NOT_RUN",
+  "lines": [
+    {
+      "id": "LF002-L01",
+      "shot_id": "LF002-S02",
+      "speaker": "ADULT_A",
+      "listener": "ADULT_B",
+      "intent": "Ask whether the envelope arrived",
+      "timing": {"start_s": 5.0, "end_s": 8.5},
+      "causal_stage": "STIMULUS"
+    },
+    {
+      "id": "LF002-L02",
+      "shot_id": "LF002-S03",
+      "speaker": "ADULT_B",
+      "listener": "ADULT_A",
+      "intent": "Confirm receipt after a visible processing beat",
+      "timing": {"start_s": 12.0, "end_s": 16.0},
+      "causal_stage": "RESPONSE"
+    }
+  ],
+  "channel_contract": {
+    "semantics": "line meaning and speaker ownership",
+    "voice": "separately identified voice asset or confirmed native voice",
+    "performance": "gaze, reaction, gesture and turn-taking",
+    "lip_sync": "face/audio alignment evidence",
+    "mix": "dialogue, foley, ambience and final level relationship"
+  },
+  "causality": ["STIMULUS", "PROCESSING", "REACTION", "RESPONSE"],
+  "known_bad": [
+    "listener mouths the active speaker line without explicit scripting",
+    "response precedes processing",
+    "speaker identity changes between shots",
+    "visible speech is marked PASS without voice or lip-sync evidence"
+  ],
+  "blockers": [
+    "No authorized dialogue-capable runtime profile",
+    "No voice asset or line-level audio artifact",
+    "No face/audio alignment observation"
+  ],
+  "next_action": "Execute only after a current dialogue/voice/lip-sync profile and explicit audio authorization exist."
+}

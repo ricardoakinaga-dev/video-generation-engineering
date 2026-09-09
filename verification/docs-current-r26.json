@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "docs-current-r26",
+  "task": "VGE-TRIPLE-AAA-R4",
+  "observed_at": "2026-09-09T20:22:33.010676+00:00",
+  "scope": "CURRENT_DOCUMENTATION_STRUCTURAL_AUDIT",
+  "procedure_status": "EXECUTED",
+  "procedure": "python3 audit-artifacts/docs-2026-09-08-r5/check_docs.py",
+  "result": "PASS",
+  "evidence_kind": "STATIC_INSPECTION",
+  "environment": "Python 3.12.3; PyYAML 6.0.1; Linux; local documentation checker",
+  "counts": {"documents":50,"yaml_blocks":50,"local_markdown_links":518,"requirements":80},
+  "checks": {"yaml_errors":[],"local_link_errors":[],"missing_traceability_ids":[],"implicit_yaml_booleans":[],"profile_parity":true,"collection_parity":true},
+  "artifacts": ["docs/triple-aaa-quality-bar-r4.json","docs/capability-matrix-r4.md","verification/scout-r4-lf001-20260909.md"],
+  "limitations": "Structural documentation inspection only; no runtime, semantic media or external source validation.",
+  "freshness": "CURRENT"
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "LF-001",
+  "target_duration_s": 15.0,
+  "intent_ref": "verification/long-form/LF-001-r4-plan.json",
+  "plan_ref": "verification/long-form/LF-001-r4-plan.json",
+  "scene_bible_ref": "verification/long-form/LF-001-r4-scene-bible.json",
+  "shot_graph_ref": "verification/long-form/LF-001-r4-shot-graph.json",
+  "continuity_ref": "verification/long-form/LF-001-r4-continuity.json",
+  "evidence_ref": "verification/long-form/LF-001-r4-evidence.json",
+  "shot_ids": ["LF001-S01", "LF001-S02", "LF001-S03"],
+  "status": "PARTIAL",
+  "production_evidence_complete": false,
+  "observed_shot_ids": ["LF001-S01", "LF001-S02", "LF001-S03"],
+  "accepted_shot_ids": ["LF001-S01", "LF001-S02"],
+  "partial_shot_ids": ["LF001-S03"],
+  "transition_status": {"LF001-S01->LF001-S02": "PASS", "LF001-S02->LF001-S03": "FAIL"},
+  "latest_runtime_evidence": {
+    "S01_artifact": "verification/media/art_730e6a3d284b4ce49b24a1dbdbc37a4d.json",
+    "S02_artifact": "verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.json",
+    "S03_artifact": "verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.json",
+    "assembly_preview": "verification/long-form/LF-001-r4-assembly-preview-r2.json",
+    "assembly_media_qa": "verification/long-form/LF-001-r4-assembled-15s-preview-r2-media-qa.json"
+  },
+  "blockers": [
+    "S03 semantic and continuity evidence is PARTIAL because colored elongated artifacts are visible in sampled frames.",
+    "T02 fails because the next-shot scorecard is PARTIAL; no accepted final LF-001 chain exists.",
+    "The 15.0s assembly is a mechanical PREVIEW_ONLY artifact; semantic promotion is not claimed.",
+    "No reference-image conditioning or dense cross-shot identity proof exists.",
+    "LF-002 dialogue/lip-sync, LF-003 long-form, FLF, repair execution and second adapter remain unproven."
+  ],
+  "repair_ref": "verification/long-form/LF-001-S03-r4-repair-plan-r2.json",
+  "reanchor_ref": "verification/long-form/LF-001-S03-r4-reanchor-decision.json",
+  "next_action": "Execute the authorized bounded S03 repair/re-anchor route only after explicit approval, then regenerate S03 with a new graph/profile revision and revalidate T02 and the final assembly.",
+  "limitations": ["Mechanical media QA is not semantic, editorial or listening acceptance.", "Generated clips are T2V without reference-image conditioning.", "No paid provider, upload or publication action was used."]
+}

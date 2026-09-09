@@ -44,11 +44,15 @@ python3 scripts/vge.py validate plan.json
 python3 scripts/vge.py route treatment.json
 python3 scripts/vge.py compile plan.json --output prompts.json
 python3 scripts/vge.py negotiate shot.json --profile profiles/comfyui-wan22-candidate.json
+python3 scripts/vge.py trim source.mp4 derived-5s.mp4 --duration 5 --report trim.json
+python3 scripts/vge.py assemble assembly.json --video preview.mp4 --preview
 ```
 
 [Treatment example](assets/templates/treatment.json) is a small complete invented scene for adapting, not a mandatory narrative. JSON scripts use the standard library. FFmpeg/ffprobe are required only for media commands. `--help` lists the execution and media commands. Writes refuse existing files; create new revisions.
 
 The helper compiles lossless structured prompt views. As director, turn those views into effective model language while preserving all critical meanings; put details omitted from prose into workflow inputs or QA and record that mapping. Never imply that a generated JSON representation is a validated workflow.
+
+`trim` creates an explicit, newly hashed derived asset with source provenance and post-trim metadata; it does not silently overwrite the source. `assemble` consumes an assembly manifest and enforces the declared preview duration while retaining segment lineage. A runtime submission may include `accepted_dependency_refs` only when each referenced JSON bundle is readable, hash-bound and already accepted by the caller's policy. This is a continuity handoff, not proof that the renderer preserved visual identity.
 
 ## Execute and evaluate
 

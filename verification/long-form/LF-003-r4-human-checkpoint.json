@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "id": "LF-003-r4-human-checkpoint",
+  "case_id": "LF-003",
+  "status": "NOT_RUN",
+  "required_before": ["assembly promotion", "identity lock", "dialogue/lip-sync acceptance", "publication"],
+  "owner": "human_editorial_review",
+  "decision": "NOT_RUN",
+  "evidence": []
+}

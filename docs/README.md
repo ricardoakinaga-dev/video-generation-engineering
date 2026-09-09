@@ -1,8 +1,8 @@
 # video-generation-engineering-vNext
 
-## Implemented package — 2026-09-09 (R3)
+## Implemented package — 2026-09-09 (R4)
 
-The repository skill now exists at [SKILL.md](../.agents/skills/video-generation-engineering/SKILL.md). [Implementation results](../IMPLEMENTATION.md) record tested software, actual local ComfyUI execution and remaining media/provider limits. The R3 prompt copies, frozen quality bar, capability matrix, scorecard and closure report are the current release packet; historical gates remain preserved and do not certify unavailable production media. See [`00-index.md`](00-index.md), [ADR-011](adr/ADR-011-skill-implementation-and-evidence.md) and [ADR-012](adr/ADR-012-triple-aaa-quality-boundary.md).
+The repository skill now exists at [SKILL.md](../.agents/skills/video-generation-engineering/SKILL.md). [Implementation results](../IMPLEMENTATION.md) record tested software, actual local ComfyUI execution and remaining media/provider limits. The R4 prompt copy, frozen quality bar, capability matrix, scorecard and closure report are the current release packet; historical gates remain preserved and do not certify unavailable production media. See [`00-index.md`](00-index.md), [ADR-011](adr/ADR-011-skill-implementation-and-evidence.md) and [ADR-012](adr/ADR-012-triple-aaa-quality-boundary.md).
 
 ## Purpose
 
@@ -10,7 +10,7 @@ Provide the design source and historical boundary record for a model-agnostic ge
 
 ## Status
 
-The expanded Phase 0 documentation remains historical context; the R3 implementation packet is `READY_WITH_RISKS` for the software Skill and `BLOCKED` for the production pillar. The prior Gauntlet `FINISHED/PASS` record and R1/R2 critics are historical. Current production evidence remains scoped to exact local artifacts, and the fresh R3 critic record is separately preserved as `INCOMPLETE` in `verification/`.
+The expanded Phase 0 documentation remains historical context; the R4 implementation packet is `READY_WITH_RISKS` for the software Skill and `PARTIAL` for the production pillar. The prior Gauntlet `FINISHED/PASS` record and R1/R2/R3 critics are historical. Current production evidence remains scoped to exact local artifacts, and the fresh R4 critic record is separately preserved in `verification/`.
 
 Use [`00-index.md`](00-index.md) as the canonical navigation hub. Documentation and deterministic verification do not invoke a paid API, upload or new external generation job; the report retains prior local ComfyUI evidence with its exact scope.
 
@@ -30,8 +30,8 @@ This package turns [`BLUEPRINT.md`](BLUEPRINT.md) into a testable design for a g
 10. [`failure-and-evals.md`](failure-and-evals.md), [`golden-scenarios.md`](golden-scenarios.md), and [`adversarial-scenarios.md`](adversarial-scenarios.md) define failure, golden, red-team, and oracle coverage.
 11. [`acceptance.md`](acceptance.md) and [`traceability.md`](traceability.md) define gates, Phase 0 acceptance, and end-to-end coverage.
 12. [`observability.md`](observability.md), [`safety-boundaries.md`](safety-boundaries.md), and [`progressive-disclosure.md`](progressive-disclosure.md) define diagnostics, safety, authorization, and context routing.
-13. [`triple-aaa-validation.md`](triple-aaa-validation.md), [`capability-matrix-r3.md`](capability-matrix-r3.md), [`long-form-validation.md`](long-form-validation.md), [`triple-aaa-scorecard-r3.md`](triple-aaa-scorecard-r3.md) and [`triple-aaa-final-production-closure.md`](triple-aaa-final-production-closure.md) form the current R3 closure packet.
-14. [`master-closure-prompt-triple-aaa-20260909-part-1.txt`](master-closure-prompt-triple-aaa-20260909-part-1.txt), [`master-closure-prompt-triple-aaa-20260909-part-2.txt`](master-closure-prompt-triple-aaa-20260909-part-2.txt) and [`triple-aaa-quality-bar-r3.json`](triple-aaa-quality-bar-r3.json) preserve the current closure authority.
+13. [`triple-aaa-validation.md`](triple-aaa-validation.md), [`capability-matrix-r4.md`](capability-matrix-r4.md), [`long-form-validation.md`](long-form-validation.md), [`triple-aaa-scorecard-r4.md`](triple-aaa-scorecard-r4.md) and [`triple-aaa-final-production-closure-r4.md`](triple-aaa-final-production-closure-r4.md) form the current R4 closure packet.
+14. [`master-prompt-triple-aaa-final-production-closure-20260909.txt`](master-prompt-triple-aaa-final-production-closure-20260909.txt) and [`triple-aaa-quality-bar-r4.json`](triple-aaa-quality-bar-r4.json) preserve the current closure authority.
 15. [`proposed-skill-structure.md`](proposed-skill-structure.md), [`open-questions.md`](open-questions.md), [`roadmap.md`](roadmap.md), and [`phase-0-report.md`](phase-0-report.md) preserve the Phase 0 handoff and its historical gates; the current implementation is linked at the top of each document.
 
 ## Canonical ownership

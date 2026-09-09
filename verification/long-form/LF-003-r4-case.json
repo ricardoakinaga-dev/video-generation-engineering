@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "LF-003",
+  "target_duration_s": 50.0,
+  "intent_ref": "verification/long-form/LF-003-r4-plan.json",
+  "plan_ref": "verification/long-form/LF-003-r4-plan.json",
+  "scene_bible_ref": "verification/long-form/LF-003-r4-scene-bible.json",
+  "shot_graph_ref": "verification/long-form/LF-003-r4-shot-graph.json",
+  "continuity_ref": "verification/long-form/LF-003-r4-continuity.json",
+  "evidence_ref": "verification/long-form/LF-003-r4-plan.json",
+  "shot_ids": ["LF003-S01", "LF003-S02", "LF003-S03", "LF003-S04", "LF003-S05", "LF003-S06", "LF003-S07", "LF003-S08", "LF003-S09", "LF003-S10"],
+  "audio_timeline_ref": "verification/long-form/LF-003-r4-audio-timeline.json",
+  "repair_budget_ref": "verification/long-form/LF-003-r4-repair-budget.json",
+  "human_checkpoint_ref": "verification/long-form/LF-003-r4-human-checkpoint.json",
+  "status": "BLOCKED",
+  "production_evidence_complete": false,
+  "blockers": [
+    "No accepted 45–60 second dependent-shot chain",
+    "LF-002 dialogue/audio dependency is blocked",
+    "No real repair ledger, transition envelope or human editorial checkpoint"
+  ],
+  "next_action": "Do not schedule production until LF-001 and LF-002 provide accepted reusable evidence and the ten-shot budget is authorized."
+}

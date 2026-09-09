@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "id": "assembly_lf001_r4_preview_15s",
+  "shot_order": [
+    "LF001-S01",
+    "LF001-S02",
+    "LF001-S03"
+  ],
+  "kind": "PREVIEW",
+  "artifact": {
+    "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/LF-001-r4-assembled-15s-preview.mp4",
+    "content_hash": "sha256:29000c8c4ce42dce63c030dab9db8999514c783688074c6e83fa52acfcf7bad1",
+    "observed_at": "2026-09-09T21:00:18.981081+00:00",
+    "procedure": "ffprobe streams and format; SHA-256 of local bytes",
+    "duration_s": 15.056,
+    "fps": 24.0,
+    "video_streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "width": 384,
+        "height": 224,
+        "coded_width": 384,
+        "coded_height": 224,
+        "closed_captions": 0,
+        "film_grain": 0,
+        "has_b_frames": 2,
+        "pix_fmt": "yuv420p",
+        "level": 13,
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "iec61966-2-1",
+        "color_primaries": "bt709",
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "refs": 1,
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "24/1",
+        "avg_frame_rate": "24/1",
+        "time_base": "1/12288",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 184832,
+        "duration": "15.041667",
+        "bit_rate": "634832",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "361",
+        "extradata_size": 47,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "vendor_id": "[0][0][0][0]",
+          "encoder": "Lavc60.31.102 libx264"
+        }
+      }
+    ],
+    "audio_streams": [
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "sample_fmt": "fltp",
+        "sample_rate": "32000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/32000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 481792,
+        "duration": "15.056000",
+        "bit_rate": "128960",
+        "nb_frames": "472",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "SoundHandler",
+          "vendor_id": "[0][0][0][0]"
+        }
+      }
+    ],
+    "format": "mov,mp4,m4a,3gp,3g2,mj2",
+    "status": "PARTIAL",
+    "limitations": [
+      "Metadata does not establish identity, lip-sync, contact, story or editorial quality"
+    ]
+  },
+  "segments": [
+    {
+      "shot_id": "LF001-S01",
+      "artifact_id": "trim_lf001_s01_r4_5s",
+      "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s01_r4_5s.mp4",
+      "content_hash": "sha256:30b2bb4e45efcde2a0f733c46af14d8108eefcf7e848d0ef5aa73937ac8c2cda",
+      "duration_s": 5.0,
+      "fps": 24,
+      "resolution": {
+        "width": 384,
+        "height": 224
+      },
+      "audio_source": {
+        "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s01_r4_5s.mp4",
+        "content_hash": "sha256:30b2bb4e45efcde2a0f733c46af14d8108eefcf7e848d0ef5aa73937ac8c2cda"
+      },
+      "transition": {
+        "status": "NONE"
+      },
+      "source_attempt": {
+        "id": "attempt_e2ba123f3dcc4e618852f26564db0c06"
+      },
+      "repair_lineage": []
+    },
+    {
+      "shot_id": "LF001-S02",
+      "artifact_id": "trim_lf001_s02_r4_5s",
+      "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s02_r4_5s.mp4",
+      "content_hash": "sha256:f09f69c9470d054ebcd0ea63667bc329978da782ab1f003acb1c2b34d1bc0055",
+      "duration_s": 5.0,
+      "fps": 24,
+      "resolution": {
+        "width": 384,
+        "height": 224
+      },
+      "audio_source": {
+        "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s02_r4_5s.mp4",
+        "content_hash": "sha256:f09f69c9470d054ebcd0ea63667bc329978da782ab1f003acb1c2b34d1bc0055"
+      },
+      "transition": {
+        "status": "DECLARED",
+        "start_s": 0.0,
+        "end_s": 0.0
+      },
+      "source_attempt": {
+        "id": "attempt_837c51fbb5ea4ba9926f671638f70da4"
+      },
+      "repair_lineage": []
+    },
+    {
+      "shot_id": "LF001-S03",
+      "artifact_id": "trim_lf001_s03_r4_5s",
+      "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s03_r4_5s.mp4",
+      "content_hash": "sha256:988bd66dd42c0d64c17ecd50d7456bf86cfa4068bbdbae8390e1570761530988",
+      "duration_s": 5.0,
+      "fps": 24,
+      "resolution": {
+        "width": 384,
+        "height": 224
+      },
+      "audio_source": {
+        "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s03_r4_5s.mp4",
+        "content_hash": "sha256:988bd66dd42c0d64c17ecd50d7456bf86cfa4068bbdbae8390e1570761530988"
+      },
+      "transition": {
+        "status": "DECLARED",
+        "start_s": 0.0,
+        "end_s": 0.0
+      },
+      "source_attempt": {
+        "id": "attempt_328c345de305471faba150dd74f7b907"
+      },
+      "repair_lineage": [
+        "DEC-REANCHOR-LF001-S03"
+      ]
+    }
+  ],
+  "source_artifacts": [
+    {
+      "id": "trim_lf001_s01_r4_5s",
+      "shot_id": "LF001-S01",
+      "content_hash": "sha256:30b2bb4e45efcde2a0f733c46af14d8108eefcf7e848d0ef5aa73937ac8c2cda"
+    },
+    {
+      "id": "trim_lf001_s02_r4_5s",
+      "shot_id": "LF001-S02",
+      "content_hash": "sha256:f09f69c9470d054ebcd0ea63667bc329978da782ab1f003acb1c2b34d1bc0055"
+    },
+    {
+      "id": "trim_lf001_s03_r4_5s",
+      "shot_id": "LF001-S03",
+      "content_hash": "sha256:988bd66dd42c0d64c17ecd50d7456bf86cfa4068bbdbae8390e1570761530988"
+    }
+  ],
+  "final_artifact_binding": {
+    "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/LF-001-r4-assembled-15s-preview.mp4",
+    "content_hash": "sha256:29000c8c4ce42dce63c030dab9db8999514c783688074c6e83fa52acfcf7bad1",
+    "source_shots": [
+      {
+        "shot_id": "LF001-S01",
+        "artifact_id": "trim_lf001_s01_r4_5s",
+        "content_hash": "sha256:30b2bb4e45efcde2a0f733c46af14d8108eefcf7e848d0ef5aa73937ac8c2cda"
+      },
+      {
+        "shot_id": "LF001-S02",
+        "artifact_id": "trim_lf001_s02_r4_5s",
+        "content_hash": "sha256:f09f69c9470d054ebcd0ea63667bc329978da782ab1f003acb1c2b34d1bc0055"
+      },
+      {
+        "shot_id": "LF001-S03",
+        "artifact_id": "trim_lf001_s03_r4_5s",
+        "content_hash": "sha256:988bd66dd42c0d64c17ecd50d7456bf86cfa4068bbdbae8390e1570761530988"
+      }
+    ]
+  },
+  "audio": null,
+  "mechanical_status": "PASS",
+  "technical_acceptance": "PASS",
+  "semantic_acceptance": "NOT_RUN",
+  "generation_acceptance": "NOT_RUN",
+  "editorial_acceptance": "NOT_RUN"
+}

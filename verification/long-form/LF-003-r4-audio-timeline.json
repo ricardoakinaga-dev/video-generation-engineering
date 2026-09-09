@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "LF-003-r4-audio-timeline",
+  "case_id": "LF-003",
+  "status": "NOT_RUN",
+  "required_layers": ["DIALOGUE", "VOICE", "FOLEY", "AMBIENCE", "MUSIC", "MIX"],
+  "events": [
+    {"id": "LF003-A01", "layer": "AMBIENCE", "start_s": 0.0, "end_s": 50.0, "cause": "continuous location bed", "source": "planned roadside ambience"},
+    {"id": "LF003-A02", "layer": "DIALOGUE", "start_s": 6.0, "end_s": 18.0, "cause": "conversation and reaction", "source": "LF-002 dependency"},
+    {"id": "LF003-A03", "layer": "FOLEY", "start_s": 24.0, "end_s": 32.0, "cause": "envelope and vehicle contact", "source": "planned interaction coverage"}
+  ],
+  "blockers": ["No accepted LF-002 dialogue dependency", "No collected 50-second audio artifact or mix review"]
+}

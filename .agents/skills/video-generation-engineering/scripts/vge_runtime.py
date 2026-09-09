@@ -44,6 +44,26 @@ def _runtime_name(value, label):
     return value
 
 
+def _workflow_equivalent(expected, observed):
+    """Compare an API graph structurally while tolerating JSON numeric coercion.
+
+    ComfyUI may round-trip an integer widget as ``1.0`` in `/history`.  That
+    representation change is not a graph mutation, but the sealed byte-level
+    digest must remain unchanged and the returned graph hash is recorded
+    separately at collection time.
+    """
+    if isinstance(expected, dict) and isinstance(observed, dict):
+        return (set(expected) == set(observed)
+                and all(_workflow_equivalent(expected[key], observed[key]) for key in expected))
+    if isinstance(expected, list) and isinstance(observed, list):
+        return len(expected) == len(observed) and all(
+            _workflow_equivalent(left, right) for left, right in zip(expected, observed))
+    if isinstance(expected, (int, float)) and not isinstance(expected, bool) \
+            and isinstance(observed, (int, float)) and not isinstance(observed, bool):
+        return expected == observed
+    return type(expected) is type(observed) and expected == observed
+
+
 class ComfyClient:
     def __init__(self, endpoint, timeout=15, remote=False, token=None):
         url = urlsplit(endpoint)
@@ -430,6 +450,18 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
         require(profile_workflow_hash == digest(workflow), "Workflow differs from the profile's probed graph; bind and revalidate the profile first")
     accepted_dependencies = context.get("accepted_dependencies", [])
     require(isinstance(accepted_dependencies, list), "accepted_dependencies must be an array")
+    accepted_dependency_refs = context.get("accepted_dependency_refs", [])
+    require(isinstance(accepted_dependency_refs, list), "accepted_dependency_refs must be an array")
+    for dependency_ref in accepted_dependency_refs:
+        require(isinstance(dependency_ref, str) and dependency_ref, "accepted dependency reference must be a nonempty path")
+        dependency_path = Path(dependency_ref)
+        require(dependency_path.is_file(), f"Accepted dependency bundle is unavailable: {dependency_ref}")
+        try:
+            dependency_bundle = json.loads(dependency_path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            raise ContractError(f"Accepted dependency bundle cannot be read: {dependency_ref}") from exc
+        require(isinstance(dependency_bundle, dict), "Accepted dependency bundle must be an object")
+        accepted_dependencies.append(dependency_bundle)
     for bundle in accepted_dependencies:
         require(isinstance(bundle, dict) and isinstance(bundle.get("artifact"), dict) and isinstance(bundle.get("shot"), dict), "Each accepted dependency must contain an artifact and canonical shot bundle")
     predecessors = {b["artifact"].get("shot_id"): b for b in accepted_dependencies}
@@ -622,7 +654,16 @@ def collect(client, attempt, history, destination):
     history_status = raw.get("status", {})
     require(isinstance(history_status, dict) and history_status.get("completed") is True and history_status.get("status_str") == "success", "History does not confirm successful completion")
     submitted_prompt = raw.get("prompt", [])
-    require(isinstance(submitted_prompt, list) and len(submitted_prompt) >= 3 and submitted_prompt[1] == history["prompt_id"] and digest(submitted_prompt[2]) == attempt["workflow"]["content_hash"], "Runtime history does not match the sealed workflow")
+    sealed_graph_path = Path(attempt["workflow"]["ref"])
+    require(sealed_graph_path.is_file(), "Sealed workflow graph is unavailable")
+    try:
+        sealed_workflow = json.loads(sealed_graph_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ContractError("Sealed workflow graph cannot be read") from exc
+    require(isinstance(submitted_prompt, list) and len(submitted_prompt) >= 3
+            and submitted_prompt[1] == history["prompt_id"]
+            and _workflow_equivalent(sealed_workflow, submitted_prompt[2]),
+            "Runtime history does not match the sealed workflow")
     out = Path(destination)
     out.mkdir(parents=True, exist_ok=True)
     completed = copy.deepcopy(attempt)
@@ -666,7 +707,7 @@ def collect(client, attempt, history, destination):
                             "profile_content_hash": attempt["profile"].get("content_hash"),
                             "model_asset_hash": attempt["model"].get("asset_hash"),
                             "input_hashes": copy.deepcopy(attempt.get("inputs", [])),
-                            "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "workflow_hash": attempt["workflow"]["content_hash"], "workflow_fingerprint": attempt["workflow"].get("fingerprint"), "shot_contract_hash": attempt["shot_contract_hash"], "profile_id": attempt["profile"].get("id"), "profile_revision": attempt["profile"].get("revision"), "profile_content_hash": attempt["profile"].get("content_hash"), "model_asset_hash": attempt["model"].get("asset_hash"), "input_hashes": copy.deepcopy(attempt.get("inputs", [])), "selected_device": attempt["runtime"].get("selected_device"), "resource_context_hash": attempt["runtime"].get("resource_context_hash"), "runtime_context": copy.deepcopy(attempt["runtime"].get("runtime_context", {}))}, "quality_review": {"lifecycle": "NOT_STARTED", "observation_ref": None}}
+                            "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "workflow_hash": attempt["workflow"]["content_hash"], "runtime_history_workflow_hash": digest(submitted_prompt[2]), "workflow_fingerprint": attempt["workflow"].get("fingerprint"), "shot_contract_hash": attempt["shot_contract_hash"], "profile_id": attempt["profile"].get("id"), "profile_revision": attempt["profile"].get("revision"), "profile_content_hash": attempt["profile"].get("content_hash"), "model_asset_hash": attempt["model"].get("asset_hash"), "input_hashes": copy.deepcopy(attempt.get("inputs", [])), "selected_device": attempt["runtime"].get("selected_device"), "resource_context_hash": attempt["runtime"].get("resource_context_hash"), "runtime_context": copy.deepcopy(attempt["runtime"].get("runtime_context", {}))}, "quality_review": {"lifecycle": "NOT_STARTED", "observation_ref": None}}
                 save(out / (aid + ".json"), artifact)
                 records.append(artifact)
     require(records, "Job completed without collectible outputs")

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "id": "FLF-r4",
+  "status": "NOT_RUN",
+  "profile_scope": "No current profile confirms first/last-frame conditioning in this repository run.",
+  "modes": {
+    "FIRST_ONLY": {"status": "NOT_RUN", "artifact": null, "blocker": "No endpoint input/output probe executed"},
+    "LAST_ONLY": {"status": "NOT_RUN", "artifact": null, "blocker": "No endpoint input/output probe executed"},
+    "FIRST_AND_LAST": {"status": "NOT_RUN", "artifact": null, "blocker": "No endpoint input/output probe executed"}
+  },
+  "required_checks": ["endpoint_identity", "motion_path", "object_state", "artifact_delivery"],
+  "limitations": ["The T2V H3 runs do not establish FLF capability.", "No endpoint artifact is promoted from a planned input."]
+}

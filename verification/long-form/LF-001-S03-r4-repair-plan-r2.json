@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "plan_revision": 1,
+  "changed_shot_ids": [
+    "LF001-S03"
+  ],
+  "affected_shot_ids": [
+    "LF001-S03"
+  ],
+  "preserved_shot_ids": [
+    "LF001-S01",
+    "LF001-S02"
+  ],
+  "routes": [
+    {
+      "id": "F-LF001-S03-ARTIFACT",
+      "owner": "cinematography",
+      "shot_id": "LF001-S03",
+      "reason": "Visible colored elongated artifacts in sampled S03 frames prevent full semantic/continuity acceptance."
+    },
+    {
+      "id": "F-LF001-S03-BOUNDARY",
+      "owner": "continuity",
+      "shot_id": "LF001-S03",
+      "reason": "Re-anchor S03 at the accepted S02 entry state and revalidate the terminal state before promotion."
+    }
+  ],
+  "budget": {
+    "max_regenerations": 1,
+    "max_attempts": 1,
+    "max_runtime_s": 600,
+    "max_cost_usd": 0,
+    "human_review_threshold": 1,
+    "authorized": false
+  },
+  "estimated_regenerations": 1,
+  "transition_revalidation": {
+    "schema_version": 1,
+    "status": "NOT_REQUIRED",
+    "required_pairs": [],
+    "validated_pairs": [],
+    "evidence_refs": [],
+    "next_action": "Re-observe and validate every affected dependency transition before accepting repair"
+  },
+  "status": "AWAITING_AUTHORIZATION",
+  "limitations": [
+    "Cost/runtime estimates are declarations until a runtime ledger is attached"
+  ]
+}

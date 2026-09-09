@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "id": "LF-003-r4-continuity",
+  "case_id": "LF-003",
+  "status": "STRUCTURAL_ONLY",
+  "locked_dimensions": ["identity", "wardrobe", "position", "gaze", "hand_occupancy", "object_ownership", "vehicle_state", "lighting", "screen_direction", "audio_state", "time"],
+  "anchor_policy": "Accepted artifact observations only; generated boundary frames remain candidates until reviewed.",
+  "repair_policy": "Repair the smallest affected shot/subgraph, preserve unaffected siblings and revalidate all downstream transitions."
+}

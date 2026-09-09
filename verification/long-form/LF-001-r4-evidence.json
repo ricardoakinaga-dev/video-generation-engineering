@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "LF-001-r4-evidence",
+  "case_id": "LF-001",
+  "status": "PARTIAL",
+  "production_evidence_complete": false,
+  "segments": [
+    {"shot_id": "LF001-S01", "artifact": "verification/media/art_730e6a3d284b4ce49b24a1dbdbc37a4d.json", "semantic": "verification/long-form/LF-001-S01-r4-semantic-observation.json", "status": "PASS"},
+    {"shot_id": "LF001-S02", "artifact": "verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.json", "semantic": "verification/long-form/LF-001-S02-r4-semantic-observation.json", "status": "PASS"},
+    {"shot_id": "LF001-S03", "artifact": "verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.json", "semantic": "verification/long-form/LF-001-S03-r4-semantic-observation.json", "status": "PARTIAL"}
+  ],
+  "transitions": ["verification/long-form/LF-001-T01-r4-transition.json", "verification/long-form/LF-001-T02-r4-transition.json"],
+  "assembly_preview": "verification/long-form/LF-001-r4-assembly-preview-r2.json",
+  "limitations": ["This is a partial production evidence bundle; it cannot support a Triple-AAA final verdict."]
+}

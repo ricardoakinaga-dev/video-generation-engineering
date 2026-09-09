@@ -1,0 +1,17 @@
+{
+  "status": "PARTIAL",
+  "accepted": false,
+  "affected_shot_ids": [
+    "LF001-S03"
+  ],
+  "preserved_shot_ids": [
+    "LF001-S01",
+    "LF001-S02"
+  ],
+  "authorized": false,
+  "execution_ledger_status": "NOT_RUN",
+  "transition_revalidation_status": "NOT_REQUIRED",
+  "limitations": [
+    "Repair usage remains unmeasured until an execution ledger is attached"
+  ]
+}

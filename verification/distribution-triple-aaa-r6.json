@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-09T21:34:00Z",
+  "status": "PASS",
+  "scope": "FROZEN_PORTABLE_SKILL_DISTRIBUTION_AFTER_INDEPENDENT_CRITIC",
+  "archive": {
+    "path": "dist/video-generation-engineering-triple-aaa-r6.zip",
+    "sha256": "sha256:3953a27801f72d4e4d18653792b849f56b2484d6e6d80d7928a4d2de25e53df4",
+    "bytes": 130922,
+    "entry_count": 38,
+    "file_count": 29,
+    "crc_test": "PASS",
+    "unsafe_paths": "PASS",
+    "secret_value_scan": "PASS",
+    "model_weight_files": "PASS",
+    "bytecode": "PASS"
+  },
+  "package_scope": ".agents/skills/video-generation-engineering",
+  "package_manifest": {
+    "procedure": "sha256sum over sorted package files, excluding __pycache__ and *.pyc; manifest bytes hashed as UTF-8 lines",
+    "sha256": "sha256:d6a44be976a4a228b86d0789b18e6374fed32ea492e1571ee55da5b107c59051",
+    "file_count": 29
+  },
+  "required_members": [
+    ".agents/skills/video-generation-engineering/SKILL.md",
+    ".agents/skills/video-generation-engineering/scripts/vge.py",
+    ".agents/skills/video-generation-engineering/scripts/vge_quality_common.py",
+    ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+    ".agents/skills/video-generation-engineering/references/production-quality.md",
+    ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json"
+  ],
+  "verification": {
+    "compileall": "PASS",
+    "skill_quick_validate": "PASS",
+    "external_cwd_smoke": {
+      "status": "PASS",
+      "commands": ["--help", "prepare", "validate", "compile"],
+      "working_directory": "temporary directory outside repository",
+      "internal_absolute_dependency": false
+    },
+    "import_dag": {"status": "PASS", "modules": 8, "edges": 23, "cycles": []},
+    "credential_value_scan": "PASS",
+    "workspace_path_scan": "PASS"
+  },
+  "post_critic_accounting": {
+    "critic_memo": "verification/triple-aaa-independent-critic-r4.md",
+    "critic_verdict": "REJECT",
+    "candidate_fingerprint": "sha256:6912e357f0d9523591956334749780c56f61b801db85255345034873e22fd589",
+    "mutation_sentinel": "sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80",
+    "candidate_scope_unchanged": true
+  },
+  "limitations": [
+    "Distribution proves package transport and deterministic structural contracts, not provider capability or audiovisual semantics.",
+    "The archive intentionally excludes project docs, generated runtime media, credentials and model weights.",
+    "The independent critic rejected Triple-AAA production readiness because the audiovisual ladder remains partial."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PARTIAL",
+  "accepted": false,
+  "missing_dimensions": [],
+  "failed_dimensions": [],
+  "partial_dimensions": [
+    "object_state_ownership",
+    "temporal"
+  ],
+  "unobserved_dimensions": []
+}

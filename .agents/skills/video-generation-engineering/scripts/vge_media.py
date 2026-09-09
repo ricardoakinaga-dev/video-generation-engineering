@@ -12,7 +12,7 @@ from pathlib import Path
 
 from vge_core import ContractError, file_hash, hash_value, number, require, save
 from vge_evidence import validate_observation
-from vge_quality import aggregate_quality
+from vge_quality_common import aggregate_quality
 
 
 def run(command, timeout=120):
@@ -206,6 +206,33 @@ def media_qa(path, audio_required=False, allow_black=False, allow_freeze=False, 
             "checks": checks, "frame_count": frame_count, "status": status, "accepted": status == "PASS", "limitations": limitations}
 
 
+def trim(path, output, duration_s):
+    """Create a new, hashable derived segment with an explicit duration trim."""
+    source = Path(path).resolve(strict=True)
+    output = Path(output).resolve()
+    require(number(duration_s, True) and duration_s > 0, "Trim duration must be positive")
+    require(not output.exists(), "Trim output exists; use a new revision")
+    source_probe = probe(source)
+    require(source_probe["video_streams"] and source_probe["duration_s"] > 0, "Trim source must contain a video")
+    require(duration_s <= source_probe["duration_s"] + 1 / max(source_probe.get("fps") or 24, 1) + 0.02,
+            "Trim duration cannot exceed the source duration")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    run(["ffmpeg", "-nostdin", "-v", "error", "-n", "-i", str(source), "-t", str(duration_s),
+         "-map", "0:v:0", "-map", "0:a:0?", "-c:v", "libx264", "-crf", "18",
+         "-pix_fmt", "yuv420p", "-c:a", "aac", "-movflags", "+faststart", str(output)], timeout=300)
+    actual = probe(output)
+    fps = source_probe.get("fps") or actual.get("fps") or 24
+    require(abs(actual["duration_s"] - duration_s) <= 1 / fps + 0.08, "Trimmed duration failed validation")
+    require(actual.get("fps") is not None and abs(actual["fps"] - fps) < 0.001, "Trimmed FPS differs from source")
+    require(len(actual["video_streams"]) == 1, "Trimmed output must contain exactly one video stream")
+    require(bool(actual["audio_streams"]) == bool(source_probe["audio_streams"]), "Trim changed the declared audio presence")
+    return {"schema_version": 1, "kind": "TRIMMED_MEDIA", "source": source_probe,
+            "artifact": actual, "target_duration_s": duration_s,
+            "procedure": "Explicit ffmpeg duration trim with H.264/AAC remux and post-trim ffprobe validation",
+            "status": "PASS", "accepted": True,
+            "limitations": ["Derived media preserves source bytes only by lineage; it does not add semantic or editorial acceptance."]}
+
+
 def validate_assembly_manifest(manifest, inspections=None, final_artifact=None):
     """Validate ordered shot lineage before and after a mechanical assembly."""
     require(isinstance(manifest, dict), "Assembly manifest must be an object")
@@ -380,7 +407,7 @@ def assemble(manifest, output, preview=False):
             command += ["-i", str(Path(audio).resolve()), "-map", "0:v:0", "-map", "1:a:0"]
         else:
             command += ["-map", "0:v:0", "-map", "0:a:0?"]
-        command += ["-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-movflags", "+faststart", str(staged)]
+        command += ["-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-t", str(target), "-movflags", "+faststart", str(staged)]
         run(command, timeout=300)
         actual = probe(staged)
         require(abs(actual["duration_s"]-target) <= len(segments)/fps+0.08, "Encoded output duration failed validation")

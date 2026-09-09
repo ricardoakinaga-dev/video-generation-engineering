@@ -1,0 +1,870 @@
+{
+  "schema_version": 1,
+  "plan_hash": "sha256:d389d55ae6cf1500c95ebf5d0b317cd0cef70da02365c17a488a137cf4cc33d3",
+  "execution_mode": "PLAN_ONLY",
+  "status": "PASS",
+  "prompts": [
+    {
+      "schema_version": 1,
+      "shot_id": "shot_001",
+      "canonical_revision": "scene_001_rev1",
+      "profile_reference": null,
+      "sections": {
+        "subject_and_identity": {
+          "entities": [
+            {
+              "id": "subject_courier",
+              "type": "character",
+              "description": "Fictional adult courier in a plain blue jacket",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "vehicle_van",
+              "type": "vehicle",
+              "description": "Plain grey van without brand marks",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "environment_driveway",
+              "type": "environment",
+              "description": "Quiet driveway",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "active_entity_ids": [
+            "subject_courier"
+          ],
+          "supporting_entity_ids": [],
+          "unreferenced_entity_ids": [
+            "vehicle_van",
+            "environment_driveway"
+          ],
+          "retention": [],
+          "relationships": [],
+          "prohibited_drift": []
+        },
+        "setting_and_time": {
+          "scene_intent": {
+            "schema_version": 1,
+            "project_id": "proj_example",
+            "scene_id": "scene_001",
+            "title": "A door opens",
+            "objective": "Show a fictional courier opening a stationary van door with readable contact",
+            "duration": {
+              "target_seconds": 6
+            },
+            "target": {
+              "platform": "unselected",
+              "aspect_ratio": "16:9",
+              "delivery": "video"
+            },
+            "subjects": [
+              "subject_courier"
+            ],
+            "objects": [
+              "vehicle_van"
+            ],
+            "environments": [
+              "environment_driveway"
+            ],
+            "actions": [
+              "reach",
+              "contact",
+              "pull"
+            ],
+            "dialogue_required": false,
+            "audio_required": false,
+            "style_preferences": [
+              "naturalistic"
+            ],
+            "hard_constraints": [
+              "Show hand contact before door rotation"
+            ],
+            "preferences": [
+              "medium static coverage"
+            ],
+            "unknowns": [
+              "Target model not selected"
+            ]
+          },
+          "project_id": "proj_example",
+          "scene_id": "scene_001",
+          "revision": 1,
+          "scope": "CONTIGUOUS_SEQUENCE",
+          "geography": "driveway; courier left, van right",
+          "time_of_day": "morning",
+          "lighting": "soft daylight from camera left",
+          "visual_style": "naturalistic",
+          "camera_language": "hold through contact",
+          "continuity_rules": [],
+          "audio_identity": "UNKNOWN"
+        },
+        "action_sequence": {
+          "shot_id": "shot_001",
+          "purpose": "Make contact and door articulation legible",
+          "actions": [
+            "reach",
+            "contact",
+            "pull"
+          ],
+          "motion_primitives": [],
+          "interactions": [
+            {
+              "id": "contact_shot_001",
+              "shot_id": "shot_001",
+              "actor": "subject_courier",
+              "target": "vehicle_van",
+              "effector": "right_hand",
+              "phases": [
+                "reach",
+                "contact",
+                "pull"
+              ],
+              "success_criterion": "Hand stays on handle as door rotates"
+            }
+          ],
+          "state_changes": [
+            {
+              "property": "subject_courier.right_hand",
+              "prior": "free",
+              "next": "door_handle",
+              "cause": "contact"
+            },
+            {
+              "property": "vehicle_van.door",
+              "prior": "closed",
+              "next": "open",
+              "cause": "pull"
+            }
+          ]
+        },
+        "performance": [
+          "Eyes settle on the handle before reaching"
+        ],
+        "camera": {
+          "size": "MEDIUM",
+          "angle": "EYE_LEVEL",
+          "focal_length": "50mm_equivalent",
+          "framing": "HAND_AND_DOOR",
+          "focus": "subject_courier.right_hand",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL",
+          "exposure": "LOCKED_TO_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "vehicle_van",
+          "movement": {
+            "type": "STATIC",
+            "direction": "NONE",
+            "phase": "HOLD_CONTACT"
+          },
+          "screen_direction": "LEFT_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "HOLD_THROUGH_CONTACT"
+        },
+        "lighting_and_style": {
+          "scene": "naturalistic",
+          "camera_language": "hold through contact",
+          "lighting": "soft daylight from camera left"
+        },
+        "audio_or_sync": {
+          "identity": {},
+          "dialogue": [],
+          "audio": []
+        },
+        "continuity": {
+          "initial_state_ref": "scene_bible:scene_001:initial",
+          "start": "scene_bible:scene_001:initial",
+          "start_delta": {},
+          "end": {
+            "subject_courier.position": "beside_van",
+            "subject_courier.right_hand": "door_handle",
+            "vehicle_van.door": "open",
+            "vehicle_van.ignition": "OFF"
+          },
+          "end_delta": {
+            "subject_courier.right_hand": "door_handle",
+            "vehicle_van.door": "open"
+          },
+          "changes": [
+            {
+              "property": "subject_courier.right_hand",
+              "prior": "free",
+              "next": "door_handle",
+              "cause": "contact"
+            },
+            {
+              "property": "vehicle_van.door",
+              "prior": "closed",
+              "next": "open",
+              "cause": "pull"
+            }
+          ]
+        },
+        "constraints": {
+          "hard": [
+            "Show hand contact before door rotation"
+          ],
+          "global": [
+            {
+              "constraint_id": "con_contact",
+              "subject": "subject_courier",
+              "kind": "QA_ASSERTION",
+              "statement": "Visible hand contact precedes door rotation",
+              "priority": "HIGH",
+              "scope": [
+                "shot_001"
+              ],
+              "evidence": {
+                "status": "PROPOSED",
+                "claim_type": "DECISION",
+                "confidence": "HIGH"
+              },
+              "validation": {
+                "method": "frame_sequence_review",
+                "blocking": true
+              },
+              "fallback": "SPLIT_CONTACT",
+              "status": "PROPOSED"
+            }
+          ],
+          "shot": [
+            "con_contact"
+          ],
+          "prohibited_drift": [],
+          "negative_selection": {
+            "schema_version": 1,
+            "status": "PASS",
+            "selected_families": [
+              "IDENTITY",
+              "HANDS",
+              "CONTACT",
+              "VEHICLE",
+              "ENVIRONMENT",
+              "TEMPORAL",
+              "CAMERA"
+            ],
+            "selected": [],
+            "omitted": [],
+            "limits": {
+              "generic_untyped_constraints": "OMIT",
+              "unrelated_families": "OMIT"
+            },
+            "limitations": [
+              "Negative constraints are generation hints; semantic QA remains authoritative"
+            ]
+          }
+        },
+        "references": {
+          "assets": [],
+          "scene_reference_ids": [],
+          "shot_reference_ids": [],
+          "all_reference_ids": [],
+          "retention_rules": []
+        }
+      },
+      "mappings": [
+        {
+          "canonical_section": "subject_and_identity",
+          "compiled_representation": "positive_prompt.subject_and_identity",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "setting_and_time",
+          "compiled_representation": "positive_prompt.setting_and_time",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "action_sequence",
+          "compiled_representation": "positive_prompt.action_sequence",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "performance",
+          "compiled_representation": "positive_prompt.performance",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "camera",
+          "compiled_representation": "positive_prompt.camera",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "lighting_and_style",
+          "compiled_representation": "positive_prompt.lighting_and_style",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "audio_or_sync",
+          "compiled_representation": "positive_prompt.audio_or_sync",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "continuity",
+          "compiled_representation": "positive_prompt.continuity",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "constraints",
+          "compiled_representation": "positive_prompt.constraints",
+          "status": "PROPOSED"
+        },
+        {
+          "canonical_section": "references",
+          "compiled_representation": "positive_prompt.references",
+          "status": "PROPOSED"
+        }
+      ],
+      "omissions": [],
+      "canonical_coverage": {
+        "scene_entity_ids": [
+          "subject_courier",
+          "vehicle_van",
+          "environment_driveway"
+        ],
+        "compiled_entity_ids": [
+          "subject_courier",
+          "vehicle_van",
+          "environment_driveway"
+        ],
+        "scene_reference_ids": [],
+        "compiled_reference_ids": [],
+        "intent_fields": [
+          "actions",
+          "audio_required",
+          "dialogue_required",
+          "duration",
+          "environments",
+          "hard_constraints",
+          "objective",
+          "objects",
+          "preferences",
+          "project_id",
+          "scene_id",
+          "schema_version",
+          "style_preferences",
+          "subjects",
+          "target",
+          "title",
+          "unknowns"
+        ],
+        "scene_bible_fields": [
+          "camera_language",
+          "continuity_rules",
+          "entities",
+          "geography",
+          "initial_state",
+          "initial_state_ref",
+          "lighting",
+          "prohibited_drift",
+          "project_id",
+          "relationships",
+          "revision",
+          "scene_id",
+          "schema_version",
+          "scope",
+          "time_of_day",
+          "visual_style"
+        ],
+        "shot_fields": [
+          "acceptance_ids",
+          "action_primitives",
+          "active_subject_ids",
+          "artifact_observation_ref",
+          "camera",
+          "capability_requirements",
+          "constraints",
+          "contact_graph_ref",
+          "dependency_ids",
+          "duration_s",
+          "end_state_delta",
+          "generation_artifact_ref",
+          "generation_mode",
+          "id",
+          "lifecycle_status",
+          "performance",
+          "purpose",
+          "references",
+          "revision",
+          "risk",
+          "scene_id",
+          "start_state_delta",
+          "start_state_ref",
+          "state_changes",
+          "supporting_subject_ids"
+        ]
+      },
+      "canonical_contradiction_gate": {
+        "schema_version": 1,
+        "status": "PASS",
+        "contradictions": [],
+        "next_action": null,
+        "limitations": [
+          "This gate checks explicit canonical fields and bounded authored phrases; it is not an audiovisual oracle"
+        ]
+      },
+      "presentation": {
+        "subject_definitions": {
+          "entities": [
+            {
+              "id": "subject_courier",
+              "type": "character",
+              "description": "Fictional adult courier in a plain blue jacket",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "vehicle_van",
+              "type": "vehicle",
+              "description": "Plain grey van without brand marks",
+              "permanence": "PERSISTENT"
+            },
+            {
+              "id": "environment_driveway",
+              "type": "environment",
+              "description": "Quiet driveway",
+              "permanence": "PERSISTENT"
+            }
+          ],
+          "active_entity_ids": [
+            "subject_courier"
+          ],
+          "supporting_entity_ids": [],
+          "unreferenced_entity_ids": [
+            "vehicle_van",
+            "environment_driveway"
+          ],
+          "retention": [],
+          "relationships": [],
+          "prohibited_drift": []
+        },
+        "environment_definitions": {
+          "scene_intent": {
+            "schema_version": 1,
+            "project_id": "proj_example",
+            "scene_id": "scene_001",
+            "title": "A door opens",
+            "objective": "Show a fictional courier opening a stationary van door with readable contact",
+            "duration": {
+              "target_seconds": 6
+            },
+            "target": {
+              "platform": "unselected",
+              "aspect_ratio": "16:9",
+              "delivery": "video"
+            },
+            "subjects": [
+              "subject_courier"
+            ],
+            "objects": [
+              "vehicle_van"
+            ],
+            "environments": [
+              "environment_driveway"
+            ],
+            "actions": [
+              "reach",
+              "contact",
+              "pull"
+            ],
+            "dialogue_required": false,
+            "audio_required": false,
+            "style_preferences": [
+              "naturalistic"
+            ],
+            "hard_constraints": [
+              "Show hand contact before door rotation"
+            ],
+            "preferences": [
+              "medium static coverage"
+            ],
+            "unknowns": [
+              "Target model not selected"
+            ]
+          },
+          "project_id": "proj_example",
+          "scene_id": "scene_001",
+          "revision": 1,
+          "scope": "CONTIGUOUS_SEQUENCE",
+          "geography": "driveway; courier left, van right",
+          "time_of_day": "morning",
+          "lighting": "soft daylight from camera left",
+          "visual_style": "naturalistic",
+          "camera_language": "hold through contact",
+          "continuity_rules": [],
+          "audio_identity": "UNKNOWN"
+        },
+        "summary": "Make contact and door articulation legible",
+        "retention_analysis": [],
+        "detailed_description": {
+          "shot_id": "shot_001",
+          "purpose": "Make contact and door articulation legible",
+          "actions": [
+            "reach",
+            "contact",
+            "pull"
+          ],
+          "motion_primitives": [],
+          "interactions": [
+            {
+              "id": "contact_shot_001",
+              "shot_id": "shot_001",
+              "actor": "subject_courier",
+              "target": "vehicle_van",
+              "effector": "right_hand",
+              "phases": [
+                "reach",
+                "contact",
+                "pull"
+              ],
+              "success_criterion": "Hand stays on handle as door rotates"
+            }
+          ],
+          "state_changes": [
+            {
+              "property": "subject_courier.right_hand",
+              "prior": "free",
+              "next": "door_handle",
+              "cause": "contact"
+            },
+            {
+              "property": "vehicle_van.door",
+              "prior": "closed",
+              "next": "open",
+              "cause": "pull"
+            }
+          ]
+        },
+        "global_physical_constraints": [
+          {
+            "constraint_id": "con_contact",
+            "subject": "subject_courier",
+            "kind": "QA_ASSERTION",
+            "statement": "Visible hand contact precedes door rotation",
+            "priority": "HIGH",
+            "scope": [
+              "shot_001"
+            ],
+            "evidence": {
+              "status": "PROPOSED",
+              "claim_type": "DECISION",
+              "confidence": "HIGH"
+            },
+            "validation": {
+              "method": "frame_sequence_review",
+              "blocking": true
+            },
+            "fallback": "SPLIT_CONTACT",
+            "status": "PROPOSED"
+          }
+        ],
+        "cinematography": {
+          "size": "MEDIUM",
+          "angle": "EYE_LEVEL",
+          "focal_length": "50mm_equivalent",
+          "framing": "HAND_AND_DOOR",
+          "focus": "subject_courier.right_hand",
+          "depth_of_field": "MODERATE",
+          "motion_blur": "NATURAL",
+          "exposure": "LOCKED_TO_SCENE",
+          "lighting": "scene_bible:lighting",
+          "eyeline": "vehicle_van",
+          "movement": {
+            "type": "STATIC",
+            "direction": "NONE",
+            "phase": "HOLD_CONTACT"
+          },
+          "screen_direction": "LEFT_TO_RIGHT",
+          "axis_policy": "PRESERVE_180_AXIS",
+          "edit_rhythm": "HOLD_THROUGH_CONTACT"
+        },
+        "overall_soundscape": {
+          "identity": {},
+          "dialogue": [],
+          "audio": []
+        },
+        "negative_constraints": [],
+        "negative_constraint_selection": {
+          "schema_version": 1,
+          "status": "PASS",
+          "selected_families": [
+            "IDENTITY",
+            "HANDS",
+            "CONTACT",
+            "VEHICLE",
+            "ENVIRONMENT",
+            "TEMPORAL",
+            "CAMERA"
+          ],
+          "selected": [],
+          "omitted": [],
+          "limits": {
+            "generic_untyped_constraints": "OMIT",
+            "unrelated_families": "OMIT"
+          },
+          "limitations": [
+            "Negative constraints are generation hints; semantic QA remains authoritative"
+          ]
+        }
+      },
+      "compiled_view": {
+        "profile_reference": null,
+        "positive_prompt": {
+          "subject_and_identity": {
+            "entities": [
+              {
+                "id": "subject_courier",
+                "type": "character",
+                "description": "Fictional adult courier in a plain blue jacket",
+                "permanence": "PERSISTENT"
+              },
+              {
+                "id": "vehicle_van",
+                "type": "vehicle",
+                "description": "Plain grey van without brand marks",
+                "permanence": "PERSISTENT"
+              },
+              {
+                "id": "environment_driveway",
+                "type": "environment",
+                "description": "Quiet driveway",
+                "permanence": "PERSISTENT"
+              }
+            ],
+            "active_entity_ids": [
+              "subject_courier"
+            ],
+            "supporting_entity_ids": [],
+            "unreferenced_entity_ids": [
+              "vehicle_van",
+              "environment_driveway"
+            ],
+            "retention": [],
+            "relationships": [],
+            "prohibited_drift": []
+          },
+          "setting_and_time": {
+            "scene_intent": {
+              "schema_version": 1,
+              "project_id": "proj_example",
+              "scene_id": "scene_001",
+              "title": "A door opens",
+              "objective": "Show a fictional courier opening a stationary van door with readable contact",
+              "duration": {
+                "target_seconds": 6
+              },
+              "target": {
+                "platform": "unselected",
+                "aspect_ratio": "16:9",
+                "delivery": "video"
+              },
+              "subjects": [
+                "subject_courier"
+              ],
+              "objects": [
+                "vehicle_van"
+              ],
+              "environments": [
+                "environment_driveway"
+              ],
+              "actions": [
+                "reach",
+                "contact",
+                "pull"
+              ],
+              "dialogue_required": false,
+              "audio_required": false,
+              "style_preferences": [
+                "naturalistic"
+              ],
+              "hard_constraints": [
+                "Show hand contact before door rotation"
+              ],
+              "preferences": [
+                "medium static coverage"
+              ],
+              "unknowns": [
+                "Target model not selected"
+              ]
+            },
+            "project_id": "proj_example",
+            "scene_id": "scene_001",
+            "revision": 1,
+            "scope": "CONTIGUOUS_SEQUENCE",
+            "geography": "driveway; courier left, van right",
+            "time_of_day": "morning",
+            "lighting": "soft daylight from camera left",
+            "visual_style": "naturalistic",
+            "camera_language": "hold through contact",
+            "continuity_rules": [],
+            "audio_identity": "UNKNOWN"
+          },
+          "action_sequence": {
+            "shot_id": "shot_001",
+            "purpose": "Make contact and door articulation legible",
+            "actions": [
+              "reach",
+              "contact",
+              "pull"
+            ],
+            "motion_primitives": [],
+            "interactions": [
+              {
+                "id": "contact_shot_001",
+                "shot_id": "shot_001",
+                "actor": "subject_courier",
+                "target": "vehicle_van",
+                "effector": "right_hand",
+                "phases": [
+                  "reach",
+                  "contact",
+                  "pull"
+                ],
+                "success_criterion": "Hand stays on handle as door rotates"
+              }
+            ],
+            "state_changes": [
+              {
+                "property": "subject_courier.right_hand",
+                "prior": "free",
+                "next": "door_handle",
+                "cause": "contact"
+              },
+              {
+                "property": "vehicle_van.door",
+                "prior": "closed",
+                "next": "open",
+                "cause": "pull"
+              }
+            ]
+          },
+          "performance": [
+            "Eyes settle on the handle before reaching"
+          ],
+          "camera": {
+            "size": "MEDIUM",
+            "angle": "EYE_LEVEL",
+            "focal_length": "50mm_equivalent",
+            "framing": "HAND_AND_DOOR",
+            "focus": "subject_courier.right_hand",
+            "depth_of_field": "MODERATE",
+            "motion_blur": "NATURAL",
+            "exposure": "LOCKED_TO_SCENE",
+            "lighting": "scene_bible:lighting",
+            "eyeline": "vehicle_van",
+            "movement": {
+              "type": "STATIC",
+              "direction": "NONE",
+              "phase": "HOLD_CONTACT"
+            },
+            "screen_direction": "LEFT_TO_RIGHT",
+            "axis_policy": "PRESERVE_180_AXIS",
+            "edit_rhythm": "HOLD_THROUGH_CONTACT"
+          },
+          "lighting_and_style": {
+            "scene": "naturalistic",
+            "camera_language": "hold through contact",
+            "lighting": "soft daylight from camera left"
+          },
+          "audio_or_sync": {
+            "identity": {},
+            "dialogue": [],
+            "audio": []
+          },
+          "continuity": {
+            "initial_state_ref": "scene_bible:scene_001:initial",
+            "start": "scene_bible:scene_001:initial",
+            "start_delta": {},
+            "end": {
+              "subject_courier.position": "beside_van",
+              "subject_courier.right_hand": "door_handle",
+              "vehicle_van.door": "open",
+              "vehicle_van.ignition": "OFF"
+            },
+            "end_delta": {
+              "subject_courier.right_hand": "door_handle",
+              "vehicle_van.door": "open"
+            },
+            "changes": [
+              {
+                "property": "subject_courier.right_hand",
+                "prior": "free",
+                "next": "door_handle",
+                "cause": "contact"
+              },
+              {
+                "property": "vehicle_van.door",
+                "prior": "closed",
+                "next": "open",
+                "cause": "pull"
+              }
+            ]
+          },
+          "constraints": {
+            "hard": [
+              "Show hand contact before door rotation"
+            ],
+            "global": [
+              {
+                "constraint_id": "con_contact",
+                "subject": "subject_courier",
+                "kind": "QA_ASSERTION",
+                "statement": "Visible hand contact precedes door rotation",
+                "priority": "HIGH",
+                "scope": [
+                  "shot_001"
+                ],
+                "evidence": {
+                  "status": "PROPOSED",
+                  "claim_type": "DECISION",
+                  "confidence": "HIGH"
+                },
+                "validation": {
+                  "method": "frame_sequence_review",
+                  "blocking": true
+                },
+                "fallback": "SPLIT_CONTACT",
+                "status": "PROPOSED"
+              }
+            ],
+            "shot": [
+              "con_contact"
+            ],
+            "prohibited_drift": [],
+            "negative_selection": {
+              "schema_version": 1,
+              "status": "PASS",
+              "selected_families": [
+                "IDENTITY",
+                "HANDS",
+                "CONTACT",
+                "VEHICLE",
+                "ENVIRONMENT",
+                "TEMPORAL",
+                "CAMERA"
+              ],
+              "selected": [],
+              "omitted": [],
+              "limits": {
+                "generic_untyped_constraints": "OMIT",
+                "unrelated_families": "OMIT"
+              },
+              "limitations": [
+                "Negative constraints are generation hints; semantic QA remains authoritative"
+              ]
+            }
+          },
+          "references": {
+            "assets": [],
+            "scene_reference_ids": [],
+            "shot_reference_ids": [],
+            "all_reference_ids": [],
+            "retention_rules": []
+          }
+        },
+        "text": "subject_and_identity: {\"active_entity_ids\":[\"subject_courier\"],\"entities\":[{\"description\":\"Fictional adult courier in a plain blue jacket\",\"id\":\"subject_courier\",\"permanence\":\"PERSISTENT\",\"type\":\"character\"},{\"description\":\"Plain grey van without brand marks\",\"id\":\"vehicle_van\",\"permanence\":\"PERSISTENT\",\"type\":\"vehicle\"},{\"description\":\"Quiet driveway\",\"id\":\"environment_driveway\",\"permanence\":\"PERSISTENT\",\"type\":\"environment\"}],\"prohibited_drift\":[],\"relationships\":[],\"retention\":[],\"supporting_entity_ids\":[],\"unreferenced_entity_ids\":[\"vehicle_van\",\"environment_driveway\"]}\nsetting_and_time: {\"audio_identity\":\"UNKNOWN\",\"camera_language\":\"hold through contact\",\"continuity_rules\":[],\"geography\":\"driveway; courier left, van right\",\"lighting\":\"soft daylight from camera left\",\"project_id\":\"proj_example\",\"revision\":1,\"scene_id\":\"scene_001\",\"scene_intent\":{\"actions\":[\"reach\",\"contact\",\"pull\"],\"audio_required\":false,\"dialogue_required\":false,\"duration\":{\"target_seconds\":6},\"environments\":[\"environment_driveway\"],\"hard_constraints\":[\"Show hand contact before door rotation\"],\"objective\":\"Show a fictional courier opening a stationary van door with readable contact\",\"objects\":[\"vehicle_van\"],\"preferences\":[\"medium static coverage\"],\"project_id\":\"proj_example\",\"scene_id\":\"scene_001\",\"schema_version\":1,\"style_preferences\":[\"naturalistic\"],\"subjects\":[\"subject_courier\"],\"target\":{\"aspect_ratio\":\"16:9\",\"delivery\":\"video\",\"platform\":\"unselected\"},\"title\":\"A door opens\",\"unknowns\":[\"Target model not selected\"]},\"scope\":\"CONTIGUOUS_SEQUENCE\",\"time_of_day\":\"morning\",\"visual_style\":\"naturalistic\"}\naction_sequence: {\"actions\":[\"reach\",\"contact\",\"pull\"],\"interactions\":[{\"actor\":\"subject_courier\",\"effector\":\"right_hand\",\"id\":\"contact_shot_001\",\"phases\":[\"reach\",\"contact\",\"pull\"],\"shot_id\":\"shot_001\",\"success_criterion\":\"Hand stays on handle as door rotates\",\"target\":\"vehicle_van\"}],\"motion_primitives\":[],\"purpose\":\"Make contact and door articulation legible\",\"shot_id\":\"shot_001\",\"state_changes\":[{\"cause\":\"contact\",\"next\":\"door_handle\",\"prior\":\"free\",\"property\":\"subject_courier.right_hand\"},{\"cause\":\"pull\",\"next\":\"open\",\"prior\":\"closed\",\"property\":\"vehicle_van.door\"}]}\nperformance: [\"Eyes settle on the handle before reaching\"]\ncamera: {\"angle\":\"EYE_LEVEL\",\"axis_policy\":\"PRESERVE_180_AXIS\",\"depth_of_field\":\"MODERATE\",\"edit_rhythm\":\"HOLD_THROUGH_CONTACT\",\"exposure\":\"LOCKED_TO_SCENE\",\"eyeline\":\"vehicle_van\",\"focal_length\":\"50mm_equivalent\",\"focus\":\"subject_courier.right_hand\",\"framing\":\"HAND_AND_DOOR\",\"lighting\":\"scene_bible:lighting\",\"motion_blur\":\"NATURAL\",\"movement\":{\"direction\":\"NONE\",\"phase\":\"HOLD_CONTACT\",\"type\":\"STATIC\"},\"screen_direction\":\"LEFT_TO_RIGHT\",\"size\":\"MEDIUM\"}\nlighting_and_style: {\"camera_language\":\"hold through contact\",\"lighting\":\"soft daylight from camera left\",\"scene\":\"naturalistic\"}\naudio_or_sync: {\"audio\":[],\"dialogue\":[],\"identity\":{}}\ncontinuity: {\"changes\":[{\"cause\":\"contact\",\"next\":\"door_handle\",\"prior\":\"free\",\"property\":\"subject_courier.right_hand\"},{\"cause\":\"pull\",\"next\":\"open\",\"prior\":\"closed\",\"property\":\"vehicle_van.door\"}],\"end\":{\"subject_courier.position\":\"beside_van\",\"subject_courier.right_hand\":\"door_handle\",\"vehicle_van.door\":\"open\",\"vehicle_van.ignition\":\"OFF\"},\"end_delta\":{\"subject_courier.right_hand\":\"door_handle\",\"vehicle_van.door\":\"open\"},\"initial_state_ref\":\"scene_bible:scene_001:initial\",\"start\":\"scene_bible:scene_001:initial\",\"start_delta\":{}}\nconstraints: {\"global\":[{\"constraint_id\":\"con_contact\",\"evidence\":{\"claim_type\":\"DECISION\",\"confidence\":\"HIGH\",\"status\":\"PROPOSED\"},\"fallback\":\"SPLIT_CONTACT\",\"kind\":\"QA_ASSERTION\",\"priority\":\"HIGH\",\"scope\":[\"shot_001\"],\"statement\":\"Visible hand contact precedes door rotation\",\"status\":\"PROPOSED\",\"subject\":\"subject_courier\",\"validation\":{\"blocking\":true,\"method\":\"frame_sequence_review\"}}],\"hard\":[\"Show hand contact before door rotation\"],\"negative_selection\":{\"limitations\":[\"Negative constraints are generation hints; semantic QA remains authoritative\"],\"limits\":{\"generic_untyped_constraints\":\"OMIT\",\"unrelated_families\":\"OMIT\"},\"omitted\":[],\"schema_version\":1,\"selected\":[],\"selected_families\":[\"IDENTITY\",\"HANDS\",\"CONTACT\",\"VEHICLE\",\"ENVIRONMENT\",\"TEMPORAL\",\"CAMERA\"],\"status\":\"PASS\"},\"prohibited_drift\":[],\"shot\":[\"con_contact\"]}\nreferences: {\"all_reference_ids\":[],\"assets\":[],\"retention_rules\":[],\"scene_reference_ids\":[],\"shot_reference_ids\":[]}",
+        "compiled_omissions": [],
+        "deliberate_changes": [],
+        "unresolved": []
+      }
+    }
+  ]
+}

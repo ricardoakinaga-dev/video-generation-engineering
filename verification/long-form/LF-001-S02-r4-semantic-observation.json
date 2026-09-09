@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "id": "semantic_obs_lf001_s02_r4_production",
+  "shot_id": "LF001-S02",
+  "artifact_id": "art_c1c52b6492b04dc1847edbe3d028bab7",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4",
+  "observed_content_hash": "sha256:9c2a699c7ce2aefc05c31b29602339bd59a981ebfc75e9ed64dc3474f350d094",
+  "observed_at": "2026-09-09T20:50:00+00:00",
+  "procedure": "Human inspection of the exact collected S02 production artifact through a 16-frame contact sheet, cross-checked against the production media-QA record; the sampled record supports hand contact, door articulation and torso transfer but does not claim dense all-frame or audio-semantic proof.",
+  "checks": [
+    {
+      "id": "identity",
+      "semantic_dimension": "identity",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does one consistent adult subject remain identifiable through the sampled S02 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "wardrobe",
+      "semantic_dimension": "wardrobe",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the dark charcoal shirt remain stable in the sampled S02 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "object_retention",
+      "semantic_dimension": "object_retention",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does one matte graphite compact hatchback remain the same grounded vehicle in the sampled S02 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "environment",
+      "semantic_dimension": "environment",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the wet residential curb remain coherent in the sampled S02 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "lighting",
+      "semantic_dimension": "lighting",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the cool overcast lighting remain stable in the sampled S02 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "physics",
+      "semantic_dimension": "physics",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Do sampled frames avoid gross body/vehicle intersection, duplication or teleportation?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "interaction",
+      "semantic_dimension": "interaction",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the subject move causally toward the driver-side handle with hand contact preceding door opening?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "camera",
+      "semantic_dimension": "camera",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the locked-off medium-wide camera preserve readable subject/vehicle geography?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "performance",
+      "semantic_dimension": "performance",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the subject perform a calm purposeful approach through the entry action?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "dialogue",
+      "semantic_dimension": "dialogue",
+      "category": "audio",
+      "result": "NOT_APPLICABLE",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is dialogue applicable to this no-dialogue S02 segment?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "HIGH",
+      "reason": "The canonical S01 audio contract declares no dialogue; no lip-sync claim is made.",
+      "evidence": [],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "lip_sync",
+      "semantic_dimension": "lip_sync",
+      "category": "audio",
+      "result": "NOT_APPLICABLE",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is lip-sync applicable to this no-dialogue S02 segment?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "HIGH",
+      "reason": "The canonical S01 audio contract declares no dialogue; no lip-sync claim is made.",
+      "evidence": [],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "temporal_continuity",
+      "semantic_dimension": "temporal_continuity",
+      "category": "temporal",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does sampled motion remain decodable and temporally coherent through S02?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S02-production-contact-sheet.jpg",
+          "content_hash": "sha256:7bcbac7a0cf89041d519df5415837b43b174afed3a026c845da9c8abba9a563a"
+        }
+      ],
+      "limitations": [
+        "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+        "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    }
+  ],
+  "status": "PASS",
+  "limitations": [
+    "Human review used the exact 16-frame contact sheet from the collected S02 production artifact; it is evidence for sampled-frame S02 semantics, not dense all-frame proof.",
+    "S02 shows the hand/door/entry segment in sampled frames; S03 settlement and cross-shot identity retention remain unobserved.",
+    "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+  ],
+  "provenance": {
+    "attempt": {
+      "id": "attempt_837c51fbb5ea4ba9926f671638f70da4",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/attempt_837c51fbb5ea4ba9926f671638f70da4-completed.json",
+      "content_hash": "sha256:4876408eb4675aad57ff80035666de712614bb2b0fcaceacda2f8f32a1650938"
+    },
+    "shot": {
+      "id": "LF001-S02",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S02-r4-shot.json",
+      "content_hash": "sha256:d4cf08f2ea2243f2ce8426d1bda98361bf715a1c33263bfe8e5689eed3a98981",
+      "contract_hash": "sha256:635818a7adf0ff43612adc99ce8b6d2f7c331aa109e48f25d8522a4655405633"
+    },
+    "artifact": {
+      "id": "art_c1c52b6492b04dc1847edbe3d028bab7",
+      "record_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.json",
+      "record_content_hash": "sha256:b463854f636c85f47eaaf220ccbc22ce21dc5f90ea830f8f9d20739c23ee101f",
+      "media_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4",
+      "media_content_hash": "sha256:9c2a699c7ce2aefc05c31b29602339bd59a981ebfc75e9ed64dc3474f350d094"
+    }
+  },
+  "repair_route": "none_required",
+  "observed_end_state": {
+    "subject_position": "torso_entering_driver_seat",
+    "door_state": "open",
+    "vehicle_state": "stationary",
+    "phase": "ENTRY"
+  }
+}

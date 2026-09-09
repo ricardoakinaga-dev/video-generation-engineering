@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "id": "semantic_obs_lf001_s03_r4_production",
+  "shot_id": "LF001-S03",
+  "artifact_id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.mp4",
+  "observed_content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+  "observed_at": "2026-09-09T20:56:00+00:00",
+  "procedure": "Human inspection of the exact collected S03 production artifact through a 16-frame contact sheet, cross-checked against production media QA. The core settle/close action is readable, but visible colored elongated artifacts make the final semantic result partial.",
+  "checks": [
+    {
+      "id": "identity",
+      "semantic_dimension": "identity",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does one consistent adult subject remain identifiable through the sampled S03 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "wardrobe",
+      "semantic_dimension": "wardrobe",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the dark charcoal shirt remain stable in the sampled S03 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "object_retention",
+      "semantic_dimension": "object_retention",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does one matte graphite compact hatchback remain the same grounded vehicle in the sampled S03 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "environment",
+      "semantic_dimension": "environment",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the wet residential curb remain coherent in the sampled S03 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "lighting",
+      "semantic_dimension": "lighting",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the cool overcast lighting remain stable in the sampled S03 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "physics",
+      "semantic_dimension": "physics",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Do sampled S03 frames support this dimension despite the visible colored elongated artifacts?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "interaction",
+      "semantic_dimension": "interaction",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the subject move causally toward the driver-side handle with the body inside before door closure?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "camera",
+      "semantic_dimension": "camera",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the locked-off medium-wide camera preserve readable subject/vehicle geography?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "performance",
+      "semantic_dimension": "performance",
+      "category": "visual",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the subject perform a calm purposeful approach inside the vehicle?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "dialogue",
+      "semantic_dimension": "dialogue",
+      "category": "audio",
+      "result": "NOT_APPLICABLE",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is dialogue applicable to this no-dialogue S03 segment?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "HIGH",
+      "reason": "The canonical S01 audio contract declares no dialogue; no lip-sync claim is made.",
+      "evidence": [],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "lip_sync",
+      "semantic_dimension": "lip_sync",
+      "category": "audio",
+      "result": "NOT_APPLICABLE",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is lip-sync applicable to this no-dialogue S03 segment?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "HIGH",
+      "reason": "The canonical S01 audio contract declares no dialogue; no lip-sync claim is made.",
+      "evidence": [],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    },
+    {
+      "id": "temporal_continuity",
+      "semantic_dimension": "temporal_continuity",
+      "category": "temporal",
+      "result": "PARTIAL",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Do sampled S03 frames support this dimension despite the visible colored elongated artifacts?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit semantic acceptance.",
+        "The graph is T2V without reference-image conditioning; cross-shot identity retention remains unsupported."
+      ]
+    }
+  ],
+  "status": "PARTIAL",
+  "limitations": [
+    "The settle/door-close action is readable in sampled frames, but colored elongated artifacts are visible and prevent full semantic acceptance.",
+    "S03 is the terminal generated segment; no downstream transition is claimed.",
+    "The graph is T2V without reference-image conditioning."
+  ],
+  "provenance": {
+    "attempt": {
+      "id": "attempt_328c345de305471faba150dd74f7b907",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/attempt_328c345de305471faba150dd74f7b907-completed.json",
+      "content_hash": "sha256:85ddbd0203e8e08b963ae047f7b8707576f21cc519ed3faae3f4e432d7313f93"
+    },
+    "shot": {
+      "id": "LF001-S03",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S03-r4-shot.json",
+      "content_hash": "sha256:79fcf54586c825a1864e7b4b9844c008ee4f03dfc5e829de5499a82a32bc68dc",
+      "contract_hash": "sha256:c5646401c441048ea7b1f4739cc7de36f3c1340e339f1aeb4170eebc9a41b266"
+    },
+    "artifact": {
+      "id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+      "record_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.json",
+      "record_content_hash": "sha256:22800b952bd371b543b66883a1340eb64f3e44969b8af80da1ef70cd1c045a8c",
+      "media_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.mp4",
+      "media_content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167"
+    }
+  },
+  "repair_route": "REGENERATE_OR_REANCHOR_IF_PROMOTED"
+}

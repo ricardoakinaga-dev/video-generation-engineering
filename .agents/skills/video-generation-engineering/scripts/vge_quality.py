@@ -18,6 +18,7 @@ from vge_core import (
     ContractError, canonical, digest, file_hash, indexed, number, require, repair_scope,
     validate_canonical_state,
 )
+from vge_quality_common import aggregate_quality
 
 
 QUALITY_STATUSES = (
@@ -269,28 +270,6 @@ def _require_oracle_strength(check, allowed, label, claim):
         kind = check["oracle"]["kind"]
         require(kind in allowed,
                 f"{label} uses {kind} oracle for {claim}; allowed: {', '.join(sorted(allowed))}")
-
-
-def aggregate_quality(checks):
-    """Aggregate exact observed statuses without treating missing evidence as PASS."""
-    _list(checks, "checks")
-    if not checks:
-        return "NOT_OBSERVED"
-    results = [check.get("result") for check in checks]
-    require(all(result in QUALITY_STATUSES for result in results), "Invalid quality check result")
-    if "FAIL" in results:
-        return "FAIL"
-    if "BLOCKED" in results:
-        return "BLOCKED"
-    if "PARTIAL" in results:
-        return "PARTIAL"
-    if any(result in ("NOT_RUN", "UNKNOWN") for result in results):
-        return "PARTIAL" if any(result == "PASS" for result in results) else "NOT_OBSERVED"
-    if "NOT_OBSERVED" in results:
-        return "PARTIAL" if any(result == "PASS" for result in results) else "NOT_OBSERVED"
-    if all(result == "NOT_APPLICABLE" for result in results):
-        return "NOT_APPLICABLE"
-    return "PASS" if all(result in ("PASS", "NOT_APPLICABLE") for result in results) else "PARTIAL"
 
 
 def validate_observation_contract(observation, artifact=None, required_categories=None):

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "accepted": true,
+  "artifact_id": "art_730e6a3d284b4ce49b24a1dbdbc37a4d",
+  "limitations": [
+    "Human review used the exact 16-frame contact sheet from the collected production artifact; it is evidence for sampled-frame S01 semantics, not dense all-frame proof.",
+    "S01 ends at PRE_CONTACT; HANDLE_CONTACT through DOOR_CLOSE and cross-shot continuity remain unobserved.",
+    "The graph is T2V without reference-image conditioning; identity retention across shots remains unsupported."
+  ]
+}

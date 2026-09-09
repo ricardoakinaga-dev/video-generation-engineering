@@ -1,12 +1,12 @@
 # Phase 0 documentation index
 
-## Implemented package — 2026-09-09 (R3 closure)
+## Implemented package — 2026-09-09 (R4 closure)
 
-The repository skill now exists at [SKILL.md](../.agents/skills/video-generation-engineering/SKILL.md). [Implementation results](../IMPLEMENTATION.md) record tested software, actual local ComfyUI execution and remaining media/provider limits. The current R3 closure packet is [`triple-aaa-final-production-closure.md`](triple-aaa-final-production-closure.md); it does not promote unavailable production evidence. See the [frozen R3 bar](triple-aaa-quality-bar-r3.json), [capability matrix](capability-matrix-r3.md) and [scorecard](triple-aaa-scorecard-r3.md).
+The repository skill now exists at [SKILL.md](../.agents/skills/video-generation-engineering/SKILL.md). [Implementation results](../IMPLEMENTATION.md) record tested software, actual local ComfyUI execution and remaining media/provider limits. The current R4 closure packet is [`triple-aaa-final-production-closure-r4.md`](triple-aaa-final-production-closure-r4.md); it does not promote unavailable production evidence. See the [frozen R4 bar](triple-aaa-quality-bar-r4.json), [capability matrix](capability-matrix-r4.md) and [scorecard](triple-aaa-scorecard-r4.md).
 
 ## Status
 
-This is the navigation hub for the documentation-first architecture of `video-generation-engineering-vNext`. The documentation and deterministic software closure are `READY_WITH_RISKS` in the scoped R3 bar; the production pillar remains `BLOCKED`. The prior Gauntlet `FINISHED/PASS` record is historical and applies to an earlier fingerprint, not to this revision. Runtime/media limits remain explicit and the package does not claim universal audiovisual quality.
+This is the navigation hub for the documentation-first architecture of `video-generation-engineering-vNext`. The documentation and deterministic software closure are `READY_WITH_RISKS` in the scoped R4 bar; the production pillar remains `PARTIAL`. The prior Gauntlet `FINISHED/PASS` record is historical and applies to an earlier fingerprint, not to this revision. Runtime/media limits remain explicit and the package does not claim universal audiovisual quality.
 
 ## Purpose
 
@@ -58,16 +58,18 @@ No lower-level document may silently override a higher-level contract. External 
 | [`open-questions.md`](open-questions.md) | Blockers and non-blocking decisions | Resolving remaining uncertainty |
 | [`phase-0-report.md`](phase-0-report.md) | Final status, decisions, risks, readiness, stop point | Handoff after this phase |
 | [`triple-aaa-validation.md`](triple-aaa-validation.md) | Production evidence contracts and architecture closure | Quality, runtime or release work |
-| [`capability-matrix-r3.md`](capability-matrix-r3.md) | Current exact capability scope and blockers | Selecting a model or feature |
+| [`capability-matrix-r4.md`](capability-matrix-r4.md) | Current exact capability scope and blockers | Selecting a model or feature |
 | [`long-form-validation.md`](long-form-validation.md) | LF-001..LF-004 evidence envelope | Long-form generation or assembly |
-| [`triple-aaa-scorecard-r3.md`](triple-aaa-scorecard-r3.md) | Current independent release scores and maturity | Final readiness decision |
+| [`triple-aaa-scorecard-r4.md`](triple-aaa-scorecard-r4.md) | Current release scores and maturity | Final readiness decision |
 | [`master-closure-prompt-triple-aaa-20260909-part-1.txt`](master-closure-prompt-triple-aaa-20260909-part-1.txt) | Exact preserved current user prompt, part 1 | Auditing prompt fidelity |
 | [`master-closure-prompt-triple-aaa-20260909-part-2.txt`](master-closure-prompt-triple-aaa-20260909-part-2.txt) | Exact preserved current user prompt, part 2 | Auditing prompt fidelity |
 | [`triple-aaa-quality-bar-r3.json`](triple-aaa-quality-bar-r3.json) | Frozen R3 quality bar and verdict policy | Auditing this closure |
+| [`triple-aaa-quality-bar-r4.json`](triple-aaa-quality-bar-r4.json) | Frozen R4 quality bar and verdict policy | Auditing this closure |
 | [`master-prompt-triple-aaa-r2.txt`](master-prompt-triple-aaa-r2.txt) | Exact preserved user prompt | Auditing prompt fidelity |
 | [`triple-aaa-quality-bar-r2.json`](triple-aaa-quality-bar-r2.json) | Frozen R2 quality bar and verdict policy | Auditing this closure |
 | [`triple-aaa-quality-bar-r1.json`](triple-aaa-quality-bar-r1.json) | Historical R1 quality bar | Comparing prior closure only |
 | [`triple-aaa-final-production-closure.md`](triple-aaa-final-production-closure.md) | Current R3 evidence, scores and remaining blockers | Release handoff |
+| [`triple-aaa-final-production-closure-r4.md`](triple-aaa-final-production-closure-r4.md) | Current R4 evidence, scores and remaining blockers | Release handoff |
 
 ## Recommended reading order
 
@@ -120,7 +122,7 @@ No lower-level document may silently override a higher-level contract. External 
 | Canonical scene/state/continuity model | Specified | Contracts and scenario fixtures |
 | Model and ComfyUI capabilities | Profiled conservatively | Dated local runtime probes; feature-scoped confirmation only |
 | Failure and evaluation strategy | Implemented for deterministic boundaries | Golden/known-bad/adversarial structural fixtures plus runtime limits |
-| Repository Skill package | Implemented; R3 closure `READY_WITH_RISKS` | 141 tests in final verification, local ComfyUI evidence and frozen R3 bar |
+| Repository Skill package | Implemented; R4 closure `READY_WITH_RISKS` | 142 tests in final verification, local ComfyUI evidence and frozen R4 bar |
 | Generated media quality | Mechanically evaluated; semantic acceptance remains partial | Exact H3 T2V/R2V artifacts, separated observations and long-form blockers |
 
 ## Deviations from the suggested tree

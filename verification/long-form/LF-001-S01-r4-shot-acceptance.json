@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "shot_acceptance_lf001_s01_r4",
+  "shot_id": "LF001-S01",
+  "revision": 3,
+  "acceptance_checks": [
+    {
+      "id": "QG-01",
+      "observation_check_id": "QG-01",
+      "question": "S01 must produce a decodable approach/pre-contact artifact with exact provenance and sampled endpoint evidence.",
+      "required": true
+    }
+  ],
+  "limitations": [
+    "Acceptance is segment-scoped; LF-001 production remains incomplete until S02/S03, transitions, repair and assembly pass."
+  ]
+}

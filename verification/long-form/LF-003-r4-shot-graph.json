@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "LF-003-r4-shot-graph",
+  "case_id": "LF-003",
+  "status": "STRUCTURAL_ONLY",
+  "shots": [
+    {"id": "LF003-S01", "phase": "ESTABLISH", "duration_s": 5.0, "depends_on": []},
+    {"id": "LF003-S02", "phase": "CONVERSATION", "duration_s": 5.0, "depends_on": ["LF003-S01"]},
+    {"id": "LF003-S03", "phase": "REACTION", "duration_s": 5.0, "depends_on": ["LF003-S02"]},
+    {"id": "LF003-S04", "phase": "MOVEMENT", "duration_s": 5.0, "depends_on": ["LF003-S03"]},
+    {"id": "LF003-S05", "phase": "OBJECT_HANDOFF", "duration_s": 5.0, "depends_on": ["LF003-S04"]},
+    {"id": "LF003-S06", "phase": "VEHICLE_INTERACTION", "duration_s": 5.0, "depends_on": ["LF003-S05"]},
+    {"id": "LF003-S07", "phase": "COVERAGE_CHANGE", "duration_s": 5.0, "depends_on": ["LF003-S06"]},
+    {"id": "LF003-S08", "phase": "RESOLUTION", "duration_s": 5.0, "depends_on": ["LF003-S07"]},
+    {"id": "LF003-S09", "phase": "CLOSING_HERO", "duration_s": 5.0, "depends_on": ["LF003-S08"]},
+    {"id": "LF003-S10", "phase": "EDITORIAL_BUFFER", "duration_s": 5.0, "depends_on": ["LF003-S09"]}
+  ],
+  "transition_policy": "Every adjacent edge requires accepted prior end state, next start state, semantic observation and continuity scorecard before assembly."
+}

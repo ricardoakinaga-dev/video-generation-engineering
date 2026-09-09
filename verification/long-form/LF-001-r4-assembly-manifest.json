@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "assembly_lf001_r4_preview_15s",
+  "case_id": "LF-001",
+  "shot_order": ["LF001-S01", "LF001-S02", "LF001-S03"],
+  "fps": 24,
+  "target_duration_s": 15.0,
+  "derived_trim_policy": "Each 5.166667s generated source is explicitly trimmed to 5.0s/120 frames before concatenation. Source artifacts remain immutable and are referenced below.",
+  "segments": [
+    {
+      "shot_id": "LF001-S01",
+      "duration_s": 5.0,
+      "fps": 24,
+      "resolution": {"width": 384, "height": 224},
+      "artifact": {"id": "trim_lf001_s01_r4_5s", "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s01_r4_5s.mp4", "content_hash": "sha256:30b2bb4e45efcde2a0f733c46af14d8108eefcf7e848d0ef5aa73937ac8c2cda"},
+      "audio_source": {"ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s01_r4_5s.mp4", "content_hash": "sha256:30b2bb4e45efcde2a0f733c46af14d8108eefcf7e848d0ef5aa73937ac8c2cda"},
+      "transition": {"status": "NONE"},
+      "source_attempt": {"id": "attempt_e2ba123f3dcc4e618852f26564db0c06"},
+      "repair_lineage": [],
+      "shot": {"id": "LF001-S01"}
+    },
+    {
+      "shot_id": "LF001-S02",
+      "duration_s": 5.0,
+      "fps": 24,
+      "resolution": {"width": 384, "height": 224},
+      "artifact": {"id": "trim_lf001_s02_r4_5s", "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s02_r4_5s.mp4", "content_hash": "sha256:f09f69c9470d054ebcd0ea63667bc329978da782ab1f003acb1c2b34d1bc0055"},
+      "audio_source": {"ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s02_r4_5s.mp4", "content_hash": "sha256:f09f69c9470d054ebcd0ea63667bc329978da782ab1f003acb1c2b34d1bc0055"},
+      "transition": {"status": "DECLARED", "start_s": 0.0, "end_s": 0.0},
+      "source_attempt": {"id": "attempt_837c51fbb5ea4ba9926f671638f70da4"},
+      "repair_lineage": [],
+      "shot": {"id": "LF001-S02"}
+    },
+    {
+      "shot_id": "LF001-S03",
+      "duration_s": 5.0,
+      "fps": 24,
+      "resolution": {"width": 384, "height": 224},
+      "artifact": {"id": "trim_lf001_s03_r4_5s", "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s03_r4_5s.mp4", "content_hash": "sha256:988bd66dd42c0d64c17ecd50d7456bf86cfa4068bbdbae8390e1570761530988"},
+      "audio_source": {"ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/trim_lf001_s03_r4_5s.mp4", "content_hash": "sha256:988bd66dd42c0d64c17ecd50d7456bf86cfa4068bbdbae8390e1570761530988"},
+      "transition": {"status": "DECLARED", "start_s": 0.0, "end_s": 0.0},
+      "source_attempt": {"id": "attempt_328c345de305471faba150dd74f7b907"},
+      "repair_lineage": ["DEC-REANCHOR-LF001-S03"],
+      "shot": {"id": "LF001-S03"}
+    }
+  ],
+  "status": "PREVIEW_ONLY",
+  "limitations": ["This manifest is a mechanical 15.0s preview because S03 semantic/continuity acceptance is PARTIAL.", "Final promotion requires repair/re-anchor, re-review and accepted observations for every segment."]
+}

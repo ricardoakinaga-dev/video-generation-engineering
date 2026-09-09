@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "selected_families": [
+    "IDENTITY",
+    "CONTACT",
+    "VEHICLE",
+    "TEMPORAL",
+    "CAMERA",
+    "TEXT"
+  ],
+  "selected": [
+    {
+      "family": "TEXT",
+      "constraint": "no text or logo",
+      "selection_reason": "Scene risk activates this family"
+    },
+    {
+      "family": "CAMERA",
+      "constraint": "no unmotivated axis change",
+      "selection_reason": "Scene risk activates this family"
+    }
+  ],
+  "omitted": [
+    {
+      "index": 0,
+      "family": "INTERACTION",
+      "reason": "Family is not active for the declared scene risk"
+    },
+    {
+      "index": 3,
+      "family": "DIALOGUE",
+      "reason": "Family is not active for the declared scene risk"
+    }
+  ],
+  "limits": {
+    "generic_untyped_constraints": "OMIT",
+    "unrelated_families": "OMIT"
+  },
+  "limitations": [
+    "Negative constraints are generation hints; semantic QA remains authoritative"
+  ]
+}

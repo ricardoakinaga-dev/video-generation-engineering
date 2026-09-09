@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "id": "continuity_lf001_s03_r4_production",
+  "shot_id": "LF001-S03",
+  "artifact_id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.mp4",
+  "observed_content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+  "observed_at": "2026-09-09T20:56:00+00:00",
+  "dimensions": [
+    {
+      "dimension": "identity",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is subject identity stable in sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "wardrobe",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is wardrobe stable in sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "hair",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is hair stable in sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "object_state_ownership",
+      "result": "PARTIAL",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the sampled S03 state remain readable despite the visible colored elongated artifacts?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "vehicle",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is the same matte graphite vehicle geography readable?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "environment",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is the curb environment coherent?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "lighting",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is cool overcast lighting stable?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "screen_direction",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the subject approach from the declared screen side?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "camera_geography",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is driver-side handle geography readable?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "gaze",
+      "result": "PASS",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does gaze remain directed toward the vehicle?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "emotional",
+      "result": "NOT_APPLICABLE",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is emotional continuity applicable before dialogue?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "HIGH",
+      "reason": "The declared S01 contract has no dialogue/emotional continuity requirement.",
+      "evidence": [],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "dialogue",
+      "result": "NOT_APPLICABLE",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Is dialogue continuity applicable to this no-dialogue shot?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "HIGH",
+      "reason": "The declared S01 contract has no dialogue/emotional continuity requirement.",
+      "evidence": [],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "temporal",
+      "result": "PARTIAL",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the sampled S03 state remain readable despite the visible colored elongated artifacts?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Exact 16-frame S03 contact-sheet review; sparse samples do not prove dense temporal quality.",
+        "Colored elongated artifacts are visible in sampled frames and limit continuity acceptance.",
+        "No cross-shot identity retention is claimed."
+      ]
+    },
+    {
+      "dimension": "audio",
+      "result": "PASS",
+      "oracle": {
+        "kind": "AUDIO",
+        "question": "Does mechanical media QA confirm an audio stream aligned to the S03 video artifact?",
+        "version": "r4-production-media-qa-mechanical-audio-r4"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "MEDIA_QA",
+          "ref": "verification/long-form/LF-001-S03-r4-production-media-qa.json",
+          "content_hash": "sha256:9f6d2f39e2d12723bedbb906bae92e542aefa7c3aff18b935d03fba134459d61"
+        }
+      ],
+      "limitations": [
+        "Mechanical stream/alignment only; no listening, mix, foley-semantic or dialogue/lip-sync acceptance."
+      ]
+    }
+  ],
+  "status": "PARTIAL",
+  "limitations": [
+    "The seated/door-closed state is readable, but visible colored elongated artifacts prevent full continuity acceptance.",
+    "Audio is mechanical stream/alignment evidence only; no listening or mix acceptance was performed.",
+    "S03 is terminal; no accepted downstream transition is claimed."
+  ]
+}

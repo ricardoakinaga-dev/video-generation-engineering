@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "id": "obs_lf001_s03_r4_production",
+  "shot_id": "LF001-S03",
+  "generation_artifact_ref": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.mp4",
+  "observed_content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167",
+  "observed_at": "2026-09-09T20:56:00+00:00",
+  "procedure": "Human review of the exact 16-frame S03 production contact sheet confirmed a readable seated/door-closed endpoint, but visible colored elongated artifacts prevent full acceptance.",
+  "checks": [
+    {
+      "id": "QG-01",
+      "required": true,
+      "result": "PASS",
+      "category": "visual",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the collected S02 artifact show the declared hand-contact/door-open/entry segment in the sampled frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Sampled-frame evidence supports the declared S02 endpoint but does not prove dense temporal behavior or cross-shot identity."
+      ]
+    },
+    {
+      "id": "QG-06",
+      "required": true,
+      "result": "PARTIAL",
+      "category": "visual",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does hand contact precede door articulation and torso transfer in the sampled S02 frames?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Core action is readable, but colored elongated artifacts limit causal/temporal acceptance."
+      ]
+    },
+    {
+      "id": "QG-07",
+      "required": true,
+      "result": "PARTIAL",
+      "category": "temporal",
+      "oracle": {
+        "kind": "HUMAN",
+        "question": "Does the sampled S02 action order remain decodable from contact through entry?",
+        "version": "r4-production-contact-sheet-16frame-human-review"
+      },
+      "confidence": "MEDIUM",
+      "evidence": [
+        {
+          "type": "CONTACT_SHEET",
+          "ref": "artifacts/lf001_r4_20260909/LF001-S03-production-contact-sheet.jpg",
+          "content_hash": "sha256:7a66d818e67f320042cd037e9f1ab54bfac7fbb91ccc3448935c975f7139b5c6"
+        }
+      ],
+      "limitations": [
+        "Core action is readable, but colored elongated artifacts limit causal/temporal acceptance."
+      ]
+    }
+  ],
+  "status": "PARTIAL",
+  "observed_end_state": {
+    "subject_position": "seated_driver",
+    "door_state": "closed",
+    "vehicle_state": "stationary",
+    "phase": "RESULT"
+  },
+  "limitations": [
+    "The seated/door-closed endpoint is readable, but visible colored elongated artifacts prevent full acceptance.",
+    "No downstream transition is claimed."
+  ],
+  "provenance": {
+    "attempt": {
+      "id": "attempt_328c345de305471faba150dd74f7b907",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/attempt_328c345de305471faba150dd74f7b907-completed.json",
+      "content_hash": "sha256:85ddbd0203e8e08b963ae047f7b8707576f21cc519ed3faae3f4e432d7313f93"
+    },
+    "shot": {
+      "id": "LF001-S03",
+      "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S03-r4-shot.json",
+      "content_hash": "sha256:79fcf54586c825a1864e7b4b9844c008ee4f03dfc5e829de5499a82a32bc68dc",
+      "contract_hash": "sha256:c5646401c441048ea7b1f4739cc7de36f3c1340e339f1aeb4170eebc9a41b266"
+    },
+    "artifact": {
+      "id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+      "record_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.json",
+      "record_content_hash": "sha256:22800b952bd371b543b66883a1340eb64f3e44969b8af80da1ef70cd1c045a8c",
+      "media_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.mp4",
+      "media_content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167"
+    }
+  },
+  "artifact_id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+  "repair_route": "REGENERATE_OR_REANCHOR_IF_PROMOTED"
+}

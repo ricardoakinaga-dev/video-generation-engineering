@@ -1,0 +1,2 @@
+{"attempt_id":"attempt_adb97c1d9ed84ddca02044b7eba804f9","event_id":"event-intent-recorded","observed_at":"2026-09-09T20:29:54.570017+00:00","schema_version":1,"source":"vge_runtime.submit","status":"INTENT_RECORDED"}
+{"attempt_id":"attempt_adb97c1d9ed84ddca02044b7eba804f9","event_id":"event-submitted","observed_at":"2026-09-09T20:29:54.600333+00:00","queue_id":"1c523e60-5c79-48e2-a96a-e6c476d4221e","schema_version":1,"source":"vge_runtime.submit","status":"SUBMITTED"}

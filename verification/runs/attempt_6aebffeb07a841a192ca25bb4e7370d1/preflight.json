@@ -1,0 +1,53 @@
+{
+  "validation": {
+    "status": "PASS",
+    "issues": [],
+    "workflow_hash": "sha256:646cbc8147e7c486d8a649241145239142670e3ea6758496ffe19316e68cc30a",
+    "workflow_fingerprint": "sha256:2ef0ba7e266b5ab7eaf59e48670b8af0800b60b61311a33a2ccee225101b2921",
+    "scope": "API_GRAPH_METADATA",
+    "limitations": [
+      "Execution, VRAM fit, hidden/dynamic node validation and visual quality require a runtime probe"
+    ]
+  },
+  "compatibility": {
+    "status": "BLOCKED",
+    "profile_reference": "comfyui-h3-lf001-r4-s03-probe-v1",
+    "gaps": [
+      "Profile is not confirmed for execution",
+      "Profile has no valid expiry",
+      "Unconfirmed feature: native_audio_generation",
+      "Unconfirmed feature: text_to_video"
+    ],
+    "fallback": "Preserve intent; propose shorter segments, a confirmed profile or separate audio/sync; obtain approval for weakened requirements"
+  },
+  "resource_status": {
+    "status": "SUPPORTED",
+    "selected_device": "cuda:1",
+    "requirements": {
+      "device_id": "cuda:1",
+      "min_free_vram_bytes": 2500000000,
+      "safety_margin": 1.2
+    },
+    "effective_min_free_vram_bytes": 2500000000,
+    "effective_required_free_vram_bytes": 3000000000.0,
+    "observed_free_vram_bytes": 12301172736,
+    "observed_resources": [
+      {
+        "id": "1",
+        "device_id": "cuda:1",
+        "name": "cuda:1 NVIDIA GeForce RTX 3060 : cudaMallocAsync",
+        "type": "cuda",
+        "vram_total": 12490440704,
+        "vram_free": 12301172736,
+        "observed": true
+      }
+    ],
+    "gaps": [],
+    "limitations": [
+      "A resource snapshot is not an execution guarantee",
+      "Free VRAM can change between this snapshot and runtime execution"
+    ]
+  },
+  "discovery_hash": "sha256:77a13cb19ced5ef1e9937ce00322e65fcfedbb132139b898592adb8db3c8bbf6",
+  "probe_purpose": "Bounded one-shot runtime capability probe for the changed S03 workflow graph before any production POST."
+}

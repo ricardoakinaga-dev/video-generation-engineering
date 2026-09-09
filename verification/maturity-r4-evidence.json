@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "maturity-r4-evidence",
+  "observed_at": "2026-09-09T21:12:30Z",
+  "structural": {
+    "status": "PASS",
+    "observed_at": "2026-09-09T21:11:59Z",
+    "procedure": "Current documentation audit: 52 documents, 519 local Markdown links, 0 link/YAML/traceability errors.",
+    "evidence": [{"type": "JSON", "ref": "verification/docs-current-r27.json", "content_hash": "sha256:e12b7b064ad4a3404e60bd78d6d5a9a5f08af46ede637524344187c176958515"}],
+    "limitations": ["Structural documentation evidence does not prove runtime or media quality."]
+  },
+  "deterministic_tests": {
+    "status": "PASS",
+    "observed_at": "2026-09-09T21:05:00Z",
+    "procedure": "Run the full unittest suite, compileall, Skill quick validation and tools/verify.py.",
+    "evidence": [{"type": "JSON", "ref": "verification/software-triple-aaa-r30.json", "content_hash": "sha256:48b93500de4a05071a56928a719bdc35d15b1a65ec04f37394f873ccb6f6da16"}],
+    "limitations": ["Tests cover deterministic contracts and fixtures; they do not establish universal renderer behavior."]
+  },
+  "runtime_provenance": {
+    "status": "PASS",
+    "observed_at": "2026-09-09T20:25:00Z",
+    "procedure": "Discover ComfyUI, bind the current H3 profile, guard each POST with selected-device resource observations and collect immutable attempts/artifacts.",
+    "evidence": [
+      {"type": "JSON", "ref": "verification/comfyui-r4-baseline-20260909-a001.json", "content_hash": "sha256:11108d057464ab8095013c7994007c23b549aed9647cd707cc75aae9af3b75ac"},
+      {"type": "JSON", "ref": "verification/long-form/LF-001-S01-r4-acceptance-bundle.json", "content_hash": "sha256:8a3b085d92eac532b4d0af9a7743f361ab73f42d856acecccac8d90ecbeede47"},
+      {"type": "JSON", "ref": "verification/long-form/LF-001-S02-r4-acceptance-bundle.json", "content_hash": "sha256:1b5ab046c40ae963c8bd788b5cfdc2026edaa41e9234c2f0a3314f2200acce25"}
+    ],
+    "limitations": ["Runtime provenance is current for the local H3 T2V scope; it does not prove FLF, I2V, dialogue or lip-sync."]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "LF001-S02",
+  "revision": 1,
+  "acceptance_ids": ["QG-01", "QG-06", "QG-07"],
+  "duration_s": 5.166666666666667,
+  "generation_mode": "T2V",
+  "parameters": {"width": 384, "height": 224, "frame_count": 124, "fps": 24, "seed": 2026090912},
+  "dependency_ids": ["LF001-S01"],
+  "references": [],
+  "capability_requirements": ["text_to_video", "native_audio_generation"],
+  "degradable_capability_requirements": [],
+  "shot_id": "LF001-S02",
+  "purpose": "Make causal handle contact, articulate the driver door and transfer the subject torso into the seat.",
+  "start_state_ref": "LF001-S01.observed_end_state",
+  "start_state_delta": {"subject_position": "driver_side_at_handle", "door_state": "closed", "vehicle_state": "stationary"},
+  "end_state_delta": {"subject_position": "torso_entering_driver_seat", "door_state": "open", "vehicle_state": "stationary", "phase": "ENTRY"},
+  "required_dependency_properties": {"LF001-S01": ["subject_position", "door_state", "vehicle_state"]},
+  "risk": "HIGH"
+}

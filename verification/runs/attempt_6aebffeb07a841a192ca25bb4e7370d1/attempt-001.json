@@ -1,0 +1,345 @@
+{
+  "schema_version": 1,
+  "id": "attempt_6aebffeb07a841a192ca25bb4e7370d1",
+  "revision": 1,
+  "execution_plan_ref": "verification/long-form/LF-001-r4-plan.json",
+  "shot_id": "LF001-S03",
+  "shot_contract_hash": "sha256:1281ea4821dd129fda05121498adf730aa674d8a56405be89720649f50ac6ac8",
+  "attempt_index": 1,
+  "status": "UNKNOWN",
+  "started_at": "2026-09-09T20:52:42.593385+00:00",
+  "ended_at": null,
+  "profile": {
+    "schema_version": 1,
+    "id": "comfyui-h3-lf001-r4-s03-probe-v1",
+    "provider": "local_comfyui",
+    "runtime": "ComfyUI",
+    "runtime_version": "0.34.0",
+    "model": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+    "integration_version": "2026-09-09-r4-production",
+    "profile_revision": 1,
+    "status": "PROPOSED",
+    "evidence_refs": [
+      "verification/comfyui-r4-baseline-20260909-a001.json"
+    ],
+    "supports": {
+      "modes": [
+        "T2V"
+      ],
+      "inputs": [
+        "text",
+        "image"
+      ],
+      "outputs": [
+        "video"
+      ],
+      "audio": {
+        "native_generation": "PROPOSED"
+      },
+      "camera_controls": "UNKNOWN",
+      "identity_conditioning": "UNKNOWN"
+    },
+    "controls": [
+      "seed",
+      "width",
+      "height",
+      "frame_count",
+      "fps"
+    ],
+    "dependencies": {
+      "nodes": {
+        "ClipProjLoader": "0.1.13",
+        "UNETLoader": "0.34.0",
+        "LoraLoaderModelOnly": "0.34.0",
+        "MiniMaxH3SigmaShift": "0.34.0",
+        "VAELoader": "0.34.0",
+        "MiniMaxH3ImageToVideo": "0.34.0",
+        "BasicGuider": "0.34.0",
+        "KSamplerSelect": "0.34.0",
+        "BasicScheduler": "0.34.0",
+        "RandomNoise": "0.34.0",
+        "SamplerCustomAdvanced": "0.34.0",
+        "VAEDecode": "0.34.0",
+        "VAEDecodeAudio": "0.34.0",
+        "CreateVideo": "0.34.0",
+        "SaveVideo": "0.34.0"
+      },
+      "model_assets": [
+        {
+          "ref": "text_encoder",
+          "content_hash": "sha256:54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094"
+        },
+        {
+          "ref": "clip_projection",
+          "content_hash": "sha256:0184e5c8d666a131962506d21949c2d8a8c6f33445b7b5e347e9a7e0a5baa819"
+        },
+        {
+          "ref": "video_vae",
+          "content_hash": "sha256:9bb2d96f218c76babd85e0611b85ca8fb330a90546c01a0005e8a58a59593410"
+        },
+        {
+          "ref": "audio_vae",
+          "content_hash": "sha256:8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48"
+        },
+        {
+          "ref": "lora",
+          "content_hash": "sha256:1b85da614014024a0c9507f12558917dcc69b6adb564e716324594f401723115"
+        }
+      ]
+    },
+    "limits": {
+      "duration_s": {
+        "min": 5.166666666666667,
+        "max": 5.166666666666667
+      },
+      "frame_count": {
+        "multiple": 17,
+        "offset": 5
+      },
+      "resolution": {
+        "width": {
+          "min": 384,
+          "max": 384,
+          "multiple": 32
+        },
+        "height": {
+          "min": 224,
+          "max": 224,
+          "multiple": 32
+        }
+      },
+      "fps": [
+        24
+      ],
+      "vram": {
+        "observed_device_bytes": 12884901888,
+        "inference_fit": "PROPOSED"
+      }
+    },
+    "feature_evidence": {
+      "text_to_video": {
+        "status": "PROPOSED",
+        "source_ref": "verification/comfyui-r4-baseline-20260909-a001.json",
+        "probe_ref": "verification/comfyui-r4-baseline-20260909-a001.json",
+        "checked_at": "2026-09-09",
+        "scope": "S03 graph probe pending"
+      },
+      "native_audio_generation": {
+        "status": "PROPOSED",
+        "source_ref": "verification/comfyui-r4-baseline-20260909-a001.json",
+        "probe_ref": "verification/comfyui-r4-baseline-20260909-a001.json",
+        "checked_at": "2026-09-09",
+        "scope": "S03 graph probe pending"
+      }
+    },
+    "workflow_hash": "UNKNOWN",
+    "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+    "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+    "workflow_fingerprint": "UNKNOWN",
+    "selected_device": "cuda:1",
+    "resource_context_hash": "sha256:19c6069d09699aa2b4d2d457b4196944a82d2fe8224ad01c345aad77bc672d60",
+    "revision": 1,
+    "content_hash": "sha256:a861af0ed6a7196a6b375a37d2cdfea8ad0033184b64f6ef26a7a2b8814005e3"
+  },
+  "model": {
+    "id": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+    "version": "installed-sha256-01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+    "asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec"
+  },
+  "runtime": {
+    "provider": "comfyui",
+    "endpoint": "http://127.0.0.1:8188",
+    "version": "0.34.0",
+    "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+    "selected_device": "cuda:1",
+    "resource_context_hash": "sha256:19c6069d09699aa2b4d2d457b4196944a82d2fe8224ad01c345aad77bc672d60",
+    "resource_snapshot": [
+      {
+        "id": "0",
+        "device_id": "cuda:0",
+        "name": "cuda:0 NVIDIA GeForce RTX 3060 : cudaMallocAsync",
+        "type": "cuda",
+        "vram_total": 12482576384,
+        "vram_free": 11606228992,
+        "observed": true
+      },
+      {
+        "id": "1",
+        "device_id": "cuda:1",
+        "name": "cuda:1 NVIDIA GeForce RTX 3060 : cudaMallocAsync",
+        "type": "cuda",
+        "vram_total": 12490440704,
+        "vram_free": 12301172736,
+        "observed": true
+      }
+    ],
+    "resource_status": {
+      "status": "SUPPORTED",
+      "selected_device": "cuda:1",
+      "requirements": {
+        "device_id": "cuda:1",
+        "min_free_vram_bytes": 2500000000,
+        "safety_margin": 1.2
+      },
+      "effective_min_free_vram_bytes": 2500000000,
+      "effective_required_free_vram_bytes": 3000000000.0,
+      "observed_free_vram_bytes": 12301172736,
+      "observed_resources": [
+        {
+          "id": "1",
+          "device_id": "cuda:1",
+          "name": "cuda:1 NVIDIA GeForce RTX 3060 : cudaMallocAsync",
+          "type": "cuda",
+          "vram_total": 12490440704,
+          "vram_free": 12301172736,
+          "observed": true
+        }
+      ],
+      "gaps": [],
+      "limitations": [
+        "A resource snapshot is not an execution guarantee",
+        "Free VRAM can change between this snapshot and runtime execution"
+      ]
+    },
+    "runtime_context": {
+      "python_version": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+      "pytorch_version": "2.14.0+cu130",
+      "cuda_version": "cu130",
+      "runtime_commit": "UNKNOWN",
+      "runtime_dirty": "UNKNOWN",
+      "custom_node_commits": {}
+    }
+  },
+  "workflow": {
+    "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/runs/attempt_6aebffeb07a841a192ca25bb4e7370d1/workflow.json",
+    "content_hash": "sha256:646cbc8147e7c486d8a649241145239142670e3ea6758496ffe19316e68cc30a",
+    "fingerprint": "sha256:2ef0ba7e266b5ab7eaf59e48670b8af0800b60b61311a33a2ccee225101b2921",
+    "prompt_ref": "verification/long-form/LF-001-r4-plan.json",
+    "queue_id": null
+  },
+  "nodes": [
+    {
+      "id": "1",
+      "type": "ClipProjLoader",
+      "version": "0.1.13"
+    },
+    {
+      "id": "2",
+      "type": "UNETLoader",
+      "version": "0.34.0"
+    },
+    {
+      "id": "3",
+      "type": "MiniMaxH3SigmaShift",
+      "version": "0.34.0"
+    },
+    {
+      "id": "4",
+      "type": "VAELoader",
+      "version": "0.34.0"
+    },
+    {
+      "id": "5",
+      "type": "VAELoader",
+      "version": "0.34.0"
+    },
+    {
+      "id": "6",
+      "type": "MiniMaxH3ImageToVideo",
+      "version": "0.34.0"
+    },
+    {
+      "id": "7",
+      "type": "BasicGuider",
+      "version": "0.34.0"
+    },
+    {
+      "id": "8",
+      "type": "KSamplerSelect",
+      "version": "0.34.0"
+    },
+    {
+      "id": "9",
+      "type": "BasicScheduler",
+      "version": "0.34.0"
+    },
+    {
+      "id": "10",
+      "type": "RandomNoise",
+      "version": "0.34.0"
+    },
+    {
+      "id": "11",
+      "type": "SamplerCustomAdvanced",
+      "version": "0.34.0"
+    },
+    {
+      "id": "12",
+      "type": "VAEDecode",
+      "version": "0.34.0"
+    },
+    {
+      "id": "13",
+      "type": "VAEDecodeAudio",
+      "version": "0.34.0"
+    },
+    {
+      "id": "14",
+      "type": "CreateVideo",
+      "version": "0.34.0"
+    },
+    {
+      "id": "15",
+      "type": "SaveVideo",
+      "version": "0.34.0"
+    },
+    {
+      "id": "34",
+      "type": "LoraLoaderModelOnly",
+      "version": "0.34.0"
+    }
+  ],
+  "inputs": [
+    {
+      "ref": "text_encoder",
+      "role": "text_encoder",
+      "content_hash": "sha256:54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094"
+    },
+    {
+      "ref": "clip_projection",
+      "role": "clip_projection",
+      "content_hash": "sha256:0184e5c8d666a131962506d21949c2d8a8c6f33445b7b5e347e9a7e0a5baa819"
+    },
+    {
+      "ref": "video_vae",
+      "role": "video_vae",
+      "content_hash": "sha256:9bb2d96f218c76babd85e0611b85ca8fb330a90546c01a0005e8a58a59593410"
+    },
+    {
+      "ref": "audio_vae",
+      "role": "audio_vae",
+      "content_hash": "sha256:8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48"
+    },
+    {
+      "ref": "lora",
+      "role": "lora",
+      "content_hash": "sha256:1b85da614014024a0c9507f12558917dcc69b6adb564e716324594f401723115"
+    }
+  ],
+  "parameters": {
+    "seed": 2026090913,
+    "bindings": {
+      "width": 384,
+      "height": 224,
+      "frame_count": 124,
+      "fps": 24,
+      "seed": 2026090913
+    }
+  },
+  "progress_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/runs/attempt_6aebffeb07a841a192ca25bb4e7370d1/events.jsonl",
+  "error_ref": null,
+  "unknown_fields": [
+    "workflow.queue_id"
+  ],
+  "purpose": "CAPABILITY_PROBE"
+}

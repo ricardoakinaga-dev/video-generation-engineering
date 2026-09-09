@@ -1,0 +1,12 @@
+{
+  "negative_constraint_families": ["INTERACTION", "TEXT", "CAMERA"],
+  "negative_constraints": [
+    {"family": "INTERACTION", "constraint": "no premature door articulation or teleportation"},
+    {"family": "TEXT", "constraint": "no text or logo"},
+    {"family": "CAMERA", "constraint": "no unmotivated axis change"},
+    {"family": "DIALOGUE", "constraint": "no dialogue"}
+  ],
+  "action_sequence": ["approach", "contact", "open", "enter"],
+  "door_state": "closed_before_contact",
+  "screen_direction": "subject_left_to_driver_side"
+}

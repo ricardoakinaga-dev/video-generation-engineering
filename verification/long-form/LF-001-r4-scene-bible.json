@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "id": "scene_bible_lf001_r4",
+  "scene_id": "LF001-VEHICLE-ENTRY",
+  "canonical_state": {
+    "subject": "one adult man with short black hair, rectangular glasses, light mustache and goatee, dark charcoal shirt",
+    "vehicle": "one parked matte graphite compact hatchback",
+    "environment": "wet residential curb under cool overcast light and light rain",
+    "camera": "locked driver-side medium-wide geography",
+    "audio": "native rain/foley/ambience; no dialogue or music"
+  },
+  "continuity_rules": ["one subject", "one vehicle", "screen side remains driver-side", "door state is causally owned", "vehicle remains stationary", "no unmotivated cut within a shot"],
+  "known_limits": ["T2V graph has no reference-image conditioning", "cross-shot identity/vehicle continuity is sampled evidence only", "audio review is mechanical stream/alignment only"]
+}

@@ -1,0 +1,8 @@
+{
+  "canonical_state": {
+    "vehicle": {"door_state": "closed", "motion_state": "stationary"},
+    "interaction": {"door_during_entry": "closed_before_contact", "action_sequence": ["approach", "contact", "open", "enter"]},
+    "camera": {"screen_direction": "subject_left_to_driver_side", "axis_policy": "LOCKED"},
+    "audio": {"dialogue": "NONE", "music": "NONE", "foley": ["rain", "footsteps"]}
+  }
+}

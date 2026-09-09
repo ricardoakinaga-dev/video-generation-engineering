@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "status": "STRUCTURAL",
+  "presentation_mode": "PRODUCTION",
+  "required_references": [
+    {
+      "id": "core",
+      "path": "references/core-contracts.md",
+      "reasons": [
+        "Required for every authored scene contract"
+      ]
+    },
+    {
+      "id": "continuity",
+      "path": "references/continuity-and-long-form.md",
+      "reasons": [
+        "Multi-shot, dialogue or physical state requires explicit continuity guidance"
+      ]
+    },
+    {
+      "id": "directing_audio",
+      "path": "references/directing-and-audio.md",
+      "reasons": [
+        "Camera, purpose and performance decisions are present in every scene"
+      ]
+    },
+    {
+      "id": "interaction_constraints",
+      "path": "references/interaction-and-constraints.md",
+      "reasons": [
+        "Contact, articulation or vehicle/animal mechanics are in scope"
+      ]
+    },
+    {
+      "id": "evaluation_repair",
+      "path": "references/evaluation-and-repair.md",
+      "reasons": [
+        "Acceptance and bounded repair are required even for a simple shot"
+      ]
+    },
+    {
+      "id": "observability",
+      "path": "references/observability.md",
+      "reasons": [
+        "Routing and unresolved decisions need concise inspectable diagnostics"
+      ]
+    }
+  ],
+  "excluded_references": [
+    {
+      "id": "model_adaptation",
+      "path": "references/model-adaptation.md",
+      "reason": "No selected model, non-T2V mode or capability requirement"
+    },
+    {
+      "id": "comfyui_execution",
+      "path": "references/comfyui-execution.md",
+      "reason": "No explicit ComfyUI/runtime execution target"
+    },
+    {
+      "id": "production_quality",
+      "path": "references/production-quality.md",
+      "reason": "No long-form production-quality signal"
+    },
+    {
+      "id": "safety_provenance",
+      "path": "references/safety-and-provenance.md",
+      "reason": "No explicit rights, consent, likeness, voice or transfer risk"
+    }
+  ],
+  "signals": {
+    "duration_s": 6,
+    "shot_count": 1,
+    "dialogue": false,
+    "audio": false,
+    "moving_camera": false,
+    "interaction": true,
+    "long_form": false,
+    "model_selection_or_capability": false,
+    "comfyui_execution": false,
+    "production_quality": false,
+    "safety_or_provenance": false
+  },
+  "limitations": [
+    "This is a deterministic context-loading recommendation, not proof that a host loaded the files",
+    "Reference routing does not establish model capability, runtime availability or media quality"
+  ]
+}
