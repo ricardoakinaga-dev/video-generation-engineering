@@ -218,11 +218,11 @@
     ".agents/skills/video-generation-engineering/scripts/vge_quality.py"
       ],
       "next_action": {
-        "id": "VGE-TRIPLE-AAA-R4:COMMIT-PUSH",
+        "id": "VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY",
         "kind": "VERIFY",
-        "summary": "Commit and push the post-critic R4 closure packet, then verify origin/main and the clean worktree",
-        "target": "Current R4 source, R5 critic/accounting, final R7 distribution and configured origin main",
-        "completion_signal": "Local final commit exists, origin/main resolves to the same commit, worktree is clean, and R5 REJECT plus production blockers remain explicit"
+        "summary": "Record the verified post-critic remote handoff while preserving the production boundary",
+        "target": "origin/main at 889b32e732573708fcc68d5eeac9985874a103aa and the final R4 closure packet",
+        "completion_signal": "Local HEAD and origin/main match at the verified commit, worktree is clean, and R5 REJECT plus production blockers remain explicit"
       }
     }
   ]

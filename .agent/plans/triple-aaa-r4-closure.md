@@ -1,6 +1,6 @@
 # Triple-AAA Closure R4 — master prompt production closure
 
-<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:COMMIT-PUSH -->
+<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY -->
 
 ## Purpose
 
@@ -31,7 +31,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 
 ## Concrete Steps
 
-1. [VGE-TRIPLE-AAA-R4:COMMIT-PUSH] — commit the post-critic closure packet, force-add the final R7 archive, push `origin/main` and verify the remote tip; preserve the `REJECT` production boundary. **IN PROGRESS.**
+1. [VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY] — verify and record the post-critic remote handoff; local `HEAD` and `origin/main` match at `889b32e`, and the worktree is clean. **COMPLETE.**
 
 2. [VGE-TRIPLE-AAA-R4:FRESH-CRITIC] — obtain a fresh non-inherited read-only review of the post-cross-shot-gate candidate, with reviewer-owned fingerprint and mutation sentinel; preserve the current PARTIAL production boundary. **COMPLETE with R5 `REJECT`, matching fingerprint and unchanged sentinel.**
 
@@ -43,7 +43,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 
 6. Attempt only evidence-authorized repair/re-anchor, FLF and later ladders; preserve every failure and stop on resource/capability blockers. **COMPLETE as a disposition: repair is awaiting authorization; FLF/LF-002/LF-003/second adapter remain NOT_RUN/BLOCKED.**
 
-7. Update the R4 matrix, scorecard and final closure report, obtain the fresh critic, freeze distribution, commit and push. **R5 critic and post-critic R7 distribution are complete; final remote handoff remains open.**
+7. Update the R4 matrix, scorecard and final closure report, obtain the fresh critic, freeze distribution, commit and push. **R5 critic, post-critic R7 distribution and final remote handoff are complete.**
 
 ## Execution order
 
@@ -82,7 +82,7 @@ The prior R4 closure packet was committed and pushed to the configured `origin/m
 - [x] Re-run focused/full tests, compileall, offline verification and current documentation audit.
 - [x] Rebuild the portable package as R7; obtain a new fresh non-inherited critic before final remote handoff.
 
-Current action: `VGE-TRIPLE-AAA-R4:COMMIT-PUSH`. The audiovisual verdict remains `PARTIAL`; this hardening closes a software acceptance gap but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
+Current action: `VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY`. The audiovisual verdict remains `PARTIAL`; this hardening closes a software acceptance gap but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
 
 ## Purpose / Big Picture
 
@@ -93,7 +93,8 @@ Close the supplied R4 master prompt against the brownfield Skill while preservin
 - [x] (2026-09-09T21:50:00Z) Implemented and tested the explicit hash-bound cross-shot comparison gate; R4 T01 is `PARTIAL`, T02 is `FAIL`.
 - [x] (2026-09-09T22:08:30Z) Completed the fresh non-inherited critic: `REJECT`, 403-file fingerprint matched before/after, sentinel unchanged.
 - [x] (2026-09-09T22:08:56Z) Rebuilt the R7 distribution after the critic; archive/manifest/security/CWD smoke remain `PASS`.
-- [ ] (2026-09-09T22:09:00Z) Commit/push the final packet and verify `origin/main`.
+- [x] (2026-09-09T22:09:00Z) Committed and pushed the final packet; the follow-up remote comparison is recorded below.
+- [x] (2026-09-09T22:12:28Z) Verified local `HEAD` and `origin/main` at `889b32e732573708fcc68d5eeac9985874a103aa`; worktree clean.
 
 ## Surprises & Discoveries
 
@@ -133,11 +134,11 @@ Complete.
 
 ### M3 — Fresh critic and final remote handoff
 
-Fresh critic and post-critic distribution complete; remote handoff pending.
+Fresh critic, post-critic distribution and remote handoff complete; audiovisual production remains `PARTIAL`.
 
 ## Plan of Work
 
-Commit and push the post-critic closure packet, then verify that `origin/main` resolves to the same commit. Preserve `READY_WITH_RISKS`/`PARTIAL` and the critic's `REJECT` for audiovisual promotion.
+The post-critic closure packet is committed and pushed; preserve `READY_WITH_RISKS`/`PARTIAL` and the critic's `REJECT` for audiovisual promotion.
 
 ## Validation and Acceptance
 
