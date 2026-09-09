@@ -39,4 +39,4 @@ Current global maturity: `3 — RUNTIME_PROVENANCE`, with bounded audiovisual ob
 
 ## Verdict policy
 
-`TRIPLE_AAA_PROVEN` requires production evidence, not only structural scores. The current verdict is `READY_WITH_RISKS`. `TRIPLE_AAA_CANDIDATE` is also withheld because LF-001..003 and the fresh post-integration critic have not passed.
+`TRIPLE_AAA_PROVEN` requires production evidence, not only structural scores. The current verdict is `READY_WITH_RISKS`, with the current independent critic decision `REJECT`. `TRIPLE_AAA_CANDIDATE` is withheld because LF-001..003 and the production evidence gates have not passed.

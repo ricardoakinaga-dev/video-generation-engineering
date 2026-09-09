@@ -95,7 +95,7 @@
         "VGE-TRIPLE-AAA-R1"
       ],
       "owner": "Codex",
-      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 134-test software evidence and rebuilt portable distribution; R13 rejected its pre-fix snapshot after finding a semantic long-form acceptance gap, the fix is recorded, and the final independent critic plus production evidence remain blocked while release is READY_WITH_RISKS",
+      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 134-test software evidence, rebuilt portable distribution and completed R14 independent review; R14 rejected Triple-AAA promotion because real production evidence remains blocked, so release is READY_WITH_RISKS",
       "evidence_refs": [
         "docs/master-prompt-triple-aaa-r2.txt",
         "docs/triple-aaa-quality-bar-r2.json",
@@ -104,6 +104,9 @@
         "verification/software-triple-aaa-r20.json",
         "verification/software-triple-aaa-r21.json",
         "verification/lf-semantic-acceptance-boundary-r1.json",
+        "verification/docs-current-r14.json",
+        "verification/triple-aaa-independent-critic-r14.md",
+        ".agent/verification.jsonl#VER-20260908-AAA-R2-STATE-RECOVERY-10",
         "verification/distribution-triple-aaa-r2.json",
         "verification/comfyui-preflight-r2.json",
         "verification/comfyui-queue-recheck-20260908.json",
@@ -121,11 +124,11 @@
         "dist/video-generation-engineering-triple-aaa-r2.zip"
       ],
       "next_action": {
-        "id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC",
-        "kind": "REVIEW",
-        "summary": "Run a sealed fresh independent critic against the integrated R2 candidate",
-        "target": "Current committed implementation, fixtures, profile, quality bar, report, matrix and distribution",
-        "completion_signal": "Independent critic record includes scope fingerprint, mutation sentinel and verdict"
+        "id": "VGE-TRIPLE-AAA-R2:PRODUCTION-EVIDENCE",
+        "kind": "RUN",
+        "summary": "Obtain authorized runtime/resource/rights capacity and execute the smallest blocked production probes",
+        "target": "LF-001 vehicle entry, LF-002 dialogue/audio/lip-sync and LF-003 long-form evidence envelopes",
+        "completion_signal": "Each attempted capability has hash-bound runtime/artifact/observation evidence or remains explicitly BLOCKED/NOT_RUN with the reason recorded"
       }
     }
   ]
