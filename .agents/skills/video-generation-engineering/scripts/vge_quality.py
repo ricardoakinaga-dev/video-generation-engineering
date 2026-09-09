@@ -44,6 +44,8 @@ AUDIO_LAYERS = (
 )
 AUDIO_LAYER_ALIASES = {"effects": "foley"}
 REANCHOR_ACTIONS = ("CONTINUE", "RE_ANCHOR", "RESET", "REGENERATE", "SPLIT")
+REANCHOR_ANCHORS = ("UNKNOWN", "canonical_reference", "accepted_last_frame", "first_last_frame",
+                    "keyframe_reset", "human_review", "generated_frame")
 REPAIR_OWNERS = (
     "reference_conditioning", "continuity", "cinematography", "adapter", "shot_decomposition",
     "dialogue", "audio", "performance", "human_review"
@@ -566,8 +568,19 @@ def reanchor_decision(drift, shot_id, downstream_shot_ids=None):
     _quality_provenance(drift.get("provenance"), "drift.provenance", shot_id=shot_id)
     capability = drift.get("capability_status", "CONFIRMED")
     require(capability in ("CONFIRMED", "PARTIAL", "UNKNOWN", "UNSUPPORTED", "BLOCKED"), "Invalid drift capability_status")
+    anchor_kind = drift.get("anchor_kind", "UNKNOWN")
+    require(anchor_kind in REANCHOR_ANCHORS, "Invalid re-anchor anchor_kind")
+    generated_chain_depth = drift.get("generated_chain_depth", 0)
+    require(type(generated_chain_depth) is int and generated_chain_depth >= 0,
+            "generated_chain_depth must be a nonnegative integer")
     reasons = []
-    if drift.get("state_contradiction") is True:
+    recursive_generated_anchor = anchor_kind == "generated_frame" or (
+        anchor_kind == "accepted_last_frame" and generated_chain_depth > 1
+    )
+    if recursive_generated_anchor:
+        action, owner = "RE_ANCHOR", "reference_conditioning"
+        reasons.append("Generated-frame propagation exceeded the bounded canonical-anchor policy")
+    elif drift.get("state_contradiction") is True:
         action, owner = "RESET", "continuity"
         reasons.append("Observed state contradicts the canonical handoff")
     elif capability in ("UNSUPPORTED", "BLOCKED"):
@@ -789,7 +802,7 @@ def validate_vehicle_state(record):
     _nonempty(record.get("vehicle_id"), "vehicle_state.vehicle_id")
     field_names = (
         "vehicle_position", "velocity_phase", "wheel_state", "engine_state", "door_state",
-        "steering_phase", "road_contact", "lights", "occupants"
+        "steering_phase", "road_contact", "lights", "occupants", "geometry"
     )
     state = record.get("state", record)
     _object(state, "vehicle_state.state")
@@ -822,6 +835,9 @@ def validate_vehicle_state(record):
         changed = [field for field in field_names if field in prior and field in state and prior[field] != state[field]]
         if changed:
             _nonempty(record.get("cause"), "vehicle_state.cause")
+        if "geometry" in changed:
+            _nonempty(record.get("geometry_transition_ref"),
+                      "vehicle_state.geometry_transition_ref")
     return {"status": "PASS", "accepted": True, "vehicle_id": record["vehicle_id"],
             "applicable_fields": list(applicable),
             "limitations": ["Vehicle state validation is structural; physics and geometry require artifact observation."]}
@@ -832,6 +848,13 @@ def validate_dialogue_contract(dialogue):
     _object(dialogue, "dialogue")
     require(dialogue.get("schema_version") == 1, "Unsupported dialogue contract schema")
     lines = _list(dialogue.get("lines"), "dialogue.lines", allow_empty=False)
+    speaker_sequence = dialogue.get("speaker_sequence")
+    if speaker_sequence is not None:
+        speaker_sequence = _list(speaker_sequence, "dialogue.speaker_sequence", allow_empty=False)
+        require(len(speaker_sequence) == len(lines),
+                "dialogue.speaker_sequence must cover every dialogue line")
+        for index, speaker in enumerate(speaker_sequence):
+            _nonempty(speaker, f"dialogue.speaker_sequence[{index}]")
     seen_line_ids = set()
     for index, line in enumerate(lines):
         label = f"dialogue.lines[{index}]"
@@ -842,6 +865,9 @@ def validate_dialogue_contract(dialogue):
         seen_line_ids.add(line_id)
         shot_id = _alias_value(line, ("shot_id",), f"{label}.shot_id")
         speaker = _alias_value(line, ("speaker",), f"{label}.speaker")
+        if speaker_sequence is not None:
+            require(speaker == speaker_sequence[index],
+                    f"{label}: speaker sequence mismatch (speaker swap)")
         listener = _alias_value(line, ("listener",), f"{label}.listener")
         text = _alias_value(line, ("text", "line"), f"{label}.line")
         intention = _alias_value(line, ("intention", "intent"), f"{label}.intent")
@@ -1230,9 +1256,24 @@ def build_repair_plan(plan, changed_shot_ids, findings, budget):
     require(all(route["shot_id"] in affected for route in routes), "Repair route may not mutate preserved siblings")
     requested = len(affected)
     require(requested <= max(1, budget["max_regenerations"]), "Repair exceeds max_regenerations budget")
+    nodes = indexed(plan.get("shots", []), "shots")
+    required_pairs = [
+        f"{dependency}->{shot_id}"
+        for shot_id in affected
+        for dependency in nodes[shot_id].get("dependency_ids", [])
+    ]
+    required_pairs = sorted(set(required_pairs))
     return {"schema_version": 1, "plan_revision": plan.get("revision"), "changed_shot_ids": changed_shot_ids,
             "affected_shot_ids": affected, "preserved_shot_ids": scope["preserved_shot_ids"], "routes": routes,
             "budget": copy.deepcopy(budget), "estimated_regenerations": requested,
+            "transition_revalidation": {
+                "schema_version": 1,
+                "status": "NOT_REQUIRED" if not required_pairs else "NOT_RUN",
+                "required_pairs": required_pairs,
+                "validated_pairs": [],
+                "evidence_refs": [],
+                "next_action": "Re-observe and validate every affected dependency transition before accepting repair",
+            },
             "status": "AUTHORIZED" if budget.get("authorized") is True else "AWAITING_AUTHORIZATION",
             "limitations": ["Cost/runtime estimates are declarations until a runtime ledger is attached"]}
 
@@ -1278,6 +1319,33 @@ def validate_repair_plan(repair):
         require(route.get("shot_id") in affected, f"repair_plan.routes[{index}] targets a non-affected shot")
         _nonempty(route.get("reason"), f"repair_plan.routes[{index}].reason")
     require(repair.get("status") in ("AUTHORIZED", "AWAITING_AUTHORIZATION", "BLOCKED"), "Invalid repair plan status")
+    revalidation = repair.get("transition_revalidation")
+    if revalidation is None:
+        revalidation_status = "MISSING"
+        required_pairs, validated_pairs = [], []
+    else:
+        _object(revalidation, "repair_plan.transition_revalidation")
+        require(revalidation.get("schema_version") == 1, "Unsupported transition revalidation schema")
+        revalidation_status = revalidation.get("status")
+        require(revalidation_status in ("NOT_REQUIRED", "NOT_RUN", "PARTIAL", "PASS", "BLOCKED"),
+                "Invalid transition revalidation status")
+        required_pairs = _list(revalidation.get("required_pairs"), "transition_revalidation.required_pairs")
+        validated_pairs = _list(revalidation.get("validated_pairs"), "transition_revalidation.validated_pairs")
+        require(all(isinstance(pair, str) and "->" in pair for pair in required_pairs),
+                "Transition revalidation pairs must use previous->next IDs")
+        require(all(isinstance(pair, str) and "->" in pair for pair in validated_pairs),
+                "Validated transition pairs must use previous->next IDs")
+        require(len(required_pairs) == len(set(required_pairs)), "Duplicate transition revalidation pair")
+        require(len(validated_pairs) == len(set(validated_pairs)), "Duplicate validated transition pair")
+        require(set(validated_pairs) <= set(required_pairs), "Validated transition is not required by repair scope")
+        evidence_refs = _list(revalidation.get("evidence_refs"), "transition_revalidation.evidence_refs")
+        if revalidation_status == "PASS":
+            require(set(validated_pairs) == set(required_pairs),
+                    "PASS transition revalidation must cover every required pair")
+            require(evidence_refs, "PASS transition revalidation requires evidence_refs")
+        if revalidation_status == "NOT_REQUIRED":
+            require(not required_pairs and not validated_pairs,
+                    "NOT_REQUIRED transition revalidation cannot declare required pairs")
     ledger = repair.get("execution_ledger")
     if ledger is None:
         status = "BLOCKED" if repair["status"] == "BLOCKED" else "PARTIAL"
@@ -1285,9 +1353,13 @@ def validate_repair_plan(repair):
     else:
         ledger_report = _validate_repair_ledger(ledger, repair["budget"], shot_id=changed[0])
         ledger_status = ledger_report["status"]
-        status = "PASS" if ledger_status == "COMPLETE" and repair["status"] == "AUTHORIZED" else "BLOCKED" if ledger_status == "BLOCKED" else "PARTIAL"
+        if ledger_status == "COMPLETE" and repair["status"] == "AUTHORIZED":
+            status = "PASS" if revalidation_status in ("PASS", "NOT_REQUIRED") else "BLOCKED"
+        else:
+            status = "BLOCKED" if ledger_status == "BLOCKED" else "PARTIAL"
     return {"status": status, "accepted": status == "PASS", "affected_shot_ids": affected, "preserved_shot_ids": preserved,
             "authorized": repair["status"] == "AUTHORIZED", "execution_ledger_status": ledger_status,
+            "transition_revalidation_status": revalidation_status,
             "limitations": [] if ledger is not None else ["Repair usage remains unmeasured until an execution ledger is attached"]}
 
 

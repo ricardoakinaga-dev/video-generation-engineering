@@ -25,6 +25,8 @@ python3 .agents/skills/video-generation-engineering/scripts/vge.py prepare \
   .agents/skills/video-generation-engineering/assets/templates/treatment.json \
   --output /tmp/vge-example-plan.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py validate /tmp/vge-example-plan.json
+python3 .agents/skills/video-generation-engineering/scripts/vge.py route \
+  .agents/skills/video-generation-engineering/assets/templates/treatment.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py compile /tmp/vge-example-plan.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py semantic observation.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py scorecard scorecard.json

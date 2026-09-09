@@ -294,6 +294,13 @@ class QualityContractTests(unittest.TestCase):
             reanchor_decision({"failed_dimensions": [], "partial_dimensions": [], "unobserved_dimensions": [], "observed_dimensions": ["identity"], "evidence_refs": [{"ref": "/tmp/vge-reanchor-evidence-does-not-exist.png", "content_hash": QUALITY_ARTIFACT_HASH}], "provenance": quality_provenance("shot_2", "artifact_2")}, "shot_2")
         with self.assertRaisesRegex(ContractError, "provenance"):
             reanchor_decision({"failed_dimensions": [], "partial_dimensions": [], "unobserved_dimensions": [], "observed_dimensions": ["identity"], "evidence_refs": decision_evidence()}, "shot_2")
+        recursive = reanchor_decision({"failed_dimensions": [], "partial_dimensions": [], "unobserved_dimensions": [],
+                                       "observed_dimensions": ["identity"], "anchor_kind": "accepted_last_frame",
+                                       "generated_chain_depth": 2, "evidence_refs": decision_evidence(),
+                                       "provenance": quality_provenance("shot_2", "artifact_recursive")}, "shot_2", ["shot_3"])
+        self.assertEqual("RE_ANCHOR", recursive["action"])
+        self.assertEqual("reference_conditioning", recursive["repair_owner"])
+        self.assertEqual(["shot_2", "shot_3"], recursive["changed_shot_ids"])
 
     def test_first_last_frame_needs_actual_endpoint_checks(self):
         checks = []
@@ -394,6 +401,8 @@ class QualityContractTests(unittest.TestCase):
         self.assertEqual("PASS", adapt_prompt(sections, {"id": "fixture", "preserve_sections": list(sections)})["status"])
         degraded = adapt_prompt(sections, {"id": "small", "unsupported_sections": ["audio"]})
         self.assertEqual("DEGRADED", degraded["status"]); self.assertEqual(["audio"], degraded["omissions"])
+        with self.assertRaisesRegex(ContractError, "truncate"):
+            adapt_prompt(sections, {"id": "tiny", "max_words": 1})
         diff = adapter_differential(sections, [{"id": "fixture"}, {"id": "small", "unsupported_sections": ["audio"]}])
         self.assertEqual("DEGRADED", diff["status"])
         self.assertTrue(analyze_prompt_density({"constraints": "not open and static"})["contradictions"])
@@ -433,6 +442,8 @@ class QualityContractTests(unittest.TestCase):
         self.assertEqual("AWAITING_AUTHORIZATION", repair["status"]); self.assertEqual("PARTIAL", validate_repair_plan(repair)["status"])
         repair["status"] = "AUTHORIZED"
         repair["execution_ledger"] = {"schema_version": 1, "status": "COMPLETE", "attempts": 1, "regenerations": 1, "runtime_s": 10, "cost_usd": 0, "human_reviews": 0, "observed_at": datetime.now(timezone.utc).isoformat(), "completed_at": datetime.now(timezone.utc).isoformat(), "evidence": evidence(), "provenance": quality_provenance("a", "artifact_repair")}
+        self.assertEqual("BLOCKED", validate_repair_plan(repair)["status"])
+        repair["transition_revalidation"].update(status="PASS", validated_pairs=["a->b"], evidence_refs=["transition:a->b"])
         self.assertEqual("PASS", validate_repair_plan(repair)["status"])
         saved_repair_provenance = repair["execution_ledger"].pop("provenance")
         with self.assertRaisesRegex(ContractError, "provenance"):
@@ -474,6 +485,16 @@ class QualityContractTests(unittest.TestCase):
         vehicle["state"]["velocity_phase"] = "MOVING"
         with self.assertRaisesRegex(ContractError, "active engine"):
             validate_vehicle_state(vehicle)
+        geometry = copy.deepcopy(vehicle)
+        geometry["state"]["velocity_phase"] = "STATIONARY"
+        geometry["state"]["geometry"] = "van-v2"
+        geometry["applicable_fields"].append("geometry")
+        geometry["prior_state"] = {"geometry": "van-v1"}
+        geometry["cause"] = "repair"
+        with self.assertRaisesRegex(ContractError, "geometry_transition_ref"):
+            validate_vehicle_state(geometry)
+        geometry["geometry_transition_ref"] = "human-review-vehicle-v2"
+        self.assertTrue(validate_vehicle_state(geometry)["accepted"])
         dialogue = {"schema_version": 1, "lines": [{"dialogue_id": "line_alias", "shot_id": "shot_1",
                     "speaker": "a", "listener": "b", "line": "Ready.", "intent": "warn",
                     "delivery": "quiet", "emotion": "focused", "start": 1, "end": 2,
@@ -484,6 +505,10 @@ class QualityContractTests(unittest.TestCase):
                                   "reason": "not run", "evidence": []}
                         for channel in ("semantics", "voice", "performance", "lip_sync", "mix")}}]}
         self.assertEqual("NOT_OBSERVED", validate_dialogue_contract(dialogue)["status"])
+        dialogue["speaker_sequence"] = ["b"]
+        with self.assertRaisesRegex(ContractError, "speaker sequence"):
+            validate_dialogue_contract(dialogue)
+        dialogue.pop("speaker_sequence")
         dialogue["lines"][0]["listener_mouthing"] = True
         with self.assertRaisesRegex(ContractError, "listener must not mouth"):
             validate_dialogue_contract(dialogue)

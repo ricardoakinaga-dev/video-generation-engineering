@@ -157,7 +157,7 @@ The label cannot lower a requirement imposed by complexity, risk, or the duratio
 
 ## Progressive disclosure
 
-The future package should use the following routing:
+The package uses the following routing, with the deterministic `reference_route` record emitted by `vge_core.py` as the structural implementation of the matrix:
 
 ```text
 Layer 1: concise skill metadata and trigger boundary
@@ -167,6 +167,8 @@ Layer 4: conditional references (dialogue, vehicle, animal, audio, long-form)
 Layer 5: target-model profile and ComfyUI workflow guidance
 Layer 6: deterministic helpers and templates only when proven useful
 ```
+
+`reference_route` names package-relative references, inclusion reasons and explicit exclusions. It is recomputed from canonical scene signals and is not evidence that a host loaded context; runtime/model/media claims remain owned by their respective boundaries.
 
 The initial Skill catalog description must be concise and scoped. The full instruction file should route to references rather than carry all cinematography, model, and failure knowledge. The official [Build skills documentation](https://developers.openai.com/codex/skills/) confirms the package shape and that selected Skills load the full `SKILL.md`; this design preserves that boundary.
 

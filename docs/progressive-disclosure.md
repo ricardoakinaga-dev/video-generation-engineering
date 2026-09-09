@@ -31,6 +31,18 @@ Keep the Skill concise and context-efficient while ensuring that high-risk tasks
 | ComfyUI target | core, model-adaptation, ComfyUI execution, current runtime profile | external API details unless fallback selected |
 | Failure diagnosis | relevant domain owner, failure/evals, observability | entire package |
 
+The deterministic planner now emits this matrix as `reference_route` on every prepared plan. The route is a structural recommendation: it names package-relative reference paths, the signals that caused each inclusion, and explicit exclusions. It never claims that the host loaded a file or that a model satisfied a capability.
+
+## Executable routing contract
+
+Use the portable command when the host needs a machine-readable route:
+
+```bash
+python3 .agents/skills/video-generation-engineering/scripts/vge.py route treatment.json
+```
+
+`reference_route.status` is `STRUCTURAL`; `required_references` and `excluded_references` are derived from canonical intent, shot, dialogue, contact, duration, model and runtime fields. A prepared plan fails validation with `REFERENCE_ROUTE_DRIFT` if an authored route no longer matches those signals. This makes context efficiency testable without pretending that a JSON route is evidence of actual context loading.
+
 ## Reference loading rules
 
 1. Load a reference because a current task needs its decision, not because the blueprint names it.
@@ -38,6 +50,7 @@ Keep the Skill concise and context-efficient while ensuring that high-risk tasks
 3. The core `SKILL.md` should route to a reference by concrete signal (`dialogue`, `vehicle`, `long-form`, model/runtime), not by a broad “read everything” instruction.
 4. Model profiles remain dated and are not loaded as capability truth until their evidence is current.
 5. Scripts are loaded/run only when deterministic repetition or artifact parsing justifies them.
+6. The route is recomputed after an authored change; it is never a manually edited substitute for the canonical plan.
 
 ## Failure modes
 

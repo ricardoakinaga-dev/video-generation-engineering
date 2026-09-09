@@ -61,6 +61,7 @@ The existing functional requirements below are intentionally `MUST` requirements
 - **R-PLAN-03** The system MUST produce a narrative timeline for long-form or high-dependency work before shot compilation.
 - **R-PLAN-04** The story plan MUST represent stimulus → reaction → response and MUST avoid premature reactions.
 - **R-PLAN-05** The story plan MUST avoid overloading a shot with unrelated concurrent actions and MUST decompose action-heavy beats.
+- **R-PLAN-06** The prepared plan MUST emit a deterministic progressive-disclosure route with package-relative references, inclusion reasons, explicit exclusions, and a limitation that route output is not proof of context loading.
 
 ### Canonical scene model
 

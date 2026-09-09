@@ -85,12 +85,12 @@ The canonical model remains model-independent. Desired, planned and observed tru
 | `tests/test_evidence_runtime_media.py` | PASS; provenance, fake HTTP boundary, dynamic-combo runtime and strict assembly mechanics |
 | `tests/test_extensions.py` | PASS; provider boundary, assembly and bounded repair |
 | `tests/test_quality.py` | PASS; 14-dimension continuity, 12-dimension semantic QA, editorial acceptance, contact, dialogue/audio, causality, ownership, vehicle, profile, transition, long-form and known-bad cases |
-| Full `python3 -B -m unittest discover -s tests -q` | `127` tests, `0` failures, `0` errors, `0` skips |
+| Full `python3 -B -m unittest discover -s tests -q` | `133` tests, `0` failures, `0` errors, `0` skips |
 | `python3 -m compileall -q .agents/skills/video-generation-engineering/scripts tests` | PASS |
 | Skill quick validation | PASS (`Skill is valid!`) |
 | Documentation checker | PASS; no broken local links or YAML blocks |
 | Live ComfyUI preflight | PASS; both bundled H3 API workflows validated against local ComfyUI 0.34.0 and 911-node catalog; no credits spent |
-| `tools/verify.py --output verification/software-triple-aaa-r18.json` | PASS; 127 tests, package manifest `448c1c4ed8f24bbb92c286e183deb30b2a7288214e05b65e8031a30c28cffb23`; offline/package/mechanical scope only |
+| `tools/verify.py --output verification/software-triple-aaa-r20.json` | PASS; 133 tests, package manifest `4ed1f7b7ca9e28aa141ecaf1bba3429ac19e7ca0b34545dbc30e85090fe09f56`; offline/package/mechanical scope only |
 | Framework `check_state.py` recovery audit | Current R2 pointer is canonical after repair; full ledger result remains `FAIL` because preserved pre-R2 records use legacy event/verification shapes, so no whole-ledger PASS is claimed |
 
 The tests are evidence of software contracts and synthetic/fake boundaries. They are not a substitute for accepted generated media.
@@ -151,7 +151,7 @@ The Skill loads only the references activated by risk: core contracts for all no
 
 ## Portability
 
-The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only for media commands. CLI writes are new-file-only. External-CWD `help → prepare → validate → compile` behavior and package manifest/CRC checks are covered. The fresh R2 archive is [`video-generation-engineering-triple-aaa-r2.zip`](../dist/video-generation-engineering-triple-aaa-r2.zip), SHA-256 `bdb7483f18c80b9a6f56fd1632c112ea213373c360a4e10732d9dcba23721be1`, 28 files; its manifest is [`distribution-triple-aaa-r2.json`](../verification/distribution-triple-aaa-r2.json) with package-manifest hash `448c1c4ed8f24bbb92c286e183deb30b2a7288214e05b65e8031a30c28cffb23`. It contains the Skill, references, scripts, profiles and templates, not model weights, secrets, local media or project control-plane state.
+The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only for media commands. CLI writes are new-file-only. External-CWD `help → prepare → validate → compile` behavior and package manifest/CRC checks are covered. The fresh R2 archive is [`video-generation-engineering-triple-aaa-r2.zip`](../dist/video-generation-engineering-triple-aaa-r2.zip), SHA-256 `8ecd47a3d80f7c22c2d2fe5ed201a8e0c4115b4083166ee33514a34b748a7340`, 28 files; its manifest is [`distribution-triple-aaa-r2.json`](../verification/distribution-triple-aaa-r2.json) with package-manifest hash `4ed1f7b7ca9e28aa141ecaf1bba3429ac19e7ca0b34545dbc30e85090fe09f56`. It contains the Skill, references, scripts, profiles and templates, not model weights, secrets, local media or project control-plane state.
 
 ## Independent Critic
 

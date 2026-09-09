@@ -29,7 +29,8 @@ Load only the references needed for the current decision. The package is self-co
 3. Establish story causality and scene geography. Specify what the viewer must notice, stimulus → processing → reaction → response, object ownership, action phases and end state. Split at causal/interaction/capability boundaries.
 4. Author a shot treatment with camera, performance, start/end state, dependency IDs and review criteria. Keep speaker timing and sound layers separate from image generation. Apply continuous duration floors and reset strategy from the continuity reference.
 5. Validate the treatment; repair contradictions before compiling. Use the deterministic helper for repeatable graph/state/timing checks. It does not choose a story or judge media quality.
-6. Compile from the canonical state, not from the previous prompt. Record each mapping, omission, deliberate change and unsupported feature. Give natural, concrete shot prompts; use structured attachments for details that would overload prose.
+6. Run the structural progressive-disclosure route from the prepared plan. It records which package references are relevant and which specialist references are intentionally excluded; it does not claim that the host loaded them.
+7. Compile from the canonical state, not from the previous prompt. Record each mapping, omission, deliberate change and unsupported feature. Give natural, concrete shot prompts; use structured attachments for details that would overload prose.
 
 Before calling a treatment `SUPPORTED_PLAN`, resolve its causal prerequisites and action-load decisions. A note saying “insert landing later” or “timing needs repair” is still unfinished planning: insert that coverage now, or return a scoped unresolved result. Do not assign one hand to two tasks or compress several vehicle-entry mechanics into an unreviewed short shot.
 
@@ -40,6 +41,7 @@ Run Python 3.10+ commands relative to this skill's directory (resolve the actual
 ```bash
 python3 scripts/vge.py prepare treatment.json --output plan.json
 python3 scripts/vge.py validate plan.json
+python3 scripts/vge.py route treatment.json
 python3 scripts/vge.py compile plan.json --output prompts.json
 python3 scripts/vge.py negotiate shot.json --profile profiles/comfyui-wan22-candidate.json
 ```

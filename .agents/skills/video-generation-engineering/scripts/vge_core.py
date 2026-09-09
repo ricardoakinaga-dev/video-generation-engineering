@@ -208,6 +208,184 @@ def _route_complexity(intent, shots, complexity):
     return mode, reasons
 
 
+REFERENCE_CATALOG = (
+    ("core", "references/core-contracts.md"),
+    ("continuity", "references/continuity-and-long-form.md"),
+    ("directing_audio", "references/directing-and-audio.md"),
+    ("interaction_constraints", "references/interaction-and-constraints.md"),
+    ("model_adaptation", "references/model-adaptation.md"),
+    ("comfyui_execution", "references/comfyui-execution.md"),
+    ("evaluation_repair", "references/evaluation-and-repair.md"),
+    ("production_quality", "references/production-quality.md"),
+    ("observability", "references/observability.md"),
+    ("safety_provenance", "references/safety-and-provenance.md"),
+)
+
+
+def _contains_comfyui(value):
+    """Inspect only explicit runtime/provider fields, never free-form prose."""
+    if isinstance(value, str):
+        return "comfyui" in value.lower() or value.lower() == "comfy"
+    if isinstance(value, dict):
+        return any(_contains_comfyui(value.get(key)) for key in
+                   ("runtime", "runtime_target", "execution", "execution_target", "provider", "backend"))
+    return False
+
+
+def _reference_route(plan, complexity=None):
+    """Derive a small, explainable reference-loading recommendation.
+
+    This is a structural routing record for the host/agent context loader. It
+    does not claim that a host actually loaded any reference or that a model
+    can satisfy the routed capability.
+    """
+    require(isinstance(plan, dict), "plan must be an object")
+    intent = object_value(plan.get("scene_intent", {}), "scene_intent")
+    shots = plan.get("shots", [])
+    require(isinstance(shots, list), "shots must be an array")
+    references = plan.get("references", [])
+    require(isinstance(references, list), "references must be an array")
+    dialogue = plan.get("dialogue_timeline", [])
+    contacts = plan.get("contact_graphs", [])
+    audio = plan.get("audio_timeline", [])
+    require(isinstance(dialogue, list), "dialogue_timeline must be an array")
+    require(isinstance(contacts, list), "contact_graphs must be an array")
+    require(isinstance(audio, list), "audio_timeline must be an array")
+    complexity = complexity or _complexity_vector(intent, shots, references, dialogue, contacts)
+    routed_mode, _ = _route_complexity(intent, shots, complexity)
+    duration = complexity["duration"]
+    entities = plan.get("scene_bible", {}).get("entities", [])
+    entity_types = {str(entity.get("type", "")).lower() for entity in entities if isinstance(entity, dict)}
+    capability_requirements = {
+        item
+        for shot in shots
+        if isinstance(shot, dict)
+        for item in shot.get("capability_requirements", [])
+        if isinstance(item, str)
+    }
+    action_text = {
+        str(action).lower()
+        for shot in shots
+        if isinstance(shot, dict)
+        for action in shot.get("action_primitives", [])
+        if isinstance(action, str)
+    }
+    interaction_signal = bool(contacts) or any(
+        isinstance(shot, dict) and shot.get("contact_graph_ref") for shot in shots
+    ) or bool({"vehicle", "animal", "articulated", "articulated_object"} & entity_types) or bool(
+        {"contact", "collision", "physics", "articulation", "vehicle_geometry", "animal_anatomy"}
+        & capability_requirements
+    ) or bool({"contact", "collision", "articulate", "transfer", "handoff", "examine", "reach"} & action_text)
+    dialogue_signal = bool(dialogue) or intent.get("dialogue_required") is True or bool(
+        {"dialogue", "audio_dialogue_lip_sync", "lip_sync", "voice"} & capability_requirements
+    )
+    audio_signal = bool(audio) or intent.get("audio_required") is True or dialogue_signal
+    dependent_action = complexity["dependency_edges"] > 0
+    long_form_signal = duration > 30 or len(shots) > 1 or dependent_action
+    continuity_signal = long_form_signal or dialogue_signal or interaction_signal
+    moving_camera = complexity["camera_movement"] > 0
+    target = intent.get("target", {}) if isinstance(intent.get("target", {}), dict) else {}
+    model_signal = any(
+        plan.get(key) not in (None, "", "UNKNOWN")
+        for key in ("model", "model_id", "profile", "profile_id", "selected_profile", "provider")
+    ) or any(
+        intent.get(key) not in (None, "", "UNKNOWN")
+        for key in ("model", "model_id", "profile", "profile_id", "selected_profile", "provider")
+    ) or any(
+        target.get(key) not in (None, "", "UNKNOWN")
+        for key in ("model", "model_id", "profile", "profile_id", "selected_profile", "provider")
+    ) or bool(capability_requirements) or any(
+        isinstance(shot, dict) and shot.get("generation_mode", "T2V") != "T2V" for shot in shots
+    )
+    comfy_signal = _contains_comfyui(plan) or _contains_comfyui(target)
+    constraints = plan.get("constraints", [])
+    safety_signal = any(
+        isinstance(ref, dict) and (
+            ref.get("sensitive") is True or
+            bool({"face", "likeness", "voice", "voice_identity", "character_identity", "identity_reference"}
+                 & set(ref.get("roles", [])))
+        )
+        for ref in references
+    ) or any(
+        isinstance(constraint, dict) and constraint.get("kind") == "RIGHTS_SAFETY"
+        for constraint in constraints if isinstance(constraints, list)
+    ) or any(
+        intent.get(key) is True for key in ("external_transfer", "publication", "consent_required", "rights_required")
+    )
+    production_signal = duration >= 45 or len(shots) > 2 or bool(plan.get("human_checkpoints"))
+
+    signals = {
+        "duration_s": duration,
+        "shot_count": len(shots),
+        "dialogue": dialogue_signal,
+        "audio": audio_signal,
+        "moving_camera": moving_camera,
+        "interaction": interaction_signal,
+        "long_form": long_form_signal,
+        "model_selection_or_capability": model_signal,
+        "comfyui_execution": comfy_signal,
+        "production_quality": production_signal,
+        "safety_or_provenance": safety_signal,
+    }
+    reasons = {
+        "core": ["Required for every authored scene contract"],
+        "directing_audio": ["Camera, purpose and performance decisions are present in every scene"],
+        "evaluation_repair": ["Acceptance and bounded repair are required even for a simple shot"],
+        "observability": ["Routing and unresolved decisions need concise inspectable diagnostics"],
+        "continuity": ["Multi-shot, dialogue or physical state requires explicit continuity guidance"],
+        "interaction_constraints": ["Contact, articulation or vehicle/animal mechanics are in scope"],
+        "model_adaptation": ["A selected model, non-T2V mode or capability requirement needs scoped adaptation"],
+        "comfyui_execution": ["The request names an explicit ComfyUI/runtime execution target"],
+        "production_quality": ["Duration or shot count crosses the production-quality review boundary"],
+        "safety_provenance": ["Rights, consent, likeness, voice or external-transfer risk is explicit"],
+    }
+    required = {"core", "directing_audio", "evaluation_repair", "observability"}
+    if continuity_signal:
+        required.add("continuity")
+    if interaction_signal:
+        required.add("interaction_constraints")
+    if model_signal:
+        required.add("model_adaptation")
+    if comfy_signal:
+        required.add("comfyui_execution")
+    if production_signal:
+        required.add("production_quality")
+    if safety_signal:
+        required.add("safety_provenance")
+    exclusions = {
+        "continuity": "No multi-shot, dialogue, physical-interaction or long-form signal",
+        "interaction_constraints": "No contact, articulated-object, vehicle, animal or physical-action signal",
+        "model_adaptation": "No selected model, non-T2V mode or capability requirement",
+        "comfyui_execution": "No explicit ComfyUI/runtime execution target",
+        "production_quality": "No long-form production-quality signal",
+        "safety_provenance": "No explicit rights, consent, likeness, voice or transfer risk",
+    }
+    required_records = []
+    excluded_records = []
+    for key, path in REFERENCE_CATALOG:
+        if key in required:
+            required_records.append({"id": key, "path": path, "reasons": reasons[key]})
+        else:
+            excluded_records.append({"id": key, "path": path, "reason": exclusions.get(key, "No current decision requires this reference")})
+    return {
+        "schema_version": 1,
+        "status": "STRUCTURAL",
+        "presentation_mode": routed_mode,
+        "required_references": required_records,
+        "excluded_references": excluded_records,
+        "signals": signals,
+        "limitations": [
+            "This is a deterministic context-loading recommendation, not proof that a host loaded the files",
+            "Reference routing does not establish model capability, runtime availability or media quality",
+        ],
+    }
+
+
+def route_references(plan):
+    """Public structural progressive-disclosure route for a prepared plan."""
+    return _reference_route(plan)
+
+
 def _validation_diagnostics(plan, errors):
     intent = plan.get("scene_intent", {}) if isinstance(plan, dict) else {}
     project = intent.get("project_id", "unknown") if isinstance(intent, dict) else "unknown"
@@ -655,6 +833,10 @@ def validate(plan):
         routed_mode, _ = _route_complexity(intent, list(shots.values()), computed_complexity)
         if plan["presentation_mode"] != routed_mode:
             add("ROUTING_DRIFT", "presentation_mode", "Stored depth label disagrees with complexity routing", "Use the computed depth or record a reviewed routing override", "ASK", "QG-04")
+    if "reference_route" in plan:
+        authored_route = object_value(plan["reference_route"], "reference_route")
+        if authored_route != _reference_route(plan, computed_complexity):
+            add("REFERENCE_ROUTE_DRIFT", "reference_route", "Stored progressive-disclosure route disagrees with canonical scene signals", "Recompute the structural route and load only the required references", "ASK", "QG-04")
     return {"status": "FAIL" if errors else "PASS", "scope": "STRUCTURAL_PLAN_ONLY", "issues": errors,
             "diagnostics": _validation_diagnostics(plan, errors), "shot_order": order, "end_states": ends,
             "limitations": ["Does not verify visual identity, physics, editorial quality or model feasibility"]}
@@ -735,6 +917,7 @@ def prepare(treatment):
         plan["complexity"] = complexity
     routed_mode, route_reasons = _route_complexity(intent, shots, complexity)
     plan.setdefault("presentation_mode", routed_mode)
+    plan.setdefault("reference_route", _reference_route(plan, complexity))
     plan.setdefault("decision_diagnostics", [decision_diagnostic(
         f"DEC-ROUTE-{intent.get('project_id', 'unknown')}-{intent['scene_id']}-R{plan['revision']}",
         "complexity_routing", f"{intent.get('project_id', 'unknown')}:{intent['scene_id']}:rev{plan['revision']}",

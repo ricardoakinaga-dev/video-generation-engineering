@@ -5,7 +5,7 @@ import json
 import sys
 from pathlib import Path
 
-from vge_core import ContractError, load, save, prepare, validate, compile_plan, negotiate, repair_scope
+from vge_core import ContractError, load, save, prepare, validate, compile_plan, negotiate, repair_scope, route_references
 from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect
 from vge_media import probe, assemble, contact_sheet, validate_assembly_manifest
 from vge_evidence import aggregate, validate_observation
@@ -21,7 +21,7 @@ from vge_quality import (validate_continuity_scorecard, validate_transition_cont
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in ("prepare", "validate", "compile", "negotiate", "aggregate", "accept", "assemble", "repair-scope", "hailuo-plan", "hailuo-submit"):
+    for name in ("prepare", "validate", "compile", "route", "negotiate", "aggregate", "accept", "assemble", "repair-scope", "hailuo-plan", "hailuo-submit"):
         p = sub.add_parser(name)
         p.add_argument("input", help="JSON file")
         p.add_argument("--output", help="New JSON file; stdout when omitted")
@@ -74,6 +74,7 @@ def main(argv=None):
         if cmd == "prepare": result = prepare(data)
         elif cmd == "validate": result = validate(data)
         elif cmd == "compile": result = compile_plan(data, load(args.profile) if args.profile else None)
+        elif cmd == "route": result = route_references(prepare(data))
         elif cmd == "negotiate": result = negotiate(data, load(args.profile))
         elif cmd == "aggregate": result = {"status": aggregate(data["checks"], data.get("artifact_id"))}
         elif cmd == "repair-scope": result = repair_scope(data["plan"], data["changed_shot_ids"])

@@ -13,7 +13,7 @@ The current release therefore uses `READY_WITH_RISKS`. `TRIPLE_AAA_PROVEN` is re
 ## 2. End-to-end ownership
 
 ```text
-intent → references → complexity → Scene Bible → story/time
+intent → references → complexity → reference route → Scene Bible → story/time
        → shot graph + continuity state → direction/constraints
        → canonical prompt → feature-scoped adapter → ComfyUI preflight
        → immutable attempt → collected artifact → media QA
@@ -22,6 +22,8 @@ intent → references → complexity → Scene Bible → story/time
 ```
 
 `vge_core.py` owns authored and derived plan truth. `vge_quality.py` owns immutable quality contracts and never promotes a plan to observed truth. `vge_runtime.py` owns runtime discovery, workflow/device binding and queue reconciliation. `vge_evidence.py` owns attempts, artifacts and acceptance provenance. `vge_media.py` owns mechanical media QA and assembly mechanics. `vge.py` composes these owners; it is not a second domain model.
+
+Progressive disclosure is also derived by `vge_core.py`: `reference_route` includes only the package references justified by canonical scene signals and records exclusions. The route is structural context guidance, not evidence that the host loaded a document.
 
 The truth domains remain separate:
 
@@ -73,7 +75,7 @@ Each phase has timing, a visible assertion and, for observed status, an oracle a
 
 Dialogue keeps semantics, voice, performance, lip-sync and mix as five independent channels. It retains speaker, listener, line aliases, intent, delivery, emotion, gaze, timing, pauses, reaction delay, voice reference and sync mode. Sustained listener mouthing is rejected unless explicitly scripted. Visible speech cannot use `NOT_APPLICABLE` for voice or lip-sync.
 
-The causal sequence is explicit: `STIMULUS → PROCESSING → REACTION → RESPONSE`. The validator rejects missing stages, duplicate stages, backwards ordering and unmarked overlaps.
+The causal sequence is explicit: `STIMULUS → PROCESSING → REACTION → RESPONSE`. The validator rejects missing stages, duplicate stages, backwards ordering and unmarked overlaps. Dialogue contracts may bind an explicit `speaker_sequence`; a mismatch is rejected as a speaker swap, while sustained listener mouthing remains forbidden unless scripted.
 
 The canonical audio layers are `dialogue`, `foley`, `ambience`, `room_tone`, `vehicle`, `animal`, `music`, `transition`, `non_diegetic` and `silence`. Every scoped timeline accounts for each layer as required or `not_applicable`; each event has timing, source, cause, priority, mix role, oracle and evidence. The planning alias `effects` maps to `foley`. A present audio stream proves only stream presence, not intelligibility, causality, mix quality or lip-sync.
 
@@ -89,21 +91,21 @@ ComfyUI execution records bind the inspected graph, model, profile, device, para
 
 `validate_long_form_case()` accepts a production `PASS` only when every logical reference resolves, every attempt is `SUCCEEDED`, every artifact/observation/transition record is accepted and hash-bound, and the assembly record has separate technical, semantic and editorial acceptance plus final-artifact binding to every ordered source shot hash. Placeholder references plus `production_evidence_complete=true` are rejected. Structural fixtures are intentionally separate from production evidence.
 
-Repair is bounded by regenerations, attempts, runtime, cost and human-review budgets. It preserves immutable failed attempts and unaffected siblings, then requires re-observation and downstream revalidation. Mechanical media QA emits separate checks for readability, duration, FPS, resolution, frame count, codec, container, audio stream/duration, A/V mismatch, decode, black/freeze and SHA-256. Strict assembly validates shot order, duplicate/missing shots, transition timing, lineage and final-artifact binding; editorial acceptance remains a separate human gate with pacing, acting, camera, emotion, framing and rhythm dimensions.
+Repair is bounded by regenerations, attempts, runtime, cost and human-review budgets. It preserves immutable failed attempts and unaffected siblings, then requires re-observation and downstream transition revalidation before a completed repair can pass. Re-anchor decisions also reject an unbounded generated-frame chain and route back to a canonical reference. Vehicle state can carry a geometry identity, but a geometry change requires an explicit reviewed transition. Mechanical media QA emits separate checks for readability, duration, FPS, resolution, frame count, codec, container, audio stream/duration, A/V mismatch, decode, black/freeze and SHA-256. Strict assembly validates shot order, duplicate/missing shots, transition timing, lineage and final-artifact binding; editorial acceptance remains a separate human gate with pacing, acting, camera, emotion, framing and rhythm dimensions.
 
 ## 5. Independent gates and maturity
 
 | Gate | Current result | Boundary |
 |---|---|---|
 | Architecture | `PASS (scoped)` | Ownership, canonical state, routing, safety and traceability are implemented. |
-| Verification | `PASS (scoped)` | 127 deterministic tests, compile/skill/docs checks, package verification and known-bad regressions. |
+| Verification | `PASS (scoped)` | 133 deterministic tests, compile/skill/docs checks, package verification and known-bad regressions. |
 | Production | `PARTIAL/BLOCKED` | Local H3 artifacts have exact provenance and mechanical QA; required LF cases, semantic dialogue/lip-sync and second adapter remain unaccepted. |
 
 Maturity is conservative: Level 0 intent, Level 1 structural plan, Level 2 deterministic verification, Level 3 runtime provenance, Level 4 audiovisual evaluation and Level 5 repeatable bounded production with a fresh critic. Current global maturity is Level 3 with bounded audiovisual observations; Level 5 is not claimed.
 
 ## 6. Evaluation families
 
-The executable regression suite covers canonical contracts, malformed inputs, state/graph mutations, contact/audio/dialogue known-bad cases, twelve-dimension semantic observations, placeholder LF PASS rejection, profile evidence, transition identity, strict assembly lineage, editorial acceptance, repair budgets, adapter omission, runtime fakes, provenance mismatch, granular media checks, corruption/black/freeze and external-CWD operation. Real production evaluation remains separately marked in [`long-form-validation.md`](long-form-validation.md), [`capability-matrix-r1.md`](capability-matrix-r1.md) and the [final closure report](triple-aaa-final-report.md).
+The executable regression suite covers canonical contracts, malformed inputs, state/graph mutations, progressive-disclosure route drift, metamorphic scene invariants, contact/audio/dialogue known-bad cases, twelve-dimension semantic observations, placeholder LF PASS rejection, profile evidence, transition identity, strict assembly lineage, editorial acceptance, repair budgets and transition revalidation, adapter omission, runtime fakes, provenance mismatch, granular media checks, corruption/black/freeze and external-CWD operation. Real production evaluation remains separately marked in [`long-form-validation.md`](long-form-validation.md), [`capability-matrix-r1.md`](capability-matrix-r1.md) and the [final closure report](triple-aaa-final-report.md).
 
 ## 7. Safety and release rule
 

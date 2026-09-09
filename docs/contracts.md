@@ -92,6 +92,10 @@ Schema keys use `snake_case`; serialized enum values use uppercase. The canonica
 
 The YAML examples in this package use the same canonical serialized fields. In particular, `ShotSpec` uses `id`, `duration_s`, `dependency_ids`, and `start_state_ref`; `CapabilityProfile` uses `id` and the nested `supports.modes`, `supports.inputs`, and `supports.outputs` fields. Reader-facing names such as `shot_id`, `duration_seconds`, `dependencies`, `in_state_ref`, `profile_id`, `modes`, and `modalities` are not alternate wire formats. A legacy input may use them only through an explicitly named migration that converts every affected field to the canonical representation before validation; no document may emit a legacy object as if it were canonical.
 
+### Progressive-disclosure route
+
+`ScenePlan.reference_route` is a derived structural projection owned by `vge_core.py`. It contains package-relative reference IDs/paths, inclusion reasons, explicit exclusions and signals for duration, dialogue, interaction, model and runtime. It is recomputed from canonical records; it is context guidance, not proof that a host loaded a reference or that a capability is supported. A mismatch is `REFERENCE_ROUTE_DRIFT`.
+
 ## Input contract: `SceneIntent`
 
 ```yaml
@@ -572,6 +576,7 @@ An observation must identify which `GenerationArtifact` was inspected through `g
 10. A recompiled prompt must preserve stable intent, state, references, and constraints unless the revision records a deliberate decision.
 11. A fallback must disclose which requirement is weakened and what compensating review is required.
 12. No execution plan may contain a secret, guessed endpoint, or unsupported node/model capability.
+13. A completed repair with affected dependency boundaries must include transition revalidation for every affected incoming edge; an execution ledger alone cannot promote the repair to `PASS`.
 
 ## Canonical prompt view
 

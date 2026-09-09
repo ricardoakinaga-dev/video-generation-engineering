@@ -22,7 +22,7 @@ This document owns cross-document coverage, not the domain semantics themselves.
 | Mission and operating model | `README.md`, `architecture.md` | R-GOV-01, QG-17 | G-001, G-009 |
 | Intent parser | `requirements.md`, `contracts.md` | R-INT-01, R-INT-02, R-INT-03, R-INT-04, QG-01 | G-001, G-012 |
 | Reference analyzer and retention | `scene-and-continuity.md`, `constraints.md` | R-REF-01, R-REF-02, R-REF-03, R-REF-04, QG-02/QG-05 | G-005, G-008 |
-| Complexity analyzer and depth | `scene-and-continuity.md`, `architecture.md` | R-PLAN-01, R-PLAN-02, QG-04 | G-002, G-004, G-009 |
+| Complexity analyzer and depth | `scene-and-continuity.md`, `architecture.md`, `vge_core.py` | R-PLAN-01, R-PLAN-02, R-PLAN-06, QG-04 | G-002, G-004, G-009, executable route/metamorphic tests |
 | Scene Bible / story engine | `scene-and-continuity.md`, `directing.md` | R-PLAN-03, R-PLAN-04, R-PLAN-05, R-SCENE-01, R-SCENE-02, R-SCENE-03, R-SCENE-04, R-SCENE-05, QG-03 | G-003, G-009 |
 | Character and relationships | `directing.md`, `contracts.md` | R-SHOT-01, R-SHOT-02, R-DIR-01, R-DIR-02, QG-11 | G-004, G-006 |
 | Dialogue and performance | `directing.md`, `contracts.md` | R-DIR-03, R-DIR-04, QG-10/QG-11 | G-004, G-011 |
@@ -35,7 +35,7 @@ This document owns cross-document coverage, not the domain semantics themselves.
 | Model adapters and negotiation | `model-adaptation.md`, `research.md` | R-ADP-01, R-ADP-02, R-ADP-03, R-ADP-04, R-ADP-05, QG-15 | G-008, G-012 |
 | ComfyUI execution | `comfyui-execution.md`, `contracts.md`, `domain-model.md` | R-EXE-01, R-EXE-02, R-EXE-03, R-EXE-04, R-EXE-05, R-EXE-06, QG-17 | G-009, G-012 |
 | Long-form generation | `scene-and-continuity.md`, `comfyui-execution.md` | R-LONG-01, R-LONG-02, R-LONG-03, R-LONG-04, QG-07/QG-17 | G-009 |
-| Modes and progressive disclosure | `architecture.md`, `README.md` | R-PLAN-03, R-QA-01 | G-001, G-004, G-009 |
+| Modes and progressive disclosure | `architecture.md`, `README.md`, `progressive-disclosure.md`, `vge_core.py` | R-PLAN-03, R-PLAN-06, R-QA-01 | G-001, G-004, G-009, route CLI and drift regression |
 | Quality gates and failure taxonomy | `acceptance.md`, `failure-and-evals.md` | R-QA-01, R-QA-02, R-QA-03, R-QA-04, R-QA-05, R-QA-06, all gates | G-001..G-012 |
 | Golden cases and evals | `failure-and-evals.md` | R-QA-04, R-QA-05, R-QA-06 | G-001..G-012 |
 | Non-goals and governance | `README.md`, `constraints.md`, `roadmap.md` | R-GOV-01, R-QA-06 | governance review |
@@ -125,7 +125,7 @@ The following chain is the acceptance path for the current implementation. A ran
 |---|---|---|---|---|---|---|
 | Turn creative intent into an actionable plan | `R-INT-01..04` | Intent normalizer and core scene contract | `F-INT-01`, `F-PRM-01` | QG-01, QG-03 | G-001, G-012, ADV-001 | `SKILL.md` intake route + `core-contracts.md` |
 | Preserve reference meaning, identity, rights, and precedence | `R-REF-01..04`, `R-GOV-01` | Reference analyzer, retention matrix, safety gate | `F-REF-01..03`, `F-ID-01..03`, `F-GOV-01` | QG-02, QG-05 | G-005, G-007, G-012, ADV-002/009/013/015 | `continuity-and-long-form.md` + `safety-and-provenance.md` |
-| Route planning depth by risk and causal complexity | `R-PLAN-01..05` | Complexity analyzer, narrative planner, shot planner | `F-SHOT-01`, `F-PER-01`, `F-TEMP-01` | QG-03, QG-04, QG-07 | G-004, G-010, G-011, ADV-004/006 | `SKILL.md` routing + `continuity-and-long-form.md` |
+| Route planning depth by risk and causal complexity | `R-PLAN-01..06` | Complexity analyzer, progressive-disclosure router, narrative planner, shot planner | `F-SHOT-01`, `F-PER-01`, `F-TEMP-01`, `F-PKG-01` | QG-03, QG-04, QG-07, QG-17 | G-001, G-004, G-010, G-011, ADV-004/006 | `SKILL.md` routing + `progressive-disclosure.md` + `vge_core.py` |
 | Establish a model-independent canonical scene/state model | `R-SCENE-01..05` | Scene Bible, entity model, state ledger | `F-SCENE-01`, `F-WLD-01..02`, `F-DOC-02` | QG-03, QG-05, QG-06 | G-003, G-007, G-012, static contract evals | `core-contracts.md` |
 | Propagate state through dependent shots | `R-SHOT-01..07` | Shot DAG, continuity engine, anchor manager | `F-SCENE-01`, `F-TEMP-01`, `F-CAM-01`, `F-ID-01` | QG-05, QG-06, QG-07, QG-13 | G-005, G-008, G-009, G-010, ADV-006/007/008/017 | `continuity-and-long-form.md` |
 | Direct observable story, performance, interaction, and motion | `R-DIR-01..07` | Directing layer, contact graph, motion primitives, camera/audio timelines | `F-AN-01..02`, `F-CON-01..02`, `F-PER-01`, `F-AUD-01` | QG-08, QG-09, QG-10, QG-11, QG-13, QG-14 | G-002, G-003, G-004, G-006, G-009, G-011 | `directing-and-audio.md` + `interaction-and-constraints.md` |

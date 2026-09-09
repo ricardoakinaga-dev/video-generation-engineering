@@ -87,6 +87,18 @@ class PlanningTests(unittest.TestCase):
     def test_end_state_cannot_invent_an_event(self):
         p=prepare(self.t);p['shots'][0]['end_state_delta']['vehicle_van.ignition']='ON'
         self.assert_issue(p,'END_CONTRADICTION')
+
+    def test_known_bad_door_contradiction_and_object_teleportation(self):
+        door = prepare(self.t)
+        door['shots'][0]['state_changes'][1]['prior'] = 'open'
+        self.assert_issue(door, 'DELTA_PRECONDITION')
+        teleport = copy.deepcopy(self.t)
+        teleport['scene_bible']['initial_state']['vehicle_van']['position'] = 'curb'
+        teleport['shots'][0]['state_changes'].append({
+            'property': 'vehicle_van.position', 'prior': 'curb', 'next': 'inside', 'cause': 'teleport'
+        })
+        report = prepare(teleport)['validation']
+        self.assertIn('MISSING_CAUSE', [issue['id'] for issue in report['issues']])
     def test_diamond_conflict_not_last_writer_wins(self):
         a=copy.deepcopy(self.t['shots'][0]);a.update(id='a',duration_s=2)
         b=copy.deepcopy(a);b.update(id='b',state_changes=[],end_state_delta={})
@@ -153,6 +165,131 @@ class PlanningTests(unittest.TestCase):
         self.t['shots'][0]['camera']['movement']['type']='TRACK'
         cinematic=prepare(self.t)
         self.assertEqual('CINEMATIC',cinematic['presentation_mode'])
+
+    def simple_portrait(self):
+        treatment = copy.deepcopy(self.t)
+        intent = treatment['scene_intent']
+        intent.update(objective='Show one fictional adult holding a calm, natural portrait pose',
+                      objects=[], actions=['look'], hard_constraints=['Preserve the subject identity and window geography'])
+        intent['environments'] = ['environment_driveway']
+        treatment['scene_bible']['entities'] = [
+            entity for entity in treatment['scene_bible']['entities'] if entity['id'] != 'vehicle_van'
+        ]
+        treatment['scene_bible']['initial_state'].pop('vehicle_van', None)
+        treatment['scene_bible']['initial_state']['subject_courier']['position'] = 'by_window'
+        shot = treatment['shots'][0]
+        shot.update(action_primitives=['look'], state_changes=[], constraints=[], acceptance_ids=['QG-01'])
+        shot.pop('contact_graph_ref', None)
+        shot['camera']['focus'] = 'subject_courier'
+        shot['camera']['eyeline'] = 'window'
+        treatment['constraints'] = []
+        treatment['contact_graphs'] = []
+        return treatment
+
+    def dialogue_treatment(self):
+        treatment = self.simple_portrait()
+        intent = treatment['scene_intent']
+        intent['dialogue_required'] = True
+        intent['subjects'].append('subject_listener')
+        treatment['scene_bible']['entities'].append({
+            'id': 'subject_listener', 'type': 'character',
+            'description': 'Fictional adult listener', 'permanence': 'PERSISTENT'
+        })
+        treatment['scene_bible']['initial_state']['subject_listener'] = {'position': 'near_window'}
+        treatment['scene_bible']['audio_identity'] = {'voice': 'fixture_voice', 'room_tone': 'quiet'}
+        treatment['shots'][0]['active_subject_ids'].append('subject_listener')
+        treatment['dialogue_timeline'] = [{
+            'id': 'line_1', 'shot_id': 'shot_001', 'speaker': 'subject_courier',
+            'listener': 'subject_listener', 'text': 'Ready.', 'start_s': 1, 'end_s': 2,
+            'intention': 'reassure', 'delivery': 'quiet', 'emotion': 'focused',
+            'gaze': 'listener', 'pause_policy': 'none', 'overlap_policy': 'none',
+            'reaction_at_s': 2, 'visible_speech': False,
+        }]
+        return treatment
+
+    def route_ids(self, plan):
+        return {item['id'] for item in plan['reference_route']['required_references']}
+
+    def test_progressive_disclosure_routes_only_relevant_references(self):
+        simple = prepare(self.simple_portrait())
+        simple_ids = self.route_ids(simple)
+        self.assertEqual('STRUCTURAL', simple['reference_route']['status'])
+        self.assertEqual('FAST', simple['reference_route']['presentation_mode'])
+        self.assertTrue({'core', 'directing_audio', 'evaluation_repair', 'observability'} <= simple_ids)
+        self.assertTrue({'continuity', 'interaction_constraints', 'model_adaptation', 'comfyui_execution', 'production_quality'}
+                        <= {item['id'] for item in simple['reference_route']['excluded_references']})
+
+        dialogue = prepare(self.dialogue_treatment())
+        dialogue_ids = self.route_ids(dialogue)
+        self.assertTrue({'continuity', 'directing_audio', 'evaluation_repair'} <= dialogue_ids)
+        self.assertNotIn('interaction_constraints', dialogue_ids)
+
+        long_form = self.simple_portrait()
+        long_form['scene_intent']['duration']['target_seconds'] = 60
+        long_form['shots'][0]['duration_s'] = 60
+        long_plan = prepare(long_form)
+        self.assertEqual('DIRECTOR', long_plan['reference_route']['presentation_mode'])
+        self.assertTrue({'continuity', 'production_quality'} <= self.route_ids(long_plan))
+
+        selected_model = self.simple_portrait()
+        selected_model['scene_intent']['target']['model'] = 'fixture-model'
+        self.assertIn('model_adaptation', self.route_ids(prepare(selected_model)))
+
+        comfy = self.simple_portrait()
+        comfy['scene_intent']['target']['runtime'] = 'ComfyUI'
+        self.assertIn('comfyui_execution', self.route_ids(prepare(comfy)))
+
+    def test_progressive_disclosure_route_is_derived_and_detects_drift(self):
+        plan = prepare(self.simple_portrait())
+        plan['reference_route']['required_references'] = []
+        self.assert_issue(plan, 'REFERENCE_ROUTE_DRIFT')
+
+    def test_metamorphic_object_color_preserves_causal_structure(self):
+        original = prepare(self.t)
+        recolored = copy.deepcopy(self.t)
+        for entity in recolored['scene_bible']['entities']:
+            if entity['id'] == 'vehicle_van':
+                entity['description'] = 'Plain silver van without brand marks'
+        recolored = prepare(recolored)
+        self.assertNotEqual(original['scene_bible']['entities'], recolored['scene_bible']['entities'])
+        for field in ('shot_graph', 'complexity', 'presentation_mode', 'reference_route', 'continuity_states', 'contact_graphs'):
+            with self.subTest(field=field):
+                self.assertEqual(original[field], recolored[field])
+        self.assertEqual(original['shots'][0]['state_changes'], recolored['shots'][0]['state_changes'])
+
+    def test_metamorphic_dialogue_tone_preserves_identity_and_order(self):
+        original = prepare(self.dialogue_treatment())
+        changed_treatment = self.dialogue_treatment()
+        changed_treatment['dialogue_timeline'][0]['emotion'] = 'anxious'
+        changed = prepare(changed_treatment)
+        for field in ('shot_graph', 'complexity', 'presentation_mode', 'reference_route'):
+            with self.subTest(field=field):
+                self.assertEqual(original[field], changed[field])
+        left, right = original['dialogue_timeline'][0], changed['dialogue_timeline'][0]
+        for field in ('id', 'shot_id', 'speaker', 'listener', 'text', 'start_s', 'end_s'):
+            self.assertEqual(left[field], right[field])
+        self.assertNotEqual(left['emotion'], right['emotion'])
+        self.assertNotEqual(
+            compile_plan(original)['prompts'][0]['sections']['audio_or_sync']['dialogue'][0]['emotion'],
+            compile_plan(changed)['prompts'][0]['sections']['audio_or_sync']['dialogue'][0]['emotion'])
+
+    def test_metamorphic_duration_escalation_preserves_identity_semantics(self):
+        thirty = self.simple_portrait()
+        thirty['scene_intent']['duration']['target_seconds'] = 30
+        thirty['shots'][0]['duration_s'] = 30
+        p30 = prepare(thirty)
+        sixty = copy.deepcopy(thirty)
+        sixty['scene_intent']['duration']['target_seconds'] = 60
+        sixty['shots'][0]['duration_s'] = 60
+        p60 = prepare(sixty)
+        self.assertEqual('FAST', p30['presentation_mode'])
+        self.assertEqual('DIRECTOR', p60['presentation_mode'])
+        for field in ('subjects', 'objects', 'environments', 'actions', 'hard_constraints'):
+            self.assertEqual(p30['scene_intent'][field], p60['scene_intent'][field])
+        self.assertEqual(p30['shot_graph'], p60['shot_graph'])
+        self.assertEqual(p30['shots'][0]['state_changes'], p60['shots'][0]['state_changes'])
+        self.assertNotIn('production_quality', self.route_ids(p30))
+        self.assertIn('production_quality', self.route_ids(p60))
     def test_authored_complexity_cannot_bypass_routing(self):
         plan=prepare(self.t)
         plan['complexity']['motion']=999
@@ -184,6 +321,9 @@ class PlanningTests(unittest.TestCase):
             self.assertEqual(0,c.returncode,c.stderr)
             c=subprocess.run([sys.executable,str(SKILL/'scripts/vge.py'),'validate',str(p)],cwd=tmp,capture_output=True,text=True)
             self.assertEqual('PASS',json.loads(c.stdout)['status'])
+            c=subprocess.run([sys.executable,str(SKILL/'scripts/vge.py'),'route',str(SKILL/'assets/templates/treatment.json')],cwd=tmp,capture_output=True,text=True)
+            self.assertEqual(0,c.returncode,c.stderr)
+            self.assertEqual('STRUCTURAL',json.loads(c.stdout)['status'])
 
 
 class ProfileTests(unittest.TestCase):
