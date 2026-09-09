@@ -29,6 +29,7 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [x] (2026-09-08T22:38:43-03:00) Current ComfyUI recheck confirmed the local server is live but 10 queue records remain (7 queued, 3 repository jobs) with approximately 1.2 GB free VRAM per RTX 3060; no new long-form submission or cancellation was performed, and the runtime boundary remains `NOT_RUN`/`BLOCKED`.
 - [x] (2026-09-08T22:40:46-03:00) Post-runtime-recheck documentation audit passed: 46 documents, 50 YAML blocks, 467 local links, 80 requirements, no link/YAML/traceability errors.
 - [x] (2026-09-08T22:43:50-03:00) Post-runtime-compatibility documentation audit passed: 46 documents, 50 YAML blocks, 468 local links, 80 requirements, no link/YAML/traceability errors.
+- [x] (2026-09-08T22:47:38-03:00) Post-runtime-recheck-R2 documentation audit passed: 46 documents, 50 YAML blocks, 469 local links, 80 requirements, no link/YAML/traceability errors.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -169,6 +170,7 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - verification/comfyui-preflight-r2.json: current local live graph/schema preflight without generation.
 - verification/comfyui-queue-recheck-20260908.json: current local queue/resource observation; no bounded production submission was safe.
 - verification/comfyui-runtime-recheck-20260908.json: current live validation of both H3 workflows plus post-cleanup queue/resource state; compatibility passed while production submission remained blocked.
+- verification/comfyui-runtime-recheck-20260908-r2.json: repeated current live validation after another cleanup request; the unchanged queue/resource boundary keeps production submission blocked.
 - verification/comfyui-profile-revalidation-r2.json: explicit expiration of the prior confirmed profile after workflow identity changed.
 - verification/triple-aaa-independent-critic-r6.md: fresh read-only critic and mutation sentinel.
 - verification/triple-aaa-independent-critic-r7.md: fresh read-only R7 attempt; mutation-clean operational blocker.

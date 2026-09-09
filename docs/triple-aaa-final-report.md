@@ -106,6 +106,8 @@ The latest local runtime recheck found 10 queue records (7 still queued, includi
 
 After a non-interrupting `free_memory` request, both bundled H3 workflows still validated against the live schema with zero errors/warnings and no partner nodes, while the queue/resource condition remained unchanged. This is current compatibility evidence only, not inference or production evidence; see [`comfyui-runtime-recheck-20260908.json`](../verification/comfyui-runtime-recheck-20260908.json).
 
+A subsequent fresh recheck reproduced the same result after another non-interrupting cleanup request: both workflows remain schema-compatible, while production submission stays `NOT_RUN`/`BLOCKED` at the observed queue and VRAM boundary. The repeated observation is preserved separately in [`comfyui-runtime-recheck-20260908-r2.json`](../verification/comfyui-runtime-recheck-20260908-r2.json).
+
 ## Artifact Evidence
 
 - H3 T2V artifact: [`art_2898879072af4739b673efe71fafcc7e.mp4`](../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4), SHA-256 `623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124`, 384×224, 124 frames, 24 FPS, approximately 5.167 seconds. Mechanical QA passes.

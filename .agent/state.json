@@ -23,8 +23,8 @@
     "docs/triple-aaa-quality-bar-r2.json"
   ],
   "last_gate_record": null,
-  "last_event_id": "EVT-VGE-AAA-R2-CORRECTION-DOCS-06",
-  "state_revision": 46,
+  "last_event_id": "EVT-VGE-AAA-R2-CORRECTION-DOCS-07",
+  "state_revision": 48,
   "next_gate": "VERIFIED",
   "active_action_id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC",
   "blocked_by": [
@@ -32,7 +32,7 @@
     "Local ComfyUI queue/resource snapshot provides no safe bounded window for a new long-form submission; no cancellation authority was exercised"
   ],
   "human_approval_required": [],
-  "updated_at": "2026-09-08T22:43:50-03:00",
+  "updated_at": "2026-09-08T22:47:38-03:00",
   "remaining_capability_limits": [
     "Full audiovisual production acceptance",
     "Paid provider and external transfer authority",
