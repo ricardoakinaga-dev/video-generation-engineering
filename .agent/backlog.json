@@ -222,11 +222,11 @@
     ".agents/skills/video-generation-engineering/scripts/vge_quality.py"
       ],
       "next_action": {
-        "id": "VGE-TRIPLE-AAA-R4:R6-COMMIT-PUSH",
+        "id": "VGE-TRIPLE-AAA-R4:R6-POST-PUSH-VERIFY",
         "kind": "VERIFY",
-        "summary": "Commit and push the post-R6 critic/distribution packet, then verify the remote tip",
-        "target": "Current R4 source/docs, live ComfyUI snapshot, R6 critic/fingerprint, R8 distribution and origin main",
-        "completion_signal": "Local final commit exists, origin/main matches it, worktree is clean, and R6 REJECT plus production blockers remain explicit"
+        "summary": "Record the verified post-R6 remote handoff while preserving the production boundary",
+        "target": "origin/main at 01a81cfce776f268e2917f034621f2c0c16eca2d and the final R6 closure packet",
+        "completion_signal": "Local HEAD and origin/main match at the verified commit, worktree is clean, and R6 REJECT plus production blockers remain explicit"
       }
     }
   ]

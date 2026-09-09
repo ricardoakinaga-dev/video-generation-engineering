@@ -1,6 +1,6 @@
 # Triple-AAA Closure R4 — master prompt production closure
 
-<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:R6-COMMIT-PUSH -->
+<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:R6-POST-PUSH-VERIFY -->
 
 ## Purpose
 
@@ -31,7 +31,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 
 ## Concrete Steps
 
-1. [VGE-TRIPLE-AAA-R4:R6-COMMIT-PUSH] — commit and push the post-R6 critic/distribution packet, then verify the remote tip; preserve the R6 `REJECT` production boundary. **IN PROGRESS.**
+1. [VGE-TRIPLE-AAA-R4:R6-POST-PUSH-VERIFY] — verify and record the post-R6 remote handoff; local `HEAD` and `origin/main` match at `01a81cf`, and the worktree is clean. **COMPLETE.**
 
 2. [VGE-TRIPLE-AAA-R4:FRESH-CRITIC] — obtain a fresh non-inherited read-only review of the post-cross-shot-gate candidate, with reviewer-owned fingerprint and mutation sentinel; preserve the current PARTIAL production boundary. **COMPLETE with R5 `REJECT`, matching fingerprint and unchanged sentinel.**
 
@@ -43,7 +43,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 
 6. Attempt only evidence-authorized repair/re-anchor, FLF and later ladders; preserve every failure and stop on resource/capability blockers. **COMPLETE as a disposition: repair is awaiting authorization; FLF/LF-002/LF-003/second adapter remain NOT_RUN/BLOCKED.**
 
-7. Update the R4 matrix, scorecard and final closure report, obtain the fresh critic, freeze distribution, commit and push. **R6 critic and post-R6 R8 distribution are complete; final remote handoff is pending.**
+7. Update the R4 matrix, scorecard and final closure report, obtain the fresh critic, freeze distribution, commit and push. **R6 critic, post-R6 R8 distribution and final remote handoff are complete.**
 
 ## Execution order
 
@@ -56,7 +56,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 - [x] Update R4 matrix, scorecard and closure report with exact status and unsupported claims.
 - [x] Run fresh final critic with before/after fingerprint and mutation sentinel.
 - [x] Build final R8 distribution and rerun the release gate after the R6 critic.
-- [ ] Commit, push and verify the remote tip.
+- [x] Commit, push and verify the remote tip.
 
 ## Recovery rules
 
@@ -82,7 +82,7 @@ The prior R4 closure packet was committed and pushed to the configured `origin/m
 - [x] Re-run focused/full tests, compileall, offline verification and current documentation audit.
 - [x] Rebuild the portable package as R8 after R6; obtain the fresh non-inherited R6 critic before final remote handoff.
 
-Current action: `VGE-TRIPLE-AAA-R4:R6-COMMIT-PUSH`. The audiovisual verdict remains `PARTIAL`; the live runtime snapshot strengthens P0 evidence but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
+Current action: `VGE-TRIPLE-AAA-R4:R6-POST-PUSH-VERIFY`. The audiovisual verdict remains `PARTIAL`; the live runtime snapshot strengthens P0 evidence but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
 
 ## Purpose / Big Picture
 
@@ -98,7 +98,8 @@ Close the supplied R4 master prompt against the brownfield Skill while preservin
 - [x] (2026-09-09T22:14:29Z) Captured a read-only live ComfyUI/server/device/queue/workflow snapshot; no queue mutation or POST occurred.
 - [x] (2026-09-09T22:22:50Z) Completed the fresh R6 critic: `REJECT`, 405-file fingerprint matched before/after, sentinel unchanged.
 - [x] (2026-09-09T22:23:58Z) Rebuilt R8 after R6; 143 tests, compile/Skill validation, CRC, manifest, scans and external-CWD smoke pass.
-- [ ] (2026-09-09T22:24:00Z) Commit/push the post-R6 packet and verify the remote tip.
+- [x] (2026-09-09T22:24:00Z) Committed and pushed the post-R6 packet; the follow-up remote comparison is recorded below.
+- [x] (2026-09-09T22:26:15Z) Verified local `HEAD` and `origin/main` at `01a81cfce776f268e2917f034621f2c0c16eca2d`; worktree clean.
 
 ## Surprises & Discoveries
 
@@ -138,11 +139,11 @@ Complete.
 
 ### M3 — Fresh critic and final remote handoff
 
-R6 critic and R8 distribution are complete; the final remote handoff is pending and production remains `PARTIAL`.
+R6 critic, R8 distribution and remote handoff are complete; production remains `PARTIAL`.
 
 ## Plan of Work
 
-Commit/push the R6 packet and verify `origin/main`; preserve `READY_WITH_RISKS`/`PARTIAL` and the R6 critic's `REJECT` for audiovisual promotion.
+The R6 packet is committed and pushed; preserve `READY_WITH_RISKS`/`PARTIAL` and the R6 critic's `REJECT` for audiovisual promotion.
 
 ## Validation and Acceptance
 
