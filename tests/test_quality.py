@@ -203,6 +203,97 @@ class QualityContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "Duplicate semantic observation dimension"):
             validate_semantic_observation(duplicate)
 
+    def test_long_form_pass_requires_semantic_observations(self):
+        def write_json(path, value):
+            path.write_text(json.dumps(value, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+
+        def file_ref(path):
+            return {"ref": str(path), "content_hash": file_hash(path)}
+
+        def build_case(factory, root):
+            refs = {}
+            for name in ("intent", "plan", "bible", "graph", "continuity", "evidence", "audio", "repair", "human"):
+                path = root / f"{name}.json"
+                write_json(path, {"id": name})
+                refs[name] = str(path)
+
+            attempts, artifacts, observations, shot_records = [], [], [], []
+            for shot_id, artifact_id in (("shot_1", "artifact_1"), ("shot_2", "artifact_2")):
+                provenance = quality_provenance(shot_id, artifact_id)
+                attempts.append({"ref": provenance["attempt"]["ref"], "content_hash": provenance["attempt"]["content_hash"]})
+                artifacts.append({"ref": provenance["artifact"]["record_ref"],
+                                  "content_hash": provenance["artifact"]["record_content_hash"],
+                                  "media_ref": str(QUALITY_ARTIFACT), "media_content_hash": QUALITY_ARTIFACT_HASH})
+                record = factory()
+                record.update(id=f"obs_{shot_id}", shot_id=shot_id, artifact_id=artifact_id,
+                              provenance=quality_provenance(shot_id, artifact_id))
+                path = root / f"{record['id']}.json"
+                write_json(path, record)
+                observations.append(file_ref(path))
+                shot_records.append((record, provenance))
+
+            transition = {
+                "schema_version": 1,
+                "id": "transition_1",
+                "status": "PASS",
+                "previous_artifact": {"artifact_id": "artifact_1"},
+                "next_artifact": {"artifact_id": "artifact_2"},
+                "previous_observation": json.loads((root / "obs_shot_1.json").read_text(encoding="utf-8")),
+                "next_observation": json.loads((root / "obs_shot_2.json").read_text(encoding="utf-8")),
+                "continuity_scorecard": scorecard(),
+            }
+            transition_path = root / "transition.json"
+            write_json(transition_path, transition)
+            assembly = {
+                "schema_version": 1,
+                "id": "assembly_1",
+                "technical_acceptance": "PASS",
+                "semantic_acceptance": "PASS",
+                "editorial_acceptance": "PASS",
+                "mechanical_status": "PASS",
+                "shot_order": ["shot_1", "shot_2"],
+                "segments": [
+                    {"shot_id": "shot_1", "artifact_id": "artifact_1", "duration_s": 22.5, "fps": 24,
+                     "resolution": {"width": 384, "height": 224}, "audio_source": "NONE", "transition": "CUT",
+                     "source_attempt": {"id": shot_records[0][1]["attempt"]["id"]}, "repair_lineage": []},
+                    {"shot_id": "shot_2", "artifact_id": "artifact_2", "duration_s": 22.5, "fps": 24,
+                     "resolution": {"width": 384, "height": 224}, "audio_source": "NONE", "transition": "END",
+                     "source_attempt": {"id": shot_records[1][1]["attempt"]["id"]}, "repair_lineage": []},
+                ],
+                "final_artifact_binding": {
+                    "artifact_ref": str(QUALITY_ARTIFACT),
+                    "content_hash": QUALITY_ARTIFACT_HASH,
+                    "source_shots": [
+                        {"shot_id": "shot_1", "artifact_id": "artifact_1", "content_hash": QUALITY_ARTIFACT_HASH},
+                        {"shot_id": "shot_2", "artifact_id": "artifact_2", "content_hash": QUALITY_ARTIFACT_HASH},
+                    ],
+                },
+            }
+            assembly_path = root / "assembly.json"
+            write_json(assembly_path, assembly)
+            return {
+                "schema_version": 1,
+                "id": "LF-003",
+                "target_duration_s": 45,
+                "intent_ref": refs["intent"], "plan_ref": refs["plan"], "scene_bible_ref": refs["bible"],
+                "shot_graph_ref": refs["graph"], "continuity_ref": refs["continuity"], "evidence_ref": refs["evidence"],
+                "shot_ids": ["shot_1", "shot_2"], "audio_timeline_ref": refs["audio"],
+                "repair_budget_ref": refs["repair"], "human_checkpoint_ref": refs["human"],
+                "status": "PASS", "production_evidence_complete": True,
+                "production_evidence": {
+                    "attempts": attempts, "artifacts": artifacts, "observations": observations,
+                    "transitions": [file_ref(transition_path)], "assembly": file_ref(assembly_path),
+                },
+            }
+
+        with tempfile.TemporaryDirectory(prefix="vge-lf-semantic-contract-") as raw:
+            root = Path(raw)
+            valid = build_case(semantic_observation, root)
+            self.assertEqual("PASS", validate_long_form_case(valid, base_dir=root)["status"])
+            invalid = build_case(observation, root)
+            with self.assertRaisesRegex(ContractError, "semantic_dimension"):
+                validate_long_form_case(invalid, base_dir=root)
+
     def test_editorial_acceptance_is_separate_and_dimension_complete(self):
         result = validate_editorial_acceptance(editorial_acceptance())
         self.assertTrue(result["accepted"])

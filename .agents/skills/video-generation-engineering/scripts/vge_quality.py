@@ -1502,7 +1502,7 @@ def _validate_long_form_production_evidence(case, base_dir=None):
                 f"production_evidence.observations[{index}] artifact locator mismatch")
         require(normalized.get("observed_content_hash") == artifact["record"].get("content_hash"),
                 f"production_evidence.observations[{index}] artifact hash mismatch")
-        validate_observation_contract(normalized)
+        validate_semantic_observation(normalized)
         observed_artifacts.add(normalized["artifact_id"])
 
     transitioned_pairs = set()
@@ -1534,7 +1534,7 @@ def _validate_long_form_production_evidence(case, base_dir=None):
             observation["artifact_ref"] = artifact["artifact_ref"]
             observation["observed_content_hash"] = artifact["content_hash"]
             require(observation.get("status") == "PASS", f"production_evidence.transitions[{index}] observations must be PASS")
-            validate_observation_contract(observation)
+            validate_semantic_observation(observation)
         scorecard = _normalize_scorecard_paths(
             _object(normalized.get("continuity_scorecard"), f"production_evidence.transitions[{index}].continuity_scorecard"),
             path, f"production_evidence.transitions[{index}].continuity_scorecard")

@@ -98,7 +98,7 @@ Repair is bounded by regenerations, attempts, runtime, cost and human-review bud
 | Gate | Current result | Boundary |
 |---|---|---|
 | Architecture | `PASS (scoped)` | Ownership, canonical state, routing, safety and traceability are implemented. |
-| Verification | `PASS (scoped)` | 133 deterministic tests, compile/skill/docs checks, package verification and known-bad regressions. |
+| Verification | `PASS (scoped)` | 134 deterministic tests, compile/skill/docs checks, package verification and known-bad regressions. |
 | Production | `PARTIAL/BLOCKED` | Local H3 artifacts have exact provenance and mechanical QA; required LF cases, semantic dialogue/lip-sync and second adapter remain unaccepted. |
 
 Maturity is conservative: Level 0 intent, Level 1 structural plan, Level 2 deterministic verification, Level 3 runtime provenance, Level 4 audiovisual evaluation and Level 5 repeatable bounded production with a fresh critic. Current global maturity is Level 3 with bounded audiovisual observations; Level 5 is not claimed.

@@ -30,6 +30,8 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [x] (2026-09-08T22:40:46-03:00) Post-runtime-recheck documentation audit passed: 46 documents, 50 YAML blocks, 467 local links, 80 requirements, no link/YAML/traceability errors.
 - [x] (2026-09-08T22:43:50-03:00) Post-runtime-compatibility documentation audit passed: 46 documents, 50 YAML blocks, 468 local links, 80 requirements, no link/YAML/traceability errors.
 - [x] (2026-09-08T22:47:38-03:00) Post-runtime-recheck-R2 documentation audit passed: 46 documents, 50 YAML blocks, 469 local links, 80 requirements, no link/YAML/traceability errors.
+- [x] (2026-09-08T23:16:57-03:00) Closed the R13 semantic-boundary finding: long-form direct and transition observations now require the twelve semantic dimensions; the focused regression and full 134-test suite passed, the R2 ZIP was rebuilt, and offline software verification r21 passed.
+- [ ] (2026-09-08T23:16:57-03:00) R13 rejected its pre-fix snapshot and is stale for the current candidate; reconcile the score/report accounting, then run one final fresh critic with a complete reviewer-owned scope fingerprint and mutation sentinel.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -70,10 +72,10 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 
 ## Outcomes & Retrospective
 
-- Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 133-test regression, package, portability and documentation checks pass within scope.
+- Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 134-test regression, package, portability and documentation checks pass within scope.
 - Preserved limits: LF-001/002/003 remain `BLOCKED`, LF-004 remains `NOT_RUN`, and semantic audiovisual, dialogue/lip-sync, FLF, second-adapter and real-repair claims remain unproven.
-- Fresh-review outcome: R10, R11 and R12 ended operationally without a criterion-level response; `verification/triple-aaa-independent-critic-r10.md`, `verification/triple-aaa-independent-critic-r11.md` and `verification/triple-aaa-independent-critic-r12.md` record the stable committed trees and incomplete reviews. No completed reviewer verdict or reviewer-owned pre/post fingerprint is available, so R2-22 remains open.
-- Smallest next action: run one completed fresh read-only critic against the current candidate; R12 also returned no matrix, so the reviewer must own a new fingerprint and mutation sentinel and return a terminal criterion-level verdict.
+- Fresh-review outcome: R10, R11 and R12 ended operationally without a criterion-level response; R13 returned a criterion-level `REJECT` for the pre-fix committed snapshot and its Lead sentinel matched, but it did not return a complete reviewer-owned pre/post scope fingerprint. `verification/triple-aaa-independent-critic-r13.md` records the findings and is stale after the semantic-boundary and accounting corrections, so R2-22 remains open for the final candidate.
+- Smallest next action: run one completed fresh read-only critic against the final clean candidate; the reviewer must own a complete fingerprint of Skill/references/scripts/profiles/tests/distribution, a pre/post mutation sentinel and a terminal criterion-level verdict.
 
 ## Context and Orientation
 
@@ -117,7 +119,7 @@ The canonical flow is intent → Scene Bible/scene plan → shot graph and state
 
 ### Milestone 4 — Reverify, critic, distribution
 
-- Outcome: fresh integrated verification, final documentation audit and rebuilt portable package pass; the latest R12 attempt was mutation-clean on the Lead-owned scope but operationally incomplete, so the fresh critic requirement remains open for a completed bounded reviewer attempt.
+- Outcome: fresh integrated verification and rebuilt portable package pass; R13 found and rejected a real pre-fix semantic acceptance gap, which was corrected and regression-tested. The final fresh critic requirement remains open for a completed bounded reviewer attempt.
 - Scope/dependencies: all previous milestones; no material changes after critic without re-review.
 - Demonstration: exact commands, fingerprints, ZIP/manifest/CWD checks.
 - Acceptance/evidence: R2-17, R2-22, R2-23, R2-25, R2-26.
@@ -130,22 +132,22 @@ Execute phases A–M in order: baseline; P0 defects; LF-001; dialogue/lip-sync/a
 
 From /home/ricardo/Área de trabalho/video-generation-engineering:
 
-1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] Run one bounded sealed read-only independent critic against the frozen candidate's bar, public entry points and current evidence, with a reviewer-owned fingerprint and mutation sentinel; do not edit product or control-plane files during the review. R10, R11 and R12 were operationally incomplete and do not satisfy this step.
+1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] Run one bounded sealed read-only independent critic against the final candidate's bar, public entry points and current evidence, with a reviewer-owned fingerprint and mutation sentinel; do not edit product or control-plane files during the review. R10, R11 and R12 were operationally incomplete, and R13 is stale after the semantic-boundary correction.
 2. [x] [VGE-TRIPLE-AAA-R2:IMPLEMENT-CLOSURE] Implement the smallest missing R2 contract/fixture/test and canonical documentation updates; preserve existing R1 behavior and evidence.
 3. [x] Run focused contract tests, full unittest, compile/Skill/docs/package checks and update verification ledgers with current evidence.
 4. [x] Perform a self-review against every R2 criterion and resolve material defects without weakening the bar.
-5. [blocked] Prior fresh critic attempts, including R7, R8, R10, R11 and R12, exceeded the operational wait window without a verdict; the lead-owned sentinels matched, but this remains blocker evidence until step 1 completes.
-6. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; the package and documentation audit are current.
+5. [blocked] Prior fresh critic attempts, including R7, R8, R10, R11 and R12, exceeded the operational wait window without a verdict; R13 returned `REJECT` for a pre-fix snapshot but lacked a complete reviewer-owned fingerprint, so this remains blocker evidence until step 1 completes.
+6. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; the package and documentation audit are current for the pre-R14 candidate.
 
 ## Validation and Acceptance
 
 | Criterion | Required | Procedure/environment | Expected observation | Evidence destination |
 | --- | --- | --- | --- | --- |
 | R2-01/R2-24/R2-26 | YES | SHA-256/cmp, control-plane JSON and phase review | prompt/bar/history are traceable and safe | .agent/*, docs/triple-aaa-quality-bar-r2.json |
-| R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r20.json |
+| R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r21.json, verification/lf-semantic-acceptance-boundary-r1.json |
 | R2-17/R2-23 | YES | current local runtime where safe, docs/package/CWD checks | actual scope is recorded; portable ZIP is fresh and clean | verification/, dist/ |
 | R2-19/R2-20/R2-25 | YES | docs/link audit, report/matrix inspection | required sections, scores, statuses and non-claims are present | docs/triple-aaa-final-report.md, docs/capability-matrix-r1.md |
-| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r12.md |
+| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r13.md (stale; final R14 still required) |
 
 ## Risks and Human Decisions
 
@@ -166,7 +168,8 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - docs/triple-aaa-quality-bar-r2.json: frozen R2 acceptance criteria and verdict policy.
 - verification/long-form/LF-001.json through LF-004.json: ladder status envelopes; blocked/not-run statuses are evidence of absence, not production PASS.
 - docs/triple-aaa-final-report.md: canonical final accounting and claims boundary.
-- verification/software-triple-aaa-r20.json: current offline software evidence after the routing, metamorphic and repair-gate corrections.
+- verification/software-triple-aaa-r21.json: current offline software evidence after the R13 semantic-boundary correction; 134 tests and the rebuilt package manifest pass.
+- verification/lf-semantic-acceptance-boundary-r1.json: controlled reproduction of the pre-fix unsafe LF-003 PASS and post-fix regression/full-suite evidence.
 - verification/comfyui-preflight-r2.json: current local live graph/schema preflight without generation.
 - verification/comfyui-queue-recheck-20260908.json: current local queue/resource observation; no bounded production submission was safe.
 - verification/comfyui-runtime-recheck-20260908.json: current live validation of both H3 workflows plus post-cleanup queue/resource state; compatibility passed while production submission remained blocked.
@@ -179,5 +182,6 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - verification/triple-aaa-independent-critic-r10.md: fresh read-only R10 attempt against d4a3d1e; operationally incomplete with a stable lead-owned sentinel.
 - verification/triple-aaa-independent-critic-r11.md: fresh read-only R11 attempt against c8c2f5f; operationally incomplete with a stable lead-owned product sentinel.
 - verification/triple-aaa-independent-critic-r12.md: fresh read-only R12 attempt against 9b684e7; operationally incomplete with a stable lead-owned product sentinel.
+- verification/triple-aaa-independent-critic-r13.md: fresh read-only R13 review against 17b4f8e; criterion-level `REJECT` with a stable Lead sentinel, retained as stale after the semantic-boundary and accounting corrections.
 
-Plan revision note, 2026-09-08T22:29:33-03:00: R8 and R9 were historical for earlier candidate snapshots, and R10, R11 and R12 shut down without a criterion-level response despite stable product trees. The reviewer attempts are incomplete and cannot satisfy R2-22. The current preflight, profile expiration, architecture/portability audit and 133-test verification are recorded, but no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.
+Plan revision note, 2026-09-08T23:16:57-03:00: R8 and R9 were historical for earlier candidate snapshots, R10–R12 shut down without a criterion-level response, and R13 rejected the pre-fix snapshot after identifying a semantic long-form acceptance gap and score/report drift. The Lead corrected the semantic gate, added a regression, reconciled current accounting to 134 tests/95 deterministic/64 semantic, rebuilt the package and passed software verification r21. R13 is stale after that material change; a final R14 reviewer with complete reviewer-owned fingerprint/mutation evidence remains required. `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until the fresh review and production evidence exist.

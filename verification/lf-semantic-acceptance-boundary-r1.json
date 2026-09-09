@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "lf-semantic-acceptance-boundary-r1",
+  "observed_at": "2026-09-08T23:12:06-03:00",
+  "scope": "VGE-TRIPLE-AAA-R2:LF-PRODUCTION-SEMANTIC-BOUNDARY",
+  "baseline": {
+    "candidate_commit": "17b4f8e83a242fd73e88814103c52c9d61341631",
+    "procedure": "Ephemeral valid-looking LF-003 production envelope with successful attempts, generated artifacts, generic PASS observations, a PASS transition, a complete continuity scorecard and editorially accepted assembly",
+    "observed_result": "UNSAFE_PASS",
+    "observed_output": "validate_long_form_case returned PASS with production_evidence_complete=true even though the observations had category checks but no semantic_dimension records",
+    "risk": "A long-form production PASS could be asserted without the twelve-dimensional semantic artifact gate."
+  },
+  "change": {
+    "files": [
+      ".agents/skills/video-generation-engineering/scripts/vge_quality.py",
+      "tests/test_quality.py"
+    ],
+    "symbols": [
+      "_validate_long_form_production_evidence",
+      "QualityContractTests.test_long_form_pass_requires_semantic_observations"
+    ],
+    "implementation": "Long-form direct observations and both sides of every transition now call validate_semantic_observation instead of the category-only validate_observation_contract; the regression retains a valid semantic case and rejects the generic case."
+  },
+  "post_fix": {
+    "focused_command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest tests.test_quality.QualityContractTests.test_long_form_pass_requires_semantic_observations -v",
+    "focused_result": "PASS",
+    "focused_tests": 1,
+    "full_command": "PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s tests -q",
+    "full_result": "PASS",
+    "full_tests": 134,
+    "full_failures": 0,
+    "full_errors": 0,
+    "full_skips": 0,
+    "source_sha256": {
+      ".agents/skills/video-generation-engineering/scripts/vge_quality.py": "sha256:ea3ccd1659b6877cf1d9071b9fa850b7e6348fcf722302e8bfbed54a3ff003d9",
+      "tests/test_quality.py": "sha256:20894b8a1ac164b9cc595acd456ef1a54f1b38f70ea0a118ef2a766faf10b63e"
+    }
+  },
+  "status": "PASS",
+  "limitations": [
+    "This closes a software acceptance boundary only; it does not create or accept real LF-001, LF-002 or LF-003 generated media.",
+    "The R13 independent critic reviewed the pre-fix candidate and is invalidated for current acceptance by this material change; a fresh review is required."
+  ]
+}

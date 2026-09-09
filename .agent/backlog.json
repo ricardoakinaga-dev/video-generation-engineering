@@ -95,13 +95,15 @@
         "VGE-TRIPLE-AAA-R1"
       ],
       "owner": "Codex",
-      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, fresh software/documentation evidence and portable distribution; independent critic remains operationally blocked and release is READY_WITH_RISKS",
+      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 134-test software evidence and rebuilt portable distribution; R13 rejected its pre-fix snapshot after finding a semantic long-form acceptance gap, the fix is recorded, and the final independent critic plus production evidence remain blocked while release is READY_WITH_RISKS",
       "evidence_refs": [
         "docs/master-prompt-triple-aaa-r2.txt",
         "docs/triple-aaa-quality-bar-r2.json",
         ".agent/plans/triple-aaa-r2-closure.md",
         "verification/software-triple-aaa-r18.json",
         "verification/software-triple-aaa-r20.json",
+        "verification/software-triple-aaa-r21.json",
+        "verification/lf-semantic-acceptance-boundary-r1.json",
         "verification/distribution-triple-aaa-r2.json",
         "verification/comfyui-preflight-r2.json",
         "verification/comfyui-queue-recheck-20260908.json",
@@ -115,6 +117,7 @@
         "verification/triple-aaa-independent-critic-r10.md",
         "verification/triple-aaa-independent-critic-r11.md",
         "verification/triple-aaa-independent-critic-r12.md",
+        "verification/triple-aaa-independent-critic-r13.md",
         "dist/video-generation-engineering-triple-aaa-r2.zip"
       ],
       "next_action": {

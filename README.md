@@ -33,7 +33,7 @@ python3 .agents/skills/video-generation-engineering/scripts/vge.py scorecard sco
 python3 .agents/skills/video-generation-engineering/scripts/vge.py media-qa video.mp4 --expected-fps 24 --expected-width 384 --expected-height 224
 python3 .agents/skills/video-generation-engineering/scripts/vge.py assembly-validate assembly.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py editorial editorial-acceptance.json
-python3 tools/verify.py --output verification/software-triple-aaa-r13.json
+python3 tools/verify.py --output verification/software-triple-aaa-r21.json
 ```
 
 O planejador semântico é o agente que segue a skill; o script valida e deriva estruturas a partir de um tratamento já escrito. Uma validação estrutural não aprova um vídeo.
