@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-preflight-r2-20260908",
+  "observed_at": "2026-09-08T23:48:47.722426+00:00",
+  "status": "PASS",
+  "scope": "PREFLIGHT_ONLY",
+  "procedure": [
+    "Called local ComfyUI server_info before any workflow operation",
+    "Read live object_info and resource inventory",
+    "Validated both bundled H3 API workflows against the live node catalog",
+    "Validated both workflows again through the package validator"
+  ],
+  "runtime": {
+    "server": "http://127.0.0.1:8188",
+    "runtime": "ComfyUI",
+    "runtime_version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "node_count": 911,
+    "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+    "object_info_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+    "hardware": {
+      "os": "Linux",
+      "arch": "x86_64",
+      "gpu": "NVIDIA GeForce RTX 3060",
+      "vram_total_bytes": 12490440704,
+      "ram_total_bytes": 67203821568
+    },
+    "resource_inventory": [
+      {
+        "device_id": "cuda:0",
+        "vram_total": 12482576384,
+        "vram_free": 3162937536
+      },
+      {
+        "device_id": "cuda:1",
+        "vram_total": 12490440704,
+        "vram_free": 12318146560
+      }
+    ],
+    "queue_observation": {
+      "status": "CONTENDED",
+      "known_job_count": 10,
+      "new_generation_submitted": false,
+      "decision": "Do not cancel or supersede jobs from other projects."
+    }
+  },
+  "workflow_checks": [
+    {
+      "workflow_ref": ".agents/skills/video-generation-engineering/assets/workflows/h3-smoke-api.json",
+      "workflow_hash": "sha256:d87b023a58c671d79483fb6215f765c09f8e6ad41ed00cf264105d7f52a58ff5",
+      "workflow_fingerprint": "sha256:780377c3e9451e6366e1056707e8d468b75e1f469aee08078b155ad9b65e5cf4",
+      "package_validator": "PASS",
+      "live_comfyui_validator": "PASS",
+      "errors": [],
+      "warnings": [],
+      "partner_nodes": [],
+      "spends_credits": false
+    },
+    {
+      "workflow_ref": ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json",
+      "workflow_hash": "sha256:395237fe3008fb47ad61ff6b215927ffbc8bcfaceb8662a6ce15c7fa13cbe1cd",
+      "workflow_fingerprint": "sha256:1ef3dfe09e1be81b98c612d46728aaf5f2741690b42523645999cc26403f8e91",
+      "package_validator": "PASS",
+      "live_comfyui_validator": "PASS",
+      "errors": [],
+      "warnings": [],
+      "partner_nodes": [],
+      "spends_credits": false
+    }
+  ],
+  "limitations": [
+    "Preflight validates graph structure and live node schemas; it does not prove model-file availability, VRAM fit, inference success or media quality.",
+    "No generation was submitted because the local queue was occupied by jobs from other projects.",
+    "Existing capability evidence remains scoped to its original executed workflow and is not promoted by this preflight alone."
+  ],
+  "next_action": "Run one controlled local smoke probe only after queue ownership and resource conditions are explicitly available."
+}

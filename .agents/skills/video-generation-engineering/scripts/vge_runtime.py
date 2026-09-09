@@ -112,7 +112,8 @@ def workflow_fingerprint(workflow, node_info=None):
     node_info = node_info if node_info is not None else {}
     require(isinstance(node_info, dict), "node_info must be an object")
     critical_names = ("ckpt_name", "model_name", "unet_name", "clip_name", "vae_name", "width", "height", "length",
-                      "fps", "seed", "steps", "cfg", "sampler_name", "scheduler", "prompt", "first_frame", "last_frame")
+                      "fps", "seed", "steps", "cfg", "sampler_name", "scheduler", "prompt", "first_frame", "last_frame",
+                      "format", "format.codec", "format.codec.encoding", "format.codec.encoding.crf", "codec")
     nodes = []
     for node_id in sorted(workflow, key=str):
         node = workflow[node_id]
@@ -203,6 +204,46 @@ def validate_profile_runtime(profile, discovery, workflow=None, feature=None, mo
             "limitations": ["Runtime identity checks do not establish successful inference or audiovisual quality"]}
 
 
+def _expanded_input_specs(input_schema, inputs):
+    """Expand selected V3 dynamic-combo children into flat dotted API fields."""
+    require(isinstance(input_schema, dict), "Runtime node metadata input must be an object")
+    required = input_schema.get("required", {})
+    optional = input_schema.get("optional", {})
+    require(isinstance(required, dict) and isinstance(optional, dict), "Runtime node metadata inputs must be objects")
+    expanded, required_fields = {}, set()
+
+    def visit(prefix, entry, is_required):
+        expanded[prefix] = entry
+        if is_required:
+            required_fields.add(prefix)
+        if not isinstance(entry, (list, tuple)) or not entry or entry[0] != "COMFY_DYNAMICCOMBO_V3":
+            return
+        options = entry[1].get("options", []) if len(entry) > 1 and isinstance(entry[1], dict) else []
+        if not isinstance(options, list):
+            return
+        selected = inputs.get(prefix)
+        option = next((item for item in options if isinstance(item, dict) and item.get("key") == selected), None)
+        if option is None:
+            return
+        child_schema = option.get("inputs", {})
+        if not isinstance(child_schema, dict):
+            return
+        child_required = child_schema.get("required", {})
+        child_optional = child_schema.get("optional", {})
+        if not isinstance(child_required, dict) or not isinstance(child_optional, dict):
+            return
+        for child_name, child_entry in child_required.items():
+            visit(f"{prefix}.{child_name}", child_entry, True)
+        for child_name, child_entry in child_optional.items():
+            visit(f"{prefix}.{child_name}", child_entry, False)
+
+    for name, entry in required.items():
+        visit(name, entry, True)
+    for name, entry in optional.items():
+        visit(name, entry, False)
+    return expanded, required_fields
+
+
 def validate_workflow(workflow, node_info):
     require(isinstance(workflow, dict) and workflow, "API workflow must be a nonempty object")
     require(isinstance(node_info, dict), "Runtime node metadata must be an object")
@@ -227,9 +268,9 @@ def validate_workflow(workflow, node_info):
         required = input_schema.get("required", {})
         optional = input_schema.get("optional", {})
         require(isinstance(required, dict) and isinstance(optional, dict), f"{key}: node metadata required/optional inputs must be objects")
-        spec = {**required, **optional}
+        spec, required_fields = _expanded_input_specs(input_schema, inputs)
         dependencies[key] = set()
-        for field in required:
+        for field in required_fields:
             require(isinstance(field, str) and field, f"{key}: node metadata has an invalid input name")
             if field not in inputs:
                 issues.append(f"{key}.{field}: required input missing")

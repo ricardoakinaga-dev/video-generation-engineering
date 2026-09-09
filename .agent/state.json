@@ -14,7 +14,7 @@
   "active_execplan": ".agent/plans/triple-aaa-r2-closure.md",
   "active_task": "VGE-TRIPLE-AAA-R2",
   "verification_state": "BLOCKED",
-  "repository_state": "GIT main; origin configured; control-plane recovery state is tracked; product candidate remains frozen for fresh review",
+  "repository_state": "GIT main; origin configured; control-plane checkpoint is tracked; current product candidate includes material hardening and requires fresh review",
   "instruction_scope_refs": [
     ".agent/PLANS.md",
     ".agent/plans/triple-aaa-r2-closure.md",
@@ -23,13 +23,13 @@
     "docs/triple-aaa-quality-bar-r2.json"
   ],
   "last_gate_record": null,
-  "last_event_id": "EVT-VGE-AAA-R2-RECOVERY-STATUS",
-  "state_revision": 32,
+  "last_event_id": "EVT-VGE-AAA-R2-CHECKPOINT-HARDENING",
+  "state_revision": 33,
   "next_gate": "VERIFIED",
   "active_action_id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC",
-  "blocked_by": ["R8 compact-packet fresh independent critic remained running and returned no criterion-level verdict; no valid reviewer acceptance exists"],
+  "blocked_by": ["Current candidate changed after the R8/R9 historical reviews; no current reviewer acceptance exists"],
   "human_approval_required": [],
-  "updated_at": "2026-09-08T20:34:56-03:00",
+  "updated_at": "2026-09-08T21:23:04-03:00",
   "remaining_capability_limits": [
     "Full audiovisual production acceptance",
     "Paid provider and external transfer authority",

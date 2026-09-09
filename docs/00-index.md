@@ -117,7 +117,7 @@ No lower-level document may silently override a higher-level contract. External 
 | Canonical scene/state/continuity model | Specified | Contracts and scenario fixtures |
 | Model and ComfyUI capabilities | Profiled conservatively | Dated local runtime probes; feature-scoped confirmation only |
 | Failure and evaluation strategy | Implemented for deterministic boundaries | Golden/known-bad/adversarial structural fixtures plus runtime limits |
-| Repository Skill package | Implemented; R2 closure `READY_WITH_RISKS` | 120 tests, local ComfyUI evidence and frozen R2 bar |
+| Repository Skill package | Implemented; R2 closure `READY_WITH_RISKS` | 127 tests, local ComfyUI evidence and frozen R2 bar |
 | Generated media quality | Mechanically evaluated; semantic acceptance remains partial | Exact H3 T2V/R2V artifacts, separated observations and long-form blockers |
 
 ## Deviations from the suggested tree

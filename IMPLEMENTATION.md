@@ -6,7 +6,7 @@ A skill está implementada em [.agents/skills/video-generation-engineering](.age
 
 - Entrada concisa, metadados de descoberta e nove referências carregadas conforme a tarefa.
 - Tratamento de exemplo completo, contratos JSON, propagação de estado, DAG, timelines, conflitos, câmera, diálogo, áudio, restrições e compilação de prompts estruturados.
-- Descoberta e preflight de grafos ComfyUI, vinculação explícita de entradas/parâmetros, submissão autorizada, consulta pelo mesmo ID, coleta e registros imutáveis com SHA-256.
+- Descoberta e preflight de grafos ComfyUI, incluindo dynamic-combo aninhado com chaves pontilhadas, vinculação explícita de entradas/parâmetros, submissão autorizada, consulta pelo mesmo ID, coleta e registros imutáveis com SHA-256.
 - Negociação por perfil e evidência: perfil local H3 confirmado no escopo testado; Wan 2.2 e Hailuo API candidatos. Adaptador Hailuo com preparação e transporte testado sem chamadas pagas.
 - Validação de observações, scorecard de 14 dimensões, transições com dois artefatos observados, re-anchor, contato físico com sete fases canônicas, ownership/vehicle-state, diálogo/áudio em canais separados, causalidade, adaptação diferencial, reparo orçamentado, FFmpeg/ffprobe, montagem e folhas de contato.
 - Ladder LF-001..LF-004 com fixtures estruturais; `validate_long_form_case` falha fechado para PASS declaratório e exige tentativas, artefatos, observações, transições e assembly hash-bound.
@@ -19,18 +19,18 @@ O pacote usa Python 3.10+ e biblioteca padrão. FFmpeg e ffprobe nativos são ne
 
 | Procedimento executado | Resultado e limite |
 |---|---|
-| Suíte Python | 120 testes passaram, sem falhas ou skips: planejamento, mutações inválidas, contratos de qualidade, HTTP local simulado, API paga simulada, proveniência e mídia sintética real |
+| Suíte Python | 127 testes passaram, sem falhas ou skips: planejamento, mutações inválidas, contratos de qualidade, HTTP local simulado, API paga simulada, proveniência, mídia sintética real, semantic QA, granular media QA e assembly lineage |
 | Validação de Skill | `quick_validate.py` passou e `compileall` passou para scripts, testes e ferramentas |
-| Pacote | ZIP R1 com CRC válido; cópia para diretório temporário externo executou help, prepare, validate e compile |
+| Pacote | ZIP R2 com CRC válido, 28 arquivos e manifesto atualizado; cópia para diretório temporário externo executou help, prepare, validate e compile |
 | Revisão independente de código | Oito problemas corrigidos com regressões; auditorias fresh sucessivas fecharam vínculos de evidência, deriva e orçamento no escopo revisado |
 | Uso independente | Respostas efetivas para 12 cenários principais e 17 adversariais; revisão de oito respostas após problemas observados; G-004 passou prepare/validate/compile |
-| ComfyUI instalado | H3 T2V e H3 R2V foram observados localmente com runtime, nós, workflow, modelo, dispositivo, tentativa e artefato hash-bound; T2V é confirmado apenas no escopo exato e R2V permanece `PARTIAL` após inspeção semântica |
+| ComfyUI instalado | Preflight local validou os dois grafos H3 contra ComfyUI 0.34.0/911 nós; o perfil histórico foi marcado `EXPIRED` após a correção do dynamic-combo e exige nova sonda antes de qualquer promoção; H3 R2V permanece `PARTIAL` após inspeção semântica |
 | QA de mídia | Artefatos locais passaram checks mecânicos de integridade, alinhamento, decode, preto e freeze; isso não aprova identidade, física, emoção, continuidade ou lip-sync |
 | Mídia gerada | H3 T2V: MP4 H.264, 384×224, 124 quadros, 24 FPS, 5,167 s, AAC estéreo 32 kHz. H3 R2V: MP4 coletado de 832×480, 124 quadros, 24 FPS; retenção veterinária/identidade declarada falhou semanticamente |
 
 Os erros encontrados durante a construção incluíram validação de perfil candidato e tolerância de duração, seleção de FFmpeg via wrapper Flatpak, estados desconhecidos, inconsistências de parâmetros e promoção indevida de tentativas. Foram corrigidos antes do resultado final. As respostas e falhas iniciais da avaliação de uso foram preservadas.
 
-Evidências: [verificação Triple-AAA do software](verification/software-triple-aaa-r16.json), [manifesto de distribuição](verification/distribution-triple-aaa-r2.json), [críticas independentes incompletas R6–R8](verification/triple-aaa-independent-critic-r6.md), [QA mecânico H3 T2V](verification/media-qa-h3-t2v-r1.json), [QA mecânico H3 R2V](verification/h3-r2v-media-qa.json), [observação semântica R2V](verification/h3-r2v-semantic-observation.json), [scorecard de continuidade R2V](verification/h3-r2v-continuity-scorecard.json), [matriz de capacidade](docs/capability-matrix-r1.md), [ladder long-form](docs/long-form-validation.md) e [relatório final](docs/triple-aaa-final-report.md). As auditorias históricas continuam preservadas e não são reutilizadas como veredito atual.
+Evidências: [verificação Triple-AAA do software](verification/software-triple-aaa-r18.json), [preflight ComfyUI local](verification/comfyui-preflight-r2.json), [revalidação do perfil ComfyUI](verification/comfyui-profile-revalidation-r2.json), [manifesto de distribuição](verification/distribution-triple-aaa-r2.json), [crítica independente R9 histórica](verification/triple-aaa-independent-critic-r9.md), [críticas independentes incompletas R6–R8](verification/triple-aaa-independent-critic-r6.md), [QA mecânico H3 T2V](verification/media-qa-h3-t2v-r1.json), [QA mecânico H3 R2V](verification/h3-r2v-media-qa.json), [observação semântica R2V](verification/h3-r2v-semantic-observation.json), [scorecard de continuidade R2V](verification/h3-r2v-continuity-scorecard.json), [matriz de capacidade](docs/capability-matrix-r1.md), [ladder long-form](docs/long-form-validation.md) e [relatório final](docs/triple-aaa-final-report.md). As auditorias históricas continuam preservadas e não são reutilizadas como veredito atual.
 
 Para repetir as verificações locais:
 
@@ -47,7 +47,7 @@ Esses comandos não submetem geração nem invocam provedores externos. `tools/v
 
 A primeira inferência levou aproximadamente 36,95 segundos na RTX 3060 de 12 GB. O teste final foi uma submissão deliberada para verificar o código final, com a fila livre e o mesmo workflow; o ComfyUI reutilizou seus nós em cache. Portanto, houve uma inferência observada e uma integração adicional com cache, não duas inferências independentes.
 
-O SHA-256 do vídeo é `623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124`. [Histórico final](verification/h3-final-history.json), [artefato coletado](verification/h3-final-artifacts.json), [metadados](verification/h3-final-media-probe.json) e [observação inicial PARTIAL](verification/h3-observation.json) mantêm a proveniência. O perfil incluído expira em 15/09/2026 e exige nova validação se runtime, modelos ou workflow mudarem.
+O SHA-256 do vídeo é `623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124`. [Histórico final](verification/h3-final-history.json), [artefato coletado](verification/h3-final-artifacts.json), [metadados](verification/h3-final-media-probe.json) e [observação inicial PARTIAL](verification/h3-observation.json) mantêm a proveniência. O perfil histórico expira em 15/09/2026 e a mudança atual do workflow já está registrada como `EXPIRED`; nova sonda é obrigatória antes de reutilizar sua capacidade.
 
 ## Cobertura e limites de aceitação
 

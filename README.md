@@ -28,6 +28,9 @@ python3 .agents/skills/video-generation-engineering/scripts/vge.py validate /tmp
 python3 .agents/skills/video-generation-engineering/scripts/vge.py compile /tmp/vge-example-plan.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py semantic observation.json
 python3 .agents/skills/video-generation-engineering/scripts/vge.py scorecard scorecard.json
+python3 .agents/skills/video-generation-engineering/scripts/vge.py media-qa video.mp4 --expected-fps 24 --expected-width 384 --expected-height 224
+python3 .agents/skills/video-generation-engineering/scripts/vge.py assembly-validate assembly.json
+python3 .agents/skills/video-generation-engineering/scripts/vge.py editorial editorial-acceptance.json
 python3 tools/verify.py --output verification/software-triple-aaa-r13.json
 ```
 

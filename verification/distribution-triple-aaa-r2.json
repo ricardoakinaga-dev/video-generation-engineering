@@ -5,13 +5,13 @@
   "scope": "PORTABLE_SKILL_DISTRIBUTION",
   "archive": {
     "path": "dist/video-generation-engineering-triple-aaa-r2.zip",
-    "sha256": "sha256:529f6a7640c2a1af9eaff494d16dac173f0ca91499f3e3483807bce827b72add",
+    "sha256": "sha256:bdb7483f18c80b9a6f56fd1632c112ea213373c360a4e10732d9dcba23721be1",
     "file_count": 28,
     "crc_test": "PASS",
     "secret_scan": "PASS",
     "model_weights_included": false
   },
-  "package_manifest_sha256": "sha256:4b7d6a1ae31ecfe658126e602b9b995c2eee8e1690d9a526e35c64e6d9e79229",
+  "package_manifest_sha256": "sha256:448c1c4ed8f24bbb92c286e183deb30b2a7288214e05b65e8031a30c28cffb23",
   "package_scope": ".agents/skills/video-generation-engineering",
   "required_members": [
     ".agents/skills/video-generation-engineering/SKILL.md",

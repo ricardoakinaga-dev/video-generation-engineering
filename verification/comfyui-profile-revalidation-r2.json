@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-profile-revalidation-r2-20260908",
+  "observed_at": "2026-09-08T20:53:56-03:00",
+  "status": "EXPIRED",
+  "scope": "PROFILE_IDENTITY_REVALIDATION_ONLY",
+  "profile_ref": ".agents/skills/video-generation-engineering/profiles/comfyui-h3-local-probed.json",
+  "profile_id": "comfyui-h3-local-probe-v1",
+  "profile_fingerprint": "sha256:1c13c861981886d46f0d54300d59965e53669ffc462fa83e5c52973b2eef7dca",
+  "runtime": {
+    "server": "http://127.0.0.1:8188",
+    "runtime": "ComfyUI",
+    "runtime_version": "0.34.0",
+    "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+    "selected_device": "cuda:0",
+    "resource_context_hash": "sha256:19c6069d09699aa2b4d2d457b4196944a82d2fe8224ad01c345aad77bc672d60"
+  },
+  "checks": [
+    {
+      "feature": "text_to_video",
+      "workflow_ref": ".agents/skills/video-generation-engineering/assets/workflows/h3-smoke-api.json",
+      "previous_workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
+      "previous_workflow_fingerprint": "sha256:cebda5b0f8d219f179476589cc59c033f6993bca4a4b43447bd9955e1a40d7da",
+      "observed_workflow_hash": "sha256:d87b023a58c671d79483fb6215f765c09f8e6ad41ed00cf264105d7f52a58ff5",
+      "observed_workflow_fingerprint": "sha256:780377c3e9451e6366e1056707e8d468b75e1f469aee08078b155ad9b65e5cf4",
+      "status": "EXPIRED",
+      "expiration_triggers": [
+        "workflow fingerprint changed",
+        "workflow graph changed"
+      ],
+      "next_action": "Run a scoped capability probe and create a new profile revision"
+    },
+    {
+      "feature": "text_to_video",
+      "workflow_ref": ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json",
+      "previous_workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
+      "previous_workflow_fingerprint": "sha256:cebda5b0f8d219f179476589cc59c033f6993bca4a4b43447bd9955e1a40d7da",
+      "observed_workflow_hash": "sha256:395237fe3008fb47ad61ff6b215927ffbc8bcfaceb8662a6ce15c7fa13cbe1cd",
+      "observed_workflow_fingerprint": "sha256:1ef3dfe09e1be81b98c612d46728aaf5f2741690b42523645999cc26403f8e91",
+      "status": "EXPIRED",
+      "expiration_triggers": [
+        "workflow fingerprint changed",
+        "workflow graph changed"
+      ],
+      "next_action": "Run a scoped capability probe and create a new profile revision"
+    }
+  ],
+  "limitations": [
+    "This record checks identity drift only; it does not establish inference, model-file availability, media quality, semantic quality or lip-sync.",
+    "The prior confirmed profile remains immutable historical evidence for its exact executed workflow.",
+    "The current live graph preflight is recorded separately and does not refresh this capability profile."
+  ],
+  "evidence_ref": "verification/comfyui-preflight-r2.json"
+}

@@ -178,7 +178,7 @@
       ],
       "filename_prefix": "video/VGE_skill_probe_20260908",
       "format": "mp4",
-      "codec": "auto"
+      "format.codec": "auto"
     }
   }
 }

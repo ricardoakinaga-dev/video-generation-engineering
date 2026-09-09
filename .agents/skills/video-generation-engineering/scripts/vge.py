@@ -7,7 +7,7 @@ from pathlib import Path
 
 from vge_core import ContractError, load, save, prepare, validate, compile_plan, negotiate, repair_scope
 from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect
-from vge_media import probe, assemble, contact_sheet
+from vge_media import probe, assemble, contact_sheet, validate_assembly_manifest
 from vge_evidence import aggregate, validate_observation
 from vge_provider import hailuo_request, hailuo_submit, hailuo_poll
 from vge_quality import (validate_continuity_scorecard, validate_transition_contract, validate_semantic_observation,
@@ -15,7 +15,7 @@ from vge_quality import (validate_continuity_scorecard, validate_transition_cont
                          validate_causal_sequence, validate_object_ownership, validate_vehicle_state,
                          validate_dialogue_contract, validate_audio_timeline, analyze_prompt_density, adapt_prompt,
                          adapter_differential, validate_feature_profile, build_repair_plan, validate_repair_plan,
-                         validate_long_form_case, maturity_report)
+                         validate_long_form_case, maturity_report, validate_editorial_acceptance)
 
 
 def main(argv=None):
@@ -37,14 +37,15 @@ def main(argv=None):
     p = sub.add_parser("hailuo-poll");p.add_argument("task_id");p.add_argument("--timeout",type=float,default=60);p.add_argument("--output")
     p = sub.add_parser("probe"); p.add_argument("input"); p.add_argument("--output")
     p = sub.add_parser("contact-sheet"); p.add_argument("input"); p.add_argument("image"); p.add_argument("--frames", type=int, default=8)
-    p = sub.add_parser("media-qa"); p.add_argument("input"); p.add_argument("--output"); p.add_argument("--audio-required", action="store_true"); p.add_argument("--allow-black", action="store_true"); p.add_argument("--allow-freeze", action="store_true")
+    p = sub.add_parser("media-qa"); p.add_argument("input"); p.add_argument("--output"); p.add_argument("--audio-required", action="store_true"); p.add_argument("--allow-black", action="store_true"); p.add_argument("--allow-freeze", action="store_true"); p.add_argument("--expected-duration", type=float); p.add_argument("--expected-fps", type=float); p.add_argument("--expected-width", type=int); p.add_argument("--expected-height", type=int); p.add_argument("--expected-frame-count", type=int); p.add_argument("--expected-codec"); p.add_argument("--expected-container")
     for name, help_text in (("scorecard", "continuity scorecard JSON"), ("transition", "adjacent transition JSON"),
                             ("semantic", "category-separated observation JSON"), ("shot-acceptance", "shot acceptance contract JSON"),
                             ("contact", "contact phases JSON"), ("dialogue", "dialogue contract JSON"), ("audio", "audio timeline JSON"),
                             ("causality", "stimulus-processing-reaction-response JSON"),
                             ("ownership", "object ownership transition JSON"), ("vehicle-state", "vehicle state JSON"),
                             ("repair-validate", "repair plan JSON"), ("long-form", "long-form ladder case JSON"),
-                            ("maturity", "maturity evidence JSON"), ("adapter-diff", "adapter differential JSON")):
+                            ("maturity", "maturity evidence JSON"), ("adapter-diff", "adapter differential JSON"),
+                            ("assembly-validate", "strict assembly manifest JSON"), ("editorial", "editorial acceptance JSON")):
         p = sub.add_parser(name, help=help_text); p.add_argument("input"); p.add_argument("--output")
     p = sub.add_parser("reanchor"); p.add_argument("input"); p.add_argument("--shot-id", required=True); p.add_argument("--downstream", nargs="*", default=[]); p.add_argument("--output")
     p = sub.add_parser("repair-plan"); p.add_argument("input"); p.add_argument("--output")
@@ -82,7 +83,13 @@ def main(argv=None):
         elif cmd == "accept": result = validate_observation(data["observation"], data["artifact"], data["attempt"], data["shot"])
         elif cmd == "probe": result = probe(args.input)
         elif cmd == "contact-sheet": result = contact_sheet(args.input, args.image, args.frames)
-        elif cmd == "media-qa": result = __import__("vge_media", fromlist=["media_qa"]).media_qa(args.input, args.audio_required, args.allow_black, args.allow_freeze)
+        elif cmd == "media-qa":
+            expected_resolution = [args.expected_width, args.expected_height] if args.expected_width is not None or args.expected_height is not None else None
+            result = __import__("vge_media", fromlist=["media_qa"]).media_qa(
+                args.input, args.audio_required, args.allow_black, args.allow_freeze,
+                expected_duration_s=args.expected_duration, expected_fps=args.expected_fps,
+                expected_resolution=expected_resolution, expected_frame_count=args.expected_frame_count,
+                expected_codec=args.expected_codec, expected_container=args.expected_container)
         elif cmd == "scorecard": result = validate_continuity_scorecard(data)
         elif cmd == "transition": result = validate_transition_contract(data)
         elif cmd == "semantic": result = validate_semantic_observation(data)
@@ -103,6 +110,8 @@ def main(argv=None):
         elif cmd == "long-form": result = validate_long_form_case(data, base_dir=Path(args.input).resolve().parent)
         elif cmd == "maturity": result = maturity_report(data)
         elif cmd == "adapter-diff": result = adapter_differential(data["canonical_sections"], data["adapters"])
+        elif cmd == "assembly-validate": result = validate_assembly_manifest(data)
+        elif cmd == "editorial": result = validate_editorial_acceptance(data)
         elif cmd == "assemble": result = assemble(data, args.video, args.preview)
         else:
             client = ComfyClient(args.endpoint)

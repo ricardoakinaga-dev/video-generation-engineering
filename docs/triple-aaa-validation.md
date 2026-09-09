@@ -57,6 +57,8 @@ Adjacent transition acceptance requires different shot IDs, different artifact I
 
 The 14 independent continuity dimensions are `identity`, `wardrobe`, `hair`, `object_state_ownership`, `vehicle`, `environment`, `lighting`, `screen_direction`, `camera_geography`, `gaze`, `emotional`, `dialogue`, `temporal` and `audio`. Each dimension has its own oracle/result/evidence. Mixed PASS and unobserved dimensions aggregate to `PARTIAL`; a prompt cannot substitute for evidence.
 
+Semantic artifact observations additionally require twelve explicit records: `identity`, `wardrobe`, `object_retention`, `environment`, `lighting`, `physics`, `interaction`, `camera`, `performance`, `dialogue`, `lip_sync` and `temporal_continuity`. Every record carries its own status, confidence, oracle, hash-bound evidence and limitations; missing or duplicate dimensions cannot pass.
+
 ### Physical interaction
 
 The canonical contact sequence is:
@@ -81,27 +83,27 @@ Capability evidence is feature-scoped. Confirmed feature entries require observe
 
 The prompt compiler preserves ten canonical sections and exposes omissions, contradictions and adapter loss. `adapter_differential()` compares adapters against the same canonical source; it is structural evidence only until each adapter has a real runtime/artifact probe.
 
-ComfyUI execution records bind the inspected graph, model, profile, device, parameters, queue ID, attempt, output and artifact bytes. Uncertain submission is reconciled by the same queue ID. Preflight and discovery do not become generation or semantic PASS.
+ComfyUI execution records bind the inspected graph, model, profile, device, parameters, queue ID, attempt, output and artifact bytes. Uncertain submission is reconciled by the same queue ID. Preflight and discovery do not become generation or semantic PASS. The live local preflight is recorded in [`verification/comfyui-preflight-r2.json`](../verification/comfyui-preflight-r2.json); both bundled H3 API workflows pass the current node catalog after the `SaveVideo` dynamic-combo contract was corrected.
 
 ### Long-form, repair and assembly
 
-`validate_long_form_case()` accepts a production `PASS` only when every logical reference resolves, every attempt is `SUCCEEDED`, every artifact/observation/transition record is accepted and hash-bound, and the assembly record is editorially accepted. Placeholder references plus `production_evidence_complete=true` are rejected. Structural fixtures are intentionally separate from production evidence.
+`validate_long_form_case()` accepts a production `PASS` only when every logical reference resolves, every attempt is `SUCCEEDED`, every artifact/observation/transition record is accepted and hash-bound, and the assembly record has separate technical, semantic and editorial acceptance plus final-artifact binding to every ordered source shot hash. Placeholder references plus `production_evidence_complete=true` are rejected. Structural fixtures are intentionally separate from production evidence.
 
-Repair is bounded by regenerations, attempts, runtime, cost and human-review budgets. It preserves immutable failed attempts and unaffected siblings, then requires re-observation and downstream revalidation. Mechanical assembly checks media metadata and timing; editorial acceptance remains a separate gate.
+Repair is bounded by regenerations, attempts, runtime, cost and human-review budgets. It preserves immutable failed attempts and unaffected siblings, then requires re-observation and downstream revalidation. Mechanical media QA emits separate checks for readability, duration, FPS, resolution, frame count, codec, container, audio stream/duration, A/V mismatch, decode, black/freeze and SHA-256. Strict assembly validates shot order, duplicate/missing shots, transition timing, lineage and final-artifact binding; editorial acceptance remains a separate human gate with pacing, acting, camera, emotion, framing and rhythm dimensions.
 
 ## 5. Independent gates and maturity
 
 | Gate | Current result | Boundary |
 |---|---|---|
 | Architecture | `PASS (scoped)` | Ownership, canonical state, routing, safety and traceability are implemented. |
-| Verification | `PASS (scoped)` | 120 deterministic tests, compile/skill/docs checks, package verification and known-bad regressions. |
+| Verification | `PASS (scoped)` | 127 deterministic tests, compile/skill/docs checks, package verification and known-bad regressions. |
 | Production | `PARTIAL/BLOCKED` | Local H3 artifacts have exact provenance and mechanical QA; required LF cases, semantic dialogue/lip-sync and second adapter remain unaccepted. |
 
 Maturity is conservative: Level 0 intent, Level 1 structural plan, Level 2 deterministic verification, Level 3 runtime provenance, Level 4 audiovisual evaluation and Level 5 repeatable bounded production with a fresh critic. Current global maturity is Level 3 with bounded audiovisual observations; Level 5 is not claimed.
 
 ## 6. Evaluation families
 
-The executable regression suite covers canonical contracts, malformed inputs, state/graph mutations, contact/audio/dialogue known-bad cases, placeholder LF PASS rejection, profile evidence, transition identity, repair budgets, adapter omission, runtime fakes, provenance mismatch, media corruption/black/freeze and external-CWD operation. Real production evaluation remains separately marked in [`long-form-validation.md`](long-form-validation.md), [`capability-matrix-r1.md`](capability-matrix-r1.md) and the [final closure report](triple-aaa-final-report.md).
+The executable regression suite covers canonical contracts, malformed inputs, state/graph mutations, contact/audio/dialogue known-bad cases, twelve-dimension semantic observations, placeholder LF PASS rejection, profile evidence, transition identity, strict assembly lineage, editorial acceptance, repair budgets, adapter omission, runtime fakes, provenance mismatch, granular media checks, corruption/black/freeze and external-CWD operation. Real production evaluation remains separately marked in [`long-form-validation.md`](long-form-validation.md), [`capability-matrix-r1.md`](capability-matrix-r1.md) and the [final closure report](triple-aaa-final-report.md).
 
 ## 7. Safety and release rule
 

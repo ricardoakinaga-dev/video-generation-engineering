@@ -39,6 +39,9 @@ Baseline evidence is retained in [`software-triple-aaa-r14.json`](../verificatio
 - Added LF-001 through LF-004 structural fixtures with vehicle, dialogue, Scene Bible, continuity, repair, branch and known-bad requirements.
 - Bound confirmed H3 feature evidence to observed parameters, device, artifact bytes and observation bytes.
 - Added regressions for placeholder long-form PASS, missing transition observations, same transition artifact, listener mouthing, causal-order failure, proximity-only ownership, unsafe vehicle state, contact aliases and legacy audio aliases.
+- Corrected the live ComfyUI `SaveVideo` dynamic-combo shape to flat dotted keys, taught the package validator to expand selected nested schemas, and added regression coverage for required dynamic children and codec-sensitive fingerprints.
+- Recorded the live ComfyUI schema preflight and the resulting H3 profile revalidation as separate evidence; the historical confirmed profile is not silently reused after the workflow change.
+- Strengthened semantic artifact QA to require twelve independent dimensions, expanded media QA into separate deterministic checks, and added strict assembly lineage plus a six-dimension human editorial acceptance contract.
 - Updated the normative quality references, long-form package, capability matrix, scorecard, traceability/navigation pointers and implementation handoff.
 - Rebuilt the portable R2 distribution and recorded its archive/package hashes, CRC, secret/weight scan and external-CWD probe.
 
@@ -68,10 +71,10 @@ The canonical model remains model-independent. Desired, planned and observed tru
 | Owner | Responsibility | Boundary |
 |---|---|---|
 | `vge_core.py` | Intent, Scene Bible, graph, state, timing, planning and negotiation | Does not claim observed media quality. |
-| `vge_quality.py` | Observation, scorecard, contact, dialogue/audio, transition, profile, repair, long-form and maturity contracts | Does not render or infer pixels/audio. |
+| `vge_quality.py` | Observation, twelve-dimension semantic QA, scorecard, contact, dialogue/audio, transition, profile, repair, long-form, editorial and maturity contracts | Does not render or infer pixels/audio. |
 | `vge_evidence.py` | Immutable attempts, artifacts, provenance and acceptance lineage | Does not decide semantics. |
 | `vge_runtime.py` | Discovery, workflow/device/resource binding, queue reconciliation and collection | Does not approve quality. |
-| `vge_media.py` | ffprobe/decode/black/freeze/A/V checks and assembly mechanics | Does not approve identity, physics or editorial quality. |
+| `vge_media.py` | ffprobe, granular media checks, decode/black/freeze/A/V checks and strict assembly mechanics | Does not approve identity, physics or editorial quality. |
 | `vge.py` | JSON CLI composition and explicit command routing | Does not create a competing contract model. |
 
 ## Tests
@@ -79,23 +82,24 @@ The canonical model remains model-independent. Desired, planned and observed tru
 | Group/procedure | Result |
 |---|---|
 | `tests/test_planning.py` | PASS; planning, graph/state, routing, profiles and duration boundaries |
-| `tests/test_evidence_runtime_media.py` | PASS; provenance, fake HTTP boundary, runtime and media mechanics |
+| `tests/test_evidence_runtime_media.py` | PASS; provenance, fake HTTP boundary, dynamic-combo runtime and strict assembly mechanics |
 | `tests/test_extensions.py` | PASS; provider boundary, assembly and bounded repair |
-| `tests/test_quality.py` | PASS; 14-dimension QA, contact, dialogue/audio, causality, ownership, vehicle, profile, transition, long-form and known-bad cases |
-| Full `python3 -B -m unittest discover -s tests -q` | `120` tests, `0` failures, `0` errors, `0` skips |
+| `tests/test_quality.py` | PASS; 14-dimension continuity, 12-dimension semantic QA, editorial acceptance, contact, dialogue/audio, causality, ownership, vehicle, profile, transition, long-form and known-bad cases |
+| Full `python3 -B -m unittest discover -s tests -q` | `127` tests, `0` failures, `0` errors, `0` skips |
 | `python3 -m compileall -q .agents/skills/video-generation-engineering/scripts tests` | PASS |
 | Skill quick validation | PASS (`Skill is valid!`) |
 | Documentation checker | PASS; no broken local links or YAML blocks |
-| `tools/verify.py --output verification/software-triple-aaa-r16.json` | PASS; offline/package/mechanical scope only |
+| Live ComfyUI preflight | PASS; both bundled H3 API workflows validated against local ComfyUI 0.34.0 and 911-node catalog; no credits spent |
+| `tools/verify.py --output verification/software-triple-aaa-r18.json` | PASS; 127 tests, package manifest `448c1c4ed8f24bbb92c286e183deb30b2a7288214e05b65e8031a30c28cffb23`; offline/package/mechanical scope only |
 | Framework `check_state.py` recovery audit | Current R2 pointer is canonical after repair; full ledger result remains `FAIL` because preserved pre-R2 records use legacy event/verification shapes, so no whole-ledger PASS is claimed |
 
 The tests are evidence of software contracts and synthetic/fake boundaries. They are not a substitute for accepted generated media.
 
 ## Runtime Evidence
 
-The exact local ComfyUI observation is runtime `0.34.0`, node inventory hash `sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674`, H3 R2V workflow hash `sha256:6db1096e8cb6c7258413edef1d1290156a1f273d36fa7d1cbdbc24e4f3a2d3a6`, workflow fingerprint `sha256:1b455641a3d4c9e11b91cc1a92517d68fb7ced70c63b39f24367609429e9f9b1`, model asset hash `sha256:de2c6c29c4ee702b45e48e40daae3834aeee58ab681c732d9152589a87c89910` and selected device `cuda:0`.
+The exact current local ComfyUI preflight is runtime `0.34.0`, node inventory hash `sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674`, with both bundled H3 API workflows passing the live schema validator and the package validator. Their current workflow hashes/fingerprints are recorded in [`comfyui-preflight-r2.json`](../verification/comfyui-preflight-r2.json).
 
-The H3 T2V profile confirms only `text_to_video` and stream-level `native_audio_generation` for its exact workflow, model, runtime, device, parameters and date. H3 R2V remains `PARTIAL` after semantic inspection. No new paid or external runtime invocation was authorized during this closure.
+The H3 T2V profile confirms only `text_to_video` and stream-level `native_audio_generation` for its exact historical executed workflow, model, runtime, device, parameters and date. Because the bundled workflow changed, the identity check explicitly reports `EXPIRED` for both current H3 graphs in [`comfyui-profile-revalidation-r2.json`](../verification/comfyui-profile-revalidation-r2.json); a new scoped capability probe is required. The preflight confirms graph/schema compatibility but does not prove inference or refresh the profile. H3 R2V remains `PARTIAL` after semantic inspection. No paid or external runtime invocation was authorized during this closure, and no new local job was submitted because the queue was occupied by other projects.
 
 ## Artifact Evidence
 
@@ -147,11 +151,11 @@ The Skill loads only the references activated by risk: core contracts for all no
 
 ## Portability
 
-The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only for media commands. CLI writes are new-file-only. External-CWD `help → prepare → validate → compile` behavior and package manifest/CRC checks are covered. The fresh R2 archive is [`video-generation-engineering-triple-aaa-r2.zip`](../dist/video-generation-engineering-triple-aaa-r2.zip), SHA-256 `529f6a7640c2a1af9eaff494d16dac173f0ca91499f3e3483807bce827b72add`, 28 files; its manifest is [`distribution-triple-aaa-r2.json`](../verification/distribution-triple-aaa-r2.json) with package-manifest hash `4b7d6a1ae31ecfe658126e602b9b995c2eee8e1690d9a526e35c64e6d9e79229`. It contains the Skill, references, scripts, profiles and templates, not model weights, secrets, local media or project control-plane state.
+The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only for media commands. CLI writes are new-file-only. External-CWD `help → prepare → validate → compile` behavior and package manifest/CRC checks are covered. The fresh R2 archive is [`video-generation-engineering-triple-aaa-r2.zip`](../dist/video-generation-engineering-triple-aaa-r2.zip), SHA-256 `bdb7483f18c80b9a6f56fd1632c112ea213373c360a4e10732d9dcba23721be1`, 28 files; its manifest is [`distribution-triple-aaa-r2.json`](../verification/distribution-triple-aaa-r2.json) with package-manifest hash `448c1c4ed8f24bbb92c286e183deb30b2a7288214e05b65e8031a30c28cffb23`. It contains the Skill, references, scripts, profiles and templates, not model weights, secrets, local media or project control-plane state.
 
 ## Independent Critic
 
-The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md) and [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md). R7 and R8 were mutation-clean by Lead-owned sentinels, but each reviewer remained operationally running and returned no criterion-level verdict before being closed. This is an explicit R2-22 blocker, not a PASS. A future reviewer must inspect the frozen scope and return its own criterion results before any Triple-AAA promotion.
+The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md), [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md) and [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md). R7, R8 and R9 were mutation-clean for their respective snapshots, but each reviewer remained operationally incomplete or returned no current criterion-level acceptance; R9 also observed a dirty worktree after the latest corrections. The candidate subsequently received material runtime-validator, semantic-QA, media-QA and assembly corrections, so R6–R9 cannot govern the current candidate. This is an explicit R2-22 blocker, not a PASS. A current reviewer must inspect the clean committed scope and return its own criterion results before any Triple-AAA promotion.
 
 ## Remaining Blockers
 
@@ -159,7 +163,7 @@ The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.m
 2. Execute and accept LF-002 with speaker/listener semantics, voice, performance, lip-sync, causal audio and assembly/listening review.
 3. Execute and accept LF-003 with recurring identity/wardrobe/object/environment/camera/audio continuity, repair and human editorial checkpoint.
 4. Run a real FLF probe and a second independent adapter/model differential, or preserve the capabilities as blocked.
-5. Obtain a completed fresh independent critic with reviewer-owned pre/post fingerprints and a passing mutation sentinel; R6–R8 are operationally incomplete and are not acceptance evidence.
+5. Obtain a completed fresh independent critic with reviewer-owned pre/post fingerprints and a passing mutation sentinel; R6–R9 are historical/incomplete and are not acceptance evidence.
 
 ## Scores
 

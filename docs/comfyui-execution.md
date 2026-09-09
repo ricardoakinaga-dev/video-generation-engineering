@@ -63,6 +63,8 @@ execution_target:
 
 The graph builder validates node names, input types, linked outputs, required assets, and profile-specific controls. It never assumes that a node exists merely because a model repository supports a feature.
 
+The current ComfyUI API uses flat dotted keys for nested `COMFY_DYNAMICCOMBO_V3` inputs (for example, `format: mp4` plus `format.codec: auto`); the package validator expands the selected schema before checking required children. The bundled H3 workflows were preflighted against the live local node catalog on 2026-09-08 and are recorded in [`verification/comfyui-preflight-r2.json`](../verification/comfyui-preflight-r2.json). This is graph/runtime-schema evidence only, not inference or media-quality evidence.
+
 ## 4. Preflight-to-artifact flow
 
 ```text

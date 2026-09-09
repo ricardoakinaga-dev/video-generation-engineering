@@ -18,6 +18,8 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [ ] (2026-09-08T20:30:36-03:00) R8 blocked: `Newton` remained running through the compact-packet wait window; the pre/post sentinel matched, but no criterion-level verdict was returned. Preserve R8 as incomplete review evidence.
 - [ ] (2026-09-08T20:32:15-03:00) Recovery: normalized current instruction-scope references to repository-relative paths accepted by the framework contract; preserved external skill paths in the session record, not in canonical state.
 - [x] (2026-09-08T20:34:56-03:00) Recovery: reconciled `state.json` with the blocked R2 backlog item and recorded the canonical recovery event; the fresh critic remains the explicit next action.
+- [x] (2026-09-08T20:59:18-03:00) Found and closed a concrete runtime gap: current ComfyUI `COMFY_DYNAMICCOMBO_V3` schemas require flat dotted child inputs; both bundled H3 workflows and the package validator now honor that contract, with live preflight and explicit profile expiration evidence.
+- [x] (2026-09-08T21:15:00-03:00) Closed the three highest-impact local audit gaps: twelve-dimensional semantic observations, granular media QA, and strict assembly/editorial contracts with regression coverage.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -58,10 +60,10 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 
 ## Outcomes & Retrospective
 
-- Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 120-test regression, package, portability and documentation checks pass within scope.
+- Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 127-test regression, package, portability and documentation checks pass within scope.
 - Preserved limits: LF-001/002/003 remain `BLOCKED`, LF-004 remains `NOT_RUN`, and semantic audiovisual, dialogue/lip-sync, FLF, second-adapter and real-repair claims remain unproven.
 - Fresh-review outcome: `verification/triple-aaa-independent-critic-r6.md` records three operationally stopped fresh attempts. No reviewer verdict, reviewer-owned pre/post fingerprint or mutation sentinel was available, so R2-22 remains open.
-- Smallest next action: run one completed fresh read-only critic against the unchanged frozen candidate; if any material file changes first, rerun integrated verification and package evidence.
+- Smallest next action: run one completed fresh read-only critic against the current candidate; the dynamic-combo, semantic-QA, media-QA and assembly corrections invalidated the earlier R6–R9 review attempts, so the new review must own a new fingerprint and mutation sentinel.
 
 ## Context and Orientation
 
@@ -130,7 +132,7 @@ From /home/ricardo/Área de trabalho/video-generation-engineering:
 | Criterion | Required | Procedure/environment | Expected observation | Evidence destination |
 | --- | --- | --- | --- | --- |
 | R2-01/R2-24/R2-26 | YES | SHA-256/cmp, control-plane JSON and phase review | prompt/bar/history are traceable and safe | .agent/*, docs/triple-aaa-quality-bar-r2.json |
-| R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r16.json |
+| R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r18.json |
 | R2-17/R2-23 | YES | current local runtime where safe, docs/package/CWD checks | actual scope is recorded; portable ZIP is fresh and clean | verification/, dist/ |
 | R2-19/R2-20/R2-25 | YES | docs/link audit, report/matrix inspection | required sections, scores, statuses and non-claims are present | docs/triple-aaa-final-report.md, docs/capability-matrix-r1.md |
 | R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r6.md |
@@ -154,9 +156,11 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - docs/triple-aaa-quality-bar-r2.json: frozen R2 acceptance criteria and verdict policy.
 - verification/long-form/LF-001.json through LF-004.json: ladder status envelopes; blocked/not-run statuses are evidence of absence, not production PASS.
 - docs/triple-aaa-final-report.md: canonical final accounting and claims boundary.
-- verification/software-triple-aaa-r16.json: integrated current offline software evidence after the corrected validator.
+- verification/software-triple-aaa-r18.json: integrated offline software evidence after the dynamic-combo, semantic-QA, media-QA and assembly corrections.
+- verification/comfyui-preflight-r2.json: current local live graph/schema preflight without generation.
+- verification/comfyui-profile-revalidation-r2.json: explicit expiration of the prior confirmed profile after workflow identity changed.
 - verification/triple-aaa-independent-critic-r6.md: fresh read-only critic and mutation sentinel.
 - verification/triple-aaa-independent-critic-r7.md: fresh read-only R7 attempt; mutation-clean operational blocker.
 - verification/triple-aaa-independent-critic-r8.md: fresh read-only R8 attempt; mutation-clean operational blocker.
 
-Plan revision note, 2026-09-08T20:30:36-03:00: R8 was stopped after the reviewer remained running without returning a verdict; the Lead-owned pre/post sentinel matched. The product candidate remains unchanged. R6–R8 are operationally incomplete, and no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.
+Plan revision note, 2026-09-08T21:23:04-03:00: R8 and the subsequent R9 audit were historical for earlier candidate snapshots; the reviewer attempts were incomplete or observed a dirty worktree. Subsequent dynamic-combo, semantic-QA, media-QA and assembly corrections changed the candidate and invalidated R6–R9 for current acceptance. The current preflight, profile expiration and 127-test verification are recorded, but no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.

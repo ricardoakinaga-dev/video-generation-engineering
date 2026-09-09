@@ -23,6 +23,12 @@ QUALITY_STATUSES = (
 SCORECARD_STATUSES = ("PASS", "FAIL", "PARTIAL", "NOT_APPLICABLE", "NOT_OBSERVED")
 CONFIDENCE = ("HIGH", "MEDIUM", "LOW", "UNKNOWN")
 OBSERVATION_CATEGORIES = ("metadata", "visual", "temporal", "audio", "continuity", "editorial")
+SEMANTIC_DIMENSIONS = (
+    "identity", "wardrobe", "object_retention", "environment", "lighting", "physics",
+    "interaction", "camera", "performance", "dialogue", "lip_sync", "temporal_continuity"
+)
+SEMANTIC_DIMENSION_ALIASES = {"object_state_ownership": "object_retention", "temporal": "temporal_continuity"}
+EDITORIAL_DIMENSIONS = ("pacing", "acting", "camera", "emotion", "framing", "rhythm")
 ORACLE_KINDS = ("METADATA", "FRAME", "SEQUENCE", "AUDIO", "HUMAN", "ALGORITHMIC", "RUNTIME", "DOCUMENT")
 CONTINUITY_DIMENSIONS = (
     "identity", "wardrobe", "hair", "object_state_ownership", "vehicle", "environment", "lighting",
@@ -303,13 +309,77 @@ def validate_observation_contract(observation, artifact=None, required_categorie
     }
 
 
-def validate_semantic_observation(observation, artifact=None, required_categories=None):
-    """Explicit semantic-QA alias used by the CLI and release reports."""
-    result = validate_observation_contract(observation, artifact, required_categories)
+def validate_semantic_observation(observation, artifact=None, required_categories=None, required_dimensions=None):
+    """Validate one explicit, category-bound record for every semantic dimension."""
+    semantic_categories = required_categories if required_categories is not None else ("visual", "audio", "temporal")
+    result = validate_observation_contract(observation, artifact, semantic_categories)
+    dimensions = tuple(required_dimensions or SEMANTIC_DIMENSIONS)
+    require(set(dimensions) <= set(SEMANTIC_DIMENSIONS), "Unknown semantic observation dimension")
+    seen = set()
+    for index, check in enumerate(observation["checks"]):
+        raw_dimension = check.get("semantic_dimension", check.get("dimension"))
+        _nonempty(raw_dimension, f"observation.checks[{index}].semantic_dimension")
+        dimension = SEMANTIC_DIMENSION_ALIASES.get(raw_dimension, raw_dimension)
+        require(dimension in SEMANTIC_DIMENSIONS,
+                f"observation.checks[{index}].semantic_dimension is not canonical")
+        require(dimension not in seen, f"Duplicate semantic observation dimension: {dimension}")
+        seen.add(dimension)
+    missing = sorted(set(dimensions) - seen)
+    require(not missing, "Missing semantic observation dimensions: " + ", ".join(missing))
     if result["status"] == "PASS":
-        checks = observation["checks"]
-        require(all(check["oracle"]["kind"] in ORACLE_KINDS for check in checks), "Semantic PASS lacks a valid oracle")
+        require(all(check["oracle"]["kind"] in ORACLE_KINDS for check in observation["checks"]),
+                "Semantic PASS lacks a valid oracle")
+    result["semantic_dimensions_observed"] = sorted(seen)
+    result["missing_semantic_dimensions"] = missing
     return result
+
+
+def validate_editorial_acceptance(acceptance, artifact=None, required_dimensions=None):
+    """Keep human/editorial judgement separate from technical and semantic QA."""
+    _object(acceptance, "editorial_acceptance")
+    require(acceptance.get("schema_version") == 1, "Unsupported editorial acceptance schema")
+    _nonempty(acceptance.get("id"), "editorial_acceptance.id")
+    _nonempty(acceptance.get("artifact_ref"), "editorial_acceptance.artifact_ref")
+    _hash(acceptance.get("artifact_content_hash"), "editorial_acceptance.artifact_content_hash")
+    _timestamp(acceptance.get("observed_at"), "editorial_acceptance.observed_at")
+    _nonempty(acceptance.get("procedure"), "editorial_acceptance.procedure")
+    require(isinstance(acceptance.get("limitations", []), list), "editorial_acceptance.limitations must be an array")
+    dimensions = tuple(required_dimensions or EDITORIAL_DIMENSIONS)
+    require(set(dimensions) <= set(EDITORIAL_DIMENSIONS), "Unknown editorial acceptance dimension")
+    checks = _list(acceptance.get("checks"), "editorial_acceptance.checks", allow_empty=False)
+    seen = set()
+    for index, check in enumerate(checks):
+        _object(check, f"editorial_acceptance.checks[{index}]")
+        _nonempty(check.get("dimension"), f"editorial_acceptance.checks[{index}].dimension")
+        require(check["dimension"] in EDITORIAL_DIMENSIONS,
+                f"editorial_acceptance.checks[{index}].dimension is not canonical")
+        require(check["dimension"] in dimensions,
+                f"editorial_acceptance.checks[{index}].dimension is not required for this acceptance")
+        require(check["dimension"] not in seen,
+                f"Duplicate editorial acceptance dimension: {check['dimension']}")
+        seen.add(check["dimension"])
+        _check(check, f"editorial_acceptance.checks[{index}]")
+        require(check["oracle"]["kind"] == "HUMAN",
+                f"editorial_acceptance.checks[{index}] requires a HUMAN oracle")
+    missing = sorted(set(dimensions) - seen)
+    require(not missing, "Missing editorial acceptance dimensions: " + ", ".join(missing))
+    status = aggregate_quality([{"result": item["result"]} for item in checks])
+    require(acceptance.get("status") == status, "Editorial acceptance aggregate is inconsistent")
+    if artifact is not None:
+        _object(artifact, "editorial artifact")
+        _nonempty(artifact.get("artifact_ref"), "editorial artifact.artifact_ref")
+        _hash(artifact.get("content_hash"), "editorial artifact.content_hash")
+        require(acceptance["artifact_ref"] == artifact.get("artifact_ref"),
+                "Editorial acceptance/artifact locator mismatch")
+        require(acceptance["artifact_content_hash"] == artifact.get("content_hash"),
+                "Editorial acceptance/artifact hash mismatch")
+        _verify_observed_bytes(artifact.get("artifact_ref"), artifact.get("content_hash"),
+                               "editorial acceptance artifact", required=True)
+    else:
+        _verify_observed_bytes(acceptance["artifact_ref"], acceptance["artifact_content_hash"],
+                               "editorial acceptance artifact", required=status in ("PASS", "FAIL", "PARTIAL"))
+    return {"status": status, "accepted": status == "PASS", "dimensions_observed": sorted(seen),
+            "missing_dimensions": missing, "limitations": list(acceptance.get("limitations", []))}
 
 
 def _dimension_record(record, label):
@@ -1404,13 +1474,39 @@ def _validate_long_form_production_evidence(case, base_dir=None):
     assembly_path, assembly = _validate_long_form_file_ref(production.get("assembly"), "production_evidence.assembly", base_dir)
     require(assembly.get("schema_version") == 1, "production_evidence.assembly schema is unsupported")
     _nonempty(assembly.get("id"), "production_evidence.assembly.id")
+    require(assembly.get("technical_acceptance") in ("PASS", "ACCEPTED"),
+            "production_evidence.assembly lacks technical acceptance")
+    require(assembly.get("semantic_acceptance") in ("PASS", "ACCEPTED"),
+            "production_evidence.assembly lacks semantic acceptance")
     require(assembly.get("editorial_acceptance") in ("PASS", "ACCEPTED"),
             "production_evidence.assembly is not editorially accepted")
     require(assembly.get("mechanical_status") in ("PASS", "ACCEPTED"),
             "production_evidence.assembly lacks mechanical acceptance")
     segments = _list(assembly.get("segments"), "production_evidence.assembly.segments", allow_empty=False)
-    require(all(isinstance(segment, dict) and segment.get("artifact_id") in artifact_ids for segment in segments),
+    require(all(isinstance(segment, dict) and segment.get("artifact_id") in artifact_ids
+                and isinstance(segment.get("shot_id"), str) and segment.get("shot_id")
+                and number(segment.get("duration_s"), True) and number(segment.get("fps"), True)
+                and isinstance(segment.get("resolution"), dict)
+                and "audio_source" in segment and "transition" in segment
+                and isinstance(segment.get("source_attempt"), dict)
+                and isinstance(segment.get("repair_lineage"), list)
+                for segment in segments),
             "production_evidence.assembly has an unbound segment")
+    require(assembly.get("shot_order") == [segment["shot_id"] for segment in segments],
+            "production_evidence.assembly shot order is missing or inconsistent")
+    final_binding = assembly.get("final_artifact_binding")
+    require(isinstance(final_binding, dict), "production_evidence.assembly lacks final artifact binding")
+    _hash(final_binding.get("content_hash"), "production_evidence.assembly.final_artifact_binding.content_hash")
+    final_path = _resolve_quality_path(final_binding.get("artifact_ref"),
+                                       "production_evidence.assembly.final_artifact_binding", assembly_path.parent)
+    require(file_hash(final_path) == final_binding["content_hash"],
+            "production_evidence.assembly final artifact bytes changed")
+    source_shots = assembly.get("final_artifact_binding", {}).get("source_shots") if isinstance(assembly.get("final_artifact_binding"), dict) else None
+    expected_source_shots = [{"shot_id": segment.get("shot_id"), "artifact_id": segment.get("artifact_id"),
+                              "content_hash": artifact_by_id[segment["artifact_id"]]["record"].get("content_hash")}
+                             for segment in segments]
+    require(source_shots == expected_source_shots,
+            "production_evidence.assembly final artifact is not bound to ordered source shot hashes")
     shot_ids = {shot for shot in case.get("shot_ids", []) if shot != "NOT_RUN"}
     require(shot_ids <= artifact_shots, "production evidence does not cover every case shot")
     require(artifact_ids <= observed_artifacts, "production evidence has an unobserved artifact")
@@ -1512,9 +1608,9 @@ def maturity_report(evidence):
 
 
 __all__ = [
-    "QUALITY_STATUSES", "SCORECARD_STATUSES", "CONTINUITY_DIMENSIONS", "CONTACT_PHASES", "CAUSAL_STAGES",
+    "QUALITY_STATUSES", "SCORECARD_STATUSES", "CONTINUITY_DIMENSIONS", "SEMANTIC_DIMENSIONS", "EDITORIAL_DIMENSIONS", "CONTACT_PHASES", "CAUSAL_STAGES",
     "AUDIO_LAYERS", "AUDIO_LAYER_ALIASES", "REANCHOR_ACTIONS",
-    "validate_observation_contract", "validate_semantic_observation", "validate_continuity_scorecard",
+    "validate_observation_contract", "validate_semantic_observation", "validate_editorial_acceptance", "validate_continuity_scorecard",
     "validate_shot_acceptance", "validate_transition_contract", "reanchor_decision", "validate_first_last_frame",
     "validate_contact_phases", "validate_causal_sequence", "validate_object_ownership", "validate_vehicle_state",
     "validate_dialogue_contract", "validate_audio_timeline", "aggregate_quality",

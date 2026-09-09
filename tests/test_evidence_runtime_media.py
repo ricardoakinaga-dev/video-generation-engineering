@@ -14,7 +14,7 @@ from test_planning import ROOT, SKILL, profile
 from vge_core import ContractError, digest, file_hash, load
 from vge_evidence import aggregate, validate_observation, lifecycle
 from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect, resource_status, workflow_fingerprint, validate_profile_runtime
-from vge_media import run, probe, assemble, contact_sheet
+from vge_media import run, probe, assemble, contact_sheet, validate_assembly_manifest
 
 
 def evidence(path):
@@ -114,6 +114,42 @@ NODE_INFO={'Source':{'input':{'required':{'model_name':[['model.bin']], 'width':
 WORKFLOW={'1':{'class_type':'Source','inputs':{'model_name':'model.bin','width':64}},
           '2':{'class_type':'Save','inputs':{'images':['1',0],'filename_prefix':'test'}}}
 
+DYNAMIC_NODE_INFO={
+    'VideoSource': {'input': {'required': {}, 'optional': {}}, 'output': ['VIDEO']},
+    'SaveVideo': {
+        'input': {
+            'required': {
+                'video': ['VIDEO'],
+                'format': ['COMFY_DYNAMICCOMBO_V3', {'options': [
+                    {'key': 'mp4', 'inputs': {'required': {
+                        'codec': ['COMFY_DYNAMICCOMBO_V3', {'options': [
+                            {'key': 'auto', 'inputs': {'required': {}}},
+                            {'key': 'h264', 'inputs': {'required': {}, 'optional': {
+                                'encoding': ['COMFY_DYNAMICCOMBO_V3', {'options': [
+                                    {'key': 'auto', 'inputs': {'required': {}}},
+                                    {'key': 're-encode', 'inputs': {'required': {
+                                        'crf': ['FLOAT', {'min': 0.0, 'max': 51.0}]
+                                    }}}
+                                ]}]
+                            }}}
+                        ]}]
+                    }}}
+                ]}]
+            },
+            'optional': {}
+        },
+        'output': [],
+        'output_node': True,
+    },
+}
+
+DYNAMIC_WORKFLOW={
+    '1': {'class_type': 'VideoSource', 'inputs': {}},
+    '2': {'class_type': 'SaveVideo', 'inputs': {
+        'video': ['1', 0], 'format': 'mp4', 'format.codec': 'auto'
+    }},
+}
+
 
 class GraphTests(unittest.TestCase):
     def test_valid_graph(self):self.assertEqual('PASS',validate_workflow(WORKFLOW,NODE_INFO)['status'])
@@ -138,6 +174,40 @@ class GraphTests(unittest.TestCase):
     def test_unknown_bindings_and_ui_export_fail(self):
         with self.assertRaises(ContractError):bind_workflow(WORKFLOW,[{'node_id':'3','input':'width','value':128,'source':'user'}],NODE_INFO)
         with self.assertRaises(ContractError):validate_workflow({'nodes':[]},NODE_INFO)
+
+    def test_dynamic_combo_expands_flat_dotted_subinputs(self):
+        self.assertEqual('PASS', validate_workflow(DYNAMIC_WORKFLOW, DYNAMIC_NODE_INFO)['status'])
+        missing = copy.deepcopy(DYNAMIC_WORKFLOW)
+        del missing['2']['inputs']['format.codec']
+        report = validate_workflow(missing, DYNAMIC_NODE_INFO)
+        self.assertEqual('FAIL', report['status'])
+        self.assertTrue(any('format.codec' in issue for issue in report['issues']))
+        invalid = copy.deepcopy(DYNAMIC_WORKFLOW)
+        invalid['2']['inputs']['format.codec'] = 'h265'
+        self.assertEqual('FAIL', validate_workflow(invalid, DYNAMIC_NODE_INFO)['status'])
+
+        reencode = copy.deepcopy(DYNAMIC_WORKFLOW)
+        reencode['2']['inputs'].update({'format.codec': 'h264', 'format.codec.encoding': 're-encode'})
+        report = validate_workflow(reencode, DYNAMIC_NODE_INFO)
+        self.assertEqual('FAIL', report['status'])
+        self.assertTrue(any('format.codec.encoding.crf' in issue for issue in report['issues']))
+        reencode['2']['inputs']['format.codec.encoding.crf'] = 23.0
+        self.assertEqual('PASS', validate_workflow(reencode, DYNAMIC_NODE_INFO)['status'])
+
+    def test_workflow_fingerprint_includes_dynamic_codec_selection(self):
+        changed = copy.deepcopy(DYNAMIC_WORKFLOW)
+        changed['2']['inputs']['format.codec'] = 'h264'
+        self.assertNotEqual(workflow_fingerprint(DYNAMIC_WORKFLOW, DYNAMIC_NODE_INFO),
+                            workflow_fingerprint(changed, DYNAMIC_NODE_INFO))
+
+    def test_bundled_h3_workflows_use_current_flat_dynamic_combo_shape(self):
+        workflow_dir = SKILL / 'assets' / 'workflows'
+        for name in ('h3-smoke-api.json', 'h3-r2v-probe-api.json'):
+            with self.subTest(name=name):
+                node = json.loads((workflow_dir / name).read_text())['15']['inputs']
+                self.assertEqual('mp4', node['format'])
+                self.assertEqual('auto', node['format.codec'])
+                self.assertNotIn('codec', node)
     def test_local_boundary_rejects_remote_credentials_and_redirects(self):
         for url in ['https://example.com','http://user:pass@127.0.0.1:8188','file:///tmp/a','http://127.0.0.1?token=x']:
             with self.subTest(url=url),self.assertRaises(ContractError):ComfyClient(url)
@@ -320,13 +390,37 @@ class MediaTests(unittest.TestCase):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.path=Path(self.tmp.name)
         self.video=self.path/'source with spaces.mp4'
         run(['ffmpeg','-nostdin','-v','error','-f','lavfi','-i','testsrc2=size=64x64:rate=24:duration=1','-c:v','libx264','-pix_fmt','yuv420p',str(self.video)])
-        bundle=evidence(self.video)
-        self.manifest={'schema_version':1,'fps':24,'target_duration_s':2,'segments':[copy.deepcopy(bundle),copy.deepcopy(bundle)]}
+        first=evidence(self.video)
+        second=copy.deepcopy(first)
+        second['attempt']['id']='attempt_2'
+        second['attempt']['shot_id']='shot_2'
+        second['shot']['id']='shot_2'
+        second['attempt']['shot_contract_hash']=digest(second['shot'])
+        second['artifact']['id']='art_2'
+        second['artifact']['shot_id']='shot_2'
+        second['artifact']['execution_attempt_ref']='attempt_2'
+        second['observation']['id']='obs_2'
+        second['observation']['shot_id']='shot_2'
+        second['observation']['generation_artifact_ref']='art_2'
+        second['required_checks']=['QG-17']
+        self.manifest={'schema_version':1,'id':'assembly_fixture','fps':24,'target_duration_s':2,
+                       'shot_order':['shot_1','shot_2'],'segments':[]}
+        for bundle in (first, second):
+            inspection=probe(self.video)
+            self.manifest['segments'].append({
+                'shot_id':bundle['shot']['id'],'artifact':bundle['artifact'],
+                'attempt':bundle['attempt'],'shot':bundle['shot'],
+                'observation':bundle['observation'],
+                'duration_s':inspection['duration_s'],'fps':inspection['fps'],
+                'resolution':{'width':inspection['video_streams'][0]['width'],'height':inspection['video_streams'][0]['height']},
+                'audio_source':'NONE','transition':{'status':'NONE'},
+                'source_attempt':{'id':bundle['attempt']['id']},'repair_lineage':[]})
     def test_preview_assembly_and_real_probe(self):
         result=assemble(self.manifest,self.path/'preview.mp4',preview=True)
         self.assertEqual('NOT_RUN',result['editorial_acceptance']);self.assertEqual('PREVIEW',result['kind'])
         self.assertAlmostEqual(2,result['artifact']['duration_s'],places=2)
         self.assertEqual('h264',result['artifact']['video_streams'][0]['codec_name'])
+        self.assertTrue(result['final_artifact_binding']['source_shots'])
     def test_final_rejects_missing_segment_qa(self):
         del self.manifest['segments'][0]['observation']
         with self.assertRaises((KeyError,ContractError)):assemble(self.manifest,self.path/'final.mp4')
@@ -338,9 +432,27 @@ class MediaTests(unittest.TestCase):
         with self.assertRaises(ContractError):assemble(self.manifest,self.path/'bad.mp4',True)
         self.manifest['fps']=24;self.video.write_bytes(b'changed')
         with self.assertRaises(ContractError):assemble(self.manifest,self.path/'bad.mp4',True)
+
+    def test_strict_assembly_manifest_rejects_missing_duplicate_or_unbound_fields(self):
+        with self.assertRaisesRegex(ContractError,'shot_order'):
+            validate_assembly_manifest({**self.manifest, 'shot_order': ['shot_1']})
+        duplicate=copy.deepcopy(self.manifest)
+        duplicate['segments'][1]['shot_id']='shot_1'
+        with self.assertRaisesRegex(ContractError,'duplicated|Duplicate'):
+            validate_assembly_manifest(duplicate)
+        missing=copy.deepcopy(self.manifest)
+        missing['segments'][0].pop('repair_lineage')
+        with self.assertRaisesRegex(ContractError,'repair_lineage'):
+            validate_assembly_manifest(missing)
+        unbound=copy.deepcopy(self.manifest)
+        unbound['segments'][1]['source_attempt']['id']='attempt_wrong'
+        with self.assertRaisesRegex(ContractError,'not bound'):
+            validate_assembly_manifest(unbound)
     def test_mux_audio_and_alignment(self):
         audio=self.path/'audio.wav';run(['ffmpeg','-nostdin','-v','error','-f','lavfi','-i','sine=frequency=440:duration=2',str(audio)])
         self.manifest['audio_path']=str(audio)
+        for segment in self.manifest['segments']:
+            segment['audio_source']='MASTER_TRACK'
         result=assemble(self.manifest,self.path/'sound.mp4',True);self.assertEqual('aac',result['artifact']['audio_streams'][0]['codec_name'])
     def test_contact_sheet(self):
         result=contact_sheet(self.video,self.path/'frames.jpg',4)

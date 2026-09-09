@@ -95,23 +95,26 @@
         "VGE-TRIPLE-AAA-R1"
       ],
       "owner": "Codex",
-      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, structural ladder fixtures, current matrix/report, fresh software/documentation evidence and portable distribution; independent critic remains operationally blocked and release is READY_WITH_RISKS",
+      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, fresh software/documentation evidence and portable distribution; independent critic remains operationally blocked and release is READY_WITH_RISKS",
       "evidence_refs": [
         "docs/master-prompt-triple-aaa-r2.txt",
         "docs/triple-aaa-quality-bar-r2.json",
         ".agent/plans/triple-aaa-r2-closure.md",
-        "verification/software-triple-aaa-r16.json",
+        "verification/software-triple-aaa-r18.json",
         "verification/distribution-triple-aaa-r2.json",
+        "verification/comfyui-preflight-r2.json",
+        "verification/comfyui-profile-revalidation-r2.json",
         "verification/triple-aaa-independent-critic-r6.md",
         "verification/triple-aaa-independent-critic-r7.md",
         "verification/triple-aaa-independent-critic-r8.md",
+        "verification/triple-aaa-independent-critic-r9.md",
         "dist/video-generation-engineering-triple-aaa-r2.zip"
       ],
       "next_action": {
         "id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC",
         "kind": "REVIEW",
         "summary": "Run a sealed fresh independent critic against the integrated R2 candidate",
-        "target": "Frozen implementation, fixtures, profile, quality bar, report, matrix and distribution",
+        "target": "Current committed implementation, fixtures, profile, quality bar, report, matrix and distribution",
         "completion_signal": "Independent critic record includes scope fingerprint, mutation sentinel and verdict"
       }
     }

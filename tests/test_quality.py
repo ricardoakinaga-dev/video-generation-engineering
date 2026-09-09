@@ -19,6 +19,7 @@ from vge_quality import (
     AUDIO_LAYERS,
     CONTACT_PHASES,
     CONTINUITY_DIMENSIONS,
+    SEMANTIC_DIMENSIONS,
     adapt_prompt,
     adapter_differential,
     analyze_prompt_density,
@@ -31,6 +32,7 @@ from vge_quality import (
     validate_contact_phases,
     validate_continuity_scorecard,
     validate_dialogue_contract,
+    validate_editorial_acceptance,
     validate_feature_profile,
     validate_first_last_frame,
     validate_long_form_case,
@@ -119,6 +121,40 @@ def observation(status="PASS"):
             "provenance": quality_provenance("shot_1", "artifact_1")}
 
 
+def semantic_observation(status="PASS"):
+    item = observation(status)
+    categories = {
+        "identity": "visual", "wardrobe": "visual", "object_retention": "visual",
+        "environment": "visual", "lighting": "visual", "physics": "visual",
+        "interaction": "visual", "camera": "visual", "performance": "visual",
+        "dialogue": "audio", "lip_sync": "audio", "temporal_continuity": "temporal",
+    }
+    checks = []
+    for dimension in SEMANTIC_DIMENSIONS:
+        check = copy.deepcopy(item["checks"][0])
+        check["id"] = "semantic_" + dimension
+        check["category"] = categories[dimension]
+        check["semantic_dimension"] = dimension
+        checks.append(check)
+    item["checks"] = checks
+    return item
+
+
+def editorial_acceptance(status="PASS"):
+    checks = []
+    for dimension in ("pacing", "acting", "camera", "emotion", "framing", "rhythm"):
+        item = {"id": "editorial_" + dimension, "dimension": dimension, "category": "editorial",
+                "result": status, "oracle": oracle("HUMAN", "Does the final cut satisfy the editorial criterion?"),
+                "confidence": "HIGH" if status == "PASS" else "MEDIUM", "evidence": evidence(), "limitations": []}
+        if status != "PASS":
+            item["reason"] = "Editorial fixture is not accepted"
+        checks.append(item)
+    return {"schema_version": 1, "id": "editorial_1", "artifact_ref": str(QUALITY_ARTIFACT),
+            "artifact_content_hash": QUALITY_ARTIFACT_HASH, "observed_at": datetime.now(timezone.utc).isoformat(),
+            "procedure": "Independent editorial fixture review", "checks": checks, "status": status,
+            "limitations": ["Human editorial fixture"]}
+
+
 def scorecard(status="PASS"):
     dimensions = []
     for dimension in CONTINUITY_DIMENSIONS:
@@ -153,6 +189,31 @@ class QualityContractTests(unittest.TestCase):
             validate_observation_contract(forged)
         with self.assertRaisesRegex(ContractError, "existing artifact bytes"):
             validate_semantic_observation(forged)
+
+    def test_semantic_observation_requires_explicit_twelve_dimensions(self):
+        item = semantic_observation()
+        result = validate_semantic_observation(item)
+        self.assertTrue(result["accepted"])
+        missing = copy.deepcopy(item)
+        missing["checks"] = [check for check in missing["checks"] if check["semantic_dimension"] != "identity"]
+        with self.assertRaisesRegex(ContractError, "Missing semantic observation dimensions"):
+            validate_semantic_observation(missing)
+        duplicate = copy.deepcopy(item)
+        duplicate["checks"][-1]["semantic_dimension"] = SEMANTIC_DIMENSIONS[0]
+        with self.assertRaisesRegex(ContractError, "Duplicate semantic observation dimension"):
+            validate_semantic_observation(duplicate)
+
+    def test_editorial_acceptance_is_separate_and_dimension_complete(self):
+        result = validate_editorial_acceptance(editorial_acceptance())
+        self.assertTrue(result["accepted"])
+        missing = editorial_acceptance()
+        missing["checks"] = missing["checks"][:-1]
+        with self.assertRaisesRegex(ContractError, "Missing editorial acceptance dimensions"):
+            validate_editorial_acceptance(missing)
+        nonhuman = editorial_acceptance()
+        nonhuman["checks"][0]["oracle"] = oracle("FRAME")
+        with self.assertRaisesRegex(ContractError, "HUMAN oracle"):
+            validate_editorial_acceptance(nonhuman)
 
     def test_unobserved_is_not_pass(self):
         item = observation("NOT_OBSERVED")
@@ -450,6 +511,27 @@ class MediaQualityTests(unittest.TestCase):
             self.assertEqual("FAIL", media_qa(black)["status"])
             bad = root / "bad.mp4"; bad.write_bytes(b"not a media file")
             self.assertEqual("FAIL", media_qa(bad)["status"])
+
+    def test_media_qa_emits_granular_contract_checks(self):
+        if not shutil.which("ffmpeg"):
+            self.skipTest("ffmpeg unavailable")
+        report = media_qa(QUALITY_ARTIFACT, expected_duration_s=5.1666667,
+                          expected_fps=24, expected_resolution=[384, 224],
+                          expected_frame_count=124, expected_codec="h264", expected_container="mp4")
+        checks = {item["id"]: item for item in report["checks"]}
+        for check_id in ("file_readable", "duration", "fps", "resolution", "frame_count", "codec",
+                         "container", "audio_stream", "audio_duration", "audio_video_alignment",
+                         "av_duration_mismatch", "decode_integrity", "black_frames", "freeze_frames", "artifact_hash"):
+            self.assertIn(check_id, checks)
+        self.assertEqual("PASS", report["status"])
+        self.assertEqual(124, report["frame_count"])
+        self.assertEqual("PASS", checks["audio_stream"]["result"])
+        self.assertEqual("PASS", checks["av_duration_mismatch"]["result"])
+        self.assertEqual("FAIL", media_qa(QUALITY_ARTIFACT, expected_fps=30)["status"])
+        self.assertEqual("FAIL", media_qa(QUALITY_ARTIFACT, expected_frame_count=125)["status"])
+        self.assertEqual("FAIL", media_qa(QUALITY_ARTIFACT, expected_resolution=[32, 32])["status"])
+        self.assertEqual("FAIL", media_qa(QUALITY_ARTIFACT, expected_codec="vp9")["status"])
+        self.assertEqual("FAIL", media_qa(QUALITY_ARTIFACT, expected_container="mkv")["status"])
 
 
 if __name__ == "__main__":
