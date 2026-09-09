@@ -14,7 +14,7 @@
   "active_execplan": ".agent/plans/triple-aaa-r2-closure.md",
   "active_task": "VGE-TRIPLE-AAA-R2",
   "verification_state": "BLOCKED",
-  "repository_state": "GIT main; origin configured; current candidate includes the semantic-boundary correction, reconciled accounting, rebuilt R2 distribution and completed R14 review; R14 rejected production promotion and the next safe action is authorized evidence collection",
+  "repository_state": "GIT main; origin configured; current candidate includes the semantic-boundary correction, reconciled accounting, rebuilt R2 distribution, completed R14 review, current ComfyUI R3 recheck and docs r15 audit; R14 rejected production promotion and the next safe action is authorized evidence collection",
   "instruction_scope_refs": [
     ".agent/PLANS.md",
     ".agent/plans/triple-aaa-r2-closure.md",
@@ -23,21 +23,21 @@
     "docs/triple-aaa-quality-bar-r2.json"
   ],
   "last_gate_record": null,
-  "last_event_id": "EVT-VGE-AAA-R2-RECOVERY-STATE-10",
-  "state_revision": 57,
+  "last_event_id": "EVT-VGE-AAA-R2-DOCS-CURRENT-12",
+  "state_revision": 59,
   "next_gate": "VERIFIED",
   "active_action_id": "VGE-TRIPLE-AAA-R2:PRODUCTION-EVIDENCE",
   "blocked_by": [
     "R14 completed the current review with a matching 29-file fingerprint but rejected promotion because accepted LF production and audiovisual evidence are unavailable",
-    "Local ComfyUI queue/resource snapshot provides no safe bounded window for a new long-form submission; no cancellation authority was exercised"
+    "Current ComfyUI R3 queue/resource recheck still provides no safe bounded window for new long-form submission; 7 jobs remain queued and no cancellation authority was exercised"
   ],
   "human_approval_required": [],
-  "updated_at": "2026-09-08T23:34:10-03:00",
+  "updated_at": "2026-09-08T23:49:06-03:00",
   "remaining_capability_limits": [
     "Full audiovisual production acceptance",
     "Paid provider and external transfer authority",
     "Unprobed I2V/FLF/voice/reference modes",
     "LF-001..LF-003 accepted production chains not yet available",
-    "Second independent model unavailable locally"
+    "Second independent model unavailable in the targeted local catalog; other adapter families remain unexhaustively searched"
   ]
 }

@@ -90,7 +90,7 @@ The canonical model remains model-independent. Desired, planned and observed tru
 | Full `python3 -B -m unittest discover -s tests -q` | `134` tests, `0` failures, `0` errors, `0` skips |
 | `python3 -m compileall -q .agents/skills/video-generation-engineering/scripts tests` | PASS |
 | Skill quick validation | PASS (`Skill is valid!`) |
-| Documentation checker | PASS; no broken local links or YAML blocks |
+| Documentation checker | PASS; 46 docs, 50 YAML blocks, 473 local links, 80 requirements; current r15 evidence |
 | Live ComfyUI preflight | PASS; both bundled H3 API workflows validated against local ComfyUI 0.34.0 and 911-node catalog; no credits spent |
 | `tools/verify.py --output verification/software-triple-aaa-r21.json` | PASS; 134 tests, package manifest `5ce105c345aa18e2db8f1f9ad606285ba1c03c83ea7718fd64d1215a32442472`; offline/package/mechanical scope only |
 | Read-only architecture/portability audit | PASS; package import DAG has no cycles, R2 ZIP CRC/path scan is clean, and an extracted external-CWD `help → prepare → validate` smoke run returned `validation=PASS` |
@@ -109,6 +109,8 @@ The latest local runtime recheck found 10 queue records (7 still queued, includi
 After a non-interrupting `free_memory` request, both bundled H3 workflows still validated against the live schema with zero errors/warnings and no partner nodes, while the queue/resource condition remained unchanged. This is current compatibility evidence only, not inference or production evidence; see [`comfyui-runtime-recheck-20260908.json`](../verification/comfyui-runtime-recheck-20260908.json).
 
 A subsequent fresh recheck reproduced the same result after another non-interrupting cleanup request: both workflows remain schema-compatible, while production submission stays `NOT_RUN`/`BLOCKED` at the observed queue and VRAM boundary. The repeated observation is preserved separately in [`comfyui-runtime-recheck-20260908-r2.json`](../verification/comfyui-runtime-recheck-20260908-r2.json).
+
+A current R3 recheck found the same occupied queue and only approximately 1.05–1.17 GiB free VRAM per RTX 3060. The targeted local catalog identified H3 as the only video diffusion family in scope and returned no Wan/LTX matches; the existing three short-action clips and 15-second edit remain outside LF-001/LF-002/LF-003 acceptance. No job was cancelled and no new LF submission was run. See [`comfyui-runtime-recheck-20260908-r3.json`](../verification/comfyui-runtime-recheck-20260908-r3.json).
 
 ## Artifact Evidence
 

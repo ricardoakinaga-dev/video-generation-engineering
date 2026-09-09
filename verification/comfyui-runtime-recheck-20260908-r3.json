@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "id": "COMFYUI-RUNTIME-RECHECK-20260908-R3",
+  "observed_at": "2026-09-08T23:43:36-03:00",
+  "scope": "LOCAL_COMFYUI_PRODUCTION_CAPABILITY_RECHECK",
+  "procedure": [
+    "server_info",
+    "job(action=queue)",
+    "system_stats",
+    "search_models(folder=diffusion_models)",
+    "search_models(folder=loras)",
+    "search_models(folder=vae)",
+    "search_models(query=h3|wan|ltx|video|audio) local catalog",
+    "ffprobe and SHA-256 inspection of existing local action artifacts"
+  ],
+  "server": {
+    "endpoint": "http://127.0.0.1:8188",
+    "running": true,
+    "version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "pid": 1147514,
+    "workspace": "/home/ricardo/ComfyUI",
+    "server_info_checked_at": "2026-09-09T02:41:17.483739+00:00"
+  },
+  "queue": {
+    "count": 10,
+    "queued": 7,
+    "cancelled": 3,
+    "repository_queued_jobs": [
+      {
+        "prompt_id": "7c9b7d4c-3d89-47a8-ad86-eb33f20b3034",
+        "status": "queued",
+        "workflow_path": "artifacts/vge_action_20260908/shot_001_t2v.json",
+        "outputs": 0
+      },
+      {
+        "prompt_id": "71597f5d-fecb-4f1f-8cf0-fb29f3f421b3",
+        "status": "queued",
+        "workflow_path": "artifacts/vge_action_20260908/shot_002_t2v.json",
+        "outputs": 0
+      },
+      {
+        "prompt_id": "a960f77d-f0cc-4721-8657-3d7c32d19cb0",
+        "status": "queued",
+        "workflow_path": "artifacts/vge_action_20260908/shot_003_t2v.json",
+        "outputs": 0
+      }
+    ],
+    "other_queued_jobs": [
+      {
+        "prompt_id": "c70effe4-c47f-4584-8f7a-852fe06e1ac2",
+        "workflow_path": "/tmp/video_minimax_h3_r2v.json"
+      },
+      {
+        "prompt_id": "f8faa72a-4786-48ad-9f82-55058f4fdab7",
+        "workflow_path": "/home/ricardo/Área de trabalho/ninja-gaiden/assets/source/comfy/ren_rebuild_painted_v1_api.json"
+      },
+      {
+        "prompt_id": "0836ac61-05c9-443d-9853-d044ac6fac39",
+        "workflow_path": "/home/ricardo/cvg-his-v4/docs/frontend/assets/workflows/cvg-pulse-material-preview.json"
+      },
+      {
+        "prompt_id": "163c2f39-b826-438d-a366-dce61deb6a45",
+        "workflow_path": "/home/ricardo/Área de trabalho/ninja-gaiden/assets/source/comfy/ren_rebuild_cutout_v2.json"
+      }
+    ],
+    "status_action_probe": "UNAVAILABLE_FOR_HISTORICAL_PROMPT_IDS",
+    "status_action_observation": "job(action=status) returned Error executing tool job for the three repository prompt IDs; queue listing remained readable and was used as the authoritative current queue observation."
+  },
+  "resources": {
+    "ram_total_bytes": 67203821568,
+    "ram_free_bytes": 26925686784,
+    "devices": [
+      {
+        "device_id": "cuda:0",
+        "model": "NVIDIA GeForce RTX 3060",
+        "vram_total_bytes": 12482576384,
+        "vram_free_bytes": 1128923136
+      },
+      {
+        "device_id": "cuda:1",
+        "model": "NVIDIA GeForce RTX 3060",
+        "vram_total_bytes": 12490440704,
+        "vram_free_bytes": 1252392960
+      }
+    ]
+  },
+  "local_model_catalog": {
+    "diffusion_models": [
+      "acestep_v1.5_turbo.safetensors",
+      "flux-2-klein-4b-fp8.safetensors",
+      "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+      "minimax_h3_ref2va_pruned_w4a8_mixed.safetensors",
+      "z_image_turbo_bf16.safetensors",
+      "z_image_turbo_int8_convrot.safetensors"
+    ],
+    "loras": [
+      "minimax_h3_fl2v_turbo_4step_v1.0_768p_comfyui_resized_avg_rank_21_bf16.safetensors",
+      "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors"
+    ],
+    "vae": [
+      "ace_1.5_vae.safetensors",
+      "ae.safetensors",
+      "flux2-vae.safetensors",
+      "minimax_h3_audio_vae_fp32.safetensors",
+      "minimax_h3_video_vae_int8_convrot.safetensors"
+    ],
+    "targeted_searches": {
+      "h3": 14,
+      "wan": 0,
+      "ltx": 0,
+      "video": 1,
+      "audio": 1
+    },
+    "interpretation": "H3 is the only locally identified video diffusion family in the inspected catalog. Wan and LTX were not found by the targeted catalog searches; this is not an exhaustive proof that no other adapter exists."
+  },
+  "existing_artifacts": {
+    "scene": "Último golpe; human versus combat android in an apocalyptic street",
+    "semantic_scope": "SHORT_ACTION_ONLY_NOT_LF_001_LF_002_OR_LF_003",
+    "raw_clips": [
+      {
+        "path": "artifacts/vge_action_20260908/raw/7c9b7d4c_000.mp4",
+        "sha256": "sha256:6b7bc8b7dbd3ddc69948c18c6db0676b78890a4b9b8a5b6b0ad36316c68141b7",
+        "duration_s": 5.167,
+        "fps": 24.0,
+        "resolution": "384x224",
+        "streams": ["h264-video", "aac-stereo"]
+      },
+      {
+        "path": "artifacts/vge_action_20260908/raw/71597f5d_000.mp4",
+        "sha256": "sha256:cba09b738e8e7160169a200eda55804d1a95592dbd7cd7fc631f3bf9666645bc",
+        "duration_s": 5.167,
+        "fps": 24.0,
+        "resolution": "384x224",
+        "streams": ["h264-video", "aac-stereo"]
+      },
+      {
+        "path": "artifacts/vge_action_20260908/raw/a960f77d_000.mp4",
+        "sha256": "sha256:2e27ba3a911cd62e8b1d3dacaa3e29b5f4a466f448e847cd5dea946ae14b6c6a",
+        "duration_s": 5.167,
+        "fps": 24.0,
+        "resolution": "384x224",
+        "streams": ["h264-video", "aac-stereo"]
+      }
+    ],
+    "editorial_preview": {
+      "path": "artifacts/vge_action_20260908/vge_action_15s_preview.mp4",
+      "sha256": "sha256:ef87b4960cf92e2d4b1781a7b66ceb927530692bf1db5086791e23d00c516acb",
+      "duration_s": 15.0,
+      "fps": 24.0,
+      "resolution": "384x224",
+      "streams": ["h264-video", "aac-stereo"]
+    },
+    "observation_status": "PARTIAL",
+    "limitation": "ffprobe, hashes and contact-sheet inspection establish transport and visible short-action content only; they do not establish identity, vehicle entry, dialogue, lip-sync, causal audio, long-form continuity or repair."
+  },
+  "decision": {
+    "runtime_compatibility": "OBSERVED_SERVER_UP",
+    "safe_bounded_generation_window": "NO",
+    "new_lf_submission": "NOT_RUN",
+    "production_execution": "BLOCKED",
+    "second_video_adapter_targeted_search": "NOT_FOUND_IN_TARGETED_CATALOG",
+    "reason": "The local queue still contains long-lived work across multiple projects and both RTX 3060 devices expose approximately 1.05–1.17 GiB free VRAM. No queued job was cancelled and no new long-form job was submitted.",
+    "next_action": "Obtain explicit ownership/resource authority or wait for a naturally empty bounded window; then repeat server_info, queue, system_stats and workflow validation before any smallest safe LF probe."
+  },
+  "limitations": [
+    "No LF-001, LF-002 or LF-003 production submission was safe to run in this observation window.",
+    "No paid provider, upload, external transfer, model download or publication was attempted.",
+    "Targeted model catalog searches do not prove universal absence of every possible adapter family.",
+    "The queue status action failed for historical prompt IDs; this does not alter the readable queue snapshot.",
+    "A local runtime/resource observation cannot replace semantic media acceptance."
+  ]
+}
