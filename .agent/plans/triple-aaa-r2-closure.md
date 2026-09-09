@@ -23,6 +23,7 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [ ] (2026-09-08T21:32:26-03:00) R10 blocked operationally: `Ohm` remained running through the bounded wait window and shut down without returning the required criterion-level matrix or verdict; the lead-owned Git tree sentinel matched.
 - [ ] (2026-09-08T22:09:56-03:00) R11 blocked operationally: `Jason` remained running through the bounded waits and shut down without returning the required criterion-level matrix or verdict; the lead-owned product tree remained clean and unchanged.
 - [x] (2026-09-08T22:14:42-03:00) Post-R11 documentation recheck passed: 46 documents, 50 YAML blocks, 465 local links, 80 requirements, no link/YAML/traceability errors; this does not change the independent-review or audiovisual-production blockers.
+- [x] (2026-09-08T22:18:39-03:00) Recovery reconciled the current project profile from stale `GREENFIELD` to `BROWNFIELD`; the prompt and repository are an existing mature project, while the original Phase 0 classification remains historical.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
