@@ -1,6 +1,6 @@
 # Triple-AAA Closure R4 — master prompt production closure
 
-<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY -->
+<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:R6-FRESH-CRITIC -->
 
 ## Purpose
 
@@ -31,7 +31,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 
 ## Concrete Steps
 
-1. [VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY] — verify and record the post-critic remote handoff; local `HEAD` and `origin/main` match at `889b32e`, and the worktree is clean. **COMPLETE.**
+1. [VGE-TRIPLE-AAA-R4:R6-FRESH-CRITIC] — obtain a fresh non-inherited review after the live ComfyUI/runtime snapshot changed the candidate; preserve the existing `REJECT` production boundary. **IN PROGRESS.**
 
 2. [VGE-TRIPLE-AAA-R4:FRESH-CRITIC] — obtain a fresh non-inherited read-only review of the post-cross-shot-gate candidate, with reviewer-owned fingerprint and mutation sentinel; preserve the current PARTIAL production boundary. **COMPLETE with R5 `REJECT`, matching fingerprint and unchanged sentinel.**
 
@@ -82,7 +82,7 @@ The prior R4 closure packet was committed and pushed to the configured `origin/m
 - [x] Re-run focused/full tests, compileall, offline verification and current documentation audit.
 - [x] Rebuild the portable package as R7; obtain a new fresh non-inherited critic before final remote handoff.
 
-Current action: `VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY`. The audiovisual verdict remains `PARTIAL`; this hardening closes a software acceptance gap but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
+Current action: `VGE-TRIPLE-AAA-R4:R6-FRESH-CRITIC`. The audiovisual verdict remains `PARTIAL`; the live runtime snapshot strengthens P0 evidence but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
 
 ## Purpose / Big Picture
 
@@ -95,6 +95,8 @@ Close the supplied R4 master prompt against the brownfield Skill while preservin
 - [x] (2026-09-09T22:08:56Z) Rebuilt the R7 distribution after the critic; archive/manifest/security/CWD smoke remain `PASS`.
 - [x] (2026-09-09T22:09:00Z) Committed and pushed the final packet; the follow-up remote comparison is recorded below.
 - [x] (2026-09-09T22:12:28Z) Verified local `HEAD` and `origin/main` at `889b32e732573708fcc68d5eeac9985874a103aa`; worktree clean.
+- [x] (2026-09-09T22:14:29Z) Captured a read-only live ComfyUI/server/device/queue/workflow snapshot; no queue mutation or POST occurred.
+- [ ] (2026-09-09T22:16:20Z) Complete the fresh R6 critic and freeze a post-R6 distribution.
 
 ## Surprises & Discoveries
 
@@ -134,11 +136,11 @@ Complete.
 
 ### M3 — Fresh critic and final remote handoff
 
-Fresh critic, post-critic distribution and remote handoff complete; audiovisual production remains `PARTIAL`.
+R5 critic and remote handoff are historical; the new live runtime evidence requires R6 fresh review before the next distribution freeze.
 
 ## Plan of Work
 
-The post-critic closure packet is committed and pushed; preserve `READY_WITH_RISKS`/`PARTIAL` and the critic's `REJECT` for audiovisual promotion.
+Review the live runtime evidence with a fresh critic, then preserve `READY_WITH_RISKS`/`PARTIAL` and the prior critic's `REJECT` unless stronger evidence changes that boundary.
 
 ## Validation and Acceptance
 
@@ -154,4 +156,4 @@ Critic execution is read-only and may be repeated only against a newly fingerpri
 
 ## Artifacts and Evidence
 
-Current evidence: `verification/software-triple-aaa-r33.json`, `verification/docs-current-r28.json`, `verification/distribution-triple-aaa-r7.json`, `verification/candidate-fingerprint-r5-final.json`, `verification/triple-aaa-independent-critic-r5.md`, `verification/long-form/LF-001-T01-r4-transition.json` and `verification/long-form/LF-001-T02-r4-transition.json`.
+Current evidence: `verification/software-triple-aaa-r33.json`, `verification/docs-current-r29.json`, `verification/comfyui-r4-live-state-20260909.json`, `verification/distribution-triple-aaa-r7.json`, `verification/candidate-fingerprint-r5-final.json`, `verification/triple-aaa-independent-critic-r5.md`, `verification/long-form/LF-001-T01-r4-transition.json` and `verification/long-form/LF-001-T02-r4-transition.json`.

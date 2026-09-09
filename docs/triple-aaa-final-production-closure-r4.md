@@ -21,6 +21,7 @@ Baseline HEAD was `8b08030853d0d0a3c2ce3fe16fd0e2a9f59bd53d`, with the repositor
 - Added LF-001 plan, Scene Bible, shot graph, continuity ledger, contact phases, semantic/continuity scorecards, transitions, re-anchor decision, bounded repair plan, trim reports and mechanical assembly preview.
 - Added structural LF-002/LF-003 contracts, FLF disposition and second-adapter differential evidence without promoting them to runtime proof.
 - Added a hash-bound `cross_shot_comparison` contract covering all 14 continuity dimensions; transitions without an explicit side-by-side oracle now remain `PARTIAL`/`FAIL`.
+- Added a fresh read-only local ComfyUI snapshot covering server health, exact device free VRAM, queue non-mutation and live H3 workflow validation; it is explicitly kept below generation/production acceptance.
 - Preserved the master prompt under `docs/` and updated the executable Skill documentation with the new CLI and continuity handoff rules.
 
 ## Changes Rejected
@@ -39,11 +40,11 @@ The current software verification records 143 tests with zero failures/errors/sk
 
 ## Runtime State
 
-The local ComfyUI runtime was discovered as version 0.34.0 with the current H3 graph/profile. The confirmed profile is `verification/profiles/comfyui-h3-lf001-r4-v2.json`; feature confirmation is limited to the exact local H3 T2V/native-audio scope. I2V/reference conditioning, FLF, dialogue, voice and lip-sync remain unknown or blocked.
+The local ComfyUI runtime was discovered as version 0.34.0 with the current H3 graph/profile. A fresh read-only audit at `2026-09-09T22:14:29Z` confirms the local server is running at `127.0.0.1:8188`, the bundled H3 probe workflow validates with zero errors/warnings, and the exact profile remains `verification/profiles/comfyui-h3-lf001-r4-v2.json`. Feature confirmation is still limited to the exact local H3 T2V/native-audio scope. I2V/reference conditioning, FLF, dialogue, voice and lip-sync remain unknown or blocked; the live snapshot is not a generation or production acceptance.
 
 ## Resource State
 
-Every real POST used a fresh `free_memory`/`system_stats` guard, selected `cuda:1`, a 2.5 GB minimum free-VRAM floor and a 1.2 safety margin. Queue ownership was checked and unrelated jobs were left untouched. Resource evidence is in `verification/comfyui-r4-baseline-20260909-a001.json` and the per-attempt runtime records.
+Every real POST used a fresh `free_memory`/`system_stats` guard, selected `cuda:1`, a 2.5 GB minimum free-VRAM floor and a 1.2 safety margin. The current read-only snapshot reports approximately 11.6 GB free on `cuda:0` and 12.3 GB on `cuda:1`; it observed ten pre-existing local queue entries and deliberately mutated none. Resource evidence is in `verification/comfyui-r4-baseline-20260909-a001.json`, the per-attempt runtime records and the current snapshot `verification/comfyui-r4-live-state-20260909.json`.
 
 ## LF-001
 
@@ -95,11 +96,11 @@ Historical R4 failures remain retained, including earlier OOM/failed attempts an
 
 ## Independent Critic
 
-The pre-hardening memo `verification/triple-aaa-independent-critic-r4.md` is historical and does not govern this candidate. The post-hardening review is required to be read-only, non-inherited, reviewer-owned and fingerprinted before/after; its final record is reserved at `verification/triple-aaa-independent-critic-r5.md`. The closure report does not convert independent review into a production PASS.
+The pre-hardening memo `verification/triple-aaa-independent-critic-r4.md` and the post-hardening R5 memo `verification/triple-aaa-independent-critic-r5.md` are historical for their respective snapshots. The live runtime evidence added afterward is a material candidate change; a new read-only, non-inherited, reviewer-owned R6 review must recompute the fingerprint before any final distribution. Independent review never converts runtime inspection into a production PASS.
 
 ## Distribution
 
-The current R4 archive is `dist/video-generation-engineering-triple-aaa-r7.zip`, with CRC/SHA manifest and external-CWD smoke in `verification/distribution-triple-aaa-r7.json`. It contains the executable Skill and its references/assets, excludes credentials, model weights, generated runtime media and absolute workspace paths, and is validated independently from the source checkout.
+R7 (`dist/video-generation-engineering-triple-aaa-r7.zip`) remains the post-R5 historical archive. The final post-R6 archive must be rebuilt after the new critic; each archive contains the executable Skill and its references/assets, excludes credentials, model weights, generated runtime media and absolute workspace paths, and is validated independently from the source checkout.
 
 ## Capability Matrix
 
@@ -122,11 +123,11 @@ The 22-category diagnostic scorecard is `docs/triple-aaa-scorecard-r4.md`. Score
 - LF-003 45–60 second dependent production, repair and human checkpoint.
 - LF-004 only after shorter ladders are accepted.
 - Second real adapter differential.
-- Fresh critic result and frozen post-critic distribution accounting.
+- Fresh R6 critic result and frozen post-critic distribution accounting after the live-runtime evidence change.
 
 ## Claims Supported
 
-The repository contains an implemented, portable generative-video engineering Skill with deterministic planning/compiler/evidence tooling; a current local H3 ComfyUI profile; guarded, hash-linked LF-001 runtime artifacts; accepted S01/S02 bounded evidence; a partial S03 with explicit failure; a mechanically valid 15-second preview; explicit repair/re-anchor and long-form contracts; and truthful capability/maturity accounting.
+The repository contains an implemented, portable generative-video engineering Skill with deterministic planning/compiler/evidence tooling; a current local H3 ComfyUI profile and read-only runtime snapshot; guarded, hash-linked LF-001 runtime artifacts; accepted S01/S02 bounded evidence; a partial S03 with explicit failure; a mechanically valid 15-second preview; explicit repair/re-anchor and long-form contracts; and truthful capability/maturity accounting.
 
 ## Claims Unsupported
 

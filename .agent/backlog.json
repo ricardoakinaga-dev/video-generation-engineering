@@ -212,17 +212,18 @@
         "verification/triple-aaa-independent-critic-r4.md",
         "verification/triple-aaa-independent-critic-r5.md",
         "verification/candidate-fingerprint-r5-final.json",
+        "verification/comfyui-r4-live-state-20260909.json",
     "verification/software-triple-aaa-r33.json",
-    "verification/docs-current-r28.json",
+    "verification/docs-current-r29.json",
     "verification/distribution-triple-aaa-r7.json",
     ".agents/skills/video-generation-engineering/scripts/vge_quality.py"
       ],
       "next_action": {
-        "id": "VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY",
+        "id": "VGE-TRIPLE-AAA-R4:R6-FRESH-CRITIC",
         "kind": "VERIFY",
-        "summary": "Record the verified post-critic remote handoff while preserving the production boundary",
-        "target": "origin/main at 889b32e732573708fcc68d5eeac9985874a103aa and the final R4 closure packet",
-        "completion_signal": "Local HEAD and origin/main match at the verified commit, worktree is clean, and R5 REJECT plus production blockers remain explicit"
+        "summary": "Obtain a fresh non-inherited R6 critic after the live runtime evidence change",
+        "target": "Current R4 source/docs, live ComfyUI snapshot, R5 historical review and the new candidate fingerprint",
+        "completion_signal": "Reviewer returns a complete P0-P9 matrix with reviewer-owned before/after fingerprint and unchanged mutation sentinel; production claims remain bounded"
       }
     }
   ]

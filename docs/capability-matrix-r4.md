@@ -36,6 +36,7 @@ The matrix is deliberately scoped to observed evidence. `PROVEN` means proven fo
 
 - Frozen authority and prompt copy: `docs/triple-aaa-quality-bar-r4.json`, `docs/master-prompt-triple-aaa-final-production-closure-20260909.txt`.
 - Runtime profile and resource guard: `verification/profiles/comfyui-h3-lf001-r4-v2.json`, `verification/comfyui-r4-baseline-20260909-a001.json`.
+- Current read-only runtime/resource/workflow audit: `verification/comfyui-r4-live-state-20260909.json` (server up, H3 workflow valid, queue observed without mutation; not production proof).
 - LF-001 case, transitions, repair decision and assembly: `verification/long-form/LF-001-r4-case.json`, `LF-001-T01-r4-transition-validation.json`, `LF-001-T02-r4-transition-validation.json`, `LF-001-S03-r4-reanchor-decision.json`, `LF-001-r4-assembly-preview-r2.json`.
 - Deferred ladders: `verification/long-form/LF-002-r4-case.json`, `LF-003-r4-case.json`, `FLF-r4-evidence.json` and `verification/adapter-differential-r4.json`.
 

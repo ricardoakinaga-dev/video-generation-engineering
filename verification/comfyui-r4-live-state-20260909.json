@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-r4-live-state-20260909-221429",
+  "observed_at": "2026-09-09T22:14:29.191175+00:00",
+  "scope": "READ_ONLY_LOCAL_COMFYUI_RUNTIME_AUDIT",
+  "procedure": [
+    "server_info",
+    "system_stats",
+    "job(action=queue)",
+    "validate_workflow on the bundled H3 R2V probe workflow"
+  ],
+  "authorization_boundary": "No POST, cancel, free_memory, download, provider call, queue mutation or foreign-workspace write was performed.",
+  "server": {
+    "running": true,
+    "url": "http://127.0.0.1:8188",
+    "workspace": "/home/ricardo/ComfyUI",
+    "comfyui_version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "envelope_schema": "envelope/1",
+    "compatibility_warnings": [],
+    "core_outdated": false,
+    "packs_outdated": false,
+    "templates_version": "0.11.54"
+  },
+  "hardware": {
+    "os": "Linux",
+    "arch": "x86_64",
+    "cpu": "AMD Ryzen 7 5700",
+    "ram_total": 67203821568,
+    "ram_free": 44383559680,
+    "gpu": {
+      "vendor": "nvidia",
+      "model": "NVIDIA GeForce RTX 3060",
+      "reported_vram_bytes": 12884901888,
+      "unified_memory": false
+    }
+  },
+  "devices": [
+    {
+      "name": "cuda:0 NVIDIA GeForce RTX 3060 : cudaMallocAsync",
+      "index": 0,
+      "vram_total": 12482576384,
+      "vram_free": 11597840384
+    },
+    {
+      "name": "cuda:1 NVIDIA GeForce RTX 3060 : cudaMallocAsync",
+      "index": 1,
+      "vram_total": 12490440704,
+      "vram_free": 12301172736
+    }
+  ],
+  "queue": {
+    "host": "127.0.0.1",
+    "port": 8188,
+    "where": "local",
+    "count": 10,
+    "status_counts": {
+      "queued": 9,
+      "cancelled": 1
+    },
+    "ownership_action": "Inspected the queue and left every job untouched; no cancellation or supersession was attempted.",
+    "privacy": "Job identifiers and foreign workflow paths are intentionally not copied into the repository evidence."
+  },
+  "workflow_validation": {
+    "workflow": ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json",
+    "workflow_sha256": "sha256:fbf7968c73bb6be157c4f642e620288d17c7dc6c06d143e17f65e24b28088546",
+    "workflow_bytes": 2857,
+    "valid": true,
+    "error_count": 0,
+    "warning_count": 0,
+    "partner_nodes": [],
+    "spends_credits": false,
+    "object_info_source": {
+      "mode": "local",
+      "host": "127.0.0.1",
+      "port": 8188
+    }
+  },
+  "result": "PASS",
+  "limitations": [
+    "This is a read-only runtime/resource/workflow snapshot, not a generation result or production acceptance.",
+    "The queue contains pre-existing jobs and was not mutated; ownership is not inferred from queue presence alone.",
+    "The snapshot does not prove I2V/reference retention, FLF, dialogue, lip-sync, semantic continuity, repair or editorial quality."
+  ]
+}
