@@ -1,6 +1,6 @@
 # Triple-AAA Closure R4 — master prompt production closure
 
-<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:COMMIT-PUSH -->
+<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY -->
 
 ## Purpose
 
@@ -52,7 +52,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 - [x] Update R4 matrix, scorecard and closure report with exact status and unsupported claims.
 - [x] Run fresh final critic with before/after fingerprint and mutation sentinel.
 - [x] Build final distribution and rerun the release gate.
-- [ ] Commit, push and verify the remote tip.
+- [x] Commit, push and verify the remote tip.
 
 ## Recovery rules
 
@@ -65,3 +65,7 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 ## Completion signal
 
 The repository contains the saved prompt, R4 frozen bar, updated Skill/docs/tests/evidence, an honest final report with the exact requested headings, an independent fresh critic record, a frozen distribution and a verified commit pushed to `origin/main`. Production claims are limited to artifacts and oracles actually observed.
+
+## Final handoff
+
+The R4 closure packet was committed and pushed to the configured `origin/main`. The remote tip was verified against the local tip after the push. The remaining audiovisual gaps are intentionally recorded as `PARTIAL`, `BLOCKED` or `NOT_RUN`; reopen only with the required authorization and capability evidence.

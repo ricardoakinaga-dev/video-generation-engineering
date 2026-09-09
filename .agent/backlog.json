@@ -213,11 +213,11 @@
         "verification/distribution-triple-aaa-r6.json"
       ],
       "next_action": {
-        "id": "VGE-TRIPLE-AAA-R4:COMMIT-PUSH",
+        "id": "VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY",
         "kind": "VERIFY",
-        "summary": "Commit and push the final R4 closure packet while preserving the independent REJECT verdict and partial production status",
+        "summary": "Record the verified remote handoff and preserve the independent REJECT verdict and partial production status",
         "target": "Current R4 candidate, control-plane accounting and configured origin main",
-        "completion_signal": "Local commit exists, origin/main resolves to the pushed commit, and post-push status is clean; no Triple-AAA production proof is claimed"
+        "completion_signal": "Remote tip and local tip are verified, post-push status is clean, and no Triple-AAA production proof is claimed; reopen only for authorized production gaps"
       }
     }
   ]
