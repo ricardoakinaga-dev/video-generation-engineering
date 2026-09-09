@@ -14,7 +14,7 @@
   "active_execplan": ".agent/plans/triple-aaa-r2-closure.md",
   "active_task": "VGE-TRIPLE-AAA-R2",
   "verification_state": "BLOCKED",
-  "repository_state": "GIT main; origin configured; frozen post-guard candidate includes the selected-device/free-VRAM boundary, 137-test verification, bounded LF-001 OOM records, rebuilt R4 distribution and docs r17 audit; R14 is historical after the material package change, and a fresh post-guard critic is the current review gate",
+  "repository_state": "GIT main; origin configured; post-guard candidate includes the selected-device/free-VRAM boundary, 137-test verification, bounded LF-001 OOM records, rebuilt R4 distribution and docs r19 audit; R14 is historical and fresh post-guard R15/R16 attempts were operationally incomplete, so the independent-review gate remains open; final local suite and ZIP checks pass",
   "instruction_scope_refs": [
     ".agent/PLANS.md",
     ".agent/plans/triple-aaa-r2-closure.md",
@@ -23,17 +23,17 @@
     "docs/triple-aaa-quality-bar-r2.json"
   ],
   "last_gate_record": null,
-  "last_event_id": "EVT-VGE-AAA-R2-STATE-POINTER-18",
-  "state_revision": 61,
+  "last_event_id": "EVT-VGE-AAA-R2-STATE-FINAL-20",
+  "state_revision": 63,
   "next_gate": "VERIFIED",
   "active_action_id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC-POST-GUARD",
   "blocked_by": [
-    "R14 is stale for current acceptance because the runtime package, tests and references changed materially; fresh post-guard criterion-level review is still required",
+    "R14 is stale for current acceptance because the runtime package, tests and references changed materially; fresh post-guard criterion-level review is still required, while R15 and R16 ended without a returned matrix or fingerprint",
     "Current selected-device resource guard is BLOCKED: cuda:0 has 1,090,754,140 free bytes against the declared 2.5 GB floor with 1.2 safety margin; both bounded LF-001 attempts ended in OOM with no output",
     "Accepted LF-001, LF-002 and LF-003 production, dialogue/lip-sync/audio, FLF, second-adapter and real-repair evidence remain unavailable"
   ],
   "human_approval_required": [],
-  "updated_at": "2026-09-09T03:29:23Z",
+  "updated_at": "2026-09-09T03:49:03Z",
   "remaining_capability_limits": [
     "Full audiovisual production acceptance",
     "Paid provider and external transfer authority",

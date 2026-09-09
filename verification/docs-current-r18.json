@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-09T03:44:59.352840Z",
+  "scope": "structural documentation inspection; no runtime or external source validation",
+  "procedure": "PYTHONDONTWRITEBYTECODE=1 python3 -B audit-artifacts/docs-2026-09-08-r5/check_docs.py",
+  "python": "3.12.3",
+  "pyyaml": "6.0.1",
+  "documents": 46,
+  "yaml_blocks": 50,
+  "yaml_errors": [],
+  "local_markdown_links": 480,
+  "local_link_errors": [],
+  "requirements": 80,
+  "missing_traceability_ids": [],
+  "implicit_yaml_booleans": [],
+  "profile_comparison": {
+    "complete_profile_parity": true,
+    "collection_parity": true
+  },
+  "provenance_case": {
+    "attempt_count": 2,
+    "artifact_count": 2,
+    "observation_count": 2,
+    "artifact_attempt_links_resolve": true,
+    "observation_links_and_hashes_match": true,
+    "distinct_output_hashes": 2,
+    "distinct_output_locators": 1
+  },
+  "current_document_hashes": {
+    "docs/comfyui-execution.md": "sha256:5a80bc4e8ee7ee9ee909cf11a847f39697641d8deeefde6216e2460219612512",
+    "docs/contracts.md": "sha256:e3719cdfce715e2e8035f27b7663f4c82bc835dffa43307a6bd386890ad248c1",
+    "docs/triple-aaa-final-report.md": "sha256:489b425217613620bfae8ca8769378b260caa2d6842af75ab0ac6e009f1e3ace",
+    "docs/triple-aaa-scorecard.md": "sha256:ef6df2955f6580e0a070e98323863c9b46bede90b8c0c3d2e77381637be1cdc1"
+  },
+  "status": "PASS",
+  "limitations": [
+    "Structural documentation inspection only; no runtime, semantic media or external source validation."
+  ]
+}

@@ -95,7 +95,7 @@
         "VGE-TRIPLE-AAA-R1"
       ],
       "owner": "Codex",
-      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 137-test software evidence, fail-closed selected-device/free-VRAM guard, bounded LF-001 OOM evidence and rebuilt portable distribution; production remains BLOCKED and R14 is historical after the material runtime correction",
+      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 137-test software evidence, fail-closed selected-device/free-VRAM guard, bounded LF-001 OOM evidence and rebuilt portable distribution; production remains BLOCKED, R14 is historical after the material runtime correction and R15/R16 fresh reviews were operationally incomplete",
       "evidence_refs": [
         "docs/master-prompt-triple-aaa-r2.txt",
         "docs/triple-aaa-quality-bar-r2.json",
@@ -107,10 +107,14 @@
         "verification/lf-semantic-acceptance-boundary-r1.json",
         "verification/docs-current-r14.json",
         "verification/triple-aaa-independent-critic-r14.md",
+        "verification/triple-aaa-independent-critic-r15.md",
+        "verification/triple-aaa-independent-critic-r16.md",
         ".agent/verification.jsonl#VER-20260908-AAA-R2-STATE-RECOVERY-10",
         "verification/docs-current-r15.json",
         "verification/docs-current-r16.json",
         "verification/docs-current-r17.json",
+        "verification/docs-current-r18.json",
+        "verification/docs-current-r19.json",
         "verification/distribution-triple-aaa-r2.json",
         "verification/distribution-triple-aaa-r4.json",
         "verification/comfyui-runtime-resource-boundary-20260909.json",
