@@ -1,6 +1,6 @@
 # Triple-AAA Closure R4 — master prompt production closure
 
-<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:FRESH-CRITIC -->
+<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R4:COMMIT-PUSH -->
 
 ## Purpose
 
@@ -31,17 +31,19 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 
 ## Concrete Steps
 
-1. [VGE-TRIPLE-AAA-R4:FRESH-CRITIC] — obtain a fresh non-inherited read-only review of the post-cross-shot-gate candidate, with reviewer-owned fingerprint and mutation sentinel; preserve the current PARTIAL production boundary. **IN PROGRESS.**
+1. [VGE-TRIPLE-AAA-R4:COMMIT-PUSH] — commit the post-critic closure packet, force-add the final R7 archive, push `origin/main` and verify the remote tip; preserve the `REJECT` production boundary. **IN PROGRESS.**
 
-2. [VGE-TRIPLE-AAA-R4:BASELINE] — freeze the R4 bar, reconcile the stale R3 control-plane pointer, run fresh regression/security/portability checks and capture the current ComfyUI/resource observation before any new POST. **COMPLETE.**
+2. [VGE-TRIPLE-AAA-R4:FRESH-CRITIC] — obtain a fresh non-inherited read-only review of the post-cross-shot-gate candidate, with reviewer-owned fingerprint and mutation sentinel; preserve the current PARTIAL production boundary. **COMPLETE with R5 `REJECT`, matching fingerprint and unchanged sentinel.**
 
-3. Revalidate the local H3 profile, node inventory, model assets, workflow and device/resource context. **COMPLETE for the exact H3 T2V scope.**
+3. [VGE-TRIPLE-AAA-R4:BASELINE] — freeze the R4 bar, reconcile the stale R3 control-plane pointer, run fresh regression/security/portability checks and capture the current ComfyUI/resource observation before any new POST. **COMPLETE.**
 
-4. Attempt bounded real LF-001 shots, collect immutable artifacts and run mechanical, semantic, continuity and transition gates. **COMPLETE with S01/S02 accepted, S03 partial and T02 failed.**
+4. Revalidate the local H3 profile, node inventory, model assets, workflow and device/resource context. **COMPLETE for the exact H3 T2V scope.**
 
-5. Attempt only evidence-authorized repair/re-anchor, FLF and later ladders; preserve every failure and stop on resource/capability blockers. **COMPLETE as a disposition: repair is awaiting authorization; FLF/LF-002/LF-003/second adapter remain NOT_RUN/BLOCKED.**
+5. Attempt bounded real LF-001 shots, collect immutable artifacts and run mechanical, semantic, continuity and transition gates. **COMPLETE with S01/S02 accepted, S03 partial and T02 failed.**
 
-6. Update the R4 matrix, scorecard and final closure report, obtain the fresh critic, freeze distribution, commit and push. **The post-hardening critic and final remote handoff remain open.**
+6. Attempt only evidence-authorized repair/re-anchor, FLF and later ladders; preserve every failure and stop on resource/capability blockers. **COMPLETE as a disposition: repair is awaiting authorization; FLF/LF-002/LF-003/second adapter remain NOT_RUN/BLOCKED.**
+
+7. Update the R4 matrix, scorecard and final closure report, obtain the fresh critic, freeze distribution, commit and push. **R5 critic and post-critic R7 distribution are complete; final remote handoff remains open.**
 
 ## Execution order
 
@@ -52,9 +54,9 @@ Implement and audit the complete user-supplied `MASTER PROMPT — FINAL TRIPLE-A
 - [x] Attempt bounded real LF-001 shots on the currently supported local device; collect, inspect and record semantic/transition status.
 - [x] Attempt only evidence-authorized repair/re-anchor, FLF and later ladders; do not fabricate a failure to demonstrate repair.
 - [x] Update R4 matrix, scorecard and closure report with exact status and unsupported claims.
-- [ ] Run fresh final critic with before/after fingerprint and mutation sentinel.
-- [x] Build final distribution and rerun the release gate.
-- [x] Commit, push and verify the remote tip.
+- [x] Run fresh final critic with before/after fingerprint and mutation sentinel.
+- [x] Build final distribution and rerun the release gate after the critic.
+- [ ] Commit, push and verify the remote tip.
 
 ## Recovery rules
 
@@ -70,7 +72,7 @@ The repository contains the saved prompt, R4 frozen bar, updated Skill/docs/test
 
 ## Final handoff
 
-The R4 closure packet was committed and pushed to the configured `origin/main`. The remote tip was verified against the local tip after the push. A subsequent evidence audit found that transition acceptance lacked an explicit cross-shot comparison gate, so the package was reopened for a bounded contract hardening pass; the previous critic is historical for the pre-hardening candidate.
+The prior R4 closure packet was committed and pushed to the configured `origin/main`. A subsequent evidence audit found that transition acceptance lacked an explicit cross-shot comparison gate, so the package was reopened for a bounded contract hardening pass. R5 now supplies the fresh post-hardening critic (`REJECT`) with a matching fingerprint/sentinel; the final post-critic packet is ready for the next commit/push.
 
 ## Post-critic hardening continuation — 2026-09-09
 
@@ -80,7 +82,7 @@ The R4 closure packet was committed and pushed to the configured `origin/main`. 
 - [x] Re-run focused/full tests, compileall, offline verification and current documentation audit.
 - [x] Rebuild the portable package as R7; obtain a new fresh non-inherited critic before final remote handoff.
 
-Current action: `VGE-TRIPLE-AAA-R4:FRESH-CRITIC`. The audiovisual verdict remains `PARTIAL`; this hardening closes a software acceptance gap but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
+Current action: `VGE-TRIPLE-AAA-R4:COMMIT-PUSH`. The audiovisual verdict remains `PARTIAL`; this hardening closes a software acceptance gap but does not manufacture missing side-by-side media observations or the remaining LF/FLF/adapter evidence.
 
 ## Purpose / Big Picture
 
@@ -89,7 +91,9 @@ Close the supplied R4 master prompt against the brownfield Skill while preservin
 ## Progress
 
 - [x] (2026-09-09T21:50:00Z) Implemented and tested the explicit hash-bound cross-shot comparison gate; R4 T01 is `PARTIAL`, T02 is `FAIL`.
-- [ ] (2026-09-09T22:02:00Z) Complete the fresh non-inherited critic and record its fingerprint/sentinel.
+- [x] (2026-09-09T22:08:30Z) Completed the fresh non-inherited critic: `REJECT`, 403-file fingerprint matched before/after, sentinel unchanged.
+- [x] (2026-09-09T22:08:56Z) Rebuilt the R7 distribution after the critic; archive/manifest/security/CWD smoke remain `PASS`.
+- [ ] (2026-09-09T22:09:00Z) Commit/push the final packet and verify `origin/main`.
 
 ## Surprises & Discoveries
 
@@ -129,11 +133,11 @@ Complete.
 
 ### M3 — Fresh critic and final remote handoff
 
-Pending.
+Fresh critic and post-critic distribution complete; remote handoff pending.
 
 ## Plan of Work
 
-Run the fresh read-only critic against the current candidate, capture its criterion matrix and stable scope fingerprint, then update only reviewer-independent release accounting. If the critic passes software scope but rejects audiovisual production, preserve `READY_WITH_RISKS`/`PARTIAL` and push the honest result.
+Commit and push the post-critic closure packet, then verify that `origin/main` resolves to the same commit. Preserve `READY_WITH_RISKS`/`PARTIAL` and the critic's `REJECT` for audiovisual promotion.
 
 ## Validation and Acceptance
 
@@ -149,4 +153,4 @@ Critic execution is read-only and may be repeated only against a newly fingerpri
 
 ## Artifacts and Evidence
 
-Current evidence: `verification/software-triple-aaa-r33.json`, `verification/docs-current-r28.json`, `verification/distribution-triple-aaa-r7.json`, `verification/long-form/LF-001-T01-r4-transition.json`, `verification/long-form/LF-001-T02-r4-transition.json` and the forthcoming post-hardening critic memo.
+Current evidence: `verification/software-triple-aaa-r33.json`, `verification/docs-current-r28.json`, `verification/distribution-triple-aaa-r7.json`, `verification/candidate-fingerprint-r5-final.json`, `verification/triple-aaa-independent-critic-r5.md`, `verification/long-form/LF-001-T01-r4-transition.json` and `verification/long-form/LF-001-T02-r4-transition.json`.

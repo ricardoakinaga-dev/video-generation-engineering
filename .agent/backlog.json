@@ -209,18 +209,20 @@
         ".agent/plans/triple-aaa-r4-closure.md",
         "docs/capability-matrix-r4.md",
         "docs/triple-aaa-final-production-closure-r4.md",
-    "verification/triple-aaa-independent-critic-r4.md",
+        "verification/triple-aaa-independent-critic-r4.md",
+        "verification/triple-aaa-independent-critic-r5.md",
+        "verification/candidate-fingerprint-r5-final.json",
     "verification/software-triple-aaa-r33.json",
     "verification/docs-current-r28.json",
     "verification/distribution-triple-aaa-r7.json",
     ".agents/skills/video-generation-engineering/scripts/vge_quality.py"
       ],
       "next_action": {
-    "id": "VGE-TRIPLE-AAA-R4:FRESH-CRITIC",
+        "id": "VGE-TRIPLE-AAA-R4:COMMIT-PUSH",
         "kind": "VERIFY",
-    "summary": "Obtain a fresh non-inherited read-only critic for the post-cross-shot-gate candidate",
-    "target": "Current R4 source, transition contract, evidence matrix, software verification and R7 distribution",
-    "completion_signal": "Reviewer returns a criterion-level matrix, reviewer-owned scope fingerprint and mutation sentinel; production claims remain limited to observed evidence"
+        "summary": "Commit and push the post-critic R4 closure packet, then verify origin/main and the clean worktree",
+        "target": "Current R4 source, R5 critic/accounting, final R7 distribution and configured origin main",
+        "completion_signal": "Local final commit exists, origin/main resolves to the same commit, worktree is clean, and R5 REJECT plus production blockers remain explicit"
       }
     }
   ]

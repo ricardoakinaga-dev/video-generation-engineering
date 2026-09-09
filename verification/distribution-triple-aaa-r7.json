@@ -1,9 +1,12 @@
 {
   "schema_version": 1,
   "id": "distribution-triple-aaa-r7",
-  "observed_at": "2026-09-09T21:57:35Z",
+  "observed_at": "2026-09-09T22:08:56Z",
   "status": "PASS",
   "scope": "FRESH_PORTABLE_SKILL_DISTRIBUTION_AFTER_CROSS_SHOT_GATE",
+  "freeze_order": "REBUILT_AFTER_R5_CRITIC",
+  "critic_ref": "verification/triple-aaa-independent-critic-r5.md",
+  "fingerprint_ref": "verification/candidate-fingerprint-r5-final.json",
   "archive": {
     "path": "dist/video-generation-engineering-triple-aaa-r7.zip",
     "sha256": "sha256:38b5b23f8d8cd6a44f8b9b0d52062670bee06f3733818a6cbd7027d82cc097fe",
