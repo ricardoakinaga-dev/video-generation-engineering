@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "audit_revision": "r5-r20",
+  "observed_at": "2026-09-09T04:15:53.781422+00:00",
+  "scope": "Structural documentation inspection; no runtime or external source validation.",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B audit-artifacts/docs-2026-09-08-r5/check_docs.py",
+  "status": "PASS",
+  "documents": 46,
+  "yaml_blocks": 50,
+  "yaml_errors": [],
+  "local_markdown_links": 494,
+  "local_link_errors": [],
+  "requirements": 80,
+  "missing_traceability_ids": [],
+  "implicit_yaml_booleans": [],
+  "complete_profile_parity": true,
+  "collection_parity": true,
+  "current_changes_checked": [
+    "docs/long-form-validation.md",
+    "docs/triple-aaa-final-report.md",
+    "docs/triple-aaa-scorecard.md",
+    "IMPLEMENTATION.md",
+    "verification/long-form/LF-001.json",
+    "verification/long-form/LF-001-evidence-r2.json",
+    "verification/triple-aaa-independent-critic-r17.md"
+  ],
+  "limitations": [
+    "The checker validates structure, links and traceability only; it does not validate semantic media, runtime inference or editorial quality."
+  ]
+}

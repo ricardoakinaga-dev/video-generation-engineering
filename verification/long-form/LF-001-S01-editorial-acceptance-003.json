@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "editorial_lf001_s01_a003",
+  "shot_id": "LF001-S01",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/artifacts/lf001_probe_20260909/attempt-003-output/f2fc193e_000.mp4",
+  "artifact_content_hash": "sha256:5435ee9a4ff850a9cfb5a759d863b1e3ac806dc329f272660503798a18cde549",
+  "observed_at": "2026-09-09T04:02:56.217569846+00:00",
+  "procedure": "Editorial acceptance was deliberately not run. The record is retained to prevent technical media QA from being mistaken for an editorial sign-off.",
+  "checks": [
+    {"id":"pacing","dimension":"pacing","category":"editorial","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Is pacing suitable for the final deliverable?","version":"not-run"},"confidence":"UNKNOWN","reason":"No editorial reviewer was assigned.","evidence":[],"limitations":["Technical QA is not editorial acceptance."]},
+    {"id":"acting","dimension":"acting","category":"editorial","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Is the performance editorially acceptable?","version":"not-run"},"confidence":"UNKNOWN","reason":"No editorial reviewer was assigned.","evidence":[],"limitations":["Sparse samples only."]},
+    {"id":"camera","dimension":"camera","category":"editorial","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Is camera treatment editorially acceptable?","version":"not-run"},"confidence":"UNKNOWN","reason":"No editorial reviewer was assigned.","evidence":[],"limitations":["No final deliverable review."]},
+    {"id":"emotion","dimension":"emotion","category":"editorial","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Is emotional communication editorially acceptable?","version":"not-run"},"confidence":"UNKNOWN","reason":"No dialogue or editorial review exists.","evidence":[],"limitations":["LF-002 remains unexecuted."]},
+    {"id":"framing","dimension":"framing","category":"editorial","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Is framing acceptable for the intended cut?","version":"not-run"},"confidence":"UNKNOWN","reason":"No editorial reviewer was assigned.","evidence":[],"limitations":["This is a bounded probe."]},
+    {"id":"rhythm","dimension":"rhythm","category":"editorial","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Is rhythm acceptable in the assembled sequence?","version":"not-run"},"confidence":"UNKNOWN","reason":"No sequence assembly exists.","evidence":[],"limitations":["No multi-shot edit exists."]}
+  ],
+  "status": "NOT_OBSERVED",
+  "limitations": [
+    "This record is an explicit non-acceptance boundary, not a waiver."
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "id": "attempt_lf001_s01_003",
+  "revision": 1,
+  "execution_plan_ref": "verification/long-form/LF-001-S01-shot.json",
+  "shot_id": "LF001-S01",
+  "shot_contract_hash": "sha256:55494aad8e02775bba9b17ba5e6d026a6dcb49b470c03aadee412458c8be3b77",
+  "attempt_index": 3,
+  "status": "SUCCEEDED",
+  "started_at": "2026-09-09T03:51:47.010176+00:00",
+  "ended_at": "2026-09-09T03:53:31.224090122+00:00",
+  "timestamps_note": "started_at is the pre-submission server/resource observation lower bound; ComfyUI did not expose a job-start timestamp.",
+  "profile": {
+    "id": "comfyui-h3-lf001-t2v-local-v1",
+    "revision": 1,
+    "provider": "local_comfyui",
+    "runtime": "ComfyUI",
+    "runtime_version": "0.34.0",
+    "integration_version": "2026-09-09-a003",
+    "model": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+    "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+    "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+    "workflow_hash": "sha256:8eda3693783964f5c644c080b76e6c32dfa0a746c03a7f0c7ca2a7829c1c7a93",
+    "workflow_fingerprint": "sha256:d5487b10543f5266662fbe78758ed17ff57ec7bb923da53b90acba88afe184fd",
+    "selected_device": "cuda:0",
+    "resource_context_hash": "sha256:15efc95d2277ae4ef493a5dca9cfc7e400a72b1dd3e22158245db79a6da55cb4",
+    "supports": {
+      "modes": ["T2V"],
+      "inputs": ["text"],
+      "outputs": ["video"],
+      "native_audio_stream": "OBSERVED",
+      "reference_conditioning": "NOT_PROVEN",
+      "identity_continuity": "NOT_PROVEN",
+      "physical_contact": "NOT_PROVEN"
+    },
+    "limits": {
+      "width": 384,
+      "height": 224,
+      "frame_count": 124,
+      "fps": 24,
+      "duration_s": 5.166666666666667
+    },
+    "controls": ["seed", "width", "height", "frame_count", "fps"],
+    "scope": "Exact local T2V graph, model, node inventory, selected device and one collected 5.1667s artifact; not production acceptance.",
+    "limitations": [
+      "No reference image input in this graph.",
+      "No full LF-001 chain, transition, re-anchor or editorial acceptance was observed."
+    ],
+    "content_hash": "sha256:7d8e1db81b943eeeaf8968be539ac60402e13e022957f693a04c23962ddc627e"
+  },
+  "model": {
+    "id": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+    "version": "installed-sha256-01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+    "asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec"
+  },
+  "runtime": {
+    "provider": "comfyui",
+    "endpoint": "http://127.0.0.1:8188",
+    "version": "0.34.0",
+    "node_inventory_hash": "sha256:6ef19d283e798646f9b9bdc353194d8ce7c55b6df85400e2acc15fad729b8674",
+    "selected_device": "cuda:0",
+    "resource_context_hash": "sha256:15efc95d2277ae4ef493a5dca9cfc7e400a72b1dd3e22158245db79a6da55cb4",
+    "runtime_context_ref": "verification/comfyui-runtime-resource-context-20260909-a003.json"
+  },
+  "workflow": {
+    "ref": "/home/ricardo/Área de trabalho/video-generation-engineering/artifacts/lf001_probe_20260909/shot_s01_t2v.json",
+    "content_hash": "sha256:8eda3693783964f5c644c080b76e6c32dfa0a746c03a7f0c7ca2a7829c1c7a93",
+    "fingerprint": "sha256:d5487b10543f5266662fbe78758ed17ff57ec7bb923da53b90acba88afe184fd",
+    "prompt_ref": "verification/long-form/LF-001-S01-shot.json",
+    "queue_id": "f2fc193e-9a61-4422-9ec2-9877645f8961"
+  },
+  "nodes": [
+    {"id":"1","type":"ClipProjLoader","version":"0.1.13"},
+    {"id":"2","type":"UNETLoader","version":"0.34.0"},
+    {"id":"34","type":"LoraLoaderModelOnly","version":"0.34.0"},
+    {"id":"3","type":"MiniMaxH3SigmaShift","version":"0.34.0"},
+    {"id":"4","type":"VAELoader","version":"0.34.0"},
+    {"id":"5","type":"VAELoader","version":"0.34.0"},
+    {"id":"6","type":"MiniMaxH3ImageToVideo","version":"0.34.0"},
+    {"id":"7","type":"BasicGuider","version":"0.34.0"},
+    {"id":"8","type":"KSamplerSelect","version":"0.34.0"},
+    {"id":"9","type":"BasicScheduler","version":"0.34.0"},
+    {"id":"10","type":"RandomNoise","version":"0.34.0"},
+    {"id":"11","type":"SamplerCustomAdvanced","version":"0.34.0"},
+    {"id":"12","type":"VAEDecode","version":"0.34.0"},
+    {"id":"13","type":"VAEDecodeAudio","version":"0.34.0"},
+    {"id":"14","type":"CreateVideo","version":"0.34.0"},
+    {"id":"15","type":"SaveVideo","version":"0.34.0"}
+  ],
+  "parameters": {
+    "width": 384,
+    "height": 224,
+    "frame_count": 124,
+    "fps": 24,
+    "steps": 4,
+    "seed": 2026090901,
+    "resource_requirements": {
+      "device_id": "cuda:0",
+      "min_free_vram_bytes": 2500000000,
+      "safety_margin": 1.2
+    }
+  },
+  "inputs": [],
+  "progress_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/long-form/LF-001-S01-events-003.jsonl",
+  "error_ref": null,
+  "unknown_fields": [],
+  "purpose": "GENERATION"
+}

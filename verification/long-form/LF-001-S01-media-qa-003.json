@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "media-qa-lf001-s01-a003",
+  "observed_at": "2026-09-09T04:02:56.217569846Z",
+  "procedure": "vge_media.media_qa with ffprobe/decode checks, SHA-256 binding and a 12-frame contact sheet; no semantic model oracle and no audio listening acceptance.",
+  "artifact_ref": "artifacts/lf001_probe_20260909/attempt-003-output/f2fc193e_000.mp4",
+  "artifact_content_hash": "sha256:5435ee9a4ff850a9cfb5a759d863b1e3ac806dc329f272660503798a18cde549",
+  "status": "PASS",
+  "accepted": true,
+  "media": {
+    "container": "mp4",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "width": 384,
+    "height": 224,
+    "frames": 124,
+    "fps": 24,
+    "duration_s": 5.166667,
+    "audio_channels": 2,
+    "audio_sample_rate": 32000
+  },
+  "checks": [
+    {"id":"artifact_hash","status":"PASS"},
+    {"id":"file_readable","status":"PASS"},
+    {"id":"metadata_integrity","status":"PASS"},
+    {"id":"duration","status":"PASS"},
+    {"id":"fps","status":"PASS"},
+    {"id":"resolution","status":"PASS"},
+    {"id":"frame_count","status":"PASS"},
+    {"id":"codec","status":"PASS"},
+    {"id":"container","status":"PASS"},
+    {"id":"audio_stream","status":"PASS"},
+    {"id":"audio_duration","status":"PASS"},
+    {"id":"audio_video_alignment","status":"PASS"},
+    {"id":"av_duration_mismatch","status":"PASS"},
+    {"id":"decode_integrity","status":"PASS"},
+    {"id":"black_content","status":"PASS"},
+    {"id":"black_frames","status":"PASS"},
+    {"id":"frozen_content","status":"PASS"},
+    {"id":"freeze_frames","status":"PASS"}
+  ],
+  "contact_sheet": {
+    "ref": "artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg",
+    "content_hash": "sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649",
+    "requested_frames": 12
+  },
+  "limitations": [
+    "Mechanical media integrity passed; this does not establish contact, articulation, entry, identity continuity or editorial acceptance.",
+    "Sparse visual samples show approach/pre-contact but do not prove every-frame physics or exact hand-handle contact.",
+    "The AAC stream was present and aligned, but no listening or lip-sync review was performed."
+  ]
+}

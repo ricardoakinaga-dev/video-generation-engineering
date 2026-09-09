@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-runtime-resource-context-20260909-a003",
+  "observed_at": "2026-09-09T03:51:47.010176+00:00",
+  "scope": "PRE_SUBMISSION_RESOURCE_GATE_FOR_LF001_S01_A003",
+  "runtime": {
+    "provider": "comfyui",
+    "endpoint": "http://127.0.0.1:8188",
+    "version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "pid": 1147514,
+    "gpu": "NVIDIA GeForce RTX 3060"
+  },
+  "selected_device": "cuda:0",
+  "resource_inventory": [
+    {
+      "device_id": "cuda:0",
+      "vram_total_bytes": 12482576384,
+      "vram_free_bytes": 11847636572,
+      "observed": true
+    },
+    {
+      "device_id": "cuda:1",
+      "vram_total_bytes": 12490440704,
+      "vram_free_bytes": 12355895296,
+      "observed": true
+    }
+  ],
+  "ram_free_bytes": 38535774208,
+  "queue_observation": {
+    "live_http_endpoint": "http://127.0.0.1:8188/queue",
+    "live_pending": 0,
+    "live_running": 0,
+    "mcp_known_job_count": 10,
+    "mcp_known_job_scope": "historical_or_stale_view; not cancelled or superseded",
+    "ownership_decision": "No foreign job was cancelled or superseded"
+  },
+  "resource_requirements": {
+    "device_id": "cuda:0",
+    "min_free_vram_bytes": 2500000000,
+    "safety_margin": 1.2,
+    "effective_required_free_vram_bytes": 3000000000
+  },
+  "decision": {
+    "status": "ALLOW_FOR_SUBMISSION",
+    "reason": "The selected device had 11847636572 free bytes before submission, above the guarded 3000000000-byte threshold.",
+    "guard_scope": "Scheduling boundary only; this does not prove inference fit or semantic quality."
+  },
+  "post_run_recheck": {
+    "observed_at": "2026-09-09T04:00:16.343658+00:00",
+    "selected_device": "cuda:0",
+    "cuda:0_vram_free_bytes": 1222023360,
+    "cuda:1_vram_free_bytes": 12320243712,
+    "decision_for_next_run": "BLOCKED",
+    "reason": "The selected device is below the same guarded threshold after the successful probe; no blind follow-up generation is authorized by this evidence."
+  },
+  "source_calls": [
+    "mcp__comfyui__server_info",
+    "mcp__comfyui__system_stats",
+    "GET http://127.0.0.1:8188/queue"
+  ],
+  "limitations": [
+    "The MCP known-job view reported ten stale or historical jobs while the live HTTP queue was empty; neither view authorizes cancelling another project's jobs.",
+    "Free VRAM is an observation at the gate, not a guarantee of successful inference.",
+    "This record is bound to the A003 pre-submission window and must not be reused for later runs."
+  ]
+}

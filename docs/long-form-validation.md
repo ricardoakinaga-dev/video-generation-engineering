@@ -21,6 +21,10 @@ Every referenced file must exist at validation time and its declared hash must m
 
 The machine-readable fixtures are [`LF-001.json`](../verification/long-form/LF-001.json), [`LF-002.json`](../verification/long-form/LF-002.json), [`LF-003.json`](../verification/long-form/LF-003.json) and [`LF-004.json`](../verification/long-form/LF-004.json). They deliberately retain `fixture_status: STRUCTURAL_ONLY` and `production_evidence_complete: false` until real evidence is collected.
 
+### Latest LF-001 runtime observation
+
+The controlled local A003 run produced a real 5.1667-second S01 MP4 at 384×224, 124 frames and 24 FPS. Its immutable attempt/artifact chain, mechanical media QA, 12-dimension semantic observation, 14-dimension continuity scorecard and explicit non-run editorial boundary are [`LF-001-S01-attempt-003.json`](../verification/long-form/LF-001-S01-attempt-003.json), [`LF-001-S01-artifact-003.json`](../verification/long-form/LF-001-S01-artifact-003.json), [`LF-001-S01-media-qa-003.json`](../verification/long-form/LF-001-S01-media-qa-003.json), [`LF-001-S01-semantic-observation-003.json`](../verification/long-form/LF-001-S01-semantic-observation-003.json), [`LF-001-S01-continuity-scorecard-003.json`](../verification/long-form/LF-001-S01-continuity-scorecard-003.json) and [`LF-001-S01-editorial-acceptance-003.json`](../verification/long-form/LF-001-S01-editorial-acceptance-003.json). Media integrity is `PASS`; semantic and continuity status are `PARTIAL`; editorial acceptance is `NOT_OBSERVED`. Only `APPROACH` and `PRE_CONTACT` were observed. This advances evidence for S01 only and does not satisfy LF-001 production acceptance.
+
 ## Acceptance rule
 
 `validate_long_form_case()` accepts `PASS` only when:
@@ -49,4 +53,4 @@ The multi-shot case requires a Scene Bible with identity anchors, wardrobe, rela
 
 ## Current boundary
 
-The local H3 runtime has a confirmed short T2V/native-audio envelope and a `PARTIAL` R2V probe. It does not provide accepted LF-001, dialogue/lip-sync, FLF or LF-003 production evidence. The correct status is therefore `BLOCKED`, not a synthetic PASS. See the [capability matrix](capability-matrix-r1.md) and [Triple-AAA closure report](triple-aaa-final-report.md).
+The local H3 runtime now has one additional observed short T2V/native-audio S01 segment, alongside the earlier exact-scope T2V and `PARTIAL` R2V records. It still does not provide accepted LF-001: S02/S03, all seven contact phases, transitions, repair/re-anchor and a 10–15-second accepted chain are missing. Dialogue/lip-sync, FLF and LF-003 production evidence also remain unavailable. The correct status is therefore `BLOCKED`, not a synthetic PASS. See the [LF-001 evidence r2](../verification/long-form/LF-001-evidence-r2.json), [capability matrix](capability-matrix-r1.md) and [Triple-AAA closure report](triple-aaa-final-report.md).

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "obs_lf001_s01_a003_canonical",
+  "shot_id": "LF001-S01",
+  "generation_artifact_ref": "art_lf001_s01_a003",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/artifacts/lf001_probe_20260909/attempt-003-output/f2fc193e_000.mp4",
+  "observed_content_hash": "sha256:5435ee9a4ff850a9cfb5a759d863b1e3ac806dc329f272660503798a18cde549",
+  "observed_at": "2026-09-09T04:02:56.217569846+00:00",
+  "procedure": "Validated the immutable attempt/artifact chain, ran media QA, and inspected the exact 12-frame contact sheet. This record intentionally does not promote sparse visual evidence to production acceptance.",
+  "repair_route": "shot_decomposition",
+  "limitations": [
+    "Only the approach/pre-contact segment was generated; contact, articulation, transfer, release and result were not observed.",
+    "No cross-shot transition or re-anchor was executed.",
+    "No editorial sign-off, audio listening review or lip-sync review was performed."
+  ],
+  "checks": [
+    {
+      "id": "QG-01",
+      "required": true,
+      "result": "PARTIAL",
+      "evidence": [
+        {
+          "type": "MEDIA_QA",
+          "ref": "verification/long-form/LF-001-S01-media-qa-003.json",
+          "content_hash": "sha256:849b7baaa7a78817a278cfc023fa4f7824d256822fbc0fadedb82465639e6c1a"
+        }
+      ],
+      "reason": "Runtime and media provenance are complete, but the declared multi-phase LF-001 acceptance is incomplete."
+    }
+  ],
+  "status": "PARTIAL"
+}

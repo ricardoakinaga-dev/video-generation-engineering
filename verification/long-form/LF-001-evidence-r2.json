@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "id": "LF-001-evidence-r2",
+  "case_id": "LF-001",
+  "status": "BLOCKED",
+  "production_evidence_complete": false,
+  "execution_summary": {
+    "attempt_id": "attempt_lf001_s01_003",
+    "attempt_status": "SUCCEEDED",
+    "shot_id": "LF001-S01",
+    "artifact_id": "art_lf001_s01_a003",
+    "artifact_ref": "artifacts/lf001_probe_20260909/attempt-003-output/f2fc193e_000.mp4",
+    "artifact_content_hash": "sha256:5435ee9a4ff850a9cfb5a759d863b1e3ac806dc329f272660503798a18cde549",
+    "duration_s": 5.166667,
+    "media_qa_status": "PASS",
+    "semantic_observation_status": "PARTIAL",
+    "continuity_scorecard_status": "PARTIAL",
+    "editorial_acceptance_status": "NOT_OBSERVED"
+  },
+  "available_records": [
+    {"kind":"resource_context","ref":"verification/comfyui-runtime-resource-context-20260909-a003.json","content_hash":"sha256:4246fc859886e1e6cd3d49b095595fa266ddc229702ef763eb94e60c3396dacf"},
+    {"kind":"shot_contract","ref":"verification/long-form/LF-001-S01-shot.json","content_hash":"sha256:9cbb2bb9364f80fb29017c2f9050c339f699919339d72d846e47dff31924fe43"},
+    {"kind":"attempt","ref":"verification/long-form/LF-001-S01-attempt-003.json","content_hash":"sha256:d4a0dd1d93138de5ff7cce753b851dbde0b517915c264debf571f897a50a2156"},
+    {"kind":"artifact_record","ref":"verification/long-form/LF-001-S01-artifact-003.json","content_hash":"sha256:669f3e6f0d3a725d459bd20f4ab4d1980795de0cccab0faab4463fad828af57b"},
+    {"kind":"canonical_observation","ref":"verification/long-form/LF-001-S01-observation-003.json","content_hash":"sha256:2db414455ececcc488ffba213bdd2de82e2ddb8813283b44dcca430d804907fb"},
+    {"kind":"media_qa","ref":"verification/long-form/LF-001-S01-media-qa-003.json","content_hash":"sha256:849b7baaa7a78817a278cfc023fa4f7824d256822fbc0fadedb82465639e6c1a"},
+    {"kind":"semantic_observation","ref":"verification/long-form/LF-001-S01-semantic-observation-003.json","content_hash":"sha256:a02a7c55c7b94256f4cba42d773872835e909427cf5c34b0b405cd55d408b88c"},
+    {"kind":"continuity_scorecard","ref":"verification/long-form/LF-001-S01-continuity-scorecard-003.json","content_hash":"sha256:82b71ea7418e69c199d59ae44f0e755c62d5a1741c1e5e6932dc93f6fe12fd40"},
+    {"kind":"editorial_boundary","ref":"verification/long-form/LF-001-S01-editorial-acceptance-003.json","content_hash":"sha256:3961a2fd9aaa49a1285df91cf6d2098091cb1b274a9f7d91e6e25e5c64a74d1a"},
+    {"kind":"event_log","ref":"verification/long-form/LF-001-S01-events-003.jsonl","content_hash":"sha256:5138c3ee7bb1de03fb81268321a43a35228fb33d735322f44af6eebffc4f3b00"}
+  ],
+  "required_records": [
+    "plan",
+    "scene_bible",
+    "shot_graph",
+    "continuity",
+    "contact_phases",
+    "boundary_frames",
+    "artifact",
+    "observation",
+    "transition",
+    "repair",
+    "reanchor"
+  ],
+  "observed_contact_phases": ["APPROACH", "PRE_CONTACT"],
+  "unobserved_contact_phases": ["CONTACT", "FORCE_OR_ARTICULATION", "TRANSFER_OR_MOTION", "RELEASE", "RESULT"],
+  "blockers": [
+    "No accepted 10-15 second production chain exists; only the 5.1667s S01 segment has a real local artifact.",
+    "No transition, cross-shot continuity, physical door/seat interaction or re-anchor evidence exists.",
+    "No editorial acceptance, audio listening acceptance or LF-002 dialogue/lip-sync evidence exists.",
+    "Post-run resource observation is below the guarded selected-device floor, so additional generation is currently blocked."
+  ],
+  "next_action": "Run S02 and S03 in a fresh guarded local resource window, preserve exact start/end states, inspect all seven contact phases and transitions, then record repair/re-anchor decisions; keep LF-001 BLOCKED until all required evidence passes.",
+  "limitations": [
+    "Mechanical media integrity is not semantic or editorial acceptance.",
+    "The generated S01 is a T2V segment without reference-image conditioning.",
+    "No paid provider, upload, private data or publication action was used."
+  ]
+}

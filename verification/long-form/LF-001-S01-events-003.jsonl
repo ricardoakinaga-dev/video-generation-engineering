@@ -1,0 +1,6 @@
+{"event":"RESOURCE_GATE","at":"2026-09-09T03:51:47.010176+00:00","selected_device":"cuda:0","min_free_vram_bytes":2500000000,"effective_required_free_vram_bytes":3000000000,"observed_free_vram_bytes":11847636572,"decision":"ALLOW_FOR_SUBMISSION"}
+{"event":"WORKFLOW_VALIDATED","at":"2026-09-09T03:52:00Z","workflow_ref":"artifacts/lf001_probe_20260909/shot_s01_t2v.json","status":"PASS","errors":0,"warnings":0}
+{"event":"SUBMITTED","at":"2026-09-09T03:52:00Z","queue_id":"f2fc193e-9a61-4422-9ec2-9877645f8961","provider":"comfyui","authorization":"local_only_no_paid_action"}
+{"event":"COMPLETED","at":"2026-09-09T03:53:31.224090122Z","queue_id":"f2fc193e-9a61-4422-9ec2-9877645f8961","status":"SUCCEEDED"}
+{"event":"COLLECTED","at":"2026-09-09T03:54:03.545280005Z","artifact_ref":"artifacts/lf001_probe_20260909/attempt-003-output/f2fc193e_000.mp4","artifact_hash":"sha256:5435ee9a4ff850a9cfb5a759d863b1e3ac806dc329f272660503798a18cde549"}
+{"event":"MEDIA_QA","at":"2026-09-09T04:02:56.217569846Z","status":"PASS","semantic_status":"PARTIAL","contact_sheet_ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg"}

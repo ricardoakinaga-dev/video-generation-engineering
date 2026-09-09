@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "art_lf001_s01_a003",
+  "shot_id": "LF001-S01",
+  "execution_attempt_ref": "attempt_lf001_s01_003",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/artifacts/lf001_probe_20260909/attempt-003-output/f2fc193e_000.mp4",
+  "content_hash": "sha256:5435ee9a4ff850a9cfb5a759d863b1e3ac806dc329f272660503798a18cde549",
+  "collected_at": "2026-09-09T03:54:03.545280005+00:00",
+  "generation_status": "GENERATED",
+  "shot_contract_hash": "sha256:55494aad8e02775bba9b17ba5e6d026a6dcb49b470c03aadee412458c8be3b77",
+  "profile_id": "comfyui-h3-lf001-t2v-local-v1",
+  "profile_revision": 1,
+  "profile_content_hash": "sha256:7d8e1db81b943eeeaf8968be539ac60402e13e022957f693a04c23962ddc627e",
+  "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+  "input_hashes": [],
+  "media": {
+    "kind": "video",
+    "runtime_output_kind": "mp4"
+  },
+  "runtime": {
+    "provider": "comfyui",
+    "endpoint": "http://127.0.0.1:8188",
+    "workflow_hash": "sha256:8eda3693783964f5c644c080b76e6c32dfa0a746c03a7f0c7ca2a7829c1c7a93",
+    "workflow_fingerprint": "sha256:d5487b10543f5266662fbe78758ed17ff57ec7bb923da53b90acba88afe184fd",
+    "shot_contract_hash": "sha256:55494aad8e02775bba9b17ba5e6d026a6dcb49b470c03aadee412458c8be3b77",
+    "profile_id": "comfyui-h3-lf001-t2v-local-v1",
+    "profile_revision": 1,
+    "profile_content_hash": "sha256:7d8e1db81b943eeeaf8968be539ac60402e13e022957f693a04c23962ddc627e",
+    "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
+    "input_hashes": [],
+    "selected_device": "cuda:0",
+    "resource_context_hash": "sha256:15efc95d2277ae4ef493a5dca9cfc7e400a72b1dd3e22158245db79a6da55cb4",
+    "runtime_context_ref": "verification/comfyui-runtime-resource-context-20260909-a003.json"
+  },
+  "quality_review": {
+    "lifecycle": "REVIEW",
+    "observation_ref": "verification/long-form/LF-001-S01-observation-003.json"
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "id": "semantic_obs_lf001_s01_a003",
+  "shot_id": "LF001-S01",
+  "artifact_id": "art_lf001_s01_a003",
+  "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/artifacts/lf001_probe_20260909/attempt-003-output/f2fc193e_000.mp4",
+  "observed_content_hash": "sha256:5435ee9a4ff850a9cfb5a759d863b1e3ac806dc329f272660503798a18cde549",
+  "observed_at": "2026-09-09T04:02:56.217569846+00:00",
+  "procedure": "Human inspection of the exact 12-frame contact sheet, cross-checked with the mechanical media QA record; no full-frame review, audio listening, lip-sync measurement or editorial sign-off was performed.",
+  "checks": [
+    {
+      "id": "identity",
+      "semantic_dimension": "identity",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does one consistent adult subject remain identifiable throughout the shot?","version":"contact-sheet-review-003"},
+      "confidence": "MEDIUM",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["Sparse samples do not establish all-frame identity stability."]
+    },
+    {
+      "id": "wardrobe",
+      "semantic_dimension": "wardrobe",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does the declared dark charcoal shirt remain visually consistent?","version":"contact-sheet-review-003"},
+      "confidence": "MEDIUM",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["Only sampled frames were inspected."]
+    },
+    {
+      "id": "object_retention",
+      "semantic_dimension": "object_retention",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does one matte graphite compact hatchback remain the same vehicle in the sampled frames?","version":"contact-sheet-review-003"},
+      "confidence": "MEDIUM",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["The sparse sheet cannot prove four-wheel grounding or all-frame geometry."]
+    },
+    {
+      "id": "environment",
+      "semantic_dimension": "environment",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does the wet residential curb environment remain coherent?","version":"contact-sheet-review-003"},
+      "confidence": "MEDIUM",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["No dense temporal or depth review was performed."]
+    },
+    {
+      "id": "lighting",
+      "semantic_dimension": "lighting",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does the overcast cool light remain stable in the sampled frames?","version":"contact-sheet-review-003"},
+      "confidence": "MEDIUM",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["Exposure and light direction were not measured frame by frame."]
+    },
+    {
+      "id": "physics",
+      "semantic_dimension": "physics",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does the approach avoid obvious teleportation, duplication or gross body/vehicle intersection in sampled frames?","version":"contact-sheet-review-003"},
+      "confidence": "LOW",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["This is not a dense physics or contact review; the contact event was not generated."]
+    },
+    {
+      "id": "interaction",
+      "semantic_dimension": "interaction",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does the subject approach the intended driver-side interaction point?","version":"contact-sheet-review-003"},
+      "confidence": "MEDIUM",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["Exact hand-handle contact and force/articulation were not observed."]
+    },
+    {
+      "id": "camera",
+      "semantic_dimension": "camera",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does the fixed camera preserve the declared screen geography and readable approach?","version":"contact-sheet-review-003"},
+      "confidence": "MEDIUM",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["No adjacent-shot geography exists yet."]
+    },
+    {
+      "id": "performance",
+      "semantic_dimension": "performance",
+      "category": "visual",
+      "result": "PARTIAL",
+      "oracle": {"kind":"HUMAN","question":"Does the subject perform the declared calm purposeful approach?","version":"contact-sheet-review-003"},
+      "confidence": "LOW",
+      "evidence": [{"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}],
+      "limitations": ["Sparse frames are insufficient for acting-quality acceptance."]
+    },
+    {
+      "id": "dialogue",
+      "semantic_dimension": "dialogue",
+      "category": "audio",
+      "result": "NOT_OBSERVED",
+      "oracle": {"kind":"AUDIO","question":"Is intelligible dialogue present, correctly timed and causally owned?","version":"not-run"},
+      "confidence": "UNKNOWN",
+      "reason": "The shot declares no dialogue and no listening or waveform-event review was run.",
+      "limitations": ["Audio stream presence is not dialogue acceptance."]
+    },
+    {
+      "id": "lip_sync",
+      "semantic_dimension": "lip_sync",
+      "category": "audio",
+      "result": "NOT_OBSERVED",
+      "oracle": {"kind":"AUDIO","question":"Is visible speech synchronized to the recorded dialogue?","version":"not-run"},
+      "confidence": "UNKNOWN",
+      "reason": "No dialogue performance was declared or reviewed in this segment.",
+      "limitations": ["LF-002 remains unexecuted."]
+    },
+    {
+      "id": "temporal_continuity",
+      "semantic_dimension": "temporal_continuity",
+      "category": "temporal",
+      "result": "PARTIAL",
+      "oracle": {"kind":"SEQUENCE","question":"Does the artifact remain decodable and show bounded approach motion without a detected freeze?","version":"media-qa-plus-contact-sheet-003"},
+      "confidence": "MEDIUM",
+      "evidence": [
+        {"type":"MEDIA_QA","ref":"verification/long-form/LF-001-S01-media-qa-003.json","content_hash":"sha256:849b7baaa7a78817a278cfc023fa4f7824d256822fbc0fadedb82465639e6c1a"},
+        {"type":"CONTACT_SHEET","ref":"artifacts/lf001_probe_20260909/attempt-003-contact-sheet.jpg","content_hash":"sha256:8fdf04e5af6144918ca9bf766999886f58c55df8efcf6ae8a8d255371efbb649"}
+      ],
+      "limitations": ["No dense frame-by-frame semantic review was performed."]
+    }
+  ],
+  "status": "PARTIAL",
+  "limitations": [
+    "This record is an executed partial observation of S01 only, not LF-001 production acceptance.",
+    "The generated clip ends at pre-contact; the remaining five contact phases are unobserved."
+  ]
+}

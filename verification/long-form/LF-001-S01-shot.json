@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "id": "LF001-S01",
+  "revision": 2,
+  "acceptance_ids": ["QG-01"],
+  "duration_s": 5.166666666666667,
+  "generation_mode": "T2V",
+  "parameters": {
+    "width": 384,
+    "height": 224,
+    "frame_count": 124,
+    "fps": 24,
+    "seed": 2026090901
+  },
+  "dependency_ids": [],
+  "references": [],
+  "capability_requirements": ["text_to_video", "native_audio_generation"],
+  "degradable_capability_requirements": ["semantic_identity", "physical_contact"],
+  "shot_id": "LF001-S01",
+  "purpose": "Approach and establish vehicle geography; end in an explicit pre-contact pose.",
+  "state_start": "subject_outside_screen_left; door_closed; vehicle_stationary",
+  "state_end_declared": "subject_at_driver_handle; door_closed; vehicle_stationary",
+  "contact_phases_target": [
+    "APPROACH",
+    "PRE_CONTACT",
+    "CONTACT",
+    "FORCE_OR_ARTICULATION",
+    "TRANSFER_OR_MOTION",
+    "RELEASE",
+    "RESULT"
+  ],
+  "contact_phases_observed": ["APPROACH", "PRE_CONTACT"],
+  "semantic_acceptance_dimensions": [
+    "identity",
+    "wardrobe",
+    "object_retention",
+    "environment",
+    "lighting",
+    "physics",
+    "interaction",
+    "camera",
+    "performance",
+    "dialogue",
+    "lip_sync",
+    "temporal_continuity"
+  ],
+  "limitations": [
+    "This is one five-second segment, not the complete LF-001 10-15 second chain.",
+    "The T2V workflow has no reference image input; cross-shot identity continuity is therefore unproven."
+  ]
+}
