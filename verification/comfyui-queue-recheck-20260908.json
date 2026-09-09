@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "id": "COMFYUI-QUEUE-RECHECK-20260908-223843",
+  "observed_at": "2026-09-08T22:38:43-03:00",
+  "endpoint": "http://127.0.0.1:8188",
+  "scope": "LOCAL_COMFYUI_RUNTIME_RESOURCE_RECHECK",
+  "server": {
+    "running": true,
+    "version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "pid": 1147514,
+    "workspace": "/home/ricardo/ComfyUI"
+  },
+  "hardware": {
+    "ram_total_bytes": 67203821568,
+    "ram_free_bytes": 30070562816,
+    "gpu_model": "NVIDIA GeForce RTX 3060",
+    "reported_vram_bytes": 12884901888,
+    "devices": [
+      {
+        "device_id": "cuda:0",
+        "vram_total_bytes": 12482576384,
+        "vram_free_bytes": 1225326592
+      },
+      {
+        "device_id": "cuda:1",
+        "vram_total_bytes": 12490440704,
+        "vram_free_bytes": 1252392960
+      }
+    ]
+  },
+  "queue": {
+    "count": 10,
+    "queued": 7,
+    "cancelled": 3,
+    "repository_queued_jobs": 3,
+    "other_or_external_queued_jobs": 4,
+    "repository_prompt_ids": [
+      "7c9b7d4c-3d89-47a8-ad86-eb33f20b3034",
+      "71597f5d-fecb-4f1f-8cf0-fb29f3f421b3",
+      "a960f77d-f0cc-4721-8657-3d7c32d19cb0"
+    ]
+  },
+  "submission": {
+    "status": "NOT_RUN",
+    "decision": "BLOCKED",
+    "reason": "The local queue contains long-lived jobs from multiple projects and each observed device has approximately 1.2 GB free VRAM; no new long-form generation was submitted and no queued job was cancelled.",
+    "next_action": "Reconcile or cancel only with explicit ownership authorization, then re-run server_info, queue and system_stats before any bounded workflow submission."
+  },
+  "limitations": [
+    "A resource snapshot does not predict execution success or semantic media quality.",
+    "This recheck does not prove LF-001, LF-002, LF-003, FLF, lip-sync or second-adapter capability."
+  ]
+}

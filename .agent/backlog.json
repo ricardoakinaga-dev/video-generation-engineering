@@ -104,6 +104,8 @@
         "verification/software-triple-aaa-r20.json",
         "verification/distribution-triple-aaa-r2.json",
         "verification/comfyui-preflight-r2.json",
+        "verification/comfyui-queue-recheck-20260908.json",
+        "verification/comfyui-runtime-recheck-20260908.json",
         "verification/comfyui-profile-revalidation-r2.json",
         "verification/triple-aaa-independent-critic-r6.md",
         "verification/triple-aaa-independent-critic-r7.md",

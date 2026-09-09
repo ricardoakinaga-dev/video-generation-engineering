@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "id": "COMFYUI-RUNTIME-RECHECK-20260908-224211",
+  "observed_at": "2026-09-08T22:42:11-03:00",
+  "scope": "LOCAL_COMFYUI_WORKFLOW_COMPATIBILITY_AND_RESOURCE_RECHECK",
+  "server": {
+    "endpoint": "http://127.0.0.1:8188",
+    "running": true,
+    "version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "pid": 1147514
+  },
+  "memory_cleanup": {
+    "requested": true,
+    "result": "NO_MATERIAL_MARGIN_RECOVERED",
+    "note": "ComfyUI reports cleanup applies at the next queue-worker iteration and does not interrupt running jobs."
+  },
+  "workflow_validation": [
+    {
+      "workflow": ".agents/skills/video-generation-engineering/assets/workflows/h3-smoke-api.json",
+      "valid": true,
+      "error_count": 0,
+      "warning_count": 0,
+      "partner_nodes": [],
+      "spends_credits": false
+    },
+    {
+      "workflow": ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json",
+      "valid": true,
+      "error_count": 0,
+      "warning_count": 0,
+      "partner_nodes": [],
+      "spends_credits": false
+    }
+  ],
+  "queue": {
+    "count": 10,
+    "queued": 7,
+    "cancelled": 3,
+    "repository_queued_jobs": 3,
+    "other_or_external_queued_jobs": 4
+  },
+  "resources": {
+    "ram_total_bytes": 67203821568,
+    "ram_free_bytes": 29658513408,
+    "devices": [
+      {
+        "device_id": "cuda:0",
+        "vram_total_bytes": 12482576384,
+        "vram_free_bytes": 1154220032
+      },
+      {
+        "device_id": "cuda:1",
+        "vram_total_bytes": 12490440704,
+        "vram_free_bytes": 1252392960
+      }
+    ]
+  },
+  "decision": {
+    "compatibility": "PASS",
+    "new_long_form_submission": "NOT_RUN",
+    "production_execution": "BLOCKED",
+    "reason": "Both bundled local H3 workflows are schema-compatible and free, but the multi-project queue persists and observed free VRAM remains approximately 1.15–1.25 GB per device.",
+    "next_action": "Reconcile queue ownership or obtain resource availability, then repeat server_info, queue, system_stats and workflow validation before a bounded probe."
+  },
+  "limitations": [
+    "Workflow validation does not prove model inference, artifact semantics, identity, physics, continuity or editorial quality.",
+    "The resource snapshot does not predict whether a queued graph will fit."
+  ]
+}

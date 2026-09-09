@@ -26,6 +26,9 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [x] (2026-09-08T22:18:39-03:00) Recovery reconciled the current project profile from stale `GREENFIELD` to `BROWNFIELD`; the prompt and repository are an existing mature project, while the original Phase 0 classification remains historical.
 - [ ] (2026-09-08T22:29:33-03:00) R12 blocked operationally: `Turing` returned no criterion-level matrix or verdict after a 60-second bounded wait, an interrupt requesting a concise conclusion and a further 30-second wait; the product sentinel remained unchanged, but the fresh-critic gate remains open.
 - [x] (2026-09-08T22:35:23-03:00) Post-R12 documentation recheck passed: 46 documents, 50 YAML blocks, 466 local links, 80 requirements, no link/YAML/traceability errors; the R12 review blocker and audiovisual-production blockers remain unchanged.
+- [x] (2026-09-08T22:38:43-03:00) Current ComfyUI recheck confirmed the local server is live but 10 queue records remain (7 queued, 3 repository jobs) with approximately 1.2 GB free VRAM per RTX 3060; no new long-form submission or cancellation was performed, and the runtime boundary remains `NOT_RUN`/`BLOCKED`.
+- [x] (2026-09-08T22:40:46-03:00) Post-runtime-recheck documentation audit passed: 46 documents, 50 YAML blocks, 467 local links, 80 requirements, no link/YAML/traceability errors.
+- [x] (2026-09-08T22:43:50-03:00) Post-runtime-compatibility documentation audit passed: 46 documents, 50 YAML blocks, 468 local links, 80 requirements, no link/YAML/traceability errors.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -113,7 +116,7 @@ The canonical flow is intent → Scene Bible/scene plan → shot graph and state
 
 ### Milestone 4 — Reverify, critic, distribution
 
-- Outcome: fresh integrated verification, final documentation audit and rebuilt portable package pass; R7 was mutation-clean but operationally incomplete, so the fresh critic requirement remains open for a new bounded reviewer attempt.
+- Outcome: fresh integrated verification, final documentation audit and rebuilt portable package pass; the latest R12 attempt was mutation-clean on the Lead-owned scope but operationally incomplete, so the fresh critic requirement remains open for a completed bounded reviewer attempt.
 - Scope/dependencies: all previous milestones; no material changes after critic without re-review.
 - Demonstration: exact commands, fingerprints, ZIP/manifest/CWD checks.
 - Acceptance/evidence: R2-17, R2-22, R2-23, R2-25, R2-26.
@@ -141,7 +144,7 @@ From /home/ricardo/Área de trabalho/video-generation-engineering:
 | R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r20.json |
 | R2-17/R2-23 | YES | current local runtime where safe, docs/package/CWD checks | actual scope is recorded; portable ZIP is fresh and clean | verification/, dist/ |
 | R2-19/R2-20/R2-25 | YES | docs/link audit, report/matrix inspection | required sections, scores, statuses and non-claims are present | docs/triple-aaa-final-report.md, docs/capability-matrix-r1.md |
-| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r10.md |
+| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r12.md |
 
 ## Risks and Human Decisions
 
@@ -164,6 +167,8 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - docs/triple-aaa-final-report.md: canonical final accounting and claims boundary.
 - verification/software-triple-aaa-r20.json: current offline software evidence after the routing, metamorphic and repair-gate corrections.
 - verification/comfyui-preflight-r2.json: current local live graph/schema preflight without generation.
+- verification/comfyui-queue-recheck-20260908.json: current local queue/resource observation; no bounded production submission was safe.
+- verification/comfyui-runtime-recheck-20260908.json: current live validation of both H3 workflows plus post-cleanup queue/resource state; compatibility passed while production submission remained blocked.
 - verification/comfyui-profile-revalidation-r2.json: explicit expiration of the prior confirmed profile after workflow identity changed.
 - verification/triple-aaa-independent-critic-r6.md: fresh read-only critic and mutation sentinel.
 - verification/triple-aaa-independent-critic-r7.md: fresh read-only R7 attempt; mutation-clean operational blocker.

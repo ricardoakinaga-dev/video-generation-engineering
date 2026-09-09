@@ -102,6 +102,10 @@ The exact current local ComfyUI preflight is runtime `0.34.0`, node inventory ha
 
 The H3 T2V profile confirms only `text_to_video` and stream-level `native_audio_generation` for its exact historical executed workflow, model, runtime, device, parameters and date. Because the bundled workflow changed, the identity check explicitly reports `EXPIRED` for both current H3 graphs in [`comfyui-profile-revalidation-r2.json`](../verification/comfyui-profile-revalidation-r2.json); a new scoped capability probe is required. The preflight confirms graph/schema compatibility but does not prove inference or refresh the profile. H3 R2V remains `PARTIAL` after semantic inspection. No paid or external runtime invocation was authorized during this closure, and no new local job was submitted because the queue was occupied by other projects.
 
+The latest local runtime recheck found 10 queue records (7 still queued, including 3 repository jobs) and approximately 1.2 GB free VRAM on each RTX 3060 device. It therefore records `NOT_RUN`/`BLOCKED` for a new long-form submission; no queued job was cancelled. See [`comfyui-queue-recheck-20260908.json`](../verification/comfyui-queue-recheck-20260908.json).
+
+After a non-interrupting `free_memory` request, both bundled H3 workflows still validated against the live schema with zero errors/warnings and no partner nodes, while the queue/resource condition remained unchanged. This is current compatibility evidence only, not inference or production evidence; see [`comfyui-runtime-recheck-20260908.json`](../verification/comfyui-runtime-recheck-20260908.json).
+
 ## Artifact Evidence
 
 - H3 T2V artifact: [`art_2898879072af4739b673efe71fafcc7e.mp4`](../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4), SHA-256 `623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124`, 384×224, 124 frames, 24 FPS, approximately 5.167 seconds. Mechanical QA passes.
