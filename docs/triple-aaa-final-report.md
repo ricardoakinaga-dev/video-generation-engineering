@@ -91,6 +91,7 @@ The canonical model remains model-independent. Desired, planned and observed tru
 | Documentation checker | PASS; no broken local links or YAML blocks |
 | Live ComfyUI preflight | PASS; both bundled H3 API workflows validated against local ComfyUI 0.34.0 and 911-node catalog; no credits spent |
 | `tools/verify.py --output verification/software-triple-aaa-r20.json` | PASS; 133 tests, package manifest `4ed1f7b7ca9e28aa141ecaf1bba3429ac19e7ca0b34545dbc30e85090fe09f56`; offline/package/mechanical scope only |
+| Read-only architecture/portability audit | PASS; package import DAG has no cycles, R2 ZIP CRC/path scan is clean, and an extracted external-CWD `help → prepare → validate` smoke run returned `validation=PASS` |
 | Framework `check_state.py` recovery audit | Current R2 pointer is canonical after repair; full ledger result remains `FAIL` because preserved pre-R2 records use legacy event/verification shapes, so no whole-ledger PASS is claimed |
 
 The tests are evidence of software contracts and synthetic/fake boundaries. They are not a substitute for accepted generated media.
@@ -155,7 +156,7 @@ The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only fo
 
 ## Independent Critic
 
-The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md), [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md), [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md), [`triple-aaa-independent-critic-r10.md`](../verification/triple-aaa-independent-critic-r10.md) and [`triple-aaa-independent-critic-r11.md`](../verification/triple-aaa-independent-critic-r11.md). R7, R8, R9, R10 and R11 were mutation-clean or operationally stable for their respective snapshots, but each reviewer remained operationally incomplete or returned no current criterion-level acceptance; R9 also observed a dirty worktree after the latest corrections, while R10 and R11 shut down without returning a matrix or verdict. The candidate subsequently received material runtime-validator, semantic-QA, media-QA, assembly and routing/repair corrections, so R6–R11 cannot govern the current candidate. This is an explicit R2-22 blocker, not a PASS. A current reviewer must inspect the clean committed scope and return its own criterion results before any Triple-AAA promotion.
+The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md), [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md), [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md), [`triple-aaa-independent-critic-r10.md`](../verification/triple-aaa-independent-critic-r10.md), [`triple-aaa-independent-critic-r11.md`](../verification/triple-aaa-independent-critic-r11.md) and [`triple-aaa-independent-critic-r12.md`](../verification/triple-aaa-independent-critic-r12.md). R7, R8, R9, R10, R11 and R12 were mutation-clean or operationally stable for their respective snapshots, but each reviewer remained operationally incomplete or returned no current criterion-level acceptance; R9 also observed a dirty worktree after the latest corrections, while R10, R11 and R12 shut down without returning a matrix or verdict. The candidate subsequently received material runtime-validator, semantic-QA, media-QA, assembly and routing/repair corrections, so R6–R12 cannot govern the current candidate. This is an explicit R2-22 blocker, not a PASS. A current reviewer must inspect the clean committed scope and return its own criterion results before any Triple-AAA promotion.
 
 ## Remaining Blockers
 
@@ -163,7 +164,7 @@ The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.m
 2. Execute and accept LF-002 with speaker/listener semantics, voice, performance, lip-sync, causal audio and assembly/listening review.
 3. Execute and accept LF-003 with recurring identity/wardrobe/object/environment/camera/audio continuity, repair and human editorial checkpoint.
 4. Run a real FLF probe and a second independent adapter/model differential, or preserve the capabilities as blocked.
-5. Obtain a completed fresh independent critic with reviewer-owned pre/post fingerprints and a passing mutation sentinel; R6–R11 are historical/incomplete and are not acceptance evidence.
+5. Obtain a completed fresh independent critic with reviewer-owned pre/post fingerprints and a passing mutation sentinel; R6–R12 are historical/incomplete and are not acceptance evidence.
 
 ## Scores
 

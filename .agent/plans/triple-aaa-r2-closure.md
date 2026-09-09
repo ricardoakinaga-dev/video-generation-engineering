@@ -24,6 +24,8 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [ ] (2026-09-08T22:09:56-03:00) R11 blocked operationally: `Jason` remained running through the bounded waits and shut down without returning the required criterion-level matrix or verdict; the lead-owned product tree remained clean and unchanged.
 - [x] (2026-09-08T22:14:42-03:00) Post-R11 documentation recheck passed: 46 documents, 50 YAML blocks, 465 local links, 80 requirements, no link/YAML/traceability errors; this does not change the independent-review or audiovisual-production blockers.
 - [x] (2026-09-08T22:18:39-03:00) Recovery reconciled the current project profile from stale `GREENFIELD` to `BROWNFIELD`; the prompt and repository are an existing mature project, while the original Phase 0 classification remains historical.
+- [ ] (2026-09-08T22:29:33-03:00) R12 blocked operationally: `Turing` returned no criterion-level matrix or verdict after a 60-second bounded wait, an interrupt requesting a concise conclusion and a further 30-second wait; the product sentinel remained unchanged, but the fresh-critic gate remains open.
+- [x] (2026-09-08T22:35:23-03:00) Post-R12 documentation recheck passed: 46 documents, 50 YAML blocks, 466 local links, 80 requirements, no link/YAML/traceability errors; the R12 review blocker and audiovisual-production blockers remain unchanged.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -66,8 +68,8 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 
 - Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 133-test regression, package, portability and documentation checks pass within scope.
 - Preserved limits: LF-001/002/003 remain `BLOCKED`, LF-004 remains `NOT_RUN`, and semantic audiovisual, dialogue/lip-sync, FLF, second-adapter and real-repair claims remain unproven.
-- Fresh-review outcome: R10 and R11 ended operationally without a criterion-level response; `verification/triple-aaa-independent-critic-r10.md` and `verification/triple-aaa-independent-critic-r11.md` record the stable committed trees and incomplete reviews. No completed reviewer verdict or reviewer-owned pre/post fingerprint is available, so R2-22 remains open.
-- Smallest next action: run one completed fresh read-only critic against the current candidate; R11 also returned no matrix, so the reviewer must own a new fingerprint and mutation sentinel and return a terminal criterion-level verdict.
+- Fresh-review outcome: R10, R11 and R12 ended operationally without a criterion-level response; `verification/triple-aaa-independent-critic-r10.md`, `verification/triple-aaa-independent-critic-r11.md` and `verification/triple-aaa-independent-critic-r12.md` record the stable committed trees and incomplete reviews. No completed reviewer verdict or reviewer-owned pre/post fingerprint is available, so R2-22 remains open.
+- Smallest next action: run one completed fresh read-only critic against the current candidate; R12 also returned no matrix, so the reviewer must own a new fingerprint and mutation sentinel and return a terminal criterion-level verdict.
 
 ## Context and Orientation
 
@@ -124,11 +126,11 @@ Execute phases A–M in order: baseline; P0 defects; LF-001; dialogue/lip-sync/a
 
 From /home/ricardo/Área de trabalho/video-generation-engineering:
 
-1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] Run one bounded sealed read-only independent critic against the frozen candidate's bar, public entry points and current evidence, with a reviewer-owned fingerprint and mutation sentinel; do not edit product or control-plane files during the review. R10 was operationally incomplete and does not satisfy this step.
+1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] Run one bounded sealed read-only independent critic against the frozen candidate's bar, public entry points and current evidence, with a reviewer-owned fingerprint and mutation sentinel; do not edit product or control-plane files during the review. R10, R11 and R12 were operationally incomplete and do not satisfy this step.
 2. [x] [VGE-TRIPLE-AAA-R2:IMPLEMENT-CLOSURE] Implement the smallest missing R2 contract/fixture/test and canonical documentation updates; preserve existing R1 behavior and evidence.
 3. [x] Run focused contract tests, full unittest, compile/Skill/docs/package checks and update verification ledgers with current evidence.
 4. [x] Perform a self-review against every R2 criterion and resolve material defects without weakening the bar.
-5. [blocked] Prior fresh critic attempts, including R7, R8 and R10, exceeded the operational wait window without a verdict; the lead-owned sentinels matched, but this remains blocker evidence until step 1 completes.
+5. [blocked] Prior fresh critic attempts, including R7, R8, R10, R11 and R12, exceeded the operational wait window without a verdict; the lead-owned sentinels matched, but this remains blocker evidence until step 1 completes.
 6. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; the package and documentation audit are current.
 
 ## Validation and Acceptance
@@ -169,5 +171,6 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - verification/triple-aaa-independent-critic-r9.md: fresh read-only R9 audit of the pre-hardening snapshot; historical and not current acceptance.
 - verification/triple-aaa-independent-critic-r10.md: fresh read-only R10 attempt against d4a3d1e; operationally incomplete with a stable lead-owned sentinel.
 - verification/triple-aaa-independent-critic-r11.md: fresh read-only R11 attempt against c8c2f5f; operationally incomplete with a stable lead-owned product sentinel.
+- verification/triple-aaa-independent-critic-r12.md: fresh read-only R12 attempt against 9b684e7; operationally incomplete with a stable lead-owned product sentinel.
 
-Plan revision note, 2026-09-08T22:09:56-03:00: R8 and R9 were historical for earlier candidate snapshots, and R10 and R11 shut down without a criterion-level response despite stable product trees. The reviewer attempts are incomplete and cannot satisfy R2-22. The current preflight, profile expiration and 133-test verification are recorded, but no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.
+Plan revision note, 2026-09-08T22:29:33-03:00: R8 and R9 were historical for earlier candidate snapshots, and R10, R11 and R12 shut down without a criterion-level response despite stable product trees. The reviewer attempts are incomplete and cannot satisfy R2-22. The current preflight, profile expiration, architecture/portability audit and 133-test verification are recorded, but no reviewer result is being promoted; `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until completed review and production evidence exist.
