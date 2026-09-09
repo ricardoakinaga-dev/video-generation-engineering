@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-runtime-resource-boundary-20260909",
+  "observed_at": "2026-09-09T03:12:48Z",
+  "status": "BLOCKED",
+  "scope": "LOCAL_COMFYUI_RESOURCE_GUARD_AND_LF001_RUNTIME_RECHECK",
+  "runtime": {
+    "server": "http://127.0.0.1:8188",
+    "comfyui_version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "pid": 1147514,
+    "selected_device": "cuda:0",
+    "device": "NVIDIA GeForce RTX 3060",
+    "post_failure_resource_snapshot": {
+      "cuda:0_vram_free_bytes": 1090754140,
+      "cuda:1_vram_free_bytes": 1250295808,
+      "ram_free_bytes": 26440339456
+    }
+  },
+  "resource_guard": {
+    "implementation": ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+    "implementation_sha256": "sha256:10a0c914ae777ecfa239cd37e0ae0a98d91ac5516f34c214a2a4968a9fba22dc",
+    "requirements": {
+      "device_id": "cuda:0",
+      "min_free_vram_bytes": 2500000000,
+      "safety_margin": 1.2,
+      "effective_required_free_vram_bytes": 3000000000
+    },
+    "observed_decision": "BLOCKED",
+    "observed_free_vram_bytes": 1090754140,
+    "gap": "Observed free VRAM is below the declared minimum",
+    "post_boundary_behavior": "No POST is allowed when this report is evaluated by submit(); the guard is a scheduling check, not an inference guarantee.",
+    "regression": {
+      "tests_file": "tests/test_evidence_runtime_media.py",
+      "tests_file_sha256": "sha256:c51a382e1775e5d818641be974bd5257d93aabae2a05fb4c2c6430a322e1223e",
+      "focused_tests": 58,
+      "full_tests": 137,
+      "status": "PASS"
+    }
+  },
+  "runtime_attempts": [
+    {
+      "attempt_ref": "artifacts/lf001_probe_20260909/attempt-001-oom.json",
+      "content_sha256": "sha256:4cc1b96c9ed04f481b2b40404cdbb91a9c0443c6cfef69e89d086e0839d5116f",
+      "status": "FAILED",
+      "failure_class": "RUNTIME_RESOURCE",
+      "workflow": "384x224 / 124 frames / 4 steps",
+      "error": "torch.OutOfMemoryError at SamplerCustomAdvanced; requested 441.00 MiB with 73.31 MiB free at the failing allocation"
+    },
+    {
+      "attempt_ref": "artifacts/lf001_probe_20260909/attempt-002-oom.json",
+      "content_sha256": "sha256:005f6577e74892d204602793694837ef5a6cab1e2f6027178944235b33a40113",
+      "status": "FAILED",
+      "failure_class": "RUNTIME_RESOURCE",
+      "workflow": "256x160 / 39 frames / 4 steps; diagnostic only",
+      "error": "torch.OutOfMemoryError at SamplerCustomAdvanced; requested 441.00 MiB with 66.25 MiB free at the failing allocation"
+    }
+  ],
+  "workflow_validation": {
+    "repair_workflow_ref": "artifacts/lf001_probe_20260909/shot_s01_t2v_repair1.json",
+    "repair_workflow_sha256": "sha256:0cdbbb1350c4c28c9658bc3ea5a56dc8e748457b0801148039128a97f957aa2c",
+    "schema_preflight": "PASS",
+    "errors": [],
+    "warnings": [],
+    "partner_nodes": []
+  },
+  "decision": {
+    "lf001": "BLOCKED",
+    "production_promotion": "REJECTED",
+    "next_action": "Obtain a separately owned GPU/resource window with enough free VRAM, then run one fresh scoped probe through the guarded submission path; no further blind retry on the current device."
+  },
+  "limitations": [
+    "The resource floor is an explicit operator/profile budget informed by a prior successful short H3 observation; it is not a universal model requirement.",
+    "Both actual jobs were submitted before this guard was implemented and are preserved as failed runtime evidence.",
+    "No LF-001 artifact, semantic observation, dialogue/lip-sync evidence or accepted long-form production was created."
+  ]
+}

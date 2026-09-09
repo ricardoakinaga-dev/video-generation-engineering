@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "attempt_id": "LF001-PROBE-20260909-S01-A001",
+  "case_id": "LF-001",
+  "shot_id": "LF001-S01",
+  "parent_attempt": null,
+  "status": "FAILED",
+  "failure_class": "RUNTIME_RESOURCE",
+  "runtime": {
+    "server": "http://127.0.0.1:8188",
+    "comfyui_version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "pid": 1147514,
+    "device": "cuda:0 NVIDIA GeForce RTX 3060",
+    "preflight_vram_free_bytes": 1167392768,
+    "preflight_ram_free_bytes": 29148270592
+  },
+  "workflow": {
+    "path": "artifacts/lf001_probe_20260909/shot_s01_t2v.json",
+    "sha256": "sha256:2808eb3bbcca3698ff3c18a7e3fe002048651f0d2f54b3a6334dd7c8f768af5c",
+    "model": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+    "resolution": "384x224",
+    "frames": 124,
+    "fps": 24.0,
+    "steps": 4,
+    "seed": 2026090901
+  },
+  "execution": {
+    "prompt_id": "f4bca6ea-92cd-4118-8e43-e0f05fb199a8",
+    "submission_status": "queued",
+    "observed_status": "error",
+    "outputs": [],
+    "error_node_id": "11",
+    "error_node_type": "SamplerCustomAdvanced",
+    "exception_type": "torch.OutOfMemoryError",
+    "exception_summary": "Allocation on device 0 would exceed allowed memory; requested 441.00 MiB, only 73.31 MiB free at the failing allocation.",
+    "live_history_observed": true,
+    "live_queue_after": {
+      "queue_running": [],
+      "queue_pending": []
+    }
+  },
+  "acceptance": {
+    "semantic_observation": "NOT_RUN",
+    "media_qa": "NOT_RUN",
+    "lf001_status": "BLOCKED",
+    "reason": "No generated artifact was produced; this attempt cannot establish any of the thirteen LF-001 dimensions or a transition."
+  },
+  "repair": {
+    "owner": "RUNTIME",
+    "hypothesis": "The current device memory boundary may permit a diagnostic micro-probe if temporal and spatial workload are reduced below the model's trained 5-second envelope.",
+    "max_repair_attempt": 1,
+    "next_action": "Validate and, if accepted by the live schema, run one 256x160 / 39-frame micro-probe; do not relabel it as LF-001 production acceptance."
+  },
+  "limitations": [
+    "This failure is specific to the observed local resource state and workflow configuration.",
+    "No cancellation was needed because ComfyUI marked the new job terminal with no outputs.",
+    "A lower-resource micro-probe would be diagnostic and outside the model's documented trained 124-frame range."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-09T03:13:30Z",
+  "status": "PASS",
+  "scope": "PORTABLE_SKILL_DISTRIBUTION_AFTER_RUNTIME_RESOURCE_GUARD",
+  "archive": {
+    "path": "dist/video-generation-engineering-triple-aaa-r3.zip",
+    "sha256": "sha256:9543188bdaad13ccdc6ef96cba0d5e7848f48818d7738a269c2bc77326fc8cfa",
+    "entry_count": 37,
+    "file_count": 28,
+    "crc_test": "PASS",
+    "unsafe_paths": [],
+    "secret_names": [],
+    "model_weight_files": [],
+    "model_weights_included": false
+  },
+  "package_manifest_sha256": "sha256:827ed54990d2387f89a3a0ad5da8c1b37e6c6d164a804a9779034bdc84b37060",
+  "package_scope": ".agents/skills/video-generation-engineering",
+  "required_members": [
+    ".agents/skills/video-generation-engineering/SKILL.md",
+    ".agents/skills/video-generation-engineering/scripts/vge.py",
+    ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+    ".agents/skills/video-generation-engineering/references/comfyui-execution.md",
+    ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json"
+  ],
+  "external_cwd_probe": {
+    "status": "PASS",
+    "commands": ["--help", "prepare", "validate", "compile"],
+    "working_directory": "outside_repository",
+    "internal_absolute_dependency": false,
+    "validation_status": "PASS",
+    "compile_status": "PASS"
+  },
+  "limitations": [
+    "Portability proves package transport and executable structural contracts, not provider or audiovisual capability.",
+    "The archive contains no model weights, secrets or project-local evidence."
+  ]
+}

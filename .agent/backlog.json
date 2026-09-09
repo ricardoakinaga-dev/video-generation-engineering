@@ -95,7 +95,7 @@
         "VGE-TRIPLE-AAA-R1"
       ],
       "owner": "Codex",
-      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 134-test software evidence, rebuilt portable distribution and completed R14 independent review; R14 rejected Triple-AAA promotion because real production evidence remains blocked, so release is READY_WITH_RISKS",
+      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 137-test software evidence, fail-closed selected-device/free-VRAM guard, bounded LF-001 OOM evidence and rebuilt portable distribution; production remains BLOCKED and R14 is historical after the material runtime correction",
       "evidence_refs": [
         "docs/master-prompt-triple-aaa-r2.txt",
         "docs/triple-aaa-quality-bar-r2.json",
@@ -103,12 +103,19 @@
         "verification/software-triple-aaa-r18.json",
         "verification/software-triple-aaa-r20.json",
         "verification/software-triple-aaa-r21.json",
+        "verification/software-triple-aaa-r23.json",
         "verification/lf-semantic-acceptance-boundary-r1.json",
         "verification/docs-current-r14.json",
         "verification/triple-aaa-independent-critic-r14.md",
         ".agent/verification.jsonl#VER-20260908-AAA-R2-STATE-RECOVERY-10",
         "verification/docs-current-r15.json",
+        "verification/docs-current-r16.json",
+        "verification/docs-current-r17.json",
         "verification/distribution-triple-aaa-r2.json",
+        "verification/distribution-triple-aaa-r4.json",
+        "verification/comfyui-runtime-resource-boundary-20260909.json",
+        "artifacts/lf001_probe_20260909/attempt-001-oom.json",
+        "artifacts/lf001_probe_20260909/attempt-002-oom.json",
         "verification/comfyui-preflight-r2.json",
         "verification/comfyui-queue-recheck-20260908.json",
         "verification/comfyui-runtime-recheck-20260908.json",
@@ -123,14 +130,15 @@
         "verification/triple-aaa-independent-critic-r11.md",
         "verification/triple-aaa-independent-critic-r12.md",
         "verification/triple-aaa-independent-critic-r13.md",
-        "dist/video-generation-engineering-triple-aaa-r2.zip"
+        "dist/video-generation-engineering-triple-aaa-r2.zip",
+        "dist/video-generation-engineering-triple-aaa-r4.zip"
       ],
       "next_action": {
-        "id": "VGE-TRIPLE-AAA-R2:PRODUCTION-EVIDENCE",
-        "kind": "RUN",
-        "summary": "Obtain authorized runtime/resource/rights capacity and execute the smallest blocked production probes",
-        "target": "LF-001 vehicle entry, LF-002 dialogue/audio/lip-sync and LF-003 long-form evidence envelopes",
-        "completion_signal": "Each attempted capability has hash-bound runtime/artifact/observation evidence or remains explicitly BLOCKED/NOT_RUN with the reason recorded"
+        "id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC-POST-GUARD",
+        "kind": "REVIEW",
+        "summary": "Review the clean post-resource-guard candidate with a fresh independent critic",
+        "target": "Skill package, tests, current R4 distribution and production-boundary evidence",
+        "completion_signal": "Reviewer returns criterion-level matrix, reviewer-owned scope fingerprint and mutation sentinel; production blockers remain explicit"
       }
     }
   ]

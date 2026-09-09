@@ -29,9 +29,15 @@ An API graph maps node IDs to `class_type` and `inputs`; UI nodes/links JSON req
 
 Bindings name node_id, input, value and source. Record previous/new values and source workflow hash. Verify dimensions, duration/frame grid/FPS, batch/memory limits, loaded models, audio path and encoding. Reject rather than silently lowering quality to fit memory; propose a bounded alternative if needed.
 
+### Resource preflight
+
+Every `LOCAL_EXECUTE` submission must carry an explicit `resource_requirements` object with the exact `device_id` (or `selected_device`), `min_free_vram_bytes` and optional `safety_margin` (default `1.2`). The runtime takes a fresh `/system_stats` snapshot, selects only that device, and rejects the submission before creating an attempt or issuing `POST /prompt` when the snapshot is `UNKNOWN`, below the minimum, or below the safety threshold without explicit `allow_degraded_resources: true`. `min_vram_bytes` remains a compatibility alias for older standalone `resource_status()` callers.
+
+The threshold must be traceable to a profile/probe or an operator resource budget and is recorded in the preflight report and immutable attempt. It is a fail-closed scheduling guard, not a prediction of peak allocation or a guarantee of successful inference; a changing queue, allocator state, model load or custom node can still produce a terminal runtime failure. A `torch.OutOfMemoryError` remains a failed attempt and is never converted into a capability pass.
+
 ## Context, attempts and outputs
 
-The submission context contains execution_plan_ref, shot_id, attempt_index, profile identity/revision, full profile record and shot requirements, model identity/version/asset_path, input ref/role/path records, node_versions and parameters. Compatibility is recomputed before execution. The primary model hash and all supplied inputs are computed from local files. Include VAE, encoder, LoRA and projection weights as execution input assets so the context retains every model dependency.
+The submission context contains execution_plan_ref, shot_id, attempt_index, profile identity/revision, full profile record and shot requirements, model identity/version/asset_path, input ref/role/path records, node_versions, parameters and the resource requirements above. Compatibility is recomputed before execution. The primary model hash and all supplied inputs are computed from local files. Include VAE, encoder, LoRA and projection weights as execution input assets so the context retains every model dependency.
 
 Use `profile_record` for the complete profile and `shot` for the canonical shot. `profile` is only `{id, revision}`. Every asset, including `model`, supplies `workflow_binding: {node_id, input}` and optionally `runtime_name` when the runtime uses a relative subfolder. That binding must equal the selected filename in the graph. `parameter_bindings` maps each canonical shot parameter to `{node_id, input}`. The immutable attempt also stores a `shot_contract_hash`, which acceptance must match against the canonical shot's revision and gate set. Matching dependency hashes, workflow hash and node inventory are required for ordinary generation; changes need a new scoped probe/profile revision.
 

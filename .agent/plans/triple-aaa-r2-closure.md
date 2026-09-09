@@ -1,6 +1,6 @@
 # Triple-AAA Closure R2 — Evidence-backed video-generation engineering
 
-<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R2:PRODUCTION-EVIDENCE -->
+<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R2:FRESH-CRITIC-POST-GUARD -->
 
 ## Purpose / Big Picture
 
@@ -34,6 +34,10 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [ ] (2026-09-08T23:16:57-03:00) R13 rejected its pre-fix snapshot and is stale for the current candidate; reconcile the score/report accounting, then run one final fresh critic with a complete reviewer-owned scope fingerprint and mutation sentinel.
 - [x] (2026-09-08T23:25:00-03:00) R14 completed the current fresh review against clean HEAD `c585b3a`: 29-file reviewer-owned fingerprint matched pre/post, the full R2 matrix was returned, and the decision was `REJECT` because real production evidence is still unavailable.
 - [x] (2026-09-08T23:43:36-03:00) A fresh local ComfyUI recheck confirmed the queue/resource blocker and targeted local model inventory: 10 queue records, 7 queued, approximately 1.05–1.17 GiB free VRAM per device, H3 as the only identified local video diffusion family, and no Wan/LTX matches; existing short-action MP4s remain out of LF scope.
+- [x] (2026-09-09T03:05:00Z) A bounded LF-001 S01 probe and one allowed reduced-resource diagnostic both reached terminal `torch.OutOfMemoryError` at `SamplerCustomAdvanced`; no output was produced, and immutable A001/A002 records preserve the failures without promoting LF evidence.
+- [x] (2026-09-09T03:20:13Z) Repaired the runtime boundary so every ComfyUI submission requires a selected-device/free-VRAM contract, added three pre-POST regressions plus alias-conflict coverage, and passed 137 tests, Skill validation, compileall and offline verification r23.
+- [x] (2026-09-09T03:21:30Z) Rebuilt the portable package as R4 with 28 files, CRC/path/secret/weight checks and external-CWD `help → prepare → validate → compile` all passing; R14 is now stale because this was a material product-scope change.
+- [x] (2026-09-09T03:24:55Z) Re-ran the documentation checker after final report/scorecard edits: 46 documents, 50 YAML blocks, 478 local links, 80 requirements, zero errors; current evidence is docs r17.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -74,9 +78,9 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 
 ## Outcomes & Retrospective
 
-- Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 134-test regression, package, portability and documentation checks pass within scope.
+- Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 137-test regression, package, portability and documentation checks pass within scope.
 - Preserved limits: LF-001/002/003 remain `BLOCKED`, LF-004 remains `NOT_RUN`, and semantic audiovisual, dialogue/lip-sync, FLF, second-adapter and real-repair claims remain unproven.
-- Fresh-review outcome: R10, R11 and R12 ended operationally without a criterion-level response; R13 rejected the pre-fix snapshot and is stale after correction; R14 completed the current review with the required 29-file reviewer-owned pre/post fingerprint and a full matrix, but rejected Triple-AAA promotion because production evidence is missing. R2-22 is now satisfied for the current candidate.
+- Fresh-review outcome: R10, R11 and R12 ended operationally without a criterion-level response; R13 rejected the pre-fix snapshot and is stale after correction; R14 completed the prior review with the required 29-file reviewer-owned pre/post fingerprint and a full matrix, but became stale after the material resource-guard change. R14 rejected Triple-AAA promotion because production evidence is missing; R2-22 remains open until the fresh post-guard critic records the current candidate.
 - Smallest next action: obtain explicit runtime/resource/rights authority and execute the blocked production probes; until then keep LF-001..003, dialogue/lip-sync/FLF, second-adapter and repair claims blocked.
 
 ## Context and Orientation
@@ -121,7 +125,7 @@ The canonical flow is intent → Scene Bible/scene plan → shot graph and state
 
 ### Milestone 4 — Reverify, critic, distribution
 
-- Outcome: fresh integrated verification and rebuilt portable package pass; R13 found and rejected a real pre-fix semantic acceptance gap, which was corrected and regression-tested. R14 completed the current independent review with a matching scope fingerprint and rejected production promotion on the documented runtime/artifact limits.
+- Outcome: fresh integrated verification and rebuilt portable package pass; R13 found and rejected a real pre-fix semantic acceptance gap, which was corrected and regression-tested. R14 rejected production promotion on the documented runtime/artifact limits, and a fresh post-guard critic is required because the runtime boundary changed materially.
 - Scope/dependencies: all previous milestones; no material changes after critic without re-review.
 - Demonstration: exact commands, fingerprints, ZIP/manifest/CWD checks.
 - Acceptance/evidence: R2-17, R2-22, R2-23, R2-25, R2-26.
@@ -134,23 +138,24 @@ Execute phases A–M in order: baseline; P0 defects; LF-001; dialogue/lip-sync/a
 
 From /home/ricardo/Área de trabalho/video-generation-engineering:
 
-1. [VGE-TRIPLE-AAA-R2:PRODUCTION-EVIDENCE] Obtain explicit runtime/resource/rights authority and execute the smallest safe LF-001, LF-002 and LF-003 probes, preserving `BLOCKED`/`NOT_RUN` when the local queue or model capability cannot support them.
+1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC-POST-GUARD] Freeze the post-resource-guard candidate and run a fresh non-inherited read-only critic with a criterion-level matrix, reviewer-owned scope fingerprint and mutation sentinel.
 2. [x] [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] R14 reviewed the clean candidate with a complete 29-file reviewer-owned pre/post fingerprint and returned the full R2-01…R2-26 matrix; decision `REJECT`.
 3. [x] [VGE-TRIPLE-AAA-R2:IMPLEMENT-CLOSURE] Implement the smallest missing R2 contract/fixture/test and canonical documentation updates; preserve existing R1 behavior and evidence.
 4. [x] Run focused contract tests, full unittest, compile/Skill/docs/package checks and update verification ledgers with current evidence.
 5. [x] Perform a self-review against every R2 criterion and resolve material defects without weakening the bar.
 6. [x] R14 superseded the incomplete R7/R8/R10/R11/R12 attempts and the stale R13 snapshot; its fingerprint matched and its current rejection is recorded.
-7. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; the package and documentation audit are current for the reviewed candidate.
+7. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; R4 package and r17 documentation audit are current for the post-guard candidate.
+8. [ ] [VGE-TRIPLE-AAA-R2:PRODUCTION-EVIDENCE] After the current review, obtain explicit runtime/resource/rights authority and execute the smallest safe LF-001, LF-002 and LF-003 probes, preserving `BLOCKED`/`NOT_RUN` when the local queue or model capability cannot support them.
 
 ## Validation and Acceptance
 
 | Criterion | Required | Procedure/environment | Expected observation | Evidence destination |
 | --- | --- | --- | --- | --- |
 | R2-01/R2-24/R2-26 | YES | SHA-256/cmp, control-plane JSON and phase review | prompt/bar/history are traceable and safe | .agent/*, docs/triple-aaa-quality-bar-r2.json |
-| R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r21.json, verification/lf-semantic-acceptance-boundary-r1.json |
+| R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r23.json, verification/lf-semantic-acceptance-boundary-r1.json |
 | R2-17/R2-23 | YES | current local runtime where safe, docs/package/CWD checks | actual scope is recorded; portable ZIP is fresh and clean | verification/, dist/ |
 | R2-19/R2-20/R2-25 | YES | docs/link audit, report/matrix inspection | required sections, scores, statuses and non-claims are present | docs/triple-aaa-final-report.md, docs/capability-matrix-r1.md |
-| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r14.md |
+| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r15.md |
 
 ## Risks and Human Decisions
 
@@ -158,7 +163,7 @@ From /home/ricardo/Área de trabalho/video-generation-engineering:
 | --- | --- | --- | --- | --- |
 | Local model cannot prove 10–60s semantic production | current H3/R2V records and blocked ladder, HIGH | preserve BLOCKED/PARTIAL; do not infer | human/provider decision required for next probe | authorized capable runtime appears |
 | External paid/provider or reference transfer | no authorization, HIGH | PLAN_ONLY, provider guards, no call | remains unperformed | explicit authorization and rights scope |
-| Stale reviewer after patch | R1 critic pre-dates final changes, HIGH | fresh reviewer and fingerprint sentinel | current review required after any mutation | candidate files change |
+| Stale reviewer after patch | R14 predates the material resource-guard change, HIGH | fresh reviewer and fingerprint sentinel | current review required after any mutation | candidate files change |
 | Documentation drift | prior R1 report/matrix incomplete for R2, MEDIUM | one canonical report/matrix plus docs audit | residual only after fresh audit | docs checker detects mismatch |
 
 ## Idempotence and Recovery
@@ -171,11 +176,14 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - docs/triple-aaa-quality-bar-r2.json: frozen R2 acceptance criteria and verdict policy.
 - verification/long-form/LF-001.json through LF-004.json: ladder status envelopes; blocked/not-run statuses are evidence of absence, not production PASS.
 - docs/triple-aaa-final-report.md: canonical final accounting and claims boundary.
-- verification/software-triple-aaa-r21.json: current offline software evidence after the R13 semantic-boundary correction; 134 tests and the rebuilt package manifest pass.
+- verification/software-triple-aaa-r23.json: current offline software evidence after the resource-guard correction; 137 tests and the rebuilt package manifest pass.
+- verification/comfyui-runtime-resource-boundary-20260909.json: current resource-guard decision plus the two immutable LF-001 OOM attempts.
+- verification/distribution-triple-aaa-r4.json and dist/video-generation-engineering-triple-aaa-r4.zip: current portable package after the resource-guard correction.
 - verification/lf-semantic-acceptance-boundary-r1.json: controlled reproduction of the pre-fix unsafe LF-003 PASS and post-fix regression/full-suite evidence.
 - verification/docs-current-r14.json: post-R14 documentation/link/traceability audit; 46 documents, 50 YAML blocks, 472 local links and 80 requirements pass.
-- verification/docs-current-r15.json: post-R3 documentation/link/traceability audit; 46 documents, 50 YAML blocks, 473 local links and 80 requirements pass.
-- verification/triple-aaa-independent-critic-r14.md: current fresh non-inherited review against c585b3a; 29-file reviewer-owned fingerprint matched pre/post, full R2 matrix returned, final decision `REJECT`.
+- verification/docs-current-r17.json: post-resource-guard documentation/link/traceability audit; 46 documents, 50 YAML blocks, 478 local links and 80 requirements pass.
+- verification/triple-aaa-independent-critic-r14.md: historical fresh non-inherited review of the pre-resource-guard candidate; 29-file reviewer-owned fingerprint matched pre/post and final decision `REJECT`.
+- verification/triple-aaa-independent-critic-r15.md: required fresh non-inherited review of the post-resource-guard candidate; this file is pending until the clean candidate is committed and inspected.
 - .agent/verification.jsonl#VER-20260908-AAA-R2-STATE-RECOVERY-10: current control-plane pointer recheck; the active pointer is canonical while preserved legacy ledger failures remain explicit.
 - verification/comfyui-preflight-r2.json: current local live graph/schema preflight without generation.
 - verification/comfyui-queue-recheck-20260908.json: current local queue/resource observation; no bounded production submission was safe.
@@ -192,4 +200,4 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - verification/triple-aaa-independent-critic-r12.md: fresh read-only R12 attempt against 9b684e7; operationally incomplete with a stable lead-owned product sentinel.
 - verification/triple-aaa-independent-critic-r13.md: fresh read-only R13 review against 17b4f8e; criterion-level `REJECT` with a stable Lead sentinel, retained as stale after the semantic-boundary and accounting corrections.
 
-Plan revision note, 2026-09-08T23:43:36-03:00: R8 and R9 were historical for earlier candidate snapshots, R10–R12 shut down without a criterion-level response, and R13 rejected the pre-fix snapshot after identifying a semantic long-form acceptance gap and score/report drift. The Lead corrected the semantic gate, added a regression, reconciled current accounting to 134 tests/95 deterministic/64 semantic, rebuilt the package and passed software verification r21. R14 then reviewed clean HEAD c585b3a with a complete 29-file reviewer-owned fingerprint/mutation sentinel and returned a full matrix with decision `REJECT`. The fresh R3 runtime recheck reconfirmed that local production remains blocked by queue/resource state and that no targeted second video adapter was found. R2-22 is satisfied for this candidate, while `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until production evidence exists.
+Plan revision note, 2026-09-09T03:24:55Z: R8 and R9 were historical for earlier candidate snapshots, R10–R12 shut down without a criterion-level response, R13 rejected the pre-fix snapshot after identifying a semantic long-form acceptance gap and score/report drift, and R14 rejected the pre-resource-guard candidate because production evidence was missing. The Lead then ran a bounded LF-001 probe plus one allowed reduced diagnostic; both failed with OOM and no artifact. The Lead repaired the runtime boundary with an explicit selected-device/free-VRAM guard, added regressions, reconciled accounting to 137 tests, rebuilt software verification r23 and portable package R4, and recorded docs r17. R14 is retained as historical; R2-22 must be re-established by a fresh post-guard critic. `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until production evidence exists.

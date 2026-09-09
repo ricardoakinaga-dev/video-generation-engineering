@@ -7,7 +7,7 @@ Scores are independent 0–100 readings of the frozen bar. They are not an aesth
 | Gate | Score | Result | Reason |
 |---|---:|---|---|
 | Architecture | 93 | PASS (scoped) | Canonical ownership, state separation, progressive disclosure, safety boundary and traceability are explicit and implemented. |
-| Verification | 93 | PASS (scoped) | 134 tests, fail-closed known-bad cases, compile/skill/docs/package checks and exact provenance contracts pass. |
+| Verification | 93 | PASS (scoped) | 137 tests, fail-closed known-bad cases, compile/skill/docs/package checks and exact provenance contracts pass. |
 | Production | 21 | PARTIAL/BLOCKED | One local H3 T2V artifact and a failed R2V semantic observation exist; LF-001..003, dialogue/lip-sync, FLF, repair and second-adapter production proof do not. |
 
 ## Required independent pillars
@@ -21,8 +21,8 @@ Scores are independent 0–100 readings of the frozen bar. They are not an aesth
 | Continuity | 86 | 14-dimension scorecard, transitions, state deltas and re-anchor decisions | No accepted multi-shot continuity package exists. |
 | Prompt Compilation | 88 | ten canonical sections, density/contradiction checks and explicit omissions | Text compilation cannot prove model behavior. |
 | Model Adaptation | 78 | feature-scoped profiles, expiry triggers and adapter differential | H3 R2V and a second real adapter remain unavailable/partial. |
-| ComfyUI Runtime | 76 | local discovery, dynamic-combo-aware preflight, queue reconciliation and exact H3 provenance boundaries | Runtime evidence is dated/local; the historical H3 capability profile is expired after the workflow correction and does not establish all requested features. |
-| Deterministic QA | 95 | 134 tests, malformed/known-bad regressions, granular media checks, compile and docs verification | Some semantic oracles still require external/human execution. |
+| ComfyUI Runtime | 76 | local discovery, dynamic-combo-aware preflight, selected-device/free-VRAM guard, queue reconciliation and exact H3 provenance boundaries | Two new LF-001 attempts hit OOM; the historical H3 capability profile is expired after the workflow correction and does not establish all requested features. |
+| Deterministic QA | 95 | 137 tests, malformed/known-bad regressions, granular media checks, compile and docs verification | Some semantic oracles still require external/human execution. |
 | Semantic Artifact QA | 64 | category-separated observation contracts, twelve explicit semantic dimensions and mechanical/semantic separation | No accepted LF semantic package; R2V semantic result is FAIL. |
 | Dialogue/Performance | 42 | speaker/listener, causality and channel contracts plus known-bad tests | No generated dialogue/performance artifact was accepted. |
 | Lip-Sync/Audio | 38 | five channels, ten audio layers, timing and mix-role contracts | Native audio stream is only stream-level evidence; no lip-sync/listening acceptance. |
@@ -30,7 +30,7 @@ Scores are independent 0–100 readings of the frozen bar. They are not an aesth
 | Long-Form Production | 18 | conservative blocked statuses and fail-closed validator | LF-001, LF-002 and LF-003 have no accepted production evidence. |
 | Repairability | 72 | owner routing, budgets, immutable attempt rules and downstream invalidation | No real detect→repair→reobserve→reassemble run is accepted. |
 | Provenance | 93 | exact hashes for profiles, attempts, artifacts, observations and transitions | Existing runtime evidence is limited to dated local scope. |
-| Portability | 92 | standard-library CLI, external-CWD checks and fresh R2 manifest/CRC | Portability does not prove provider or audiovisual capability. |
+| Portability | 92 | standard-library CLI, external-CWD checks and fresh R4 manifest/CRC | Portability does not prove provider or audiovisual capability. |
 | Maintainability | 84 | explicit owners, aliases, tests and progressive documentation | Repeated historical reports and R1 filenames remain compatibility debt. |
 
 ## Maturity

@@ -1,6 +1,6 @@
 # Triple-AAA Closure Report — R2
 
-Data: 8 de setembro de 2026. Quality Bar: [`triple-aaa-quality-bar-r2.json`](triple-aaa-quality-bar-r2.json). Prompt preservado: [`master-prompt-triple-aaa-r2.txt`](master-prompt-triple-aaa-r2.txt). Prompt SHA-256: `sha256:8759fbd444abb0578fa5d7b852e4ff2ca9d1a0437913b9ace1a233dfbec16e51`.
+Data: 9 de setembro de 2026. Quality Bar: [`triple-aaa-quality-bar-r2.json`](triple-aaa-quality-bar-r2.json). Prompt preservado: [`master-prompt-triple-aaa-r2.txt`](master-prompt-triple-aaa-r2.txt). Prompt SHA-256: `sha256:8759fbd444abb0578fa5d7b852e4ff2ca9d1a0437913b9ace1a233dfbec16e51`.
 
 ## Final Verdict
 
@@ -41,9 +41,11 @@ Baseline evidence is retained in [`software-triple-aaa-r14.json`](../verificatio
 - Added regressions for placeholder long-form PASS, missing transition observations, same transition artifact, listener mouthing, causal-order failure, proximity-only ownership, unsafe vehicle state, contact aliases and legacy audio aliases.
 - Closed a semantic acceptance gap found by R13: long-form direct observations and transition-side observations now require all twelve semantic dimensions; a regression proves that category-only observations cannot produce a production `PASS`. Evidence is recorded in [`lf-semantic-acceptance-boundary-r1.json`](../verification/lf-semantic-acceptance-boundary-r1.json).
 - Corrected the live ComfyUI `SaveVideo` dynamic-combo shape to flat dotted keys, taught the package validator to expand selected nested schemas, and added regression coverage for required dynamic children and codec-sensitive fingerprints.
+- Made the ComfyUI submission boundary fail closed on an absent resource contract, an unbound device, an unknown selected-device snapshot or insufficient free VRAM; the guard records its threshold/margin and explicitly remains a scheduling check rather than an inference guarantee.
 - Recorded the live ComfyUI schema preflight and the resulting H3 profile revalidation as separate evidence; the historical confirmed profile is not silently reused after the workflow change.
 - Strengthened semantic artifact QA to require twelve independent dimensions, expanded media QA into separate deterministic checks, and added strict assembly lineage plus a six-dimension human editorial acceptance contract.
 - Completed R14 as a fresh non-inherited independent review of the clean candidate: the reviewer-owned 29-file fingerprint matched pre/post, but the final decision was `REJECT` because the frozen bar still lacks real LF production and audiovisual evidence.
+- Executed one bounded LF-001 S01 local probe and one explicitly limited repair diagnostic; both failed at `SamplerCustomAdvanced` with `torch.OutOfMemoryError`, produced no output, and remain immutable evidence rather than capability claims.
 - Updated the normative quality references, long-form package, capability matrix, scorecard, traceability/navigation pointers and implementation handoff.
 - Rebuilt the portable R2 distribution and recorded its archive/package hashes, CRC, secret/weight scan and external-CWD probe.
 
@@ -84,15 +86,15 @@ The canonical model remains model-independent. Desired, planned and observed tru
 | Group/procedure | Result |
 |---|---|
 | `tests/test_planning.py` | PASS; planning, graph/state, routing, profiles and duration boundaries |
-| `tests/test_evidence_runtime_media.py` | PASS; provenance, fake HTTP boundary, dynamic-combo runtime and strict assembly mechanics |
+| `tests/test_evidence_runtime_media.py` | PASS; provenance, fake HTTP boundary, dynamic-combo runtime, strict assembly mechanics and fail-closed resource guard |
 | `tests/test_extensions.py` | PASS; provider boundary, assembly and bounded repair |
 | `tests/test_quality.py` | PASS; 14-dimension continuity, 12-dimension semantic QA, editorial acceptance, contact, dialogue/audio, causality, ownership, vehicle, profile, transition, long-form and known-bad cases |
-| Full `python3 -B -m unittest discover -s tests -q` | `134` tests, `0` failures, `0` errors, `0` skips |
+| Full `python3 -B -m unittest discover -s tests -q` | `137` tests, `0` failures, `0` errors, `0` skips |
 | `python3 -m compileall -q .agents/skills/video-generation-engineering/scripts tests` | PASS |
 | Skill quick validation | PASS (`Skill is valid!`) |
-| Documentation checker | PASS; 46 docs, 50 YAML blocks, 473 local links, 80 requirements; current r15 evidence |
+| Documentation checker | PASS; 46 docs, 50 YAML blocks, 478 local links, 80 requirements; current r17 evidence |
 | Live ComfyUI preflight | PASS; both bundled H3 API workflows validated against local ComfyUI 0.34.0 and 911-node catalog; no credits spent |
-| `tools/verify.py --output verification/software-triple-aaa-r21.json` | PASS; 134 tests, package manifest `5ce105c345aa18e2db8f1f9ad606285ba1c03c83ea7718fd64d1215a32442472`; offline/package/mechanical scope only |
+| `tools/verify.py --output verification/software-triple-aaa-r23.json` | PASS; 137 tests, package manifest `476fdfc80cd88252fcf4cca34eb9f2c0e61b02c7207a4d55b6a5bbaa13a7483c`; offline/package/mechanical scope only |
 | Read-only architecture/portability audit | PASS; package import DAG has no cycles, R2 ZIP CRC/path scan is clean, and an extracted external-CWD `help → prepare → validate` smoke run returned `validation=PASS` |
 | Framework `check_state.py` recovery audit | Current R2 pointer is canonical after repair; full ledger result remains `FAIL` because preserved pre-R2 records use legacy event/verification shapes, so no whole-ledger PASS is claimed |
 
@@ -112,11 +114,16 @@ A subsequent fresh recheck reproduced the same result after another non-interrup
 
 A current R3 recheck found the same occupied queue and only approximately 1.05–1.17 GiB free VRAM per RTX 3060. The targeted local catalog identified H3 as the only video diffusion family in scope and returned no Wan/LTX matches; the existing three short-action clips and 15-second edit remain outside LF-001/LF-002/LF-003 acceptance. No job was cancelled and no new LF submission was run. See [`comfyui-runtime-recheck-20260908-r3.json`](../verification/comfyui-runtime-recheck-20260908-r3.json).
 
+On 9 September, one controlled LF-001 S01 probe at 384×224/124 frames and one bounded 256×160/39-frame diagnostic were submitted through the local ComfyUI path. Both were accepted by the live graph schema but terminated at `SamplerCustomAdvanced` with `torch.OutOfMemoryError`; neither produced an output. The second attempt is below the model's documented trained 124-frame envelope and was not relabeled as production. The immutable records, prompt IDs, live empty-queue checks and exact failure summaries are [`attempt-001-oom.json`](../artifacts/lf001_probe_20260909/attempt-001-oom.json), [`attempt-002-oom.json`](../artifacts/lf001_probe_20260909/attempt-002-oom.json) and [`comfyui-runtime-resource-boundary-20260909.json`](../verification/comfyui-runtime-resource-boundary-20260909.json).
+
+The runtime boundary is now safer for future callers: a `LOCAL_EXECUTE` context must declare the selected device and free-VRAM floor before `submit()` can issue a queue POST. Re-evaluating the observed post-failure snapshot against the explicit 2.5 GB floor with a 1.2 margin returns `BLOCKED`; this does not erase the two earlier failures or guarantee that a future run will fit.
+
 ## Artifact Evidence
 
 - H3 T2V artifact: [`art_2898879072af4739b673efe71fafcc7e.mp4`](../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4), SHA-256 `623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124`, 384×224, 124 frames, 24 FPS, approximately 5.167 seconds. Mechanical QA passes.
 - H3 R2V artifact: [`art_c7a1437df976419b98c5f73a41234c2d.mp4`](../verification/h3-r2v-collected-r2/art_c7a1437df976419b98c5f73a41234c2d.mp4), SHA-256 `973c979e1e0c0bc49d9ef30a3b1a4ee10821891d85fe6bcf151dcc92b210e598`. Mechanical QA passes, but the semantic observation fails the declared veterinary identity/environment.
 - [`media-qa-h3-t2v-r1.json`](../verification/media-qa-h3-t2v-r1.json), [`h3-r2v-media-qa.json`](../verification/h3-r2v-media-qa.json), [`h3-r2v-semantic-observation.json`](../verification/h3-r2v-semantic-observation.json) and [`h3-r2v-continuity-scorecard.json`](../verification/h3-r2v-continuity-scorecard.json) retain the exact scope and limitations.
+- The failed LF-001 runtime attempts are preserved with no artifact or semantic promotion: [`attempt-001-oom.json`](../artifacts/lf001_probe_20260909/attempt-001-oom.json) and [`attempt-002-oom.json`](../artifacts/lf001_probe_20260909/attempt-002-oom.json).
 
 ## LF-001
 
@@ -162,11 +169,11 @@ The Skill loads only the references activated by risk: core contracts for all no
 
 ## Portability
 
-The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only for media commands. CLI writes are new-file-only. External-CWD `help → prepare → validate → compile` behavior and package manifest/CRC checks are covered. The fresh R2 archive is [`video-generation-engineering-triple-aaa-r2.zip`](../dist/video-generation-engineering-triple-aaa-r2.zip), SHA-256 `915053030b89ad449b1e327904376e94923740490c3d712a76b60b21f636ab7e`, 28 files; its manifest is [`distribution-triple-aaa-r2.json`](../verification/distribution-triple-aaa-r2.json) with package-manifest hash `5ce105c345aa18e2db8f1f9ad606285ba1c03c83ea7718fd64d1215a32442472`. It contains the Skill, references, scripts, profiles and templates, not model weights, secrets, local media or project control-plane state.
+The package is standard-library Python 3.10+, with FFmpeg/ffprobe needed only for media commands. CLI writes are new-file-only. External-CWD `help → prepare → validate → compile` behavior and package manifest/CRC checks are covered. The current R4 archive is [`video-generation-engineering-triple-aaa-r4.zip`](../dist/video-generation-engineering-triple-aaa-r4.zip), SHA-256 `f35098d3ffc1d5d3f2db38987ea81048e7027155d16228cdb5028044ebf05d44`, 28 files; its manifest is [`distribution-triple-aaa-r4.json`](../verification/distribution-triple-aaa-r4.json) with package-manifest hash `476fdfc80cd88252fcf4cca34eb9f2c0e61b02c7207a4d55b6a5bbaa13a7483c`. It contains the Skill, references, scripts, profiles and templates, not model weights, secrets, local media or project control-plane state.
 
 ## Independent Critic
 
-The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md), [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md), [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md), [`triple-aaa-independent-critic-r10.md`](../verification/triple-aaa-independent-critic-r10.md), [`triple-aaa-independent-critic-r11.md`](../verification/triple-aaa-independent-critic-r11.md), [`triple-aaa-independent-critic-r12.md`](../verification/triple-aaa-independent-critic-r12.md), [`triple-aaa-independent-critic-r13.md`](../verification/triple-aaa-independent-critic-r13.md) and [`triple-aaa-independent-critic-r14.md`](../verification/triple-aaa-independent-critic-r14.md). R7, R8, R10, R11 and R12 were operationally incomplete. R13 returned `REJECT` for the pre-fix snapshot and is stale after the semantic-boundary/accounting correction. R14 is the current review: its 29-file reviewer-owned fingerprint matched pre/post, its criterion matrix is complete, and its decision is `REJECT` because real LF production and audiovisual evidence remain unavailable. The current review gate is therefore complete, but Triple-AAA promotion remains rejected by the production boundary.
+The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.md`](../verification/triple-aaa-independent-critic-r6.md), [`triple-aaa-independent-critic-r7.md`](../verification/triple-aaa-independent-critic-r7.md), [`triple-aaa-independent-critic-r8.md`](../verification/triple-aaa-independent-critic-r8.md), [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md), [`triple-aaa-independent-critic-r10.md`](../verification/triple-aaa-independent-critic-r10.md), [`triple-aaa-independent-critic-r11.md`](../verification/triple-aaa-independent-critic-r11.md), [`triple-aaa-independent-critic-r12.md`](../verification/triple-aaa-independent-critic-r12.md), [`triple-aaa-independent-critic-r13.md`](../verification/triple-aaa-independent-critic-r13.md) and [`triple-aaa-independent-critic-r14.md`](../verification/triple-aaa-independent-critic-r14.md). R7, R8, R10, R11 and R12 were operationally incomplete. R13 returned `REJECT` for the pre-fix snapshot and is stale after the semantic-boundary/accounting correction. R14 returned `REJECT` with a clean 29-file fingerprint, but it is now stale for the product scope because the runtime resource guard changed package code, tests and references; a fresh critic must inspect the post-guard candidate before release. Triple-AAA promotion remains rejected by the production boundary.
 
 ## Remaining Blockers
 
@@ -174,7 +181,8 @@ The fresh reviewer attempts are recorded in [`triple-aaa-independent-critic-r6.m
 2. Execute and accept LF-002 with speaker/listener semantics, voice, performance, lip-sync, causal audio and assembly/listening review.
 3. Execute and accept LF-003 with recurring identity/wardrobe/object/environment/camera/audio continuity, repair and human editorial checkpoint.
 4. Run a real FLF probe and a second independent adapter/model differential, or preserve the capabilities as blocked.
-5. R14 completed the current independent review with a matching reviewer-owned fingerprint and `REJECT`; no further review is required until a material product change occurs, but production evidence remains a blocker.
+5. The resource guard is implemented and regression-tested, but it cannot create missing production evidence; R14 must be superseded by a fresh read-only review after this material package change.
+6. Even after review, a separately owned GPU/resource window is required before any new LF probe; the current observed device is below the declared scheduling floor.
 
 ## Scores
 
@@ -185,6 +193,7 @@ The independent 0–100 pillar scores and deductions are in [`triple-aaa-scoreca
 - The Skill is implemented with model-independent planning, progressive disclosure, explicit owners and safety boundaries.
 - The quality layer has fail-closed, hash-bound contracts for observations, 14 continuity dimensions, contact, ownership, vehicle state, dialogue/audio, transitions, profiles, repair and long-form evidence.
 - The local H3 T2V/native-audio stream capability is confirmed only within its exact dated scope; the local H3 R2V artifact and its semantic failure are reproducible evidence.
+- The ComfyUI executor now fails closed before queueing when resource requirements are missing, unbound or below the observed selected-device floor; actual LF-001 OOM failures remain explicitly recorded.
 - The repository has executable known-bad regressions, a frozen prompt/bar, an exact capability matrix, independent scores and an honest release report.
 
 ## What Still Cannot Be Claimed

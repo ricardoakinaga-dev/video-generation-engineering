@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "attempt_id": "LF001-PROBE-20260909-S01-A002",
+  "case_id": "LF-001",
+  "shot_id": "LF001-S01",
+  "parent_attempt": "LF001-PROBE-20260909-S01-A001",
+  "status": "FAILED",
+  "failure_class": "RUNTIME_RESOURCE",
+  "runtime": {
+    "server": "http://127.0.0.1:8188",
+    "comfyui_version": "0.34.0",
+    "comfy_cli_version": "1.20.0",
+    "pid": 1147514,
+    "device": "cuda:0 NVIDIA GeForce RTX 3060",
+    "preflight_vram_free_bytes": null,
+    "preflight_ram_free_bytes": null,
+    "post_failure_resource_snapshot": {
+      "cuda:0": {"vram_free_bytes": 1090754140},
+      "cuda:1": {"vram_free_bytes": 1250295808},
+      "ram_free_bytes": 26440339456
+    }
+  },
+  "workflow": {
+    "path": "artifacts/lf001_probe_20260909/shot_s01_t2v_repair1.json",
+    "sha256": "sha256:0cdbbb1350c4c28c9658bc3ea5a56dc8e748457b0801148039128a97f957aa2c",
+    "model": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+    "resolution": "256x160",
+    "frames": 39,
+    "duration_s": 1.625,
+    "fps": 24,
+    "steps": 4,
+    "seed": 2026090902
+  },
+  "execution": {
+    "prompt_id": "afc36a32-7436-40d0-a510-26ede2d7d0bc",
+    "submission_status": "queued",
+    "observed_status": "error",
+    "outputs": [],
+    "error_node_id": "11",
+    "error_node_type": "SamplerCustomAdvanced",
+    "exception_type": "torch.OutOfMemoryError",
+    "exception_summary": "Allocation on device 0 would exceed allowed memory; requested 441.00 MiB, only 66.25 MiB free at the failing allocation; allocated 149.26 MiB.",
+    "live_history_observed": true,
+    "live_queue_after": {
+      "queue_running": [],
+      "queue_pending": []
+    }
+  },
+  "acceptance": {
+    "semantic_observation": "NOT_RUN",
+    "media_qa": "NOT_RUN",
+    "lf001_status": "BLOCKED",
+    "reason": "The bounded reduced-resource diagnostic also produced no artifact; it cannot establish any LF-001 dimension or production capability."
+  },
+  "repair": {
+    "owner": "RUNTIME",
+    "hypothesis": "Reducing spatial and temporal workload would provide a safe diagnostic path under the observed memory boundary.",
+    "result": "FAILED_RUNTIME_RESOURCE",
+    "max_repair_attempt": 1,
+    "next_action": "Stop local generation attempts until a separately owned GPU has enough free VRAM for a bounded probe; do not retry blindly or relabel this diagnostic as LF-001 production evidence."
+  },
+  "unknown_fields": [
+    "runtime.preflight_vram_free_bytes",
+    "runtime.preflight_ram_free_bytes"
+  ],
+  "limitations": [
+    "The reduced 39-frame workload is below the model's documented trained 124-frame envelope and was diagnostic only.",
+    "The post-failure snapshot is not a preflight measurement and does not establish a general memory requirement.",
+    "No cancellation was needed because ComfyUI marked the new job terminal with no outputs."
+  ]
+}

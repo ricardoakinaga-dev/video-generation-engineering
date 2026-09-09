@@ -129,37 +129,65 @@ def workflow_fingerprint(workflow, node_info=None):
     return digest({"topology": workflow, "nodes": nodes})
 
 
+def _declared_min_free_vram(requirements):
+    """Resolve the canonical free-VRAM floor without accepting ambiguity."""
+    has_canonical = "min_free_vram_bytes" in requirements
+    has_legacy = "min_vram_bytes" in requirements
+    canonical_value = requirements.get("min_free_vram_bytes")
+    legacy_value = requirements.get("min_vram_bytes")
+    if has_canonical:
+        require(number(canonical_value, True), "min_free_vram_bytes must be positive")
+    if has_legacy:
+        require(number(legacy_value, True), "min_vram_bytes must be positive")
+    if has_canonical and has_legacy:
+        require(canonical_value == legacy_value, "resource requirements contain conflicting VRAM floors")
+    return canonical_value if has_canonical else legacy_value
+
+
 def resource_status(discovery, requirements=None):
-    """Classify observed local resources without pretending to predict execution."""
+    """Classify observed local resources without pretending to predict execution.
+
+    ``min_free_vram_bytes`` is the canonical requirement.  The older
+    ``min_vram_bytes`` spelling remains accepted for standalone callers, but a
+    runtime submission must provide one of them and bind it to its selected
+    device.  The optional safety margin is deliberately visible in the
+    returned report; it is a policy threshold, not a claim that inference will
+    fit.
+    """
     require(isinstance(discovery, dict), "discovery must be an object")
     requirements = requirements or {}
     require(isinstance(requirements, dict), "resource requirements must be an object")
     observed = discovery.get("resource_inventory", [])
     require(isinstance(observed, list), "discovery.resource_inventory must be an array")
-    min_vram = requirements.get("min_vram_bytes")
-    if min_vram is not None:
-        require(number(min_vram, True), "min_vram_bytes must be positive")
+    min_free_vram = _declared_min_free_vram(requirements)
+    safety_margin = requirements.get("safety_margin", 1.2)
+    require(number(safety_margin, True) and safety_margin >= 1, "safety_margin must be finite and >= 1")
     selected = requirements.get("device_id") or requirements.get("selected_device")
     if selected is not None:
         require(isinstance(selected, str) and selected, "selected device must be a nonempty string")
         selected_records = [item for item in observed if isinstance(item, dict) and (item.get("device_id") == selected or item.get("id") == selected or str(item.get("name", "")).startswith(selected))]
-        known = [item for item in selected_records if isinstance(item.get("vram_free"), (int, float))]
+        known = [item for item in selected_records if number(item.get("vram_free"), True)]
     else:
-        known = [item for item in observed if isinstance(item, dict) and isinstance(item.get("vram_free"), (int, float))]
+        known = [item for item in observed if isinstance(item, dict) and number(item.get("vram_free"), True)]
     if not known:
         status = "UNKNOWN"
         gaps = ["No comparable free-VRAM observation"]
-    elif min_vram is not None and max(item["vram_free"] for item in known) < min_vram:
+    elif min_free_vram is not None and max(item["vram_free"] for item in known) < min_free_vram:
         status = "BLOCKED"
         gaps = ["Observed free VRAM is below the declared minimum"]
-    elif min_vram is not None and max(item["vram_free"] for item in known) < min_vram * 1.2:
+    elif min_free_vram is not None and max(item["vram_free"] for item in known) < min_free_vram * safety_margin:
         status = "DEGRADED"
         gaps = ["Observed free VRAM has less than the declared safety margin"]
     else:
         status = "SUPPORTED"
         gaps = []
-    return {"status": status, "selected_device": selected, "requirements": requirements, "observed_resources": known,
-            "gaps": gaps, "limitations": ["A resource snapshot is not an execution guarantee"]}
+    observed_free = max((item["vram_free"] for item in known), default=None)
+    return {"status": status, "selected_device": selected, "requirements": requirements,
+            "effective_min_free_vram_bytes": min_free_vram,
+            "effective_required_free_vram_bytes": min_free_vram * safety_margin if min_free_vram is not None else None,
+            "observed_free_vram_bytes": observed_free, "observed_resources": known,
+            "gaps": gaps, "limitations": ["A resource snapshot is not an execution guarantee",
+                                            "Free VRAM can change between this snapshot and runtime execution"]}
 
 
 def validate_profile_runtime(profile, discovery, workflow=None, feature=None, model_asset_hash=None):
@@ -440,11 +468,26 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
     require(isinstance(observed, dict) and isinstance(observed.get("system_stats"), dict) and isinstance(observed.get("object_info"), dict), "Runtime discovery response is malformed")
     system = observed["system_stats"].get("system", {})
     require(isinstance(system, dict), "Runtime system metadata is malformed")
-    resource_report = None
-    if "resource_requirements" in context:
-        resource_report = resource_status(observed, context.get("resource_requirements"))
-        allowed_degraded = context.get("allow_degraded_resources") is True and resource_report["status"] == "DEGRADED"
-        require(resource_report["status"] == "SUPPORTED" or allowed_degraded, "; ".join(resource_report["gaps"]) or "Selected runtime resource is not supported")
+    selected_device = context.get("selected_device")
+    if selected_device is None:
+        for node in workflow.values():
+            if isinstance(node, dict) and node.get("class_type") == "ClipProjLoader" and isinstance(node.get("inputs"), dict):
+                selected_device = node["inputs"].get("device")
+                break
+    require(isinstance(selected_device, str) and selected_device and selected_device != "UNKNOWN", "A selected device must be declared")
+    selected_records = [item for item in observed.get("resource_inventory", []) if isinstance(item, dict) and
+                        item.get("device_id") == selected_device]
+    require(selected_records, "Selected device is not present in observed resource inventory")
+    resource_requirements = context.get("resource_requirements")
+    require(isinstance(resource_requirements, dict), "Execution context must declare resource_requirements")
+    require(_declared_min_free_vram(resource_requirements) is not None,
+            "resource_requirements must declare min_free_vram_bytes")
+    declared_device = resource_requirements.get("device_id") or resource_requirements.get("selected_device")
+    require(declared_device == selected_device, "resource_requirements must bind the selected device")
+    resource_report = resource_status(observed, resource_requirements)
+    allowed_degraded = context.get("allow_degraded_resources") is True and resource_report["status"] == "DEGRADED"
+    require(resource_report["status"] == "SUPPORTED" or allowed_degraded,
+            "; ".join(resource_report["gaps"]) or "Selected runtime resource is not supported")
     runtime_version = profile.get("runtime_version")
     if not (probe_mode and runtime_version in (None, "", "UNKNOWN")):
         require(runtime_version == system.get("comfyui_version"), "Runtime version differs from confirmed profile")
@@ -492,19 +535,9 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
     require(isinstance(node_versions, dict), "node_versions must be an object")
     node_records = [{"id": key, "type": node["class_type"], "version": node_versions.get(node["class_type"])} for key, node in workflow.items()]
     unknown = (["runtime.version"] if not version else []) + [f"nodes.{i}.version" for i,n in enumerate(node_records) if not n["version"]]
-    selected_device = context.get("selected_device")
-    if selected_device is None:
-        for node in workflow.values():
-            if isinstance(node, dict) and node.get("class_type") == "ClipProjLoader" and isinstance(node.get("inputs"), dict):
-                selected_device = node["inputs"].get("device")
-                break
-    require(isinstance(selected_device, str) and selected_device and selected_device != "UNKNOWN", "A selected device must be declared")
     profile_device = profile.get("selected_device")
     if profile_device not in (None, "", "UNKNOWN", "UNPROBED"):
         require(profile_device == selected_device, "Selected device differs from the resolved profile")
-    selected_records = [item for item in observed.get("resource_inventory", []) if isinstance(item, dict) and
-                        item.get("device_id") == selected_device]
-    require(selected_records, "Selected device is not present in the observed resource inventory")
     stable_resources = [{key: item.get(key) for key in ("id", "device_id", "type", "vram_total")}
                         for item in observed.get("resource_inventory", []) if isinstance(item, dict)]
     resource_context_hash = digest(stable_resources)
@@ -522,7 +555,8 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
     attempt["purpose"] = "CAPABILITY_PROBE" if probe_mode else "GENERATION"
     save(run / "workflow.json", workflow)
     save(run / "attempt-001.json", attempt)
-    save(run / "preflight.json", {"validation": validation, "compatibility": compatibility, "discovery_hash": digest(observed), "probe_purpose": context.get("probe_purpose") if probe_mode else None})
+    save(run / "preflight.json", {"validation": validation, "compatibility": compatibility, "resource_status": resource_report,
+                                  "discovery_hash": digest(observed), "probe_purpose": context.get("probe_purpose") if probe_mode else None})
     _append_event(run / "events.jsonl", {"schema_version": 1, "event_id": "event-intent-recorded", "attempt_id": attempt_id,
                                           "status": "INTENT_RECORDED", "observed_at": attempt["started_at"], "source": "vge_runtime.submit"})
     # Intent is durably stored before the only POST. A lost reply or journal

@@ -97,7 +97,7 @@ The execution-context values above are persisted in the immutable [`ExecutionAtt
 
 Before execution, validate the relationship among duration, FPS, frame count, resolution, memory profile, and the selected workflow. Duration is not the only routing factor; frame count and interaction/continuity risk may force a split even when duration is short.
 
-The plan must expose estimated cost and risk where the runtime can provide them, and must include a bounded fallback: lower resolution, shorter segment, lower batch size, alternate profile, or human review. A fallback that changes story, identity, or synchronization must be marked as a material change.
+The plan must expose estimated cost and risk where the runtime can provide them, and must include a bounded fallback: lower resolution, shorter segment, lower batch size, alternate profile, or human review. A fallback that changes story, identity, or synchronization must be marked as a material change. For `LOCAL_EXECUTE`, `resource_budget` must bind the exact device and a minimum free-VRAM threshold (plus any safety margin) to a profile/probe or an operator decision. The executor takes a fresh snapshot and blocks before queueing when the selected device is unknown or below that threshold; a pass remains a scheduling guard, not an inference guarantee.
 
 ## 7. Optional downstream stages
 

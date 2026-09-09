@@ -471,6 +471,12 @@ execution_attempt:
     endpoint: local
     version: "fixture-comfyui-v1"
     node_inventory_hash: "sha256:f912352348b90a56ef3a080aea27f1022bdcbc85a512739b4e66dcfde76645e0"
+    selected_device: cuda:0
+    resource_requirements:
+      device_id: cuda:0
+      min_free_vram_bytes: 2500000000
+      safety_margin: 1.2
+    resource_status: SUPPORTED
   workflow:
     ref: workflows/shot_002_api.json
     content_hash: "sha256:8176bcc0dbd3e7abc0910578d5952d7f2df05bfccb54df880b26e6db8d56eb4e"

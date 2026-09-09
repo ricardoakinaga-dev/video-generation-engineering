@@ -241,6 +241,7 @@ class HTTPTests(unittest.TestCase):
         p=profile();p.update(runtime_version='1',node_inventory_hash=digest(NODE_INFO),workflow_hash=digest(WORKFLOW),model='model_1',model_asset_hash=file_hash(self.model))
         shot={'id':'shot_1','revision':1,'acceptance_ids':['QG-17'],'duration_s':5,'generation_mode':'T2V','parameters':{},'dependency_ids':[]}
         self.context={'execution_plan_ref':'exec_1','shot_id':'shot_1','attempt_index':1,'profile':{'id':p['id'],'revision':1},'profile_record':p,'shot':shot,'selected_device':'cuda:0',
+                      'resource_requirements':{'device_id':'cuda:0','min_free_vram_bytes':100,'safety_margin':1.0},
                       'model':{'id':'model_1','version':'1','asset_path':str(self.model),'workflow_binding':{'node_id':'1','input':'model_name'}},'inputs':[],'parameters':{'bindings':{}},'node_versions':{'Source':'1','Save':'1'}}
     def send(self,authorized=True,probe_mode=False):return submit(self.client,WORKFLOW,self.context,Path(self.tmp.name)/'runs',authorized,probe_mode)
     def test_submit_poll_collect_real_http_boundary(self):
@@ -276,8 +277,28 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual('UNKNOWN',resource_status({'resource_inventory':[]})['status'])
         selected={'resource_inventory':[{'id':'0','device_id':'cuda:0','vram_free':100},{'id':'1','device_id':'cuda:1','vram_free':1000}]}
         self.assertEqual('BLOCKED',resource_status(selected,{'device_id':'cuda:0','min_vram_bytes':200})['status'])
+        report=resource_status(selected,{'device_id':'cuda:1','min_free_vram_bytes':800,'safety_margin':1.2})
+        self.assertEqual('SUPPORTED',report['status']);self.assertEqual(960,report['effective_required_free_vram_bytes'])
+        with self.assertRaisesRegex(ContractError,'conflicting VRAM floors'):
+            resource_status(selected,{'min_free_vram_bytes':800,'min_vram_bytes':801})
+    def test_submission_requires_explicit_resource_contract_before_post(self):
+        self.context.pop('resource_requirements')
+        with self.assertRaisesRegex(ContractError,'declare resource_requirements'):
+            self.send()
+        self.assertEqual(0,self.posts)
+    def test_resource_floor_blocks_before_post(self):
+        self.context['resource_requirements']['min_free_vram_bytes']=1000
+        with self.assertRaisesRegex(ContractError,'below the declared minimum'):
+            self.send()
+        self.assertEqual(0,self.posts)
+    def test_resource_requirement_must_bind_selected_device(self):
+        self.context['resource_requirements']['device_id']='cuda:1'
+        with self.assertRaisesRegex(ContractError,'bind the selected device'):
+            self.send()
+        self.assertEqual(0,self.posts)
     def test_selected_device_must_be_observed_before_post(self):
         self.context['selected_device'] = 'cuda:1'
+        self.context['resource_requirements']['device_id'] = 'cuda:1'
         with self.assertRaisesRegex(ContractError, 'observed resource inventory'):
             self.send()
         self.assertEqual(0, self.posts)

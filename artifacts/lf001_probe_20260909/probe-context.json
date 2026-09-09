@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "probe_id": "LF001-PROBE-20260909-S01",
+  "case_id": "LF-001",
+  "shot_id": "LF001-S01",
+  "status": "PLANNED",
+  "source_fixture": "verification/long-form/LF-001.json",
+  "purpose": "Exercise the first bounded production slice of the vehicle-entry chain: approach, driver-side geography and pre-contact state.",
+  "canonical_scene": {
+    "subject": "one adult man with short dark hair, rectangular glasses, light facial hair and a dark charcoal shirt",
+    "vehicle": "one specific matte graphite compact hatchback, driver side facing the camera, continuous geometry and a small red marker on the driver-side mirror; no logo",
+    "environment": "wet residential curb at overcast late afternoon, stable cool daylight from camera-left",
+    "screen_direction": "subject enters from screen left and approaches the vehicle on screen right",
+    "vehicle_state": {
+      "vehicle_position": "parked at curb",
+      "velocity_phase": "stationary",
+      "wheel_state": "grounded",
+      "engine_state": "off",
+      "door_state": "closed",
+      "occupants": 0
+    },
+    "shot_start": "subject several steps from the driver-side door; vehicle stationary and door closed",
+    "shot_end": "subject standing at the driver-side handle in pre-contact; vehicle stationary and door closed"
+  },
+  "reference_status": {
+    "vehicle_reference": "TEXTUAL_CANONICAL_LOCK_ONLY",
+    "source_vehicle_image": "NOT_AVAILABLE",
+    "identity_reference": "TEXTUAL_CANONICAL_DESCRIPTION_ONLY",
+    "acceptance_consequence": "Vehicle geometry/color and subject identity remain NOT_OBSERVED until actual frames are inspected against a source reference."
+  },
+  "workflow": {
+    "path": "artifacts/lf001_probe_20260909/shot_s01_t2v.json",
+    "model": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
+    "mode": "LOCAL_EXECUTE",
+    "resolution": "384x224",
+    "frames": 124,
+    "fps": 24.0,
+    "expected_duration_s": 5.1667,
+    "credits": false
+  },
+  "acceptance_dimensions": {
+    "SUBJECT_IDENTITY": "NOT_OBSERVED",
+    "WARDROBE": "NOT_OBSERVED",
+    "VEHICLE_GEOMETRY": "NOT_OBSERVED",
+    "VEHICLE_COLOR": "NOT_OBSERVED",
+    "DOOR_STATE": "NOT_OBSERVED",
+    "SUBJECT_POSITION": "NOT_OBSERVED",
+    "HAND_CONTACT": "NOT_OBSERVED",
+    "BODY_COLLISION": "NOT_OBSERVED",
+    "SEAT_STATE": "NOT_OBSERVED",
+    "ENVIRONMENT": "NOT_OBSERVED",
+    "LIGHT_DIRECTION": "NOT_OBSERVED",
+    "SCREEN_DIRECTION": "NOT_OBSERVED",
+    "TEMPORAL_ORDER": "NOT_OBSERVED"
+  },
+  "safety": {
+    "bounded_attempts": 1,
+    "max_runtime_minutes": 20,
+    "no_paid_provider": true,
+    "no_external_upload": true,
+    "cancel_only_new_job_if_timeout_or_oom": true,
+    "do_not_reclassify_as_lf001_until_semantic_observation": true
+  },
+  "next_action": "Preflight this workflow, submit one local 5-second attempt if resources remain safe, collect the immutable output, then inspect metadata and frames before any second shot."
+}
