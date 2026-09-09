@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "id": "distribution-triple-aaa-r7",
+  "observed_at": "2026-09-09T21:57:35Z",
+  "status": "PASS",
+  "scope": "FRESH_PORTABLE_SKILL_DISTRIBUTION_AFTER_CROSS_SHOT_GATE",
+  "archive": {
+    "path": "dist/video-generation-engineering-triple-aaa-r7.zip",
+    "sha256": "sha256:38b5b23f8d8cd6a44f8b9b0d52062670bee06f3733818a6cbd7027d82cc097fe",
+    "bytes": 131805,
+    "entry_count": 38,
+    "file_count": 29,
+    "crc_test": "PASS",
+    "unsafe_paths": "PASS",
+    "absolute_workspace_paths": "PASS",
+    "secret_value_scan": "PASS",
+    "model_weight_files": "PASS",
+    "bytecode": "PASS"
+  },
+  "package_scope": ".agents/skills/video-generation-engineering",
+  "package_manifest": {
+    "procedure": "tools/verify.py package manifest over sorted Skill files, excluding __pycache__ and *.pyc",
+    "sha256": "sha256:cd02b858b7310bc5158e70d260bac2e5748a10247a49aa26d5ddb84042d83a01",
+    "file_count": 29
+  },
+  "required_members": [
+    ".agents/skills/video-generation-engineering/SKILL.md",
+    ".agents/skills/video-generation-engineering/scripts/vge.py",
+    ".agents/skills/video-generation-engineering/scripts/vge_quality_common.py",
+    ".agents/skills/video-generation-engineering/scripts/vge_runtime.py",
+    ".agents/skills/video-generation-engineering/references/production-quality.md",
+    ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json"
+  ],
+  "verification": {
+    "compileall": "PASS",
+    "skill_quick_validate": "PASS",
+    "external_cwd_smoke": {
+      "status": "PASS",
+      "commands": ["--help", "validate", "compile"],
+      "working_directory": "temporary directory outside repository",
+      "input": "verification/prompt-compiler-r4-prepared.json copied into the temporary directory",
+      "internal_absolute_dependency": false
+    },
+    "import_dag": {"status": "PASS", "cycles": []},
+    "credential_value_scan": "PASS",
+    "workspace_path_scan": "PASS"
+  },
+  "limitations": [
+    "Distribution proves package transport and deterministic structural contracts, not provider capability or audiovisual semantics.",
+    "The archive intentionally excludes project docs, generated runtime media, credentials and model weights.",
+    "The Triple-AAA production verdict remains below proven because LF-001, LF-002, LF-003, FLF, repair execution and second-adapter evidence remain incomplete."
+  ]
+}

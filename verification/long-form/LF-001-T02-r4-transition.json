@@ -983,7 +983,45 @@
     },
     "repair_route": "REGENERATE_OR_REANCHOR_IF_PROMOTED"
   },
-  "known_drift": false,
+  "cross_shot_comparison": {
+    "schema_version": 1,
+    "id": "cross_shot_lf001_t02_r4",
+    "previous_shot_id": "LF001-S02",
+    "next_shot_id": "LF001-S03",
+    "previous_artifact": {
+      "shot_id": "LF001-S02",
+      "artifact_id": "art_c1c52b6492b04dc1847edbe3d028bab7",
+      "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4",
+      "content_hash": "sha256:9c2a699c7ce2aefc05c31b29602339bd59a981ebfc75e9ed64dc3474f350d094"
+    },
+    "next_artifact": {
+      "shot_id": "LF001-S03",
+      "artifact_id": "art_d4883362e5a74b9aa12e0514c9eab8d3",
+      "artifact_ref": "/home/ricardo/Área de trabalho/video-generation-engineering/verification/media/art_d4883362e5a74b9aa12e0514c9eab8d3.mp4",
+      "content_hash": "sha256:57e800542cc5451768fe1a8397f29e38e6a5dcf8a7bda4d61e3745d45d9d6167"
+    },
+    "observed_at": "2026-09-09T21:20:00+00:00",
+    "procedure": "Explicit side-by-side cross-shot comparison gate; no independent adjacent-shot visual oracle was run in R4.",
+    "dimensions": [
+      {"dimension":"identity","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was identity compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot identity review was run.","evidence":[],"limitations":[]},
+      {"dimension":"wardrobe","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was wardrobe compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot wardrobe review was run.","evidence":[],"limitations":[]},
+      {"dimension":"hair","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was hair compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot hair review was run.","evidence":[],"limitations":[]},
+      {"dimension":"object_state_ownership","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was object state ownership compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"State equality was recorded, but no side-by-side object review was run.","evidence":[],"limitations":[]},
+      {"dimension":"vehicle","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was vehicle identity and geography compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot vehicle review was run.","evidence":[],"limitations":[]},
+      {"dimension":"environment","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was environment compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot environment review was run.","evidence":[],"limitations":[]},
+      {"dimension":"lighting","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was lighting compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot lighting review was run.","evidence":[],"limitations":[]},
+      {"dimension":"screen_direction","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was screen direction compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot screen-direction review was run.","evidence":[],"limitations":[]},
+      {"dimension":"camera_geography","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was camera geography compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot camera-geography review was run.","evidence":[],"limitations":[]},
+      {"dimension":"gaze","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was gaze compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot gaze review was run.","evidence":[],"limitations":[]},
+      {"dimension":"emotional","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was emotional continuity compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No side-by-side adjacent-shot emotional review was run.","evidence":[],"limitations":[]},
+      {"dimension":"dialogue","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was dialogue continuity compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"This no-dialogue case has no adjacent dialogue comparison oracle.","evidence":[],"limitations":[]},
+      {"dimension":"temporal","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was temporal continuity compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"No adjacent-shot temporal oracle was run.","evidence":[],"limitations":[]},
+      {"dimension":"audio","result":"NOT_OBSERVED","oracle":{"kind":"HUMAN","question":"Was audio continuity compared across the exact adjacent artifacts?"},"confidence":"UNKNOWN","reason":"Only mechanical audio metadata was observed; no side-by-side listening review was run.","evidence":[],"limitations":[]}
+    ],
+    "status": "NOT_OBSERVED",
+    "limitations": ["Per-shot contact sheets and state equality cannot substitute for an explicit cross-shot comparison."]
+  },
+  "known_drift": true,
   "repair_owner": "continuity",
   "status": "FAIL",
   "drift_reason": "S03 sampled quality is PARTIAL because colored elongated artifacts prevent full continuity acceptance.",

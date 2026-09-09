@@ -3,8 +3,8 @@
   "id": "continuity_contract_lf001_r4",
   "required_state_properties": ["subject_position", "door_state", "vehicle_state"],
   "handoffs": [
-    {"id": "T01", "ref": "verification/long-form/LF-001-T01-r4-transition.json", "status": "PASS", "scope": "state handoff and sampled observation"},
+    {"id": "T01", "ref": "verification/long-form/LF-001-T01-r4-transition.json", "status": "PARTIAL", "scope": "state handoff and per-shot observations; cross-shot comparison NOT_OBSERVED"},
     {"id": "T02", "ref": "verification/long-form/LF-001-T02-r4-transition.json", "status": "FAIL", "scope": "blocked by partial S03 quality"}
   ],
-  "visual_continuity_boundary": "Transition validation does not prove reference-locked identity or dense frame-to-frame continuity; those claims remain unsupported."
+  "visual_continuity_boundary": "Every transition now requires an explicit hash-bound side-by-side comparison for identity, wardrobe, geography, temporal and audio dimensions. R4 records that comparison as NOT_OBSERVED; state equality and per-shot scorecards remain insufficient."
 }

@@ -14,7 +14,7 @@
   "observed_shot_ids": ["LF001-S01", "LF001-S02", "LF001-S03"],
   "accepted_shot_ids": ["LF001-S01", "LF001-S02"],
   "partial_shot_ids": ["LF001-S03"],
-  "transition_status": {"LF001-S01->LF001-S02": "PASS", "LF001-S02->LF001-S03": "FAIL"},
+  "transition_status": {"LF001-S01->LF001-S02": "PARTIAL", "LF001-S02->LF001-S03": "FAIL"},
   "latest_runtime_evidence": {
     "S01_artifact": "verification/media/art_730e6a3d284b4ce49b24a1dbdbc37a4d.json",
     "S02_artifact": "verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.json",
@@ -24,7 +24,8 @@
   },
   "blockers": [
     "S03 semantic and continuity evidence is PARTIAL because colored elongated artifacts are visible in sampled frames.",
-    "T02 fails because the next-shot scorecard is PARTIAL; no accepted final LF-001 chain exists.",
+    "T01 is PARTIAL because state equality and per-shot observations are not a side-by-side cross-shot comparison.",
+    "T02 fails because the next-shot scorecard is PARTIAL and drift is known; no accepted final LF-001 chain exists.",
     "The 15.0s assembly is a mechanical PREVIEW_ONLY artifact; semantic promotion is not claimed.",
     "No reference-image conditioning or dense cross-shot identity proof exists.",
     "LF-002 dialogue/lip-sync, LF-003 long-form, FLF, repair execution and second adapter remain unproven."

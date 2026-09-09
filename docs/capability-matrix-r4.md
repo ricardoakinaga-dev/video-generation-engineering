@@ -22,7 +22,7 @@ The matrix is deliberately scoped to observed evidence. `PROVEN` means proven fo
 | Interaction | quality/director | PROVEN | PROVEN | PARTIAL | PARTIAL | BLOCKED | PARTIAL | S01/S02 action is readable; S03 artifacts prevent chain promotion |
 | Vehicle Entry | quality/runtime | PROVEN | PROVEN | PARTIAL | PARTIAL | BLOCKED | PARTIAL | S01/S02 accepted; S03/T02 fail the production gate |
 | Semantic QA | quality/evidence | PROVEN | NOT_APPLICABLE | PARTIAL | PARTIAL | BLOCKED | PARTIAL | Sampled semantic review exists; no dense/editorial acceptance |
-| Transition QA | quality/evidence | PROVEN | NOT_APPLICABLE | PARTIAL | PARTIAL | BLOCKED | PARTIAL | T01 PASS; T02 FAIL because S03 is partial |
+| Transition QA | quality/evidence | PROVEN | NOT_APPLICABLE | PARTIAL | PARTIAL | BLOCKED | PARTIAL | T01 PARTIAL: cross-shot comparison NOT_OBSERVED; T02 FAIL because S03 is partial |
 | Repair | quality/evidence | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | PARTIAL | Natural drift was localized and re-anchor planned; no repair regeneration executed |
 | Assembly | media/evidence | PROVEN | NOT_APPLICABLE | PARTIAL | PARTIAL | BLOCKED | PARTIAL | 15s preview passes mechanical QA but is not semantically promoted |
 | LF-001 | director/runtime/evidence | PROVEN | PROVEN | PARTIAL | PARTIAL | BLOCKED | PARTIAL | S01/S02 accepted; S03 partial; final chain and editorial acceptance absent |

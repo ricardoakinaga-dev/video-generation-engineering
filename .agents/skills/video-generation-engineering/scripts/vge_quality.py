@@ -465,6 +465,74 @@ def validate_continuity_scorecard(scorecard, artifact=None, required_dimensions=
             "unobserved_dimensions": [d["dimension"] for d in dimensions if d["result"] == "NOT_OBSERVED"]}
 
 
+def validate_cross_shot_comparison(comparison, previous_artifact=None, next_artifact=None, required_dimensions=None):
+    """Validate an explicit side-by-side comparison of adjacent artifacts.
+
+    A state handoff and a scorecard for the following shot are not themselves
+    evidence that two shots preserve identity, wardrobe, geography or audio.
+    This contract makes that comparison an independent, hash-bound gate.  A
+    comparison may honestly be ``NOT_OBSERVED`` or ``PARTIAL``; neither can be
+    promoted to an accepted transition.
+    """
+    _object(comparison, "cross_shot_comparison")
+    require(comparison.get("schema_version") == 1, "Unsupported cross-shot comparison schema")
+    _nonempty(comparison.get("id"), "cross_shot_comparison.id")
+    _nonempty(comparison.get("previous_shot_id"), "cross_shot_comparison.previous_shot_id")
+    _nonempty(comparison.get("next_shot_id"), "cross_shot_comparison.next_shot_id")
+    require(comparison["previous_shot_id"] != comparison["next_shot_id"],
+            "Cross-shot comparison needs two different shots")
+    previous = _artifact_binding(comparison.get("previous_artifact"), "cross_shot_comparison.previous_artifact")
+    following = _artifact_binding(comparison.get("next_artifact"), "cross_shot_comparison.next_artifact")
+    require(previous["shot_id"] == comparison["previous_shot_id"],
+            "Cross-shot previous artifact/shot mismatch")
+    require(following["shot_id"] == comparison["next_shot_id"],
+            "Cross-shot next artifact/shot mismatch")
+    require(previous["artifact_id"] != following["artifact_id"],
+            "Cross-shot comparison requires distinct artifacts")
+    require((previous["artifact_ref"], previous["content_hash"]) !=
+            (following["artifact_ref"], following["content_hash"]),
+            "Cross-shot comparison requires distinct artifact bytes")
+    _verify_observed_bytes(previous["artifact_ref"], previous["content_hash"],
+                           "cross_shot_comparison.previous_artifact", required=True)
+    _verify_observed_bytes(following["artifact_ref"], following["content_hash"],
+                           "cross_shot_comparison.next_artifact", required=True)
+    for declared, bound, label in (
+        (previous_artifact, previous, "previous"),
+        (next_artifact, following, "next"),
+    ):
+        if declared is None:
+            continue
+        _artifact_binding(declared, f"cross_shot_comparison.bound_{label}_artifact")
+        for field in ("shot_id", "artifact_id", "artifact_ref", "content_hash"):
+            require(declared[field] == bound[field],
+                    f"Cross-shot {label} artifact disagrees with transition binding: {field}")
+    _timestamp(comparison.get("observed_at"), "cross_shot_comparison.observed_at")
+    _nonempty(comparison.get("procedure"), "cross_shot_comparison.procedure")
+    require(isinstance(comparison.get("limitations", []), list),
+            "cross_shot_comparison.limitations must be an array")
+    required = tuple(required_dimensions or CONTINUITY_DIMENSIONS)
+    require(set(required) <= set(CONTINUITY_DIMENSIONS), "Unknown cross-shot comparison dimension")
+    dimensions = _list(comparison.get("dimensions"), "cross_shot_comparison.dimensions", allow_empty=False)
+    seen = set()
+    for index, dimension in enumerate(dimensions):
+        _dimension_record(dimension, f"cross_shot_comparison.dimensions[{index}]")
+        require(dimension["dimension"] not in seen,
+                f"Duplicate cross-shot comparison dimension: {dimension['dimension']}")
+        seen.add(dimension["dimension"])
+    missing = sorted(set(required) - seen)
+    require(not missing, "Missing cross-shot comparison dimensions: " + ", ".join(missing))
+    status = aggregate_quality([{"result": item["result"]} for item in dimensions])
+    require(comparison.get("status") == status, "Cross-shot comparison aggregate is inconsistent")
+    return {
+        "status": status,
+        "accepted": status == "PASS",
+        "missing_dimensions": missing,
+        "failed_dimensions": [d["dimension"] for d in dimensions if d["result"] == "FAIL"],
+        "partial_dimensions": [d["dimension"] for d in dimensions if d["result"] == "PARTIAL"],
+        "unobserved_dimensions": [d["dimension"] for d in dimensions if d["result"] == "NOT_OBSERVED"],
+    }
+
+
 def _artifact_binding(record, label):
     _object(record, label)
     _nonempty(record.get("shot_id"), f"{label}.shot_id")
@@ -551,7 +619,16 @@ def validate_transition_contract(contract):
     score_artifact = {"id": following["artifact_id"], "artifact_ref": following["artifact_ref"],
                       "content_hash": following["content_hash"]}
     score = validate_continuity_scorecard(scorecard, score_artifact)
-    status = "PASS" if score["accepted"] and not contract.get("known_drift") else "FAIL"
+    comparison = contract.get("cross_shot_comparison")
+    require(isinstance(comparison, dict),
+            "Transition requires an explicit cross-shot comparison")
+    comparison_score = validate_cross_shot_comparison(comparison, previous, following)
+    if contract.get("known_drift") or score["status"] == "FAIL" or comparison_score["status"] == "FAIL":
+        status = "FAIL"
+    elif score["accepted"] and comparison_score["accepted"]:
+        status = "PASS"
+    else:
+        status = "PARTIAL"
     if status == "PASS":
         previous_observation = contract.get("previous_observation")
         next_observation = contract.get("next_observation")
@@ -572,7 +649,8 @@ def validate_transition_contract(contract):
         _nonempty(contract.get("drift_reason"), "transition.drift_reason")
     require(contract.get("status") == status, "Transition aggregate is inconsistent")
     return {"status": status, "accepted": status == "PASS", "transition_id": contract["id"],
-            "repair_owner": contract.get("repair_owner"), "failed_dimensions": score["failed_dimensions"]}
+            "repair_owner": contract.get("repair_owner"),
+            "failed_dimensions": sorted(set(score["failed_dimensions"] + comparison_score["failed_dimensions"]))}
 
 
 def _decision_evidence(value, label):
@@ -1491,6 +1569,30 @@ def _normalize_scorecard_paths(record, record_path, label):
     return normalized
 
 
+def _normalize_cross_shot_comparison_paths(record, record_path, label):
+    """Resolve cross-shot endpoint and evidence paths against their record."""
+    normalized = copy.deepcopy(record)
+    base_dir = Path(record_path).parent
+    for side in ("previous", "next"):
+        artifact = normalized.get(side + "_artifact")
+        if isinstance(artifact, dict) and artifact.get("artifact_ref"):
+            artifact["artifact_ref"] = str(_resolve_quality_path(
+                artifact["artifact_ref"], f"{label}.{side}_artifact.artifact_ref", base_dir))
+    for dimension in normalized.get("dimensions", []):
+        if not isinstance(dimension, dict):
+            continue
+        evidence = dimension.get("evidence", [])
+        if isinstance(evidence, str):
+            evidence = [{"type": "TEXT", "ref": evidence}]
+            dimension["evidence"] = evidence
+        if isinstance(evidence, list):
+            for item in evidence:
+                if isinstance(item, dict) and item.get("ref"):
+                    item["ref"] = str(_resolve_quality_path(
+                        item["ref"], f"{label}.dimensions.evidence.ref", base_dir))
+    return normalized
+
+
 def _validate_long_form_production_evidence(case, base_dir=None):
     """Fail closed: a long-form PASS must resolve its complete evidence graph."""
     production = _object(case.get("production_evidence"), "long_form_case.production_evidence")
@@ -1648,6 +1750,9 @@ def _validate_long_form_production_evidence(case, base_dir=None):
         validated_transition["previous_observation"] = validated_observations["previous"]
         validated_transition["next_observation"] = validated_observations["next"]
         validated_transition["continuity_scorecard"] = scorecard
+        validated_transition["cross_shot_comparison"] = _normalize_cross_shot_comparison_paths(
+            _object(normalized.get("cross_shot_comparison"), f"{label}.cross_shot_comparison"),
+            path, f"{label}.cross_shot_comparison")
         validate_transition_contract(validated_transition)
 
     assembly_path, assembly = _validate_long_form_file_ref(production.get("assembly"), "production_evidence.assembly", base_dir)
@@ -1874,6 +1979,7 @@ __all__ = [
     "CONTINUITY_DIMENSIONS", "SEMANTIC_DIMENSIONS", "EDITORIAL_DIMENSIONS", "CONTACT_PHASES", "CAUSAL_STAGES",
     "AUDIO_LAYERS", "AUDIO_LAYER_ALIASES", "REANCHOR_ACTIONS",
     "validate_observation_contract", "validate_semantic_observation", "validate_editorial_acceptance", "validate_continuity_scorecard",
+    "validate_cross_shot_comparison",
     "validate_shot_acceptance", "validate_transition_contract", "reanchor_decision", "validate_first_last_frame",
     "validate_contact_phases", "validate_causal_sequence", "validate_object_ownership", "validate_vehicle_state",
     "validate_dialogue_contract", "validate_audio_timeline", "aggregate_quality",

@@ -20,6 +20,7 @@ Baseline HEAD was `8b08030853d0d0a3c2ce3fe16fd0e2a9f59bd53d`, with the repositor
 - Collected immutable attempt, artifact, shot, profile, workflow, model, node, device, resource and media evidence.
 - Added LF-001 plan, Scene Bible, shot graph, continuity ledger, contact phases, semantic/continuity scorecards, transitions, re-anchor decision, bounded repair plan, trim reports and mechanical assembly preview.
 - Added structural LF-002/LF-003 contracts, FLF disposition and second-adapter differential evidence without promoting them to runtime proof.
+- Added a hash-bound `cross_shot_comparison` contract covering all 14 continuity dimensions; transitions without an explicit side-by-side oracle now remain `PARTIAL`/`FAIL`.
 - Preserved the master prompt under `docs/` and updated the executable Skill documentation with the new CLI and continuity handoff rules.
 
 ## Changes Rejected
@@ -34,7 +35,7 @@ Baseline HEAD was `8b08030853d0d0a3c2ce3fe16fd0e2a9f59bd53d`, with the repositor
 
 ## Regression Results
 
-The final software verification records 142 tests with zero failures/errors/skips in `verification/software-triple-aaa-r30.json`. Compileall, Skill quick validation, JSON/contract checks, import-cycle inspection and external-CWD smoke are separate gates; their final records are listed in the Distribution section.
+The current software verification records 143 tests with zero failures/errors/skips in `verification/software-triple-aaa-r33.json`. Compileall, Skill quick validation, JSON/contract checks, import-cycle inspection and external-CWD smoke are separate gates; their current records are listed in the Distribution section.
 
 ## Runtime State
 
@@ -46,7 +47,7 @@ Every real POST used a fresh `free_memory`/`system_stats` guard, selected `cuda:
 
 ## LF-001
 
-S01 (approach/pre-contact) and S02 (handle contact/door articulation/torso transfer) each have distinct successful attempts, artifacts, hashes, semantic observations and accepted bundles. T01 is a bounded PASS. S03 (settle/door close) has a distinct successful attempt and artifact, but the probe and production contact sheets show colored elongated artifacts; semantic and continuity records are `PARTIAL`, and T02 is `FAIL`. The 15.0-second assembled preview passes mechanical media QA at 360 frames/24 fps with audio, but remains `PREVIEW_ONLY` and is not semantically promoted.
+S01 (approach/pre-contact) and S02 (handle contact/door articulation/torso transfer) each have distinct successful attempts, artifacts, hashes, semantic observations and accepted bundles. The state-bound T01 handoff is now `PARTIAL`, not `PASS`: its exact artifacts are bound, but the required side-by-side cross-shot comparison is `NOT_OBSERVED`. S03 (settle/door close) has a distinct successful attempt and artifact, but the probe and production contact sheets show colored elongated artifacts; semantic and continuity records are `PARTIAL`, and T02 is `FAIL`. The 15.0-second assembled preview passes mechanical media QA at 360 frames/24 fps with audio, but remains `PREVIEW_ONLY` and is not semantically promoted.
 
 ## FLF
 
@@ -82,7 +83,7 @@ The package has explicit ownership between directing, canonical state, adapter c
 
 ## Tests
 
-`python3 -m unittest discover -s tests -p 'test*.py' -v`: 142 passed. `python3 -m compileall -q .agents/skills/video-generation-engineering/scripts`: passed. `quick_validate.py .agents/skills/video-generation-engineering`: `Skill is valid!`. `python3 tools/verify.py --output verification/software-triple-aaa-r30.json`: passed. The full verification and package checks are frozen only after the final distribution gate.
+`python3 -m unittest discover -s tests -p 'test*.py' -v`: 143 passed. `python3 -m compileall -q .agents/skills/video-generation-engineering/scripts`: passed. `quick_validate.py .agents/skills/video-generation-engineering`: `Skill is valid!`. `python3 tools/verify.py --output verification/software-triple-aaa-r33.json`: passed. The full verification and package checks are frozen only after the final distribution gate.
 
 ## Runtime Executions
 
@@ -94,11 +95,11 @@ Historical R4 failures remain retained, including earlier OOM/failed attempts an
 
 ## Independent Critic
 
-The fresh critic is required to be read-only, non-inherited, reviewer-owned and fingerprinted before/after. The authoritative memo is `verification/triple-aaa-independent-critic-r4.md`; its verdict and mutation sentinel are intentionally kept as a separate immutable review record. The closure report does not convert that review into a production PASS.
+The pre-hardening memo `verification/triple-aaa-independent-critic-r4.md` is historical and does not govern this candidate. The post-hardening review is required to be read-only, non-inherited, reviewer-owned and fingerprinted before/after; its final record is reserved at `verification/triple-aaa-independent-critic-r5.md`. The closure report does not convert independent review into a production PASS.
 
 ## Distribution
 
-The final R4 archive is `dist/video-generation-engineering-triple-aaa-r6.zip`, with CRC/SHA manifest and external-CWD smoke in `verification/distribution-triple-aaa-r6.json`. It contains the executable Skill and its references/assets, excludes credentials, model weights, generated runtime media and absolute workspace paths, and is validated independently from the source checkout.
+The current R4 archive is `dist/video-generation-engineering-triple-aaa-r7.zip`, with CRC/SHA manifest and external-CWD smoke in `verification/distribution-triple-aaa-r7.json`. It contains the executable Skill and its references/assets, excludes credentials, model weights, generated runtime media and absolute workspace paths, and is validated independently from the source checkout.
 
 ## Capability Matrix
 

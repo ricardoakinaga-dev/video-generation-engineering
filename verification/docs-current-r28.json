@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "docs-current-r28",
+  "observed_at": "2026-09-09T21:45:38Z",
+  "scope": "CURRENT_DOCUMENTATION_STRUCTURAL_AUDIT_AFTER_CROSS_SHOT_GATE",
+  "procedure": "python3 audit-artifacts/docs-2026-09-08-r5/check_docs.py",
+  "status": "PASS",
+  "documents": 52,
+  "yaml_blocks": 50,
+  "local_markdown_links": 519,
+  "requirements": 80,
+  "yaml_errors": [],
+  "local_link_errors": [],
+  "missing_traceability_ids": [],
+  "implicit_yaml_booleans": [],
+  "prompt_view_omissions": {
+    "contract_has_top_level": true,
+    "adapter_has_top_level": true,
+    "adapter_nested_only": false
+  },
+  "complete_profile_parity": true,
+  "collection_parity": true,
+  "limitations": [
+    "Structural documentation inspection only; no runtime, semantic media or external source validation."
+  ]
+}

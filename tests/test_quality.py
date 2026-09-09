@@ -31,6 +31,7 @@ from vge_quality import (
     validate_causal_sequence,
     validate_contact_phases,
     validate_continuity_scorecard,
+    validate_cross_shot_comparison,
     validate_dialogue_contract,
     validate_editorial_acceptance,
     validate_feature_profile,
@@ -177,6 +178,42 @@ def scorecard(status="PASS"):
             "provenance": quality_provenance("shot_2", "artifact_2")}
 
 
+def cross_shot_comparison(previous_ref=None, previous_hash=None, next_ref=None, next_hash=None, status="PASS"):
+    previous_ref = str(QUALITY_ARTIFACT) if previous_ref is None else str(previous_ref)
+    previous_hash = QUALITY_ARTIFACT_HASH if previous_hash is None else previous_hash
+    next_ref = previous_ref if next_ref is None else str(next_ref)
+    next_hash = previous_hash if next_hash is None else next_hash
+    dimensions = []
+    for dimension in CONTINUITY_DIMENSIONS:
+        kind = "HUMAN" if dimension == "audio" else "TRANSITION"
+        item = {"dimension": dimension, "result": status, "oracle": oracle(kind),
+                "confidence": "HIGH" if status == "PASS" else "MEDIUM", "limitations": []}
+        if status == "PASS":
+            item["evidence"] = [
+                {"type": "FRAME", "ref": previous_ref, "content_hash": previous_hash, "time_s": 0.5},
+                {"type": "FRAME", "ref": next_ref, "content_hash": next_hash, "time_s": 0.5},
+            ]
+        else:
+            item["reason"] = "No side-by-side cross-shot oracle was run in this fixture"
+            item["evidence"] = []
+        dimensions.append(item)
+    return {
+        "schema_version": 1,
+        "id": "comparison_1",
+        "previous_shot_id": "shot_1",
+        "next_shot_id": "shot_2",
+        "previous_artifact": {"shot_id": "shot_1", "artifact_id": "artifact_1",
+                               "artifact_ref": previous_ref, "content_hash": previous_hash},
+        "next_artifact": {"shot_id": "shot_2", "artifact_id": "artifact_2",
+                           "artifact_ref": next_ref, "content_hash": next_hash},
+        "observed_at": datetime.now(timezone.utc).isoformat(),
+        "procedure": "Independent side-by-side adjacent-shot comparison fixture",
+        "dimensions": dimensions,
+        "status": status if status != "NOT_OBSERVED" else "NOT_OBSERVED",
+        "limitations": ["Fixture comparison; not a visual claim about production media."],
+    }
+
+
 class QualityContractTests(unittest.TestCase):
     def test_observation_requires_exact_categories_and_hash(self):
         report = validate_observation_contract(observation())
@@ -278,6 +315,8 @@ class QualityContractTests(unittest.TestCase):
                 "previous_observation": json.loads((root / "obs_shot_1.json").read_text(encoding="utf-8")),
                 "next_observation": json.loads((root / "obs_shot_2.json").read_text(encoding="utf-8")),
                 "continuity_scorecard": next_scorecard,
+                "cross_shot_comparison": cross_shot_comparison(
+                    str(QUALITY_ARTIFACT), QUALITY_ARTIFACT_HASH, str(next_media), next_media_hash),
             }
             transition_path = root / "transition.json"
             write_json(transition_path, transition)
@@ -367,6 +406,27 @@ class QualityContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "Missing continuity dimensions"):
             validate_continuity_scorecard(missing)
 
+    def test_cross_shot_comparison_is_explicit_and_hash_bound(self):
+        next_media = PROVENANCE_ROOT / "comparison-next.mp4"
+        shutil.copyfile(QUALITY_ARTIFACT, next_media)
+        next_media_hash = file_hash(next_media)
+        observed = cross_shot_comparison(str(QUALITY_ARTIFACT), QUALITY_ARTIFACT_HASH,
+                                         next_media, next_media_hash, "NOT_OBSERVED")
+        result = validate_cross_shot_comparison(observed)
+        self.assertEqual("NOT_OBSERVED", result["status"])
+        self.assertFalse(result["accepted"])
+        missing = copy.deepcopy(observed)
+        missing["dimensions"] = missing["dimensions"][:-1]
+        with self.assertRaisesRegex(ContractError, "Missing cross-shot comparison dimensions"):
+            validate_cross_shot_comparison(missing)
+        accepted = cross_shot_comparison(str(QUALITY_ARTIFACT), QUALITY_ARTIFACT_HASH,
+                                         next_media, next_media_hash, "PASS")
+        self.assertTrue(validate_cross_shot_comparison(accepted)["accepted"])
+        forged = copy.deepcopy(accepted)
+        forged["next_artifact"]["content_hash"] = digest("forged")
+        with self.assertRaisesRegex(ContractError, "artifact bytes changed"):
+            validate_cross_shot_comparison(forged)
+
     def test_transition_binds_state_and_scorecard(self):
         next_media = PROVENANCE_ROOT / "transition-next.mp4"
         shutil.copyfile(QUALITY_ARTIFACT, next_media)
@@ -388,6 +448,8 @@ class QualityContractTests(unittest.TestCase):
                     "previous_end_state": {"object.door": "open", "subject.position": "left"},
                     "next_start_state": {"object.door": "open", "subject.position": "left"},
                     "continuity_scorecard": next_scorecard,
+                    "cross_shot_comparison": cross_shot_comparison(
+                        str(QUALITY_ARTIFACT), QUALITY_ARTIFACT_HASH, str(next_media), next_media_hash),
                     "previous_observation": previous_observation,
                     "next_observation": next_observation,
                     "status": "PASS"}
@@ -418,7 +480,10 @@ class QualityContractTests(unittest.TestCase):
                     "required_state_properties": ["object.door"],
                     "previous_end_state": {"object.door": "open"},
                     "next_start_state": {"object.door": "open"},
-                    "continuity_scorecard": next_scorecard, "status": "PASS"}
+                    "continuity_scorecard": next_scorecard,
+                    "cross_shot_comparison": cross_shot_comparison(
+                        str(QUALITY_ARTIFACT), QUALITY_ARTIFACT_HASH, str(next_media), next_media_hash),
+                    "status": "PASS"}
         with self.assertRaisesRegex(ContractError, "both adjacent artifacts"):
             validate_transition_contract(contract)
 

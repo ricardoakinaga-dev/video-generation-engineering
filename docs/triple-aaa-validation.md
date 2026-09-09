@@ -55,7 +55,7 @@ An observed quality record carries, at minimum:
 
 The canonical plan retains Scene Bible entities, reference roles, locks, state deltas, causal beats, shot dependencies, camera geography, acceptance IDs and a repair owner. `START_STATE → ACTION → END_STATE` is required for material transitions. `validate_shot_acceptance()` now fails closed when an observation does not contain a result for every required acceptance check.
 
-Adjacent transition acceptance requires different shot IDs, different artifact IDs, distinct artifact locator/hash pairs, equal declared boundary state, a complete continuity scorecard and PASS observations for both artifacts. A generated boundary frame is not accepted merely because it is named as the next input.
+Adjacent transition acceptance requires different shot IDs, different artifact IDs, distinct artifact locator/hash pairs, equal declared boundary state, a complete continuity scorecard, an explicit hash-bound side-by-side comparison across all continuity dimensions and PASS observations for both artifacts. A generated boundary frame, state equality or a next-shot scorecard is not accepted merely because it is named as the next input; an absent comparison leaves the transition `PARTIAL` or `FAIL`.
 
 ### Continuity and semantic observation
 

@@ -209,15 +209,18 @@
         ".agent/plans/triple-aaa-r4-closure.md",
         "docs/capability-matrix-r4.md",
         "docs/triple-aaa-final-production-closure-r4.md",
-        "verification/triple-aaa-independent-critic-r4.md",
-        "verification/distribution-triple-aaa-r6.json"
+    "verification/triple-aaa-independent-critic-r4.md",
+    "verification/software-triple-aaa-r33.json",
+    "verification/docs-current-r28.json",
+    "verification/distribution-triple-aaa-r7.json",
+    ".agents/skills/video-generation-engineering/scripts/vge_quality.py"
       ],
       "next_action": {
-        "id": "VGE-TRIPLE-AAA-R4:POST-PUSH-VERIFY",
+    "id": "VGE-TRIPLE-AAA-R4:FRESH-CRITIC",
         "kind": "VERIFY",
-        "summary": "Record the verified remote handoff and preserve the independent REJECT verdict and partial production status",
-        "target": "Current R4 candidate, control-plane accounting and configured origin main",
-        "completion_signal": "Remote tip and local tip are verified, post-push status is clean, and no Triple-AAA production proof is claimed; reopen only for authorized production gaps"
+    "summary": "Obtain a fresh non-inherited read-only critic for the post-cross-shot-gate candidate",
+    "target": "Current R4 source, transition contract, evidence matrix, software verification and R7 distribution",
+    "completion_signal": "Reviewer returns a criterion-level matrix, reviewer-owned scope fingerprint and mutation sentinel; production claims remain limited to observed evidence"
       }
     }
   ]
