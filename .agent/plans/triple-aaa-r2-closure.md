@@ -42,6 +42,7 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 - [x] (2026-09-09T03:24:55Z) Re-ran the documentation checker after final report/scorecard edits: 46 documents, 50 YAML blocks, 478 local links, 80 requirements, zero errors; current evidence was docs r17 before the critic-attempt records.
 - [ ] (2026-09-09T03:41:58Z) R15 and R16 fresh post-guard critic attempts were operationally incomplete: neither returned the required criterion matrix, reviewer-owned fingerprint or mutation sentinel; preserve both records and keep R2-22 open.
 - [x] (2026-09-09T04:14:30Z) R17 fresh non-inherited critic returned the full R2 matrix and `REJECT` with a matching reviewer-owned 29-file package fingerprint; its whole-worktree sentinel caught lead-owned evidence/docs changes, so a final frozen review remains required.
+- [x] (2026-09-09T04:35:00Z) R18 was attempted against clean HEAD `84301ad` with a fresh non-inherited reviewer; after bounded waits and interrupt it remained `running` and was closed without matrix/fingerprint/sentinel. Preserve the operational blocker and do not substitute lead-owned review.
 - [ ] (2026-09-08T18:55:36-03:00) Blocked/limited: real LF-001–003 acceptance, dialogue/lip-sync/FLF and second adapter remain dependent on unobserved runtime capability.
 
 ## Surprises & Discoveries
@@ -84,9 +85,9 @@ Implement the complete user-supplied State-of-the-Art / Triple-AAA prompt agains
 
 - Final release boundary: `READY_WITH_RISKS`; deterministic implementation, 137-test regression, package, portability and documentation checks pass within scope.
 - Preserved limits: LF-001/002/003 remain `BLOCKED`, LF-004 remains `NOT_RUN`, and semantic audiovisual, dialogue/lip-sync, FLF, second-adapter and real-repair claims remain unproven.
-- Fresh-review outcome: R10, R11 and R12 ended operationally without a criterion-level response; R13 rejected the pre-fix snapshot and is stale after correction; R14 rejected the pre-resource-guard candidate; R15/R16 were operationally incomplete; R17 returned a full `REJECT` matrix with a stable package fingerprint but a whole-worktree warning during lead-owned accounting edits. R2-22 remains open until the final frozen critic reviews the committed current candidate.
+- Fresh-review outcome: R10, R11 and R12 ended operationally without a criterion-level response; R13 rejected the pre-fix snapshot and is stale after correction; R14 rejected the pre-resource-guard candidate; R15/R16 were operationally incomplete; R17 returned a full `REJECT` matrix with a stable package fingerprint but a whole-worktree warning during lead-owned accounting edits; R18 was operationally incomplete against clean HEAD. R2-22 remains blocked by reviewer responsiveness.
 - Latest runtime outcome: A003 is a real bounded LF-001 S01 artifact with mechanical QA `PASS` and semantic/continuity `PARTIAL`; the remaining contact phases, dependent shots, transitions, repair/re-anchor, LF-002/LF-003 and other production frontiers remain blocked or unobserved.
-- Smallest next action: commit the current evidence/accounting update, run one final fresh read-only critic against the clean current HEAD, then preserve the honest `READY_WITH_RISKS` boundary and request a separately owned GPU/resource window for any further production probe.
+- Smallest next action: preserve the current committed `READY_WITH_RISKS` boundary; when a responsive independent reviewer and separately owned GPU/resource window are available, rerun the final critic and the blocked production probes.
 
 ## Context and Orientation
 
@@ -130,7 +131,7 @@ The canonical flow is intent → Scene Bible/scene plan → shot graph and state
 
 ### Milestone 4 — Reverify, critic, distribution
 
-- Outcome: fresh integrated verification and rebuilt portable package pass; R13 found and rejected a real pre-fix semantic acceptance gap, which was corrected and regression-tested. R14 rejected production promotion, R17 supplied the current criterion matrix and rejected Triple-AAA promotion, and a final frozen critic is required because lead-owned evidence/docs changed after R17.
+- Outcome: fresh integrated verification and rebuilt portable package pass; R13 found and rejected a real pre-fix semantic acceptance gap, which was corrected and regression-tested. R14 rejected production promotion, R17 supplied the current criterion matrix and rejected Triple-AAA promotion, and R18 was operationally incomplete against the clean commit. The final critic gate remains blocked by reviewer responsiveness.
 - Scope/dependencies: all previous milestones; no material changes after critic without re-review.
 - Demonstration: exact commands, fingerprints, ZIP/manifest/CWD checks.
 - Acceptance/evidence: R2-17, R2-22, R2-23, R2-25, R2-26.
@@ -143,13 +144,13 @@ Execute phases A–M in order: baseline; P0 defects; LF-001; dialogue/lip-sync/a
 
 From /home/ricardo/Área de trabalho/video-generation-engineering:
 
-1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC-POST-GUARD] Freeze the current A003 evidence/accounting candidate and run a final non-inherited read-only critic with a criterion-level matrix, reviewer-owned scope fingerprint and mutation sentinel.
+1. [VGE-TRIPLE-AAA-R2:FRESH-CRITIC-POST-GUARD] The current candidate is frozen at `84301ad`; obtain a responsive final non-inherited read-only critic with a criterion-level matrix, reviewer-owned scope fingerprint and mutation sentinel when review capacity is available.
 2. [x] [VGE-TRIPLE-AAA-R2:FRESH-CRITIC] R14 reviewed the clean candidate with a complete 29-file reviewer-owned pre/post fingerprint and returned the full R2-01…R2-26 matrix; decision `REJECT`.
 3. [x] [VGE-TRIPLE-AAA-R2:IMPLEMENT-CLOSURE] Implement the smallest missing R2 contract/fixture/test and canonical documentation updates; preserve existing R1 behavior and evidence.
 4. [x] Run focused contract tests, full unittest, compile/Skill/docs/package checks and update verification ledgers with current evidence.
 5. [x] Perform a self-review against every R2 criterion and resolve material defects without weakening the bar.
 6. [x] R14 superseded the incomplete R7/R8/R10/R11/R12 attempts and the stale R13 snapshot; its fingerprint matched and its current rejection is recorded.
-7. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; R4 package, r20 documentation audit and r24 offline verification are current for the A003 candidate.
+7. [x] Rebuild the portable distribution and record the final report, matrix, scores, blockers and claims; R4 package, r22 documentation audit and r24 offline verification are current for the A003 candidate.
 8. [ ] [VGE-TRIPLE-AAA-R2:PRODUCTION-EVIDENCE] After the current review, obtain explicit runtime/resource/rights authority and execute the smallest safe LF-001, LF-002 and LF-003 probes, preserving `BLOCKED`/`NOT_RUN` when the local queue or model capability cannot support them.
 
 ## Validation and Acceptance
@@ -160,7 +161,7 @@ From /home/ricardo/Área de trabalho/video-generation-engineering:
 | R2-03..R2-16/R2-21 | YES | focused unit/property/metamorphic/known-bad tests and CLI contracts | invalid states reject for intended reasons; valid structure remains usable | tests/, verification/software-triple-aaa-r24.json, verification/lf-semantic-acceptance-boundary-r1.json, verification/long-form/LF-001-evidence-r2.json |
 | R2-17/R2-23 | YES | current local runtime where safe, docs/package/CWD checks | actual scope is recorded; portable ZIP is fresh and clean | verification/, dist/ |
 | R2-19/R2-20/R2-25 | YES | docs/link audit, report/matrix inspection | required sections, scores, statuses and non-claims are present | docs/triple-aaa-final-report.md, docs/capability-matrix-r1.md |
-| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r17.md, final frozen critic record |
+| R2-22 | YES | fresh critic, pre/post fingerprints and read-only sentinel | reviewer sees final candidate; any mutation invalidates evidence | verification/triple-aaa-independent-critic-r17.md, verification/triple-aaa-independent-critic-r18.md (incomplete) |
 
 ## Risks and Human Decisions
 
@@ -193,11 +194,13 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 - verification/docs-current-r18.json: documentation/link/traceability audit after recording the incomplete critic attempts; 46 documents, 50 YAML blocks, 480 local links and 80 requirements pass before the final report wording refresh.
 - verification/docs-current-r19.json: current documentation/link/traceability audit after the final report wording refresh; 46 documents, 50 YAML blocks, 480 local links and 80 requirements pass.
 - verification/docs-current-r20.json: historical documentation/link/traceability audit after initial A003 evidence/accounting edits; 46 documents, 50 YAML blocks, 494 local links and 80 requirements pass.
-- verification/docs-current-r21.json: current documentation/link/traceability audit after final report/state/critic accounting edits; 46 documents, 50 YAML blocks, 495 local links and 80 requirements pass.
+- verification/docs-current-r21.json: historical documentation/link/traceability audit after final report/state/critic accounting edits; 46 documents, 50 YAML blocks, 495 local links and 80 requirements pass.
+- verification/docs-current-r22.json: current documentation/link/traceability audit after recording the R18 operationally incomplete review; 46 documents, 50 YAML blocks, 496 local links and 80 requirements pass.
 - verification/triple-aaa-independent-critic-r14.md: historical fresh non-inherited review of the pre-resource-guard candidate; 29-file reviewer-owned fingerprint matched pre/post and final decision `REJECT`.
 - verification/triple-aaa-independent-critic-r15.md: fresh post-resource-guard critic attempt by Boyle; operationally incomplete with no returned matrix or reviewer-owned fingerprint.
 - verification/triple-aaa-independent-critic-r16.md: second fresh post-resource-guard critic attempt by Heisenberg; operationally incomplete with no returned matrix or reviewer-owned fingerprint.
 - verification/triple-aaa-independent-critic-r17.md: fresh post-resource-guard critic by Einstein; full R2 matrix and stable package fingerprint, decision `REJECT`, whole-worktree warning during lead-owned evidence/docs edits.
+- verification/triple-aaa-independent-critic-r18.md: fresh post-resource-guard critic by Zeno against clean HEAD; operationally incomplete after bounded waits and shutdown, with no matrix, fingerprint or sentinel.
 - .agent/verification.jsonl#VER-20260908-AAA-R2-STATE-RECOVERY-10: current control-plane pointer recheck; the active pointer is canonical while preserved legacy ledger failures remain explicit.
 - verification/comfyui-preflight-r2.json: current local live graph/schema preflight without generation.
 - verification/comfyui-queue-recheck-20260908.json: current local queue/resource observation; no bounded production submission was safe.
@@ -217,3 +220,5 @@ All writes create new revisions or use apply_patch; existing generated artifacts
 Plan revision note, 2026-09-09T03:41:58Z: R8 and R9 were historical for earlier candidate snapshots, R10–R12 shut down without a criterion-level response, R13 rejected the pre-fix snapshot after identifying a semantic long-form acceptance gap and score/report drift, and R14 rejected the pre-resource-guard candidate because production evidence was missing. The Lead then ran a bounded LF-001 probe plus one allowed reduced diagnostic; both failed with OOM and no artifact. The Lead repaired the runtime boundary with an explicit selected-device/free-VRAM guard, added regressions, reconciled accounting to 137 tests, rebuilt software verification r23 and portable package R4, and recorded docs r17. Two fresh post-guard critic attempts (R15/R16) also ended operationally incomplete without matrix or fingerprint. R14 is retained as historical; R2-22 must be re-established by a responsive fresh post-guard critic. `READY_WITH_RISKS` remains the product release boundary and `TRIPLE_AAA_PROVEN` is withheld until production evidence exists.
 
 Plan revision note, 2026-09-09T04:16:24Z: A003 later succeeded after the selected-device resource window was available and produced only LF-001 S01 approach/pre-contact media. Its canonical attempt/artifact chain passed provenance validation; mechanical media QA passed; semantic and continuity records are partial; editorial acceptance was not run. The lead synchronized the current LF-001 evidence r2, report, scorecard, implementation docs, software r24 and docs r20. R17 then returned a full independent matrix and `REJECT` with a stable package fingerprint but detected concurrent lead-owned worktree changes. Commit the current accounting update and run one final frozen critic; keep production and Triple-AAA promotion blocked.
+
+Plan revision note, 2026-09-09T04:39:58.929499301Z: R18 was attempted against clean HEAD `84301ad` with a fresh non-inherited reviewer. After four bounded waits, an interrupt requesting a concise result and shutdown, the reviewer returned no criterion matrix, reviewer-owned fingerprint, mutation sentinel or verdict. The attempt is preserved as `INCOMPLETE`; it does not satisfy R2-22. The current documentation audit is r22, and the committed boundary remains `READY_WITH_RISKS` with production and Triple-AAA promotion blocked.

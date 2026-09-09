@@ -39,4 +39,4 @@ Current global maturity: `3 — RUNTIME_PROVENANCE`, with bounded audiovisual ob
 
 ## Verdict policy
 
-`TRIPLE_AAA_PROVEN` requires production evidence, not only structural scores. The current verdict is `READY_WITH_RISKS`; R14's historical independent decision was `REJECT`; R15/R16 were incomplete, and R17 returned a fresh `REJECT` with a stable package fingerprint but a whole-worktree warning during lead-owned accounting edits. `TRIPLE_AAA_CANDIDATE` is withheld because LF-001..003 and the production evidence gates have not passed.
+`TRIPLE_AAA_PROVEN` requires production evidence, not only structural scores. The current verdict is `READY_WITH_RISKS`; R14's historical independent decision was `REJECT`; R15/R16 were incomplete, R17 returned a fresh `REJECT` with a stable package fingerprint but a whole-worktree warning during lead-owned accounting edits, and R18 was operationally incomplete without a matrix. `TRIPLE_AAA_CANDIDATE` is withheld because LF-001..003 and the production evidence gates have not passed.

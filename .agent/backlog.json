@@ -95,7 +95,7 @@
         "VGE-TRIPLE-AAA-R1"
       ],
       "owner": "Codex",
-      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 137-test software evidence, fail-closed selected-device/free-VRAM guard, bounded LF-001 OOM evidence, real but partial A003 S01 evidence and rebuilt portable distribution; production remains BLOCKED, R14 is historical, R15/R16 were incomplete and R17 rejected promotion with a final frozen review still required",
+      "acceptance_summary": "R2 frozen bar, exact prompt copy, canonical LF/dialogue/interaction/repair contracts, explicit semantic/media/assembly/editorial contracts, structural ladder fixtures, current matrix/report, 137-test software evidence, fail-closed selected-device/free-VRAM guard, bounded LF-001 OOM evidence, real but partial A003 S01 evidence and rebuilt portable distribution; production remains BLOCKED, R14 is historical, R15/R16 were incomplete, R17 rejected promotion and R18 was incomplete, so a responsive final review is still required",
       "evidence_refs": [
         "docs/master-prompt-triple-aaa-r2.txt",
         "docs/triple-aaa-quality-bar-r2.json",
@@ -111,6 +111,7 @@
         "verification/triple-aaa-independent-critic-r15.md",
         "verification/triple-aaa-independent-critic-r16.md",
         "verification/triple-aaa-independent-critic-r17.md",
+        "verification/triple-aaa-independent-critic-r18.md",
         ".agent/verification.jsonl#VER-20260908-AAA-R2-STATE-RECOVERY-10",
         "verification/docs-current-r15.json",
         "verification/docs-current-r16.json",
@@ -119,6 +120,7 @@
         "verification/docs-current-r19.json",
         "verification/docs-current-r20.json",
         "verification/docs-current-r21.json",
+        "verification/docs-current-r22.json",
         "verification/distribution-triple-aaa-r2.json",
         "verification/distribution-triple-aaa-r4.json",
         "verification/comfyui-runtime-resource-boundary-20260909.json",
@@ -152,7 +154,7 @@
       "next_action": {
         "id": "VGE-TRIPLE-AAA-R2:FRESH-CRITIC-POST-GUARD",
         "kind": "REVIEW",
-        "summary": "Freeze the A003 evidence/accounting candidate and run a final fresh independent critic",
+        "summary": "Preserve the committed A003 boundary and obtain a responsive final fresh independent critic when review capacity is available",
         "target": "Skill package, tests, current R4 distribution and production-boundary evidence",
         "completion_signal": "Reviewer returns criterion-level matrix, reviewer-owned scope fingerprint and mutation sentinel; production blockers remain explicit"
       }
