@@ -1,4 +1,4 @@
-# Long-form validation package — R2
+# Long-form validation package — R3
 
 This document owns the production ladder evidence envelope. A fixture can be structurally complete while its production status remains `BLOCKED`, `NOT_RUN` or `PARTIAL`; structural completeness is never audiovisual proof.
 
@@ -29,15 +29,16 @@ The controlled local A003 run produced a real 5.1667-second S01 MP4 at 384×224,
 
 `validate_long_form_case()` accepts `PASS` only when:
 
-1. all required intent, plan, Scene Bible, shot graph, continuity, audio/dialogue and checkpoint references resolve;
-2. `production_evidence_complete` is true;
-3. every attempt is `SUCCEEDED` and hash-bound;
-4. every artifact is accepted, has a current media reference and matches its media hash;
-5. every observation is accepted and tied to the exact artifact bytes;
-6. every transition has distinct adjacent artifacts and accepted boundary evidence;
-7. the assembly record is editorially accepted.
+1. all required intent, plan, Scene Bible, shot graph, continuity, audio/dialogue and checkpoint references are immutable hash-bound records;
+2. the canonical plan shot order exactly matches the case and the shot graph/continuity records bind that same order;
+3. `production_evidence_complete` is true;
+4. every attempt is `SUCCEEDED` and hash-bound;
+5. every artifact is accepted, has a current media reference and matches its media hash;
+6. every artifact has exactly one accepted semantic observation and every adjacent pair has an accepted transition validated by the canonical transition contract;
+7. the assembly record is a strict ordered manifest bound to all source-shot hashes;
+8. current final media QA is `PASS` and a separate six-dimension human editorial acceptance is `PASS`.
 
-Placeholder paths or a bare `production_evidence_complete: true` fail closed. Duplicating one five-second file, concatenating unaccepted media, or asserting continuity from prompt text cannot satisfy a ladder case.
+Placeholder paths, a bare `production_evidence_complete: true`, rewritten transition locators/hashes, weak oracles, duplicated observations or a missing final QA/editorial record fail closed. Duplicating one five-second file, concatenating unaccepted media, or asserting continuity from prompt text cannot satisfy a ladder case.
 
 ## LF-001 acceptance dimensions
 
@@ -53,4 +54,4 @@ The multi-shot case requires a Scene Bible with identity anchors, wardrobe, rela
 
 ## Current boundary
 
-The local H3 runtime now has one additional observed short T2V/native-audio S01 segment, alongside the earlier exact-scope T2V and `PARTIAL` R2V records. It still does not provide accepted LF-001: S02/S03, all seven contact phases, transitions, repair/re-anchor and a 10–15-second accepted chain are missing. Dialogue/lip-sync, FLF and LF-003 production evidence also remain unavailable. The correct status is therefore `BLOCKED`, not a synthetic PASS. See the [LF-001 evidence r2](../verification/long-form/LF-001-evidence-r2.json), [capability matrix](capability-matrix-r1.md) and [Triple-AAA closure report](triple-aaa-final-report.md).
+The local H3 runtime now has one additional observed short T2V/native-audio S01 segment, alongside the earlier exact-scope T2V and `PARTIAL` R2V records. It still does not provide accepted LF-001: S02/S03, all seven contact phases, transitions, repair/re-anchor and a 10–15-second accepted chain are missing. Dialogue/lip-sync, FLF and LF-003 production evidence also remain unavailable. The correct status is therefore `BLOCKED`, not a synthetic PASS. See the [LF-001 evidence r2](../verification/long-form/LF-001-evidence-r2.json), [current capability matrix](capability-matrix-r3.md) and [current Triple-AAA closure report](triple-aaa-final-production-closure.md).

@@ -39,6 +39,8 @@ The implementation adds `state_changes`, a list of `{property, prior, next, caus
 
 `prepare` fills mechanical IDs/references, derives timelines from authored shot durations and computes planned end states. It never invents entity identities, causal actions, dialogue or runtime support. `validate` reports structured issues with gate, reason, preserved intent, evidence gap, next action and repair path. `compile` refuses a structurally failed plan and emits the ten canonical sections with top-level mappings and omissions. All generated plan lifecycle remains PLANNED/READY; runtime evidence has a separate validator.
 
+Canonical compilation is fail-closed: `validate_canonical_state()` rejects contradictory door/motion/seating, temporal-lighting, camera-motion, dialogue-turn and declared state combinations before adapter work. `adapt_prompt()` and `adapter_differential()` require that validated state. Negative constraints are selected by explicit scene-risk families and are returned with selected/omitted rationale; an omitted family is a disclosed limitation, never a hidden prompt loss.
+
 Omit derived structures from a treatment to let `prepare` create them. To override edit/reset decisions explicitly, use these exact shapes (not `shot_order` or `max_chain_length`):
 
 ```json

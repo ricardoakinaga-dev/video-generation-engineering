@@ -8,7 +8,9 @@ Architecture asks whether ownership, dependencies, contracts, progressive disclo
 
 ## Status vocabulary
 
-Use `PASS`, `FAIL`, `PARTIAL`, `NOT_APPLICABLE`, `NOT_OBSERVED`, `NOT_RUN`, `UNKNOWN` and `BLOCKED` deliberately. `PASS` requires an explicit oracle, evidence bound to the exact artifact hash, confidence that is not `UNKNOWN`, and limitations. Node presence, a prompt, a workflow schema, a contact sheet or ffprobe metadata never proves semantics.
+Use `PASS`, `FAIL`, `PARTIAL`, `NOT_APPLICABLE`, `NOT_OBSERVED`, `NOT_RUN`, `UNKNOWN` and `BLOCKED` deliberately. The six release-facing quality states are PASS/FAIL/PARTIAL/NOT_OBSERVED/NOT_APPLICABLE/BLOCKED; NOT_RUN and UNKNOWN remain explicit internal non-evidentiary states. `PASS` requires an explicit oracle strong enough for the claim, evidence bound to the exact artifact hash, confidence that is not `UNKNOWN`, and limitations. Node presence, a prompt, a workflow schema, a contact sheet or ffprobe metadata never proves semantics.
+
+Oracle strength is claim-specific: frame checks can support visible snapshots, sequence or multi-frame checks are required for temporal/lip-sync claims, audio checks are required for sound claims, transition checks are required for adjacent-shot claims, and human checks are required for editorial judgement. A weaker oracle cannot be promoted by metadata or by an aggregate status.
 
 ## Long-form ladder
 
@@ -28,7 +30,7 @@ Every adjacent-shot review scores these dimensions independently: identity, ward
 ## Contracts
 
 - Shot acceptance binds canonical shot revision, immutable attempt and exact artifact hash. Generation acceptance and editorial acceptance are separate.
-- Transition acceptance binds existing previous and next artifact bytes, previous artifact end state to next shot start state and a continuity scorecard. The smallest repair owner is selected from reference conditioning, continuity, cinematography, adapter, decomposition, dialogue, audio, performance or human review.
+- Transition acceptance binds existing previous and next artifact bytes, previous artifact end state to next shot start state and a continuity scorecard. Long-form PASS additionally validates the canonical shot order, every adjacent transition, immutable observation IDs, strict assembly manifest, current final media QA and a separate human editorial acceptance record. The smallest repair owner is selected from reference conditioning, continuity, cinematography, adapter, decomposition, dialogue, audio, performance or human review.
 - Re-anchor actions are `CONTINUE`, `RE_ANCHOR`, `RESET`, `REGENERATE` and `SPLIT`. Drift is observed evidence, not a prompt instruction.
 - First/last-frame support is feature-scoped. A capability probe must inspect endpoint identity, motion path, object state and delivered artifact; node metadata alone is not proof. Observed PASS contracts also carry the successful-attempt, shot-contract and generated-artifact provenance envelope.
 - Physics is represented as observable assertions across `APPROACH`, `PRE_CONTACT`, `CONTACT`, `FORCE_OR_ARTICULATION`, `TRANSFER_OR_MOTION`, `RELEASE` and `RESULT`.

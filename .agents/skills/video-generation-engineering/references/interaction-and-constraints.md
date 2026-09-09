@@ -29,6 +29,8 @@ Precedence: rights and hard input prerequisites; story causality and explicit us
 
 Select families by risk: anatomy, contact/collision, articulation, gravity/force, vehicle/road, world/lighting, temporal, identity/reference and cinematic. A simple landscape does not need a hand anatomy checklist. A blanket “no errors” request becomes scoped generation hints plus concrete QA assertions and suitable coverage; no negative prompt is an enforcement guarantee.
 
+The executable selector uses the same rule: infer risk only from the canonical scene, choose typed constraints from applicable families, and report every declared but unrelated constraint as omitted with a reason. Negative text is a generation hint and QA obligation, not evidence that the generated artifact obeyed it.
+
 ## Reusable patterns
 
 Use patterns only when they solve a demonstrated scenario: speaker/listener coverage; contact close-up; articulated entry; gaze-triggered reveal; chase/return with ownership; product hero reset; location reset; bounded long-form segment. State inputs, applicability, output state, known failure and review oracle. Do not grow a catalog from speculative variants. Regression examples stay in project tests, outside the default skill context.

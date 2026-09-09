@@ -5,7 +5,10 @@ import json
 import sys
 from pathlib import Path
 
-from vge_core import ContractError, load, save, prepare, validate, compile_plan, negotiate, repair_scope, route_references
+from vge_core import (
+    ContractError, load, save, prepare, validate, compile_plan, negotiate, repair_scope,
+    route_references, detect_canonical_contradictions, select_negative_constraints,
+)
 from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect
 from vge_media import probe, assemble, contact_sheet, validate_assembly_manifest
 from vge_evidence import aggregate, validate_observation
@@ -50,6 +53,8 @@ def main(argv=None):
     p = sub.add_parser("reanchor"); p.add_argument("input"); p.add_argument("--shot-id", required=True); p.add_argument("--downstream", nargs="*", default=[]); p.add_argument("--output")
     p = sub.add_parser("repair-plan"); p.add_argument("input"); p.add_argument("--output")
     p = sub.add_parser("prompt-density"); p.add_argument("input"); p.add_argument("--output")
+    p = sub.add_parser("contradictions", help="canonical-state contradiction gate"); p.add_argument("input"); p.add_argument("--output")
+    p = sub.add_parser("negative-select", help="scene-aware negative-constraint selection"); p.add_argument("input"); p.add_argument("--output")
     p = sub.add_parser("adapt-prompt"); p.add_argument("input"); p.add_argument("--adapter", required=True); p.add_argument("--output")
     p = sub.add_parser("profile-check"); p.add_argument("input"); p.add_argument("--feature", required=True); p.add_argument("--output")
     p = sub.add_parser("first-last-frame"); p.add_argument("input"); p.add_argument("--output")
@@ -105,12 +110,14 @@ def main(argv=None):
         elif cmd == "repair-plan": result = build_repair_plan(data["plan"], data["changed_shot_ids"], data["findings"], data["budget"])
         elif cmd == "repair-validate": result = validate_repair_plan(data)
         elif cmd == "prompt-density": result = analyze_prompt_density(data.get("sections", data), data.get("limits", {}))
-        elif cmd == "adapt-prompt": result = adapt_prompt(data["sections"], load(args.adapter))
+        elif cmd == "contradictions": result = detect_canonical_contradictions(data)
+        elif cmd == "negative-select": result = select_negative_constraints(data)
+        elif cmd == "adapt-prompt": result = adapt_prompt(data["sections"], load(args.adapter), canonical_state=data.get("canonical_state"))
         elif cmd == "profile-check": result = validate_feature_profile(data.get("profile", data), args.feature, observed=data.get("observed"), base_dir=Path(args.input).resolve().parent)
         elif cmd == "first-last-frame": result = validate_first_last_frame(data)
         elif cmd == "long-form": result = validate_long_form_case(data, base_dir=Path(args.input).resolve().parent)
         elif cmd == "maturity": result = maturity_report(data)
-        elif cmd == "adapter-diff": result = adapter_differential(data["canonical_sections"], data["adapters"])
+        elif cmd == "adapter-diff": result = adapter_differential(data["canonical_sections"], data["adapters"], canonical_state=data.get("canonical_state"))
         elif cmd == "assembly-validate": result = validate_assembly_manifest(data)
         elif cmd == "editorial": result = validate_editorial_acceptance(data)
         elif cmd == "assemble": result = assemble(data, args.video, args.preview)

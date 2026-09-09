@@ -291,6 +291,17 @@ class HTTPTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError,'below the declared minimum'):
             self.send()
         self.assertEqual(0,self.posts)
+
+    def test_resource_margin_blocks_before_post_even_with_degraded_override(self):
+        self.context['resource_requirements'].update(min_free_vram_bytes=800, safety_margin=1.2)
+        self.context['allow_degraded_resources'] = True
+        self.assertEqual('DEGRADED', resource_status(
+            {'resource_inventory': [{'device_id': 'cuda:0', 'vram_free': 900}]},
+            self.context['resource_requirements'],
+        )['status'])
+        with self.assertRaisesRegex(ContractError, 'safety margin'):
+            self.send()
+        self.assertEqual(0, self.posts)
     def test_resource_requirement_must_bind_selected_device(self):
         self.context['resource_requirements']['device_id']='cuda:1'
         with self.assertRaisesRegex(ContractError,'bind the selected device'):

@@ -127,6 +127,239 @@ def flatten(value, prefix=""):
     return result
 
 
+def _path_value(record, path):
+    """Read an explicitly named canonical field, including dotted keys."""
+    if not isinstance(record, dict):
+        return None
+    if path in record:
+        return record[path]
+    current = record
+    for part in path.split("."):
+        if not isinstance(current, dict) or part not in current:
+            return None
+        current = current[part]
+    return current
+
+
+def _first_path_value(record, paths):
+    for path in paths:
+        value = _path_value(record, path)
+        if value is not None:
+            return value
+    return None
+
+
+def _text_values(value):
+    """Flatten authored action/camera values for conservative phrase checks."""
+    if isinstance(value, str):
+        yield value.lower()
+    elif isinstance(value, dict):
+        for item in value.values():
+            yield from _text_values(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from _text_values(item)
+
+
+def _contains_term(value, terms):
+    text = " ".join(_text_values(value))
+    return any(re.search(rf"(?<![a-z]){re.escape(term.lower())}(?![a-z])", text) for term in terms)
+
+
+def detect_canonical_contradictions(state):
+    """Find contradictions before prompt compilation.
+
+    This is intentionally a small, explicit gate over authored state.  It does
+    not interpret arbitrary prose as truth and it never rewrites a plan.  The
+    director repairs the returned canonical fields before asking for a prompt.
+    """
+    require(isinstance(state, dict), "canonical state must be an object")
+    source = state.get("canonical_state") if isinstance(state.get("canonical_state"), dict) else state
+    contradictions = []
+
+    def add(code, fields, reason, repair_route):
+        contradictions.append({"id": code, "fields": list(fields), "reason": reason,
+                               "repair_route": repair_route})
+
+    door = _first_path_value(source, (
+        "vehicle.door_state", "vehicle.door", "vehicle_door_state", "door_state", "door"
+    ))
+    entry_door = _first_path_value(source, (
+        "interaction.door_during_entry", "interaction.entry_door_state",
+        "entry.door_state", "entry_door_state"
+    ))
+    if str(door).upper() in ("CLOSED", "SHUT") and str(entry_door).upper() in ("OPEN", "OPENED"):
+        add("DOOR_ENTRY_STATE", ("vehicle.door_state", "entry_door_state"),
+            "A closed door cannot simultaneously be the open door used for entry",
+            "Repair the canonical door phase/state or split the action")
+    action_values = _first_path_value(source, ("action_sequence", "actions", "action_primitives", "interaction", "interactions"))
+    if str(door).upper() in ("CLOSED", "SHUT") and _contains_term(action_values, (
+        "through open door", "entering through open door", "already open door"
+    )):
+        add("DOOR_ENTRY_PROSE", ("door_state", "action_sequence"),
+            "The canonical action says entry uses an open door while the declared door is closed",
+            "Repair canonical state/action causality before compilation")
+
+    motion_values = [
+        _first_path_value(source, ("vehicle.motion_state", "vehicle.velocity_phase", "vehicle.motion")),
+        _first_path_value(source, ("motion_state", "velocity_phase", "vehicle_motion_state")),
+    ]
+    normalized_motion = {str(value).upper() for value in motion_values if value is not None}
+    if {"PARKED", "MOVING"} <= normalized_motion or {"STATIONARY", "MOVING"} <= normalized_motion:
+        add("VEHICLE_MOTION_STATE", ("vehicle.motion_state", "vehicle.velocity_phase"),
+            "The vehicle is declared parked/stationary and moving at the same time",
+            "Repair the canonical motion state or add a causal transition")
+
+    subject_position = _first_path_value(source, ("subject.position", "subject_position", "position"))
+    seated_state = _first_path_value(source, ("subject.seated_state", "seated_state", "subject.seated"))
+    if str(subject_position).upper() in ("OUTSIDE", "EXTERIOR") and str(seated_state).upper() in ("SEATED", "INSIDE"):
+        add("SUBJECT_SEATING_STATE", ("subject.position", "subject.seated_state"),
+            "The subject is declared outside and already seated/inside",
+            "Repair the entry state sequence or split the shot")
+
+    time_value = _first_path_value(source, ("time_of_day", "setting.time_of_day", "environment.time_of_day", "time"))
+    lighting_value = _first_path_value(source, ("lighting", "lighting_and_style.lighting", "environment.lighting"))
+    if _contains_term(time_value, ("night",)) and _contains_term(lighting_value, ("golden_hour", "golden hour")):
+        add("TIME_LIGHTING", ("time_of_day", "lighting"),
+            "Night and a golden-hour lighting lock are mutually incompatible without an explicit transition",
+            "Repair the canonical time/lighting state")
+
+    camera = _first_path_value(source, ("camera",))
+    movement = _first_path_value(camera, ("movement", "movement.type", "type")) if isinstance(camera, dict) else None
+    camera_text = " ".join(_text_values(camera))
+    if (_contains_term(movement, ("static",)) or _contains_term(camera_text, ("static",))) and _contains_term(camera_text, ("orbit",)):
+        add("CAMERA_MOTION", ("camera.movement",),
+            "A static camera cannot also perform a continuous orbit",
+            "Repair the camera movement declaration or split the coverage")
+
+    turns = _first_path_value(source, ("dialogue_turns", "turns", "dialogue"))
+    if isinstance(turns, dict):
+        turns = turns.get("lines", turns.get("turns", []))
+    if isinstance(turns, list):
+        for index, left in enumerate(turns):
+            if not isinstance(left, dict):
+                continue
+            for right in turns[index + 1:]:
+                if not isinstance(right, dict) or left.get("speaker") == right.get("speaker"):
+                    continue
+                left_start, left_end = left.get("start_s", left.get("start")), left.get("end_s", left.get("end"))
+                right_start, right_end = right.get("start_s", right.get("start")), right.get("end_s", right.get("end"))
+                overlap = number(left_start) and number(left_end) and number(right_start) and number(right_end) and left_start < right_end and right_start < left_end
+                policies = {str(left.get("overlap_policy", "")).upper(), str(right.get("overlap_policy", "")).upper()}
+                exclusive = left.get("exclusive") is True or right.get("exclusive") is True or policies & {"NONE", "EXCLUSIVE", "NO_OVERLAP"}
+                if overlap and exclusive:
+                    add("DIALOGUE_EXCLUSIVE_TURN", ("dialogue_turns",),
+                        f"Exclusive dialogue turns overlap for speakers {left.get('speaker')} and {right.get('speaker')}",
+                        "Repair the turn intervals/speakers or explicitly authorize overlap")
+                    break
+
+    wardrobe_locked = source.get("wardrobe_locked") is True
+    locked_properties = source.get("locked_properties", [])
+    if isinstance(locked_properties, list):
+        wardrobe_locked = wardrobe_locked or any(str(item).lower() in ("wardrobe", "clothing") for item in locked_properties)
+    wardrobe_changes = source.get("wardrobe_changes", source.get("wardrobe_change"))
+    if wardrobe_locked and wardrobe_changes:
+        changes = wardrobe_changes if isinstance(wardrobe_changes, list) else [wardrobe_changes]
+        unexplained = [item for item in changes if not isinstance(item, dict) or not (item.get("cause") or item.get("review_ref"))]
+        if unexplained:
+            add("LOCKED_WARDROBE_CHANGE", ("wardrobe_locked", "wardrobe_changes"),
+                "A locked wardrobe changes without a causal or reviewed transition",
+                "Repair the canonical wardrobe state or attach a reviewed transition")
+
+    if isinstance(source.get("contradictions"), list) and source["contradictions"]:
+        for item in source["contradictions"]:
+            add("DECLARED_CONTRADICTION", ("contradictions",),
+                str(item) if isinstance(item, str) else "The canonical state declares an unresolved contradiction",
+                "Resolve the canonical contradiction before compilation")
+
+    return {
+        "schema_version": 1,
+        "status": "FAIL" if contradictions else "PASS",
+        "contradictions": contradictions,
+        "next_action": "Repair canonical state before prompt compilation" if contradictions else None,
+        "limitations": ["This gate checks explicit canonical fields and bounded authored phrases; it is not an audiovisual oracle"],
+    }
+
+
+def validate_canonical_state(state):
+    """Fail closed when the canonical state is internally contradictory."""
+    report = detect_canonical_contradictions(state)
+    if report["status"] != "PASS":
+        reasons = "; ".join(item["reason"] for item in report["contradictions"])
+        require(False, "Canonical state contradictions: " + reasons)
+    return report
+
+
+NEGATIVE_CONSTRAINT_FAMILIES = {
+    "IDENTITY": ("identity", "subject", "character", "face", "likeness", "wardrobe", "reference"),
+    "ANATOMY": ("anatomy", "body", "limb", "proportion", "joint"),
+    "HANDS": ("hand", "hands", "finger", "grip"),
+    "CONTACT": ("contact", "touch", "collision", "grasp", "handoff", "reach", "interaction"),
+    "OBJECT": ("object", "prop", "ownership", "retain", "carry"),
+    "VEHICLE": ("vehicle", "car", "van", "door", "wheel", "road", "driver"),
+    "ENVIRONMENT": ("environment", "location", "background", "geography", "weather", "lighting"),
+    "TEMPORAL": ("temporal", "continuity", "state", "before", "after", "duration", "transition"),
+    "CAMERA": ("camera", "orbit", "static", "framing", "lens", "shot", "screen_direction"),
+    "DIALOGUE": ("dialogue", "speaker", "listener", "line", "turn", "voice"),
+    "LIP_SYNC": ("lip_sync", "lip-sync", "mouth", "phoneme", "speech"),
+    "TEXT": ("text", "logo", "sign", "caption", "lettering"),
+}
+
+
+def select_negative_constraints(scene):
+    """Select only risk-relevant negative-constraint families.
+
+    The result is metadata for a director/adapter, not a universal negative
+    prompt.  Untyped declarations are omitted instead of being silently
+    applied to every scene.
+    """
+    require(isinstance(scene, dict), "scene for negative constraint selection must be an object")
+    declared = scene.get("negative_constraints", [])
+    require(isinstance(declared, list), "negative_constraints must be an array")
+    explicit = scene.get("negative_constraint_families", scene.get("risk_families", []))
+    if isinstance(explicit, dict):
+        explicit = [key for key, value in explicit.items() if value is True]
+    require(isinstance(explicit, list), "negative_constraint_families must be an array")
+    explicit = {str(item).upper() for item in explicit if str(item).strip()}
+    risk_source = copy.deepcopy(scene)
+    risk_source.pop("negative_constraints", None)
+    risk_source.pop("negative_constraint_families", None)
+    risk_source.pop("risk_families", None)
+    scene_text = " ".join(_text_values(risk_source)).lower()
+    selected_families = [
+        family for family, cues in NEGATIVE_CONSTRAINT_FAMILIES.items()
+        if family in explicit or any(re.search(rf"(?<![a-z]){re.escape(cue.lower())}(?![a-z])", scene_text) for cue in cues)
+    ]
+    selected, omitted = [], []
+    for index, item in enumerate(declared):
+        if isinstance(item, dict):
+            family = str(item.get("family", item.get("kind", ""))).upper()
+            value = copy.deepcopy(item)
+            text = " ".join(_text_values(item))
+        elif isinstance(item, str) and item.strip():
+            family = next((candidate for candidate, cues in NEGATIVE_CONSTRAINT_FAMILIES.items()
+                           if any(re.search(rf"(?<![a-z]){re.escape(cue.lower())}(?![a-z])", item.lower()) for cue in cues)), "")
+            value = {"constraint": item}
+        else:
+            family, value = "", item
+        if family in selected_families:
+            value.setdefault("family", family)
+            value["selection_reason"] = "Scene risk activates this family"
+            selected.append(value)
+        else:
+            omitted.append({"index": index, "family": family or None,
+                            "reason": "Family is not active for the declared scene risk"})
+    return {
+        "schema_version": 1,
+        "status": "PASS",
+        "selected_families": selected_families,
+        "selected": selected,
+        "omitted": omitted,
+        "limits": {"generic_untyped_constraints": "OMIT", "unrelated_families": "OMIT"},
+        "limitations": ["Negative constraints are generation hints; semantic QA remains authoritative"],
+    }
+
+
 def duration_floor(seconds):
     require(number(seconds, True) and seconds <= 120, "duration must be finite and 0 < seconds <= 120")
     fields = ["shots"]
@@ -966,11 +1199,31 @@ def compile_plan(plan, profile=None):
             "continuity": {"initial_state_ref": bible.get("initial_state_ref"), "start": shot["start_state_ref"], "start_delta": copy.deepcopy(shot.get("start_state_delta", {})), "end": report["end_states"][shot["id"]], "end_delta": copy.deepcopy(shot.get("end_state_delta", {})), "changes": copy.deepcopy(shot.get("state_changes", []))},
             "constraints": {"hard": plan["scene_intent"]["hard_constraints"], "global": copy.deepcopy(plan.get("constraints", [])), "shot": shot.get("constraints", []), "prohibited_drift": copy.deepcopy(bible.get("prohibited_drift", []))},
             "references": {"assets": scene_reference_assets, "scene_reference_ids": scene_reference_ids, "shot_reference_ids": shot_reference_ids, "all_reference_ids": all_reference_ids, "retention_rules": copy.deepcopy(plan.get("retention_rules", []))}}
+        canonical_gate = validate_canonical_state({
+            "continuity": sections["continuity"],
+            "action_sequence": sections["action_sequence"],
+            "camera": sections["camera"],
+            "setting_and_time": sections["setting_and_time"],
+            "dialogue": sections["audio_or_sync"]["dialogue"],
+        })
+        negative_selection = select_negative_constraints({
+            "subject_and_identity": sections["subject_and_identity"],
+            "setting_and_time": sections["setting_and_time"],
+            "action_sequence": sections["action_sequence"],
+            "camera": sections["camera"],
+            "audio_or_sync": sections["audio_or_sync"],
+            "continuity": sections["continuity"],
+            "constraints": sections["constraints"],
+            "negative_constraints": copy.deepcopy(shot.get("negative_constraints", [])),
+            "negative_constraint_families": copy.deepcopy(shot.get("negative_constraint_families", [])),
+        })
+        sections["constraints"]["negative_selection"] = negative_selection
         omissions = []
         view = {"schema_version": 1, "shot_id": shot["id"], "canonical_revision": f"{plan['scene_intent']['scene_id']}_rev{plan['revision']}", "profile_reference": profile["id"] if profile else None, "sections": sections,
                 "mappings": [{"canonical_section": k, "compiled_representation": f"positive_prompt.{k}", "status": "PROPOSED"} for k in SECTIONS], "omissions": omissions,
                 "canonical_coverage": {"scene_entity_ids": [e["id"] for e in all_entities], "compiled_entity_ids": [e["id"] for e in all_entities], "scene_reference_ids": scene_reference_ids, "compiled_reference_ids": all_reference_ids, "intent_fields": sorted(plan["scene_intent"]), "scene_bible_fields": sorted(bible), "shot_fields": sorted(shot)},
-                "presentation": {"subject_definitions": sections["subject_and_identity"], "environment_definitions": sections["setting_and_time"], "summary": shot["purpose"], "retention_analysis": plan.get("retention_rules", []), "detailed_description": sections["action_sequence"], "global_physical_constraints": plan.get("constraints", []), "cinematography": sections["camera"], "overall_soundscape": sections["audio_or_sync"], "negative_constraints": shot.get("negative_constraints", [])}}
+                "canonical_contradiction_gate": canonical_gate,
+                "presentation": {"subject_definitions": sections["subject_and_identity"], "environment_definitions": sections["setting_and_time"], "summary": shot["purpose"], "retention_analysis": plan.get("retention_rules", []), "detailed_description": sections["action_sequence"], "global_physical_constraints": plan.get("constraints", []), "cinematography": sections["camera"], "overall_soundscape": sections["audio_or_sync"], "negative_constraints": negative_selection["selected"], "negative_constraint_selection": negative_selection}}
         view["compiled_view"] = {"profile_reference": view["profile_reference"], "positive_prompt": sections, "text": "\n".join(f"{k}: {canonical(v)}" for k, v in sections.items()), "compiled_omissions": omissions, "deliberate_changes": [], "unresolved": []}
         if profile:
             view["compatibility"] = negotiate(shot, profile)

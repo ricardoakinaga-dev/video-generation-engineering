@@ -1,0 +1,29 @@
+{
+  "id": "VGE-TRIPLE-AAA-R3-CANDIDATE-FINGERPRINT-FINAL",
+  "observed_at": "2026-09-09T12:12:00Z",
+  "ownership": "LEAD_REPRODUCIBLE_CHECK; NOT_INDEPENDENT_CRITIC_ACCEPTANCE",
+  "algorithm": "Sort all in-scope POSIX paths; for each emit path\\0byte_length\\0sha256(file_bytes)\\n; SHA-256 the UTF-8 stream.",
+  "scope": [
+    ".agents/skills/video-generation-engineering/**",
+    "tests/**",
+    "tools/verify.py",
+    "IMPLEMENTATION.md",
+    "current R3 docs and prompt copies",
+    "verification/software-triple-aaa-r26.json",
+    "verification/distribution-triple-aaa-r5.json",
+    "verification/docs-current-r25.json",
+    "dist/video-generation-engineering-triple-aaa-r5.zip"
+  ],
+  "excluded": [
+    ".agent/**",
+    ".gauntlet/**",
+    "verification/triple-aaa-independent-critic-r3.md",
+    "verification/candidate-fingerprint-r3*.json",
+    "__pycache__/**",
+    "*.pyc"
+  ],
+  "file_count": 49,
+  "fingerprint_sha256": "sha256:13a6bc2f12db15ca2664a7a1c03af2946089a37f2f8ba997d1186359a2c52f91",
+  "mutation_sentinel": "LEAD_ONLY; PASS for the final single local computation; no reviewer-owned before/after sentinel exists.",
+  "limitations": "This is a reproducible lead-owned fingerprint. It must not be read as satisfying the fresh independent-critic gate; the critic record is explicitly INCOMPLETE."
+}

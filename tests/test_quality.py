@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / ".agents/skills/video-generation-engineering"
 sys.path.insert(0, str(SKILL / "scripts"))
 
-from vge_core import ContractError, digest, file_hash
+from vge_core import ContractError, digest, file_hash, detect_canonical_contradictions, select_negative_constraints, validate_canonical_state
 from vge_media import media_qa, run
 from vge_quality import (
     AUDIO_LAYERS,
@@ -135,6 +135,12 @@ def semantic_observation(status="PASS"):
         check["id"] = "semantic_" + dimension
         check["category"] = categories[dimension]
         check["semantic_dimension"] = dimension
+        kind = "FRAME"
+        if dimension == "dialogue":
+            kind = "AUDIO"
+        elif dimension in ("lip_sync", "temporal_continuity"):
+            kind = "MULTI_FRAME" if dimension == "lip_sync" else "SEQUENCE"
+        check["oracle"] = oracle(kind)
         checks.append(check)
     item["checks"] = checks
     return item
@@ -159,7 +165,8 @@ def scorecard(status="PASS"):
     dimensions = []
     for dimension in CONTINUITY_DIMENSIONS:
         result = status
-        item = {"dimension": dimension, "result": result, "oracle": oracle(),
+        kind = "AUDIO" if dimension == "audio" else "SEQUENCE" if dimension == "temporal" else "HUMAN"
+        item = {"dimension": dimension, "result": result, "oracle": oracle(kind),
                 "confidence": "HIGH" if result == "PASS" else "MEDIUM", "evidence": evidence(), "limitations": []}
         if result != "PASS":
             item["reason"] = "Fixture dimension is not fully observed"
@@ -214,49 +221,86 @@ class QualityContractTests(unittest.TestCase):
             refs = {}
             for name in ("intent", "plan", "bible", "graph", "continuity", "evidence", "audio", "repair", "human"):
                 path = root / f"{name}.json"
-                write_json(path, {"id": name})
-                refs[name] = str(path)
+                record = {"id": name}
+                if name == "plan":
+                    record["shots"] = [{"id": "shot_1"}, {"id": "shot_2"}]
+                if name in ("graph", "continuity"):
+                    record["shot_ids"] = ["shot_1", "shot_2"]
+                write_json(path, record)
+                refs[name] = file_ref(path)
 
             attempts, artifacts, observations, shot_records = [], [], [], []
             for shot_id, artifact_id in (("shot_1", "artifact_1"), ("shot_2", "artifact_2")):
-                provenance = quality_provenance(shot_id, artifact_id)
+                media_path = QUALITY_ARTIFACT
+                if shot_id == "shot_2":
+                    media_path = root / "shot_2.mp4"
+                    shutil.copyfile(QUALITY_ARTIFACT, media_path)
+                media_hash = file_hash(media_path)
+                provenance = quality_provenance(shot_id, artifact_id, media_path, media_hash)
                 attempts.append({"ref": provenance["attempt"]["ref"], "content_hash": provenance["attempt"]["content_hash"]})
                 artifacts.append({"ref": provenance["artifact"]["record_ref"],
                                   "content_hash": provenance["artifact"]["record_content_hash"],
-                                  "media_ref": str(QUALITY_ARTIFACT), "media_content_hash": QUALITY_ARTIFACT_HASH})
+                                  "media_ref": str(media_path), "media_content_hash": media_hash})
                 record = factory()
                 record.update(id=f"obs_{shot_id}", shot_id=shot_id, artifact_id=artifact_id,
-                              provenance=quality_provenance(shot_id, artifact_id))
+                              artifact_ref=str(media_path), observed_content_hash=media_hash,
+                              provenance=provenance)
+                for check in record["checks"]:
+                    for item in check.get("evidence", []):
+                        item["ref"] = str(media_path)
+                        item["content_hash"] = media_hash
                 path = root / f"{record['id']}.json"
                 write_json(path, record)
                 observations.append(file_ref(path))
                 shot_records.append((record, provenance))
 
+            next_scorecard = scorecard()
+            next_media = root / "shot_2.mp4"
+            next_media_hash = file_hash(next_media)
+            next_scorecard.update(artifact_ref=str(next_media), observed_content_hash=next_media_hash,
+                                  provenance=quality_provenance("shot_2", "artifact_2", next_media, next_media_hash))
+            for dimension in next_scorecard["dimensions"]:
+                for item in dimension.get("evidence", []):
+                    item["ref"] = str(next_media)
+                    item["content_hash"] = next_media_hash
             transition = {
                 "schema_version": 1,
                 "id": "transition_1",
                 "status": "PASS",
-                "previous_artifact": {"artifact_id": "artifact_1"},
-                "next_artifact": {"artifact_id": "artifact_2"},
+                "previous_shot_id": "shot_1", "next_shot_id": "shot_2",
+                "previous_artifact": {"shot_id": "shot_1", "artifact_id": "artifact_1",
+                                       "artifact_ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH},
+                "next_artifact": {"shot_id": "shot_2", "artifact_id": "artifact_2",
+                                   "artifact_ref": str(next_media), "content_hash": next_media_hash},
+                "required_state_properties": ["object.door", "subject.position"],
+                "previous_end_state": {"object.door": "open", "subject.position": "left"},
+                "next_start_state": {"object.door": "open", "subject.position": "left"},
                 "previous_observation": json.loads((root / "obs_shot_1.json").read_text(encoding="utf-8")),
                 "next_observation": json.loads((root / "obs_shot_2.json").read_text(encoding="utf-8")),
-                "continuity_scorecard": scorecard(),
+                "continuity_scorecard": next_scorecard,
             }
             transition_path = root / "transition.json"
             write_json(transition_path, transition)
+            final_media_qa_path = root / "final-media-qa.json"
+            final_media_qa = media_qa(QUALITY_ARTIFACT)
+            final_media_qa["id"] = "final_media_qa_1"
+            write_json(final_media_qa_path, final_media_qa)
+            editorial_path = root / "editorial.json"
+            write_json(editorial_path, editorial_acceptance())
             assembly = {
                 "schema_version": 1,
                 "id": "assembly_1",
+                "fps": 24, "target_duration_s": 45,
                 "technical_acceptance": "PASS",
                 "semantic_acceptance": "PASS",
                 "editorial_acceptance": "PASS",
                 "mechanical_status": "PASS",
                 "shot_order": ["shot_1", "shot_2"],
                 "segments": [
-                    {"shot_id": "shot_1", "artifact_id": "artifact_1", "duration_s": 22.5, "fps": 24,
+                    {"shot_id": "shot_1", "artifact": {"id": "artifact_1", "artifact_ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}, "duration_s": 22.5, "fps": 24,
                      "resolution": {"width": 384, "height": 224}, "audio_source": "NONE", "transition": "CUT",
                      "source_attempt": {"id": shot_records[0][1]["attempt"]["id"]}, "repair_lineage": []},
-                    {"shot_id": "shot_2", "artifact_id": "artifact_2", "duration_s": 22.5, "fps": 24,
+                    {"shot_id": "shot_2", "artifact": {"id": "artifact_2", "artifact_ref": str(next_media), "content_hash": next_media_hash}, "duration_s": 22.5, "fps": 24,
                      "resolution": {"width": 384, "height": 224}, "audio_source": "NONE", "transition": "END",
                      "source_attempt": {"id": shot_records[1][1]["attempt"]["id"]}, "repair_lineage": []},
                 ],
@@ -265,7 +309,7 @@ class QualityContractTests(unittest.TestCase):
                     "content_hash": QUALITY_ARTIFACT_HASH,
                     "source_shots": [
                         {"shot_id": "shot_1", "artifact_id": "artifact_1", "content_hash": QUALITY_ARTIFACT_HASH},
-                        {"shot_id": "shot_2", "artifact_id": "artifact_2", "content_hash": QUALITY_ARTIFACT_HASH},
+                        {"shot_id": "shot_2", "artifact_id": "artifact_2", "content_hash": next_media_hash},
                     ],
                 },
             }
@@ -283,6 +327,8 @@ class QualityContractTests(unittest.TestCase):
                 "production_evidence": {
                     "attempts": attempts, "artifacts": artifacts, "observations": observations,
                     "transitions": [file_ref(transition_path)], "assembly": file_ref(assembly_path),
+                    "final_media_qa": file_ref(final_media_qa_path),
+                    "editorial_acceptance": file_ref(editorial_path),
                 },
             }
 
@@ -489,14 +535,55 @@ class QualityContractTests(unittest.TestCase):
 
     def test_prompt_adapter_is_loss_explicit_and_differential(self):
         sections = {"identity": {"subject": "courier"}, "motion": {"action": "walk"}, "audio": {"dialogue": "Ready"}}
-        self.assertEqual("PASS", adapt_prompt(sections, {"id": "fixture", "preserve_sections": list(sections)})["status"])
-        degraded = adapt_prompt(sections, {"id": "small", "unsupported_sections": ["audio"]})
+        self.assertEqual("PASS", adapt_prompt(sections, {"id": "fixture", "preserve_sections": list(sections)}, canonical_state={})["status"])
+        degraded = adapt_prompt(sections, {"id": "small", "unsupported_sections": ["audio"]}, canonical_state={})
         self.assertEqual("DEGRADED", degraded["status"]); self.assertEqual(["audio"], degraded["omissions"])
         with self.assertRaisesRegex(ContractError, "truncate"):
-            adapt_prompt(sections, {"id": "tiny", "max_words": 1})
-        diff = adapter_differential(sections, [{"id": "fixture"}, {"id": "small", "unsupported_sections": ["audio"]}])
+            adapt_prompt(sections, {"id": "tiny", "max_words": 1}, canonical_state={})
+        with self.assertRaisesRegex(ContractError, "requires canonical state"):
+            adapt_prompt(sections, {"id": "fixture"})
+        diff = adapter_differential(sections, [{"id": "fixture"}, {"id": "small", "unsupported_sections": ["audio"]}], canonical_state={})
         self.assertEqual("DEGRADED", diff["status"])
         self.assertTrue(analyze_prompt_density({"constraints": "not open and static"})["contradictions"])
+
+    def test_canonical_prompt_gate_rejects_state_contradictions(self):
+        state = {
+            "vehicle": {"door_state": "CLOSED", "motion_state": "PARKED"},
+            "entry_door_state": "OPEN",
+            "subject": {"position": "OUTSIDE", "seated_state": "SEATED"},
+            "time_of_day": "NIGHT",
+            "lighting": "GOLDEN_HOUR",
+            "camera": {"movement": {"type": "STATIC", "path": "ORBIT"}},
+        }
+        report = detect_canonical_contradictions(state)
+        self.assertEqual("FAIL", report["status"])
+        self.assertTrue({"DOOR_ENTRY_STATE", "SUBJECT_SEATING_STATE", "TIME_LIGHTING", "CAMERA_MOTION"} <=
+                        {item["id"] for item in report["contradictions"]})
+        with self.assertRaisesRegex(ContractError, "Canonical state contradictions"):
+            validate_canonical_state(state)
+        with self.assertRaisesRegex(ContractError, "Canonical state contradictions"):
+            adapt_prompt({"identity": {"subject": "adult"}}, {"id": "fixture"}, canonical_state=state)
+
+    def test_negative_constraints_are_scene_risk_scoped(self):
+        scene = {
+            "action_sequence": ["adult approaches a vehicle and reaches the door handle"],
+            "vehicle": {"door": "closed"},
+            "negative_constraints": [
+                {"family": "VEHICLE", "constraint": "no impossible door geometry"},
+                {"family": "DIALOGUE", "constraint": "no speaker swap"},
+            ],
+        }
+        result = select_negative_constraints(scene)
+        self.assertEqual("PASS", result["status"])
+        self.assertIn("VEHICLE", result["selected_families"])
+        self.assertEqual(["VEHICLE"], [item["family"] for item in result["selected"]])
+        self.assertEqual("DIALOGUE", result["omitted"][0]["family"])
+
+    def test_semantic_qa_rejects_weak_oracle_for_strong_claim(self):
+        item = semantic_observation()
+        item["checks"][0]["oracle"] = oracle("METADATA", "Does metadata prove identity?")
+        with self.assertRaisesRegex(ContractError, "weak|allowed"):
+            validate_semantic_observation(item)
 
     def test_profile_repair_long_form_and_maturity(self):
         profile = {"schema_version": 1, "id": "p", "profile_revision": 1, "provider": "fixture", "runtime": "local", "runtime_version": "1", "integration_version": "1", "model": "m", "model_asset_hash": digest("model"), "node_inventory_hash": digest("nodes"), "workflow_hash": digest("workflow"), "workflow_fingerprint": digest("workflow-fingerprint"), "selected_device": "cuda:0", "resource_context_hash": digest("resources"), "status": "CONFIRMED", "evidence_refs": [str(QUALITY_ARTIFACT)], "feature_evidence": {"text_to_video": {"status": "CONFIRMED", "source_ref": str(QUALITY_ARTIFACT), "source_content_hash": QUALITY_ARTIFACT_HASH, "probe_ref": str(QUALITY_ARTIFACT), "probe_content_hash": QUALITY_ARTIFACT_HASH, "scope": "fixture", "checked_at": "2099-01-01"}}, "validity": {"expires_at": "2099-01-01T00:00:00+00:00"}}
@@ -514,7 +601,12 @@ class QualityContractTests(unittest.TestCase):
             selected_device="cuda:0", artifact_ref=str(QUALITY_ARTIFACT), artifact_content_hash=QUALITY_ARTIFACT_HASH,
             observation_ref=str(probe_ref), observation_content_hash=file_hash(probe_ref))
         profile["profile_fingerprint"] = profile_fingerprint(profile)
-        self.assertEqual("CONFIRMED", validate_feature_profile(profile, "text_to_video")["status"])
+        observed = {"runtime_version": "1", "node_inventory_hash": digest("nodes"),
+                    "workflow_hash": digest("workflow"), "workflow_fingerprint": digest("workflow-fingerprint"),
+                    "model_asset_hash": digest("model"), "selected_device": "cuda:0",
+                    "resource_context_hash": digest("resources")}
+        self.assertEqual("CONFIRMED", validate_feature_profile(profile, "text_to_video", observed=observed)["status"])
+        self.assertEqual("UNKNOWN", validate_feature_profile(profile, "text_to_video")["status"])
         forged_profile = copy.deepcopy(profile); forged_profile["selected_device"] = "UNKNOWN"
         with self.assertRaisesRegex(ContractError, "cannot be UNKNOWN"):
             validate_feature_profile(forged_profile, "text_to_video")
@@ -546,7 +638,13 @@ class QualityContractTests(unittest.TestCase):
         placeholder_pass.update(status="PASS", production_evidence_complete=True)
         with self.assertRaisesRegex(ContractError, "existing file"):
             validate_long_form_case(placeholder_pass)
-        self.assertEqual(3, maturity_report({"structural": "PASS", "deterministic_tests": "PASS", "runtime_provenance": "PASS"})["level"])
+        self.assertEqual(0, maturity_report({"structural": "PASS", "deterministic_tests": "PASS", "runtime_provenance": "PASS"})["level"])
+        gate = lambda procedure: {"status": "PASS", "observed_at": datetime.now(timezone.utc).isoformat(),
+                                  "procedure": procedure, "limitations": [], "evidence": [
+                                      {"type": "MEDIA_QA", **item} for item in decision_evidence()]}
+        validated = maturity_report({"structural": gate("structural"), "deterministic_tests": gate("tests"),
+                                     "runtime_provenance": gate("runtime"), "audiovisual": gate("av")})
+        self.assertEqual(4, validated["level"])
 
     def test_causality_ownership_vehicle_and_dialogue_known_bad_cases(self):
         sequence = {"events": [

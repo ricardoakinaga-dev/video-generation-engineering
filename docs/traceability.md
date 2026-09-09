@@ -1,6 +1,6 @@
 # Traceability matrix
 
-This matrix connects the supplied blueprint, requirements, canonical owners, acceptance gates, and evaluation cases. It is intentionally explicit so the implemented Skill and the R2 closure can be reviewed against the prompt rather than against memory. The exact prompt copy and frozen bar are [`master-prompt-triple-aaa-r2.txt`](master-prompt-triple-aaa-r2.txt) and [`triple-aaa-quality-bar-r2.json`](triple-aaa-quality-bar-r2.json).
+This matrix connects the supplied blueprint, requirements, canonical owners, acceptance gates, and evaluation cases. It is intentionally explicit so the implemented Skill and the R3 closure can be reviewed against the current prompt rather than against memory. The current prompt copies and frozen bar are [`master-closure-prompt-triple-aaa-20260909-part-1.txt`](master-closure-prompt-triple-aaa-20260909-part-1.txt), [`master-closure-prompt-triple-aaa-20260909-part-2.txt`](master-closure-prompt-triple-aaa-20260909-part-2.txt) and [`triple-aaa-quality-bar-r3.json`](triple-aaa-quality-bar-r3.json); R1/R2 material is historical.
 
 ## Purpose and document contract
 
@@ -94,6 +94,17 @@ The major numbered sections in `BLUEPRINT.md` are covered individually below. Su
 | 44 Documentation-First Requirement | `README.md`, `roadmap.md`, `acceptance.md` | R-QA-06, QG-17 | Definition of Done |
 | 45 Design Standard | `architecture.md`, `acceptance.md` | R-QA-03, R-QA-05, QG-08/QG-15/QG-16/QG-17 | quality bar |
 | 46 Fundamental Principle | `README.md`, `contracts.md` | R-QA-01, R-QA-02, QG-01/QG-17 | G-009 and observed-state invariant |
+
+## 2.1 R3 closure trace
+
+| R3 bar | Canonical owner | Executable evidence | Current boundary |
+|---|---|---|---|
+| R3-P0-03 resource margin | `vge_runtime.py` | resource guard regression and local resource observation | Blocks before POST below floor × margin |
+| R3-P0-06 oracle discipline | `vge_quality.py` | semantic/continuity known-bad oracle tests | Strong oracle is required per claim; no semantic truth is inferred |
+| R3-P0-07 contradiction gate | `vge_core.py`, `vge_quality.py` | contradiction and adapter-gate tests | Canonical state must be supplied and consistent |
+| R3-P1/R3-P4/R3-P5 long-form ladder | `vge_quality.py`, long-form fixtures | strict hash-bound validator and real local evidence packet | LF-001/2/3 production remains blocked |
+| R3-P8 independent critic | `verification/` | final frozen fingerprint, matrix and mutation sentinel | Fresh review is required after the last material mutation |
+| R3-P9 distribution | `tools/verify.py`, release packet | fresh ZIP/CRC/path/secret/weight/CWD checks | Distribution cannot promote unavailable production evidence |
 
 ## 3. Requirement coverage rule
 

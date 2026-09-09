@@ -485,8 +485,10 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
     declared_device = resource_requirements.get("device_id") or resource_requirements.get("selected_device")
     require(declared_device == selected_device, "resource_requirements must bind the selected device")
     resource_report = resource_status(observed, resource_requirements)
-    allowed_degraded = context.get("allow_degraded_resources") is True and resource_report["status"] == "DEGRADED"
-    require(resource_report["status"] == "SUPPORTED" or allowed_degraded,
+    # A degraded snapshot is still below the declared scheduling threshold.
+    # The caller may record/inspect that state, but it cannot turn it into a
+    # queue submission by setting an override in execution context.
+    require(resource_report["status"] == "SUPPORTED",
             "; ".join(resource_report["gaps"]) or "Selected runtime resource is not supported")
     runtime_version = profile.get("runtime_version")
     if not (probe_mode and runtime_version in (None, "", "UNKNOWN")):

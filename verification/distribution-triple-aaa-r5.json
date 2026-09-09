@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-09T11:45:00Z",
+  "status": "PASS",
+  "scope": "FRESH_PORTABLE_SKILL_DISTRIBUTION",
+  "archive": "dist/video-generation-engineering-triple-aaa-r5.zip",
+  "archive_sha256": "sha256:2e2a4fa10a41f776f69810cb8115dd5e32f92c762e15d1ce6d2d68ffbe208840",
+  "archive_bytes": 128994,
+  "zip_entries": 37,
+  "file_entries": 28,
+  "crc_test": null,
+  "package_manifest_sha256": "sha256:8ac42b953094dbdda9436b7aaae2fd9f4e87a6d7cdd4540421dbca1ed215b369",
+  "scans": {
+    "unsafe_paths": "PASS",
+    "absolute_workspace_paths": "PASS",
+    "secrets": "PASS",
+    "model_weights": "PASS",
+    "bytecode": "PASS"
+  },
+  "external_cwd_smoke": {
+    "help": "PASS",
+    "prepare": "PASS",
+    "validate": "PASS",
+    "compile": "PASS"
+  },
+  "contents": {
+    "SKILL.md": "sha256:d153ed3cd99c83dc555be85c7e2986c8bf1039cbf26ccd461c9be50efe374bb0",
+    "agents/openai.yaml": "sha256:2c6fe2911002b105809693f5bd0950e933c7577058de3701982fede3d91ca81a",
+    "assets/templates/treatment.json": "sha256:7a3f4e9ae792cd6b64ea14fb62ab5fcbd7d9af596ecfbf9031561dc1f00eb5de",
+    "assets/workflows/h3-r2v-probe-api.json": "sha256:fbf7968c73bb6be157c4f642e620288d17c7dc6c06d143e17f65e24b28088546",
+    "assets/workflows/h3-smoke-api.json": "sha256:69f49cbf7e3359ef152fcba2b6695da3e5aff91c8a3a3b711f7d0a26de67a102",
+    "profiles/comfyui-h3-local-probed.json": "sha256:ae6cbd349f0ff7697a7a0a03d97fde243c62845f05db7cc41ad97b7d873266ae",
+    "profiles/comfyui-h3-r2v-local-probe-v1.json": "sha256:6ab037fe0f896ee9e79b24f08dec78970dde8b2e527a846c3afd76b3a555991a",
+    "profiles/comfyui-wan22-candidate.json": "sha256:1726aefa7b04a792809dc55e1cb8d258ef4712e48fa07fe307ca5cf95468dfda",
+    "profiles/evidence/h3-local-20260908.json": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
+    "profiles/evidence/h3-r2v-local-20260908.json": "sha256:44a8f5aeb3e4f69d6ce87d8fbb113f3159d49f393edd36ec83e4c33e18ffa7a7",
+    "profiles/hailuo-api-candidate.json": "sha256:4d7ca57cc6eeddf0f93ce1ee39a66ff2fbb3133aec726902acfde938d504e084",
+    "references/comfyui-execution.md": "sha256:10fd54b15403f62a2b9248f17ce86f014d447b0288653ef6f7b20e6ab51bfe9e",
+    "references/continuity-and-long-form.md": "sha256:f43253cfea61d21c066d36f9254d4d119f698b95c661a1bf16659b3f0bce146d",
+    "references/core-contracts.md": "sha256:1cabede130cabbb83efa2db5826ad1263b2152b122b497b716f90050553966d0",
+    "references/directing-and-audio.md": "sha256:b202e7e78df7d57a8e5dcf41713dea95570424fd8a9c3fcd85282de7a38c13a6",
+    "references/evaluation-and-repair.md": "sha256:03366623894f5d1ebe8bcc8e2284fa0575c5c43cccf7851d05afeac98e4a09e9",
+    "references/interaction-and-constraints.md": "sha256:a516d3df19e1d51b44accf96a6e289bf618ca5937cfd6073495bd74f8a56301c",
+    "references/model-adaptation.md": "sha256:401b175009405e9893c1c4b1c3fdd8bcde55882eef1f5d42ed6089efd166aa3b",
+    "references/observability.md": "sha256:e92eb082e8e1b14df920d41d0040a8102311db38e1788d0f5fb98c74e7fdcad8",
+    "references/production-quality.md": "sha256:ad6fdc7376e6e47f2979e88ced1ec9ed55de35672ff893f25eef8d385b473663",
+    "references/safety-and-provenance.md": "sha256:6a6b65cdb7345014944e58daaecedd2929f4861a4174fc6feca18fa3791f150e",
+    "scripts/vge.py": "sha256:c7fb8df25f7279543e5e840bd493ced31872830fd1a027b53fa6a71f700ed2ad",
+    "scripts/vge_core.py": "sha256:5e02f20d67593e7ae6cd80f52061092d3b40de2fa3067bda5bfe3b905fb99711",
+    "scripts/vge_evidence.py": "sha256:25ca8d421eddbeff15ef91d6bcc47c53025c0cc398ef783adf62658c7c7bd28e",
+    "scripts/vge_media.py": "sha256:42949ceb0d99352e00827d96682e0db45d9dbc815d7de157d17242bbc2328e3d",
+    "scripts/vge_provider.py": "sha256:04621ccda1716e777dd98bcd93b07f06896e9f5bfd8af0151e7aefa30fe65f1a",
+    "scripts/vge_quality.py": "sha256:afbd8b6e29fef2d64d3fad406e72b31ca2256e6cf7a76ee1350c2e4f041f7fd4",
+    "scripts/vge_runtime.py": "sha256:0e1c78545a2f4df7ee60643d82e11ba2fdc1d0a999142319e2dde16834cbed94"
+  },
+  "limitations": [
+    "Portability and scans do not prove provider capability or audiovisual semantics",
+    "The archive intentionally excludes project docs, tests, evidence media, secrets and model weights"
+  ]
+}

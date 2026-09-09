@@ -158,6 +158,40 @@
         "target": "Skill package, tests, current R4 distribution and production-boundary evidence",
         "completion_signal": "Reviewer returns criterion-level matrix, reviewer-owned scope fingerprint and mutation sentinel; production blockers remain explicit"
       }
+    },
+    {
+      "id": "VGE-TRIPLE-AAA-R3",
+      "title": "Close the current State-of-the-Art Triple-AAA Skill boundary",
+      "stage": "BUILD",
+      "priority": "P0",
+      "status": "BLOCKED",
+      "origin": "docs/master-closure-prompt-triple-aaa-20260909-part-1.txt and part-2.txt; user request 2026-09-09",
+      "dependencies": [
+        "VGE-IMPLEMENT"
+      ],
+      "owner": "Codex",
+      "acceptance_summary": "R3 prompt and bar preserved; fail-closed canonical, oracle, resource, maturity and long-form contracts implemented; 141-test software verification r26 and portable R5 distribution pass; production remains blocked and the fresh independent critic record is operationally incomplete",
+      "evidence_refs": [
+        "docs/master-closure-prompt-triple-aaa-20260909-part-1.txt",
+        "docs/master-closure-prompt-triple-aaa-20260909-part-2.txt",
+        "docs/triple-aaa-quality-bar-r3.json",
+        ".agent/plans/triple-aaa-r3-closure.md",
+        "verification/software-triple-aaa-r26.json",
+        "verification/distribution-triple-aaa-r5.json",
+        "verification/docs-current-r25.json",
+        "verification/candidate-fingerprint-r3-final.json",
+        "verification/triple-aaa-independent-critic-r3.md",
+        "docs/capability-matrix-r3.md",
+        "docs/triple-aaa-scorecard-r3.md",
+        "docs/triple-aaa-final-production-closure.md"
+      ],
+      "next_action": {
+        "id": "VGE-TRIPLE-AAA-R3:COMMIT-PUSH",
+        "kind": "REVIEW",
+        "summary": "Commit and push the scoped READY_WITH_RISKS software candidate while preserving blocked production and incomplete independent-review gates",
+        "target": "Current R3 candidate, control-plane accounting and configured origin main",
+        "completion_signal": "Local commit exists, origin/main resolves to the pushed commit, and post-push status is clean; no Triple-AAA production proof is claimed"
+      }
     }
   ]
 }

@@ -1,0 +1,26 @@
+{
+  "id": "VER-20260909-AAA-R3-DOCS-CURRENT-24",
+  "task": "VGE-TRIPLE-AAA-R3",
+  "observed_at": "2026-09-09T12:11:01.858885Z",
+  "scope": "current R3 documentation and traceability inspection after final verifier accounting",
+  "procedure": "PYTHONDONTWRITEBYTECODE=1 python3 -B audit-artifacts/docs-2026-09-08-r5/check_docs.py",
+  "procedure_status": "EXECUTED",
+  "result": "PASS",
+  "exit_status": 0,
+  "evidence_kind": "COMMAND",
+  "environment": "Python 3.12.3; PyYAML 6.0.1; Linux; local structural checker",
+  "summary": {
+    "documents": 49,
+    "yaml_blocks": 50,
+    "yaml_errors": 0,
+    "local_markdown_links": 518,
+    "local_link_errors": 0,
+    "requirements": 80,
+    "missing_traceability_ids": 0,
+    "implicit_yaml_booleans": 0,
+    "complete_profile_parity": true,
+    "collection_parity": true
+  },
+  "limitations": "Structural documentation inspection only; no runtime, semantic media or external source validation.",
+  "freshness": "CURRENT"
+}

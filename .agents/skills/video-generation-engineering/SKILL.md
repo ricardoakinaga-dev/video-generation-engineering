@@ -28,9 +28,9 @@ Load only the references needed for the current decision. The package is self-co
 2. Assign every reference to specific entities/properties. Separate identity, wardrobe, geometry, style, composition, audio and motion. Use `LOCKED`, `FLEXIBLE`, `DERIVED`, `IGNORE`; retain unresolved competing sources. A lock is a generation target and QA obligation.
 3. Establish story causality and scene geography. Specify what the viewer must notice, stimulus → processing → reaction → response, object ownership, action phases and end state. Split at causal/interaction/capability boundaries.
 4. Author a shot treatment with camera, performance, start/end state, dependency IDs and review criteria. Keep speaker timing and sound layers separate from image generation. Apply continuous duration floors and reset strategy from the continuity reference.
-5. Validate the treatment; repair contradictions before compiling. Use the deterministic helper for repeatable graph/state/timing checks. It does not choose a story or judge media quality.
+5. Validate the treatment; repair contradictions before compiling. Run the canonical-state contradiction gate before any adapter, and select negative constraints from scene risk families rather than copying a global list. Use the deterministic helper for repeatable graph/state/timing checks. It does not choose a story or judge media quality.
 6. Run the structural progressive-disclosure route from the prepared plan. It records which package references are relevant and which specialist references are intentionally excluded; it does not claim that the host loaded them.
-7. Compile from the canonical state, not from the previous prompt. Record each mapping, omission, deliberate change and unsupported feature. Give natural, concrete shot prompts; use structured attachments for details that would overload prose.
+7. Compile from the canonical state, not from the previous prompt. The adapter gate requires canonical state and fails closed on contradictions. Record each mapping, omission, deliberate change, unsupported feature and scene-aware negative selection. Give natural, concrete shot prompts; use structured attachments for details that would overload prose.
 
 Before calling a treatment `SUPPORTED_PLAN`, resolve its causal prerequisites and action-load decisions. A note saying “insert landing later” or “timing needs repair” is still unfinished planning: insert that coverage now, or return a scoped unresolved result. Do not assign one hand to two tasks or compress several vehicle-entry mechanics into an unreviewed short shot.
 
@@ -59,6 +59,8 @@ Record concrete runtime/model/node/workflow/input/parameter context per submissi
 Validate collected bytes and observed hashes before QA acceptance. Run metadata checks and inspect actual frames/audio where available. Use `NOT_RUN` for unperformed checks and `PARTIAL` when the evidence is incomplete. Generation acceptance and editorial acceptance are separate. A contact sheet or ffprobe result cannot prove physics, identity, emotion or lip-sync.
 
 Production quality is a separate evidence contract. Use `vge_quality.py` for category-separated observations, the 12-dimension semantic artifact contract, the 14-dimension continuity scorecard, adjacent-shot transition acceptance, re-anchor decisions, first/last-frame capability probes, dialogue/audio/contact contracts, adapter differentials, bounded repair plans and separate human editorial acceptance. Use `vge_media.py media-qa` only for deterministic byte/metadata/decode heuristics, and use strict assembly validation for shot order, lineage, transition timing and final-artifact binding. A `PASS` is valid only when its oracle, exact artifact hash and limitations are present; otherwise retain `NOT_OBSERVED`, `UNKNOWN`, `NOT_RUN`, `PARTIAL` or `BLOCKED`.
+
+The compiler's contradiction result, adapter differential and scene-aware negative-constraint selection are structural evidence only; they never substitute for generated-media observation.
 
 ## Deliver
 

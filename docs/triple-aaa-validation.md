@@ -1,4 +1,6 @@
-# Triple-AAA production validation — R2
+# Triple-AAA production validation — R3
+
+The current closure authority is [`triple-aaa-quality-bar-r3.json`](triple-aaa-quality-bar-r3.json), with the current matrix, scorecard and report in [`capability-matrix-r3.md`](capability-matrix-r3.md), [`triple-aaa-scorecard-r3.md`](triple-aaa-scorecard-r3.md) and [`triple-aaa-final-production-closure.md`](triple-aaa-final-production-closure.md). The R2 material below is retained as historical implementation context.
 
 Status: `READY_WITH_RISKS`.
 
