@@ -7,12 +7,12 @@
   "model": "minimax_h3_fl2va_pruned_w4a8_mixed.safetensors",
   "integration_version": "2026-09-08-candidate",
   "profile_revision": 1,
-  "status": "CONFIRMED",
+  "status": "UNKNOWN",
   "evidence_refs": [
     "evidence/h3-local-20260908.json"
   ],
   "evidence": {
-    "status": "CONFIRMED",
+    "status": "EXTERNAL_ONLY",
     "claim_type": "FACT",
     "confidence": "HIGH",
     "source_refs": [
@@ -32,7 +32,7 @@
       "video"
     ],
     "audio": {
-      "native_generation": "CONFIRMED"
+      "native_generation": "UNKNOWN"
     },
     "camera_controls": {
       "status": "UNKNOWN"
@@ -113,12 +113,12 @@
     ],
     "vram": {
       "observed_device_bytes": 12884901888,
-      "inference_fit": "CONFIRMED_AT_PROBED_WORKLOAD"
+      "inference_fit": "OBSERVED_EXTERNAL_ONLY_AT_PROBED_WORKLOAD"
     }
   },
   "feature_evidence": {
     "text_to_video": {
-      "status": "CONFIRMED",
+      "status": "UNKNOWN",
       "source_ref": "evidence/h3-local-20260908.json",
       "source_content_hash": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
       "probe_ref": "evidence/h3-local-20260908.json",
@@ -132,13 +132,10 @@
         "fps": 24
       },
       "selected_device": "cuda:0",
-      "artifact_ref": "../../../../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4",
-      "artifact_content_hash": "sha256:623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124",
-      "observation_ref": "../../../../verification/media-qa-h3-t2v-r1.json",
-      "observation_content_hash": "sha256:e2cd9515796d9b1a1bccee14707d2788a3b58ca9403b16eb00b91fcc9c7964be"
+      "evidence_scope": "EXTERNAL_REPOSITORY_NOT_SHIPPED"
     },
     "native_audio_generation": {
-      "status": "CONFIRMED",
+      "status": "UNKNOWN",
       "source_ref": "evidence/h3-local-20260908.json",
       "source_content_hash": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
       "probe_ref": "evidence/h3-local-20260908.json",
@@ -152,10 +149,7 @@
         "fps": 24
       },
       "selected_device": "cuda:0",
-      "artifact_ref": "../../../../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4",
-      "artifact_content_hash": "sha256:623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124",
-      "observation_ref": "../../../../verification/media-qa-h3-t2v-r1.json",
-      "observation_content_hash": "sha256:e2cd9515796d9b1a1bccee14707d2788a3b58ca9403b16eb00b91fcc9c7964be"
+      "evidence_scope": "EXTERNAL_REPOSITORY_NOT_SHIPPED"
     },
     "image_to_video": {
       "status": "UNKNOWN",
@@ -218,5 +212,5 @@
   "model_asset_hash": "sha256:01aa7b92c007c599890461c325f9b7e3c96fb06c36f242f95b62f7f20e538dec",
   "selected_device": "cuda:0",
   "resource_context_hash": "sha256:19c6069d09699aa2b4d2d457b4196944a82d2fe8224ad01c345aad77bc672d60",
-  "profile_fingerprint": "sha256:1c13c861981886d46f0d54300d59965e53669ffc462fa83e5c52973b2eef7dca"
+  "profile_fingerprint": "sha256:7274f563c55a12e428c6bce47a42b0f5e38d3a933585e14767a15cbfcfd0dc04"
 }

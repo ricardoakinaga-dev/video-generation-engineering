@@ -851,7 +851,13 @@ def _reference_route(plan, complexity=None):
         "production_quality": ["Duration or shot count crosses the production-quality review boundary"],
         "safety_provenance": ["Rights, consent, likeness, voice or external-transfer risk is explicit"],
     }
-    required = {"core", "directing_audio", "evaluation_repair", "observability"}
+    # Core is the only baseline for a simple authored scene. Specialist
+    # references are activated by a concrete decision signal; loading review
+    # and observability guidance ceremonially makes routing expensive without
+    # improving the simple-shot decision.
+    required = {"core"}
+    if dialogue_signal or audio_signal or moving_camera or long_form_signal:
+        required.add("directing_audio")
     if continuity_signal:
         required.add("continuity")
     if interaction_signal:
@@ -864,13 +870,20 @@ def _reference_route(plan, complexity=None):
         required.add("production_quality")
     if safety_signal:
         required.add("safety_provenance")
+    if any(plan.get(key) is True for key in ("review_required", "evaluation_required", "repair_required")):
+        required.add("evaluation_repair")
+    if any(plan.get(key) is True for key in ("audit_required", "observability_required")):
+        required.add("observability")
     exclusions = {
+        "directing_audio": "No dialogue, audio, moving-camera or long-form directing decision",
         "continuity": "No multi-shot, dialogue, physical-interaction or long-form signal",
         "interaction_constraints": "No contact, articulated-object, vehicle, animal or physical-action signal",
         "model_adaptation": "No selected model, non-T2V mode or capability requirement",
         "comfyui_execution": "No explicit ComfyUI/runtime execution target",
         "production_quality": "No long-form production-quality signal",
         "safety_provenance": "No explicit rights, consent, likeness, voice or transfer risk",
+        "evaluation_repair": "No explicit evaluation, review or repair decision",
+        "observability": "No explicit audit or observability decision",
     }
     required_records = []
     excluded_records = []

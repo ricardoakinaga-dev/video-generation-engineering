@@ -22,7 +22,7 @@ Keep the Skill concise and context-efficient while ensuring that high-risk tasks
 
 | User/task signal | Minimum loaded references | Do not load by default |
 |---|---|---|
-| Simple 5-second portrait | core contracts, directing, acceptance | long-form, vehicle, adapter internals |
+| Simple 5-second portrait | core contracts | long-form, directing/audio, vehicle, adapter internals |
 | Dialogue scene | core, scene/continuity, directing, audio/lip-sync, failure/evals | vehicle/animal physics unless present |
 | Vehicle entry/driving | core, scene/continuity, interaction/motion, constraints, pattern library | dialogue profile unless speech present |
 | Human/animal contact | core, scene/continuity, interaction/motion, animal constraints, evals | long-form unless duration/dependency requires |

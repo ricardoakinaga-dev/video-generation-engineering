@@ -15,6 +15,7 @@ from tools.candidate_fingerprint import (
 from tools.release_audit import (
     ROOT,
     build_archive,
+    describe_existing_archive,
     manifest,
     manifest_digest as package_manifest_digest,
     package_files,
@@ -89,6 +90,17 @@ class ReleaseAuditTests(unittest.TestCase):
                 build_archive(archive, paths)
             self.assertEqual(original, archive.read_bytes())
 
+    def test_existing_archive_can_be_described_without_overwrite(self):
+        paths = package_files()
+        records = manifest(paths)
+        with tempfile.TemporaryDirectory(prefix="vge-release-test-") as raw:
+            archive = Path(raw) / "existing.zip"
+            build_archive(archive, paths)
+            described = describe_existing_archive(archive)
+            self.assertEqual("EXISTING", described["status"])
+            self.assertEqual(len(paths), described["entry_count"])
+            self.assertEqual("PASS", verify_archive(archive, records)["status"])
+
     def test_archive_members_must_match_manifest_exactly(self):
         paths = package_files()
         records = manifest(paths)
@@ -141,11 +153,24 @@ class ReleaseAuditTests(unittest.TestCase):
                 encoding="utf-8",
             )
             binding = validate_release_references(freeze_ref, final_ref, critic_ref)
-            self.assertEqual("PASS", binding["status"])
+            self.assertEqual("FAIL", binding["status"])
+            self.assertEqual("PASS", binding["critic_record_binding_status"])
+            self.assertEqual("INCOMPLETE", binding["release_assurance_status"])
+            self.assertEqual("INCOMPLETE", binding["critic"]["verdict"])
+            self.assertTrue(any("must be PASS for release assurance" in error for error in binding["errors"]))
             self.assertEqual(candidate_manifest_digest(record["files_sha256"]), record["scope_sha256"])
             self.assertTrue(binding["fingerprint_content_sha256"].startswith("sha256:"))
             self.assertTrue(binding["critic_content_sha256"].startswith("sha256:"))
             self.assertEqual(record["scope_sha256"], binding["freeze_scope_sha256"])
+
+            critic_ref.write_text(
+                critic_ref.read_text(encoding="utf-8").replace("**INCOMPLETE**", "**PASS**"),
+                encoding="utf-8",
+            )
+            passing_binding = validate_release_references(freeze_ref, final_ref, critic_ref)
+            self.assertEqual("PASS", passing_binding["status"])
+            self.assertEqual("PASS", passing_binding["release_assurance_status"])
+            self.assertEqual("PASS", passing_binding["critic"]["verdict"])
 
     def test_release_reference_validation_rejects_stale_scope(self):
         record = build_record()

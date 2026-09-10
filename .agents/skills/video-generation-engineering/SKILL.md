@@ -48,6 +48,7 @@ python3 scripts/vge.py trim source.mp4 derived-5s.mp4 --duration 5 --report trim
 python3 scripts/vge.py assemble assembly.json --video preview.mp4 --preview
 python3 scripts/vge.py capture-evidence source.mp4 --output-dir evidence-r1 --frame 0.5 --audio-window 1 2 --report evidence-r1.json
 python3 scripts/vge.py flf-probe flf-probe.json --output flf-probe-report.json
+python3 scripts/vge.py flf-suite flf-suite.json --output flf-suite-report.json
 python3 scripts/vge.py case-envelope long-form-execution.json --output case-envelope-report.json
 ```
 
@@ -67,17 +68,19 @@ replaced by a collected runtime attempt and artifact observations before a mode
 can become `CONFIRMED`. `case-envelope` validates the case-level join from
 ordered shots and predecessor state to attempts, artifacts, observations,
 transitions and assembly; it is a recorder/lineage gate, not a runtime executor
-or a semantic acceptance shortcut.
+or a semantic acceptance shortcut. `flf-suite` requires independent
+`FIRST_ONLY`, `LAST_ONLY` and `FIRST_AND_LAST` records before reporting suite
+support.
 
 ## Execute and evaluate
 
 For execution, confirm target, mode and destination from the current request. Existing explicit authorization persists within that scope. `LOCAL_DRY_RUN` only reads metadata; `LOCAL_EXECUTE` queues the inspected workflow. `CLOUD_EXECUTE` additionally needs a selected provider, current API contract, credentials held outside artifacts, and transfer/cost authorization. Use installed compatible tools when present; tool names are host-dependent.
 
-Record concrete runtime/model/node/workflow/input/parameter context per submission, then collect with an immutable attempt reference, runtime history snapshot, append-only event log, output-entry manifest and output hashes. On timeout, reconcile the same queue ID; do not submit again automatically. Model/runtime changes invalidate affected capability evidence. Use one bounded repair attempt by default; propose a new budget before further costly regeneration unless already authorized.
+Record concrete runtime/model/node/workflow/input/parameter context per submission, including a point-in-time `/queue` snapshot, then collect with an immutable attempt reference, runtime history snapshot, append-only event log, output-entry manifest and output hashes. Queue discovery is observational only: it neither reserves capacity nor authorizes mutation. On timeout, reconcile the same queue ID; do not submit again automatically. Model/runtime changes invalidate affected capability evidence. Use one bounded repair attempt by default; propose a new budget before further costly regeneration unless already authorized.
 
 Validate collected bytes and observed hashes before QA acceptance. Run metadata checks and inspect actual frames/audio where available. Use `NOT_RUN` for unperformed checks and `PARTIAL` when the evidence is incomplete. Generation acceptance and editorial acceptance are separate. A contact sheet or ffprobe result cannot prove physics, identity, emotion or lip-sync.
 
-Production quality is a separate evidence contract. Use `vge_quality.py` for category-separated observations, the 12-dimension semantic artifact contract, the 14-dimension continuity scorecard, the hash-bound 14-dimension `cross_shot_comparison`, adjacent-shot transition acceptance, re-anchor decisions, first/last-frame capability probes, dialogue/audio/contact contracts, adapter differentials, bounded repair plans with before/after lineage, and separate human editorial acceptance with reviewer authority. Audio claims must reference hash-bound bytes that actually contain an audio stream; visible lip-sync claims require paired face-frame and audio evidence. Use `vge_media.py media-qa` only for deterministic byte/metadata/decode heuristics, and use strict assembly validation for shot order, lineage, transition timing and final-artifact binding. A manifest-only assembly is structural `PASS` but acceptance `NOT_RUN`. A `PASS` is valid only when its oracle, exact artifact hash and limitations are present; otherwise retain `NOT_OBSERVED`, `UNKNOWN`, `NOT_RUN`, `PARTIAL` or `BLOCKED`.
+Production quality is a separate evidence contract. Use `vge_quality.py` for category-separated observations, the 12-dimension semantic artifact contract, the 14-dimension continuity scorecard, the hash-bound 14-dimension `cross_shot_comparison`, adjacent-shot transition acceptance, re-anchor decisions, first/last-frame capability probes and the three-mode `flf-suite`, dialogue/audio/contact contracts, adapter differentials with collected runtime evidence, bounded repair plans with chronological before/after lineage, and separate human editorial acceptance with reviewer authority. A long-form production `PASS` must also satisfy case-specific gates: observed contact/vehicle state for LF-001, observed dialogue/audio for LF-002, and the LF-003 Scene Bible, timed beat structure, 6–12 dependent shots, multiple cameras, audio, repair outcome and target-duration media checks. Fixture/synthetic runtimes and copied short media cannot prove production acceptance. Audio claims must reference hash-bound bytes that actually contain an audio stream; visible lip-sync claims require paired face-frame/audio evidence. Use `vge_media.py media-qa` only for deterministic byte/metadata/decode heuristics, and use strict assembly validation for shot order, lineage, transition timing and final-artifact binding. A manifest-only assembly is structural `PASS` but acceptance `NOT_RUN`. A `PASS` is valid only when its oracle, exact artifact hash and limitations are present; otherwise retain `NOT_OBSERVED`, `UNKNOWN`, `NOT_RUN`, `PARTIAL` or `BLOCKED`.
 
 The compiler's contradiction result, adapter differential and scene-aware negative-constraint selection are structural evidence only; they never substitute for generated-media observation.
 

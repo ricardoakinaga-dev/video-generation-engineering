@@ -107,6 +107,46 @@ class EvidenceTests(unittest.TestCase):
         result=subprocess.run([sys.executable,str(SKILL/'scripts/vge.py'),'accept',str(path)],cwd=self.tmp.name,capture_output=True,text=True)
         self.assertEqual(2,result.returncode)
         self.assertEqual('PARTIAL',json.loads(result.stdout)['status'])
+    def test_cli_quality_commands_fail_closed_for_non_accepting_statuses(self):
+        aggregate_path = Path(self.tmp.name) / 'aggregate.json'
+        aggregate_path.write_text(json.dumps({
+            'checks': [
+                {'id': 'observed', 'required': True, 'result': 'PASS', 'evidence': 'fixture-bytes'},
+                {'id': 'unobserved', 'required': False, 'result': 'NOT_RUN'},
+            ]
+        }))
+        aggregate_result = subprocess.run(
+            [sys.executable, str(SKILL / 'scripts/vge.py'), 'aggregate', str(aggregate_path)],
+            cwd=self.tmp.name, capture_output=True, text=True)
+        self.assertEqual(2, aggregate_result.returncode)
+        self.assertEqual({'status': 'PARTIAL', 'accepted': False}, json.loads(aggregate_result.stdout))
+
+        dimensions = (
+            'identity', 'wardrobe', 'object_retention', 'environment', 'lighting', 'physics',
+            'interaction', 'camera', 'performance', 'dialogue', 'lip_sync', 'temporal_continuity',
+        )
+        categories = {name: 'audio' if name in ('dialogue', 'lip_sync') else 'temporal' if name == 'temporal_continuity' else 'visual'
+                      for name in dimensions}
+        semantic_path = Path(self.tmp.name) / 'semantic.json'
+        semantic_path.write_text(json.dumps({
+            'schema_version': 1, 'id': 'semantic-not-applicable', 'shot_id': 'shot-1',
+            'artifact_id': 'artifact-1', 'artifact_ref': str(Path(self.tmp.name) / 'missing.mp4'),
+            'observed_content_hash': digest('not-observed'),
+            'observed_at': datetime.now(timezone.utc).isoformat(),
+            'procedure': 'No authorized semantic observation was run', 'status': 'NOT_APPLICABLE',
+            'limitations': ['Capability not observed'],
+            'checks': [
+                {'id': 'semantic-' + name, 'category': categories[name], 'semantic_dimension': name,
+                 'result': 'NOT_APPLICABLE', 'oracle': {'kind': 'DOCUMENT', 'question': 'Was this dimension observed?'},
+                 'confidence': 'UNKNOWN', 'evidence': [], 'reason': 'No authorized observation'}
+                for name in dimensions
+            ],
+        }))
+        semantic_result = subprocess.run(
+            [sys.executable, str(SKILL / 'scripts/vge.py'), 'semantic', str(semantic_path)],
+            cwd=self.tmp.name, capture_output=True, text=True)
+        self.assertEqual(2, semantic_result.returncode)
+        self.assertEqual('NOT_APPLICABLE', json.loads(semantic_result.stdout)['status'])
 
 
 NODE_INFO={'Source':{'input':{'required':{'model_name':[['model.bin']], 'width':['INT',{'min':32,'max':512}]}},'output':['IMAGE']},
@@ -223,6 +263,7 @@ class HTTPTests(unittest.TestCase):
             def do_GET(self):
                 if self.path=='/system_stats':data={'system':{'comfyui_version':'1','python_version':'1','pytorch_version':'test+cu'},'devices':[{'index':0,'name':'fixture-gpu','type':'cuda','vram_total':1000,'vram_free':900}]}
                 elif self.path=='/object_info':data=NODE_INFO
+                elif self.path=='/queue':data={'queue_running': [], 'queue_pending': []}
                 elif self.path.startswith('/history/'):
                     data={'queue_1':{'prompt':[0,'queue_1',WORKFLOW,{},['2']],'status':{'completed':True,'status_str':'cancelled' if owner.cancelled else 'success'},'outputs':{'2':{'images':[{'filename':'../bad.png' if owner.badpath else 'test.png','subfolder':'','type':'output'}]}}}} if owner.complete else {}
                 elif self.path.startswith('/view?'):
@@ -246,6 +287,9 @@ class HTTPTests(unittest.TestCase):
     def send(self,authorized=True,probe_mode=False):return submit(self.client,WORKFLOW,self.context,Path(self.tmp.name)/'runs',authorized,probe_mode)
     def test_submit_poll_collect_real_http_boundary(self):
         submitted=self.send();self.assertEqual(1,self.posts)
+        self.assertEqual({'status': 'OBSERVED', 'running_count': 0, 'pending_count': 0,
+                          'prompt_ids': [], 'content_hash': digest({'queue_running': [], 'queue_pending': []})},
+                         submitted['attempt']['runtime']['queue_state'])
         runpath=Path(submitted['run_directory']);self.assertTrue((runpath/'attempt-001.json').exists());self.assertTrue((runpath/'attempt-002.json').exists())
         events=[json.loads(line) for line in (runpath/'events.jsonl').read_text().splitlines()]
         self.assertEqual(['INTENT_RECORDED','SUBMITTED'], [event['status'] for event in events])

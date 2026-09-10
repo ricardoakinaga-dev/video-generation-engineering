@@ -42,6 +42,11 @@ except ModuleNotFoundError:  # pragma: no cover - supports direct script executi
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / ".agents/skills/video-generation-engineering"
+# Direct script execution places ``tools/`` (not the repository root) on
+# sys.path.  Keep repository-level verification imports available in both
+# ``python tools/release_audit.py`` and module/test execution.
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 EXCLUDED_PARTS = {"__pycache__", ".git"}
 BANNED_SUFFIXES = {".ckpt", ".pt", ".pth", ".bin", ".onnx", ".safetensors", ".gguf", ".ggml"}
 PRIVATE_MEDIA_SUFFIXES = {".mp4", ".mov", ".mkv", ".webm", ".gif", ".wav", ".mp3", ".flac", ".png", ".jpg", ".jpeg"}
@@ -141,6 +146,16 @@ def _is_sha256(value: object) -> bool:
 
 def _public_validation(result: dict) -> dict:
     return {key: value for key, value in result.items() if key != "_record"}
+
+
+def _critic_verdict(text: str) -> str | None:
+    """Extract the standalone verdict from the critic's final-verdict section."""
+    match = re.search(
+        r"(?ims)^\s*#{1,6}\s*Final\s+verdict\s*$.*?^\s*[`*_~]*\s*"
+        r"(PASS|REJECT|INCOMPLETE)\s*[`*_~]*\s*$",
+        text,
+    )
+    return match.group(1).upper() if match else None
 
 
 def validate_fingerprint_reference(reference: str | Path) -> dict:
@@ -266,7 +281,8 @@ def compare_fingerprint_scopes(freeze: dict, final: dict) -> list[str]:
 def validate_critic_reference(reference: str | Path, fingerprint: dict) -> dict:
     """Validate exact critic bytes, scope binding and the required review record."""
     path = _resolve_reference(reference)
-    result = {"status": "FAIL", "ref": _display_path(path), "content_sha256": None, "errors": []}
+    result = {"status": "FAIL", "ref": _display_path(path), "content_sha256": None,
+              "verdict": None, "release_assurance_status": "INCOMPLETE", "errors": []}
     if not path.is_file() or path.is_symlink():
         result["errors"].append(f"critic reference is unavailable or not a regular file: {path}")
         return result
@@ -300,7 +316,9 @@ def validate_critic_reference(reference: str | Path, fingerprint: dict) -> dict:
         result["errors"].append("critic is missing evidence references")
     if not re.search(r"(?i)\bfresh\b", text) or not re.search(r"(?i)\bread.only\b", text):
         result["errors"].append("critic is not explicitly marked fresh and read-only")
-    if not re.search(r"(?is)Final verdict.{0,200}\b(?:PASS|REJECT|INCOMPLETE)\b", text):
+    verdict = _critic_verdict(text)
+    result["verdict"] = verdict
+    if verdict is None:
         result["errors"].append("critic final verdict must be PASS, REJECT or INCOMPLETE")
     if not _is_sha256(expected_scope) or expected_scope not in text:
         result["errors"].append("critic does not state the exact fingerprint scope digest")
@@ -314,6 +332,12 @@ def validate_critic_reference(reference: str | Path, fingerprint: dict) -> dict:
     if "Independent scope digest" not in text or "Mutation sentinel" not in text:
         result["errors"].append("critic is missing the required independent scope binding labels")
     result["status"] = "PASS" if not result["errors"] else "FAIL"
+    if verdict == "PASS" and result["status"] == "PASS":
+        result["release_assurance_status"] = "PASS"
+    elif verdict == "REJECT":
+        result["release_assurance_status"] = "REJECT"
+    else:
+        result["release_assurance_status"] = "INCOMPLETE"
     return result
 
 
@@ -361,9 +385,16 @@ def validate_release_references(freeze_ref=None, fingerprint_ref=None, critic_re
         if final_validation and final_validation.get("_record"):
             critic_validation = validate_critic_reference(critic_ref, final_validation["_record"])
             binding["critic"] = critic_validation
+            binding["critic_record_binding_status"] = critic_validation["status"]
+            binding["release_assurance_status"] = critic_validation.get("release_assurance_status", "INCOMPLETE")
             binding["critic_ref"] = critic_validation["ref"]
             binding["critic_content_sha256"] = critic_validation.get("content_sha256")
             binding["errors"].extend("critic: " + error for error in critic_validation["errors"])
+            if critic_validation.get("verdict") != "PASS":
+                binding["errors"].append(
+                    "critic final verdict must be PASS for release assurance; "
+                    f"observed {critic_validation.get('verdict') or 'MISSING'}"
+                )
         else:
             binding["errors"].append("critic_ref requires a valid fingerprint_ref for exact scope validation")
 
@@ -384,6 +415,33 @@ def build_archive(output: Path, paths: list[Path]) -> dict:
             "path": str(output.relative_to(ROOT)) if output.is_relative_to(ROOT) else str(output),
             "sha256": file_hash(output), "bytes": output.stat().st_size,
             "entry_count": len(paths), "file_count": len(paths)}
+
+
+def describe_existing_archive(archive_path: Path) -> dict:
+    """Describe a shipped archive so reference validation can remain in-scope.
+
+    The candidate fingerprint intentionally includes the distribution archive.
+    Moving that archive away just to rebuild it would make the frozen scope
+    appear incomplete, so the release audit verifies an existing archive
+    without overwriting it.  ``verify_archive`` remains the authoritative
+    byte/member check below.
+    """
+    result = {"status": "EXISTING", "path": str(archive_path),
+              "sha256": None, "bytes": None, "entry_count": None, "file_count": None}
+    if not archive_path.is_file() or archive_path.is_symlink():
+        result["status"] = "MISSING"
+        return result
+    result["sha256"] = file_hash(archive_path)
+    result["bytes"] = archive_path.stat().st_size
+    try:
+        with zipfile.ZipFile(archive_path) as archive:
+            count = len(archive.infolist())
+    except (OSError, zipfile.BadZipFile):
+        result["status"] = "INVALID"
+        return result
+    result["entry_count"] = count
+    result["file_count"] = count
+    return result
 
 
 def verify_archive(archive_path: Path, records: dict[str, str]) -> dict:
@@ -459,6 +517,80 @@ def run_compileall() -> dict:
                 "stderr": completed.stderr[-1000:]}
 
 
+def run_import_cycle_check() -> dict:
+    """Run the same static local-module cycle check used by project verification."""
+    try:
+        from tools.verify import import_cycle_audit
+        return import_cycle_audit(SKILL / "scripts")
+    except Exception as exc:  # pragma: no cover - defensive release boundary
+        return {"status": "FAIL", "cycles": [], "errors": [f"import-cycle audit could not run: {type(exc).__name__}: {exc}"]}
+
+
+def run_project_verification() -> dict:
+    """Run the complete offline verification suite in an isolated report path."""
+    with tempfile.TemporaryDirectory(prefix="vge-release-verify-") as raw:
+        report_path = Path(raw) / "verify.json"
+        env = dict(__import__("os").environ)
+        env["PYTHONDONTWRITEBYTECODE"] = "1"
+        completed = subprocess.run(
+            [sys.executable, str(ROOT / "tools/verify.py"), "--output", str(report_path)],
+            cwd=ROOT, env=env, capture_output=True, text=True, timeout=180,
+        )
+        report = None
+        if report_path.is_file():
+            try:
+                report = json.loads(report_path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+                report = None
+        return {
+            "status": "PASS" if completed.returncode == 0 and isinstance(report, dict)
+                      and report.get("status") == "PASS" else "FAIL",
+            "returncode": completed.returncode,
+            "report_status": report.get("status") if isinstance(report, dict) else "UNAVAILABLE",
+            "tests_run": report.get("tests_run") if isinstance(report, dict) else None,
+            "failures": report.get("failures") if isinstance(report, dict) else None,
+            "errors": report.get("errors", []) if isinstance(report, dict) else ["verification report unavailable"],
+            "import_cycle_status": report.get("import_cycle_audit", {}).get("status") if isinstance(report, dict) else None,
+            "stderr": completed.stderr[-2000:],
+        }
+
+
+def run_docs_validation() -> dict:
+    """Run the latest read-only documentation/link/contract audit."""
+    checker = ROOT / "audit-artifacts/docs-2026-09-08-r5/check_docs.py"
+    completed = subprocess.run([sys.executable, str(checker)], cwd=ROOT,
+                               capture_output=True, text=True, timeout=60)
+    result = None
+    if completed.returncode == 0:
+        try:
+            result = json.loads(completed.stdout)
+        except json.JSONDecodeError:
+            result = None
+    structural_ok = isinstance(result, dict) and not any((
+        result.get("yaml_errors"), result.get("local_link_errors"),
+        result.get("missing_traceability_ids"), result.get("implicit_yaml_booleans"),
+    ))
+    parity_ok = isinstance(result, dict) and result.get("complete_profile_parity") is True \
+        and result.get("collection_parity") is True
+    provenance = result.get("provenance_case", {}) if isinstance(result, dict) else {}
+    provenance_ok = isinstance(provenance, dict) and all(provenance.get(key) is True for key in (
+        "artifact_attempt_links_resolve", "observation_links_and_hashes_match"))
+    return {
+        "status": "PASS" if completed.returncode == 0 and structural_ok and parity_ok and provenance_ok else "FAIL",
+        "returncode": completed.returncode,
+        "audit_revision": result.get("audit_revision") if isinstance(result, dict) else None,
+        "documents": result.get("documents") if isinstance(result, dict) else None,
+        "yaml_errors": result.get("yaml_errors", []) if isinstance(result, dict) else ["documentation audit did not return JSON"],
+        "local_link_errors": result.get("local_link_errors", []) if isinstance(result, dict) else [],
+        "missing_traceability_ids": result.get("missing_traceability_ids", []) if isinstance(result, dict) else [],
+        "implicit_yaml_booleans": result.get("implicit_yaml_booleans", []) if isinstance(result, dict) else [],
+        "complete_profile_parity": result.get("complete_profile_parity") if isinstance(result, dict) else None,
+        "collection_parity": result.get("collection_parity") if isinstance(result, dict) else None,
+        "provenance_case": provenance,
+        "stderr": completed.stderr[-2000:],
+    }
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--archive", default="dist/video-generation-engineering-triple-aaa-r9.zip")
@@ -472,25 +604,38 @@ def main(argv=None) -> int:
     started = datetime.now(timezone.utc).isoformat()
     paths = package_files()
     records = manifest(paths)
-    errors = scan_package(paths)
+    package_errors = scan_package(paths)
+    errors = list(package_errors)
     reference_binding = validate_release_references(args.freeze_ref, args.fingerprint_ref, args.critic_ref)
     if reference_binding["status"] == "FAIL":
         errors.extend("release reference: " + error for error in reference_binding["errors"])
 
     archive = {"path": str(archive_path), "status": "NOT_BUILT"}
-    if not errors:
-        try:
-            archive = build_archive(archive_path, paths)
-        except FileExistsError as exc:
-            errors.append(str(exc))
+    # A non-PASS reviewer is an assurance failure, not a reason to suppress
+    # independent package-integrity, smoke, compile or docs measurements.
+    if not package_errors:
+        if archive_path.exists() or archive_path.is_symlink():
+            archive = describe_existing_archive(archive_path)
+            if archive["status"] == "INVALID":
+                errors.append(f"existing archive is not a valid ZIP: {archive_path}")
+            elif archive["status"] == "MISSING":
+                errors.append(f"existing archive is unavailable: {archive_path}")
+        else:
+            try:
+                archive = build_archive(archive_path, paths)
+            except FileExistsError as exc:
+                errors.append(str(exc))
     archive_check = (
         verify_archive(archive_path, records)
-        if archive.get("status") == "BUILT"
+        if archive.get("status") in ("BUILT", "EXISTING")
         else {"status": "BLOCKED", "errors": sorted(set(errors))}
     )
     smoke = run_external_smoke(archive_path) if archive_check.get("status") == "PASS" else {"status": "BLOCKED", "checks": []}
     compileall = run_compileall()
-    status = "PASS" if not errors and archive_check.get("status") == "PASS" and smoke.get("status") == "PASS" and compileall.get("status") == "PASS" else "FAIL"
+    import_cycle = run_import_cycle_check()
+    project_verification = run_project_verification()
+    docs_validation = run_docs_validation()
+    status = "PASS" if not errors and archive_check.get("status") == "PASS" and smoke.get("status") == "PASS" and compileall.get("status") == "PASS" and import_cycle.get("status") == "PASS" and project_verification.get("status") == "PASS" and docs_validation.get("status") == "PASS" else "FAIL"
     report = {
         "schema_version": 1, "id": "distribution-triple-aaa-r9", "observed_at": started,
         "completed_at": datetime.now(timezone.utc).isoformat(), "status": status,
@@ -498,7 +643,9 @@ def main(argv=None) -> int:
         "package_scope": str(SKILL.relative_to(ROOT)), "package_manifest_sha256": manifest_digest(records),
         "package_file_count": len(records), "package_files_sha256": records,
         "archive": {**archive, "verification": archive_check}, "external_cwd_smoke": smoke,
-        "compileall": compileall, "critic_binding": reference_binding,
+        "compileall": compileall, "import_cycle_audit": import_cycle,
+        "project_verification": project_verification, "docs_validation": docs_validation,
+        "critic_binding": reference_binding,
         "security": {"status": "PASS" if not errors else "FAIL", "errors": sorted(set(errors)),
                       "secret_value_scan": "PASS" if not any("secret" in error for error in errors) else "FAIL",
                       "model_weight_files": "PASS" if not any("weight" in error for error in errors) else "FAIL",

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "probe_id": "h3-local-20260908",
-  "status": "PASS_RUNTIME_GENERATION",
+  "status": "EXTERNAL_ONLY",
   "observed_at": "2026-09-08T13:07:20.964232+00:00",
-  "scope": "Exact local workflow, model hashes, runtime/node inventory, 384x224,124 frames,24 FPS; no extrapolation",
+  "scope": "External repository evidence summary only; raw artifact and observation bytes are intentionally not shipped in the Skill package",
   "runtime": {
     "provider": "comfyui",
     "endpoint": "http://127.0.0.1:8188",
@@ -126,8 +126,6 @@
   ],
   "workflow_hash": "sha256:d31bf8da1c5fcc123d1d5ecf74c338714dc7f70329e6ddc88cc537f22cb92158",
   "queue_id": "a5987861-6920-4379-b379-c258ac1f1dba",
-  "artifact_ref": "../../../../../verification/media/final/art_2898879072af4739b673efe71fafcc7e.mp4",
-  "artifact_hash": "sha256:623f04987e1401623f6bb9e31c6823b23e56694719681d081e7484303538d124",
   "duration_s": 5.167,
   "video": {
     "width": 384,
@@ -142,6 +140,7 @@
     "sample_rate": 32000
   },
   "limitations": [
+    "External repository evidence is not portable and is not a confirmed package capability",
     "Sparse frame review only; no qualified identity/contact/lipsync or listening acceptance",
     "Single seed and tiny workload, not benchmark or long-form validation",
     "Profile invalidated by workflow/runtime/model/node changes"

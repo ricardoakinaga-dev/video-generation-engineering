@@ -23,7 +23,7 @@ To establish a new capability, use `submit --probe --authorize-submit` with `pro
 
 ## Discover and validate
 
-Inspect `/system_stats` and `/object_info` through the selected endpoint. Record version, available node schemas/model enums, device/VRAM and inventory hash. Optional feature/model routes depend on the deployment. Use installed tools when they provide a better-supported discovery path. The [official route documentation](https://docs.comfy.org/development/comfyui-server/comms_routes) explains the server boundary; current local metadata is authoritative for installed node inputs.
+Inspect `/system_stats`, `/object_info` and the read-only `/queue` snapshot through the selected endpoint. Record version, available node schemas/model enums, device/VRAM, queue counts/IDs and inventory hashes. Queue state is point-in-time context, not a reservation, authorization or proof that a submission will fit. Optional feature/model routes depend on the deployment. Use installed tools when they provide a better-supported discovery path. The [official route documentation](https://docs.comfy.org/development/comfyui-server/comms_routes) explains the server boundary; current local metadata is authoritative for installed node inputs.
 
 An API graph maps node IDs to `class_type` and `inputs`; UI nodes/links JSON requires a deliberate conversion. Never guess widget ordering for an unfamiliar node. Each link is `[source_node_id, output_index]`. Check node availability, required fields, supported enum/model selections, type compatibility, range bounds, cycles and output nodes. Dynamic/custom-node inputs may need node-specific or runtime validation. A static PASS proves graph metadata compatibility only.
 

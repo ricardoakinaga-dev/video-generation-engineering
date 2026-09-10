@@ -267,13 +267,14 @@ class PlanningTests(unittest.TestCase):
         simple_ids = self.route_ids(simple)
         self.assertEqual('STRUCTURAL', simple['reference_route']['status'])
         self.assertEqual('FAST', simple['reference_route']['presentation_mode'])
-        self.assertTrue({'core', 'directing_audio', 'evaluation_repair', 'observability'} <= simple_ids)
-        self.assertTrue({'continuity', 'interaction_constraints', 'model_adaptation', 'comfyui_execution', 'production_quality'}
+        self.assertEqual({'core'}, simple_ids)
+        self.assertTrue({'directing_audio', 'evaluation_repair', 'observability', 'continuity', 'interaction_constraints', 'model_adaptation', 'comfyui_execution', 'production_quality'}
                         <= {item['id'] for item in simple['reference_route']['excluded_references']})
 
         dialogue = prepare(self.dialogue_treatment())
         dialogue_ids = self.route_ids(dialogue)
-        self.assertTrue({'continuity', 'directing_audio', 'evaluation_repair'} <= dialogue_ids)
+        self.assertTrue({'continuity', 'directing_audio'} <= dialogue_ids)
+        self.assertNotIn('evaluation_repair', dialogue_ids)
         self.assertNotIn('interaction_constraints', dialogue_ids)
 
         long_form = self.simple_portrait()

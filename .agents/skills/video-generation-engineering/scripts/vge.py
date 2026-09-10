@@ -20,7 +20,8 @@ from vge_quality import (validate_continuity_scorecard, validate_transition_cont
                          validate_dialogue_contract, validate_audio_timeline, analyze_prompt_density, adapt_prompt,
                          adapter_differential, validate_feature_profile, build_repair_plan, validate_repair_plan,
                          validate_long_form_case, maturity_report, validate_editorial_acceptance,
-                         prepare_first_last_frame_probe, validate_long_form_execution_envelope)
+                         prepare_first_last_frame_probe, validate_first_last_frame_suite,
+                         validate_long_form_execution_envelope)
 
 
 def main(argv=None):
@@ -66,6 +67,7 @@ def main(argv=None):
     p = sub.add_parser("adapt-prompt"); p.add_argument("input"); p.add_argument("--adapter", required=True); p.add_argument("--output")
     p = sub.add_parser("profile-check"); p.add_argument("input"); p.add_argument("--feature", required=True); p.add_argument("--output")
     p = sub.add_parser("first-last-frame"); p.add_argument("input"); p.add_argument("--output")
+    p = sub.add_parser("flf-suite", help="validate all three first/last-frame capability modes"); p.add_argument("input"); p.add_argument("--output")
     p = sub.add_parser("flf-probe", help="prepare a mode-specific FLF probe without executing generation"); p.add_argument("input"); p.add_argument("--output")
     for name in ("discover", "preflight", "bind", "submit", "poll", "collect"):
         p = sub.add_parser(name)
@@ -90,7 +92,9 @@ def main(argv=None):
         elif cmd == "compile": result = compile_plan(data, load(args.profile) if args.profile else None)
         elif cmd == "route": result = route_references(prepare(data))
         elif cmd == "negotiate": result = negotiate(data, load(args.profile))
-        elif cmd == "aggregate": result = {"status": aggregate(data["checks"], data.get("artifact_id"))}
+        elif cmd == "aggregate":
+            aggregate_status = aggregate(data["checks"], data.get("artifact_id"))
+            result = {"status": aggregate_status, "accepted": aggregate_status == "PASS"}
         elif cmd == "repair-scope": result = repair_scope(data["plan"], data["changed_shot_ids"])
         elif cmd == "hailuo-plan": result = hailuo_request(data)
         elif cmd == "hailuo-submit": result = hailuo_submit(data,args.destination,args.authorize_paid_call,args.authorize_transfer)
@@ -133,6 +137,7 @@ def main(argv=None):
         elif cmd == "adapt-prompt": result = adapt_prompt(data["sections"], load(args.adapter), canonical_state=data.get("canonical_state"))
         elif cmd == "profile-check": result = validate_feature_profile(data.get("profile", data), args.feature, observed=data.get("observed"), base_dir=Path(args.input).resolve().parent)
         elif cmd == "first-last-frame": result = validate_first_last_frame(data)
+        elif cmd == "flf-suite": result = validate_first_last_frame_suite(data)
         elif cmd == "flf-probe": result = prepare_first_last_frame_probe(data)
         elif cmd == "long-form": result = validate_long_form_case(data, base_dir=Path(args.input).resolve().parent)
         elif cmd == "case-envelope": result = validate_long_form_execution_envelope(data, base_dir=Path(args.input).resolve().parent)
@@ -157,14 +162,14 @@ def main(argv=None):
         if cmd == "accept" and result.get("accepted") is not True:
             exit_status = "BLOCKED"
         quality_gate_commands = {
-            "scorecard", "transition", "semantic", "shot-acceptance", "contact", "dialogue", "audio",
+            "aggregate", "scorecard", "transition", "semantic", "shot-acceptance", "contact", "dialogue", "audio",
             "causality", "ownership", "vehicle-state", "repair-validate", "long-form", "maturity",
-            "adapter-diff", "assembly-validate", "editorial", "profile-check", "first-last-frame",
+            "adapter-diff", "assembly-validate", "editorial", "profile-check", "first-last-frame", "flf-suite",
             "flf-probe", "case-envelope", "media-qa",
         }
         non_accepting_quality_status = exit_status in (
             "FAIL", "FAILED", "BLOCKED", "UNKNOWN", "PARTIAL", "NOT_OBSERVED", "NOT_RUN",
-            "EXPIRED", "DEGRADED", "UNSUPPORTED", "PROPOSED", "INFERRED")
+            "EXPIRED", "DEGRADED", "UNSUPPORTED", "PROPOSED", "INFERRED", "NOT_APPLICABLE")
         if non_accepting_quality_status and getattr(args, "output", None):
             print(json.dumps({"status": status, "report": args.output, "next_action": "Inspect issues/gaps in the saved report; the output is not accepted"}), file=sys.stderr)
         return 2 if (exit_status in ("FAIL", "FAILED", "BLOCKED", "UNKNOWN") or

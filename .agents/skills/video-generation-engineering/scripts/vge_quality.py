@@ -656,10 +656,14 @@ def validate_transition_contract(contract):
             "Transition requires distinct previous and next artifact bytes")
     _verify_observed_bytes(previous["artifact_ref"], previous["content_hash"], "transition.previous_artifact", required=True)
     _verify_observed_bytes(following["artifact_ref"], following["content_hash"], "transition.next_artifact", required=True)
-    required = _list(contract.get("required_state_properties"), "transition.required_state_properties", allow_empty=False)
-    require(all(isinstance(item, str) and item for item in required), "Transition state properties must be strings")
     start = _object(contract.get("next_start_state"), "transition.next_start_state")
     end = _object(contract.get("previous_end_state"), "transition.previous_end_state")
+    required = _list(contract.get("required_state_properties"), "transition.required_state_properties", allow_empty=False)
+    require(all(isinstance(item, str) and item for item in required), "Transition state properties must be strings")
+    declared_state = set(start) | set(end)
+    require(declared_state == set(required),
+            "Transition.required_state_properties must cover exactly every declared state property; "
+            "an omitted state cannot be hidden from the handoff gate")
     for prop in required:
         require(prop in start and prop in end, f"Transition lacks state property: {prop}")
         require(start[prop] == end[prop], f"Transition state mismatch: {prop}")
@@ -789,6 +793,41 @@ def reanchor_decision(drift, shot_id, downstream_shot_ids=None):
     }
 
 
+def _validate_first_last_frame_runtime_binding(record):
+    """Bind a confirmed FLF result to the exact capability-probe attempt."""
+    attempt_ref = record.get("attempt_ref", record.get("execution_attempt_ref"))
+    _nonempty(attempt_ref, "first_last_frame.attempt_ref")
+    attempt_content_hash = record.get("attempt_content_hash")
+    _hash(attempt_content_hash, "first_last_frame.attempt_content_hash")
+    attempt_path = _resolve_quality_path(attempt_ref, "first_last_frame.attempt_ref")
+    require(file_hash(attempt_path) == attempt_content_hash,
+            "first-last-frame attempt bytes changed")
+    try:
+        attempt = json.loads(attempt_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ContractError("first-last-frame attempt record cannot be read") from exc
+    from vge_evidence import validate_attempt
+    validate_attempt(attempt)
+    require(attempt.get("status") == "SUCCEEDED" and attempt.get("purpose") == "CAPABILITY_PROBE",
+            "CONFIRMED first-last-frame capability requires a successful capability-probe attempt")
+    require(attempt.get("shot_id") == record["shot_id"],
+            "first-last-frame attempt/shot mismatch")
+    require(attempt.get("workflow", {}).get("content_hash") == record["workflow_hash"],
+            "first-last-frame workflow differs from the bound attempt")
+    model = _object(record.get("model"), "first_last_frame.model")
+    for field in ("id", "version"):
+        _nonempty(model.get(field), f"first_last_frame.model.{field}")
+    _hash(model.get("asset_hash"), "first_last_frame.model.asset_hash")
+    require(model["asset_hash"] == attempt.get("model", {}).get("asset_hash"),
+            "first-last-frame model differs from the bound attempt")
+    require(model["id"] == attempt.get("model", {}).get("id") and
+            model["version"] == attempt.get("model", {}).get("version"),
+            "first-last-frame model identity differs from the bound attempt")
+    parameters = _object(record.get("parameters"), "first_last_frame.parameters")
+    require(parameters == attempt.get("parameters"),
+            "first-last-frame parameters differ from the bound attempt")
+
+
 def validate_first_last_frame(record):
     """Validate a first/last-frame capability probe, including actual endpoint checks."""
     _object(record, "first_last_frame")
@@ -838,6 +877,14 @@ def validate_first_last_frame(record):
             _verify_observed_bytes(inputs[key]["ref"], inputs[key]["content_hash"], f"first-last-frame {key}", required=True)
     if record["capability_status"] == "CONFIRMED":
         require(status == "PASS", "CONFIRMED first-last-frame capability requires passing observed checks")
+        output_binding = (str(Path(record["artifact_ref"]).resolve()), record["artifact_content_hash"])
+        for key in required_inputs:
+            input_binding = (str(Path(inputs[key]["ref"]).resolve()), inputs[key]["content_hash"])
+            require(input_binding != output_binding,
+                    f"CONFIRMED first-last-frame output must differ from {key} input artifact")
+            require(inputs[key]["content_hash"] != record["artifact_content_hash"],
+                    f"CONFIRMED first-last-frame output bytes must differ from {key} input artifact")
+        _validate_first_last_frame_runtime_binding(record)
         _quality_provenance(record.get("provenance"), "first_last_frame.provenance", shot_id=record["shot_id"],
                             artifact_ref=record["artifact_ref"], artifact_hash=record["artifact_content_hash"])
         for index, check in enumerate(checks):
@@ -848,6 +895,21 @@ def validate_first_last_frame(record):
     return {"status": record["capability_status"], "checks_status": status,
             "accepted": record["capability_status"] == "CONFIRMED" and status == "PASS",
             "limitations": list(record.get("limitations", []))}
+
+
+def validate_first_last_frame_suite(records):
+    """Require the three independent FLF modes before declaring suite support."""
+    records = _list(records, "first_last_frame_suite", allow_empty=False)
+    require(len(records) == 3, "First-last-frame suite requires FIRST_ONLY, LAST_ONLY and FIRST_AND_LAST")
+    modes = [record.get("mode", "FIRST_AND_LAST") if isinstance(record, dict) else None for record in records]
+    require(set(modes) == {"FIRST_ONLY", "LAST_ONLY", "FIRST_AND_LAST"},
+            "First-last-frame suite must cover each mode exactly once")
+    require(len(modes) == len(set(modes)), "First-last-frame suite contains a duplicate mode")
+    reports = [validate_first_last_frame(record) for record in records]
+    status = "PASS" if all(report["accepted"] for report in reports) else "PARTIAL"
+    return {"status": status, "accepted": status == "PASS", "modes": modes,
+            "reports": reports,
+            "limitations": ["Each mode is independently bound; suite support is not inferred from one endpoint result"]}
 
 
 def prepare_first_last_frame_probe(spec):
@@ -1335,6 +1397,32 @@ def adapt_prompt(sections, adapter, canonical_state=None):
             "limitations": ["Text compilation does not prove generation behavior"]}
 
 
+def _validate_adapter_runtime_evidence(adapter, label):
+    """Validate the optional runtime evidence needed for a capability claim."""
+    evidence = adapter.get("runtime_evidence")
+    if evidence is None:
+        return {"status": "NOT_OBSERVED", "accepted": False,
+                "limitations": ["Adapter differential has no collected runtime/artifact evidence"]}
+    _object(evidence, f"{label}.runtime_evidence")
+    for field in ("observed_problem", "suspected_failure", "change_summary", "runtime_result"):
+        _nonempty(evidence.get(field), f"{label}.runtime_evidence.{field}")
+    runtime_result = _object(evidence["runtime_result"], f"{label}.runtime_evidence.runtime_result")
+    require(runtime_result.get("status") in ("PASS", "FAIL", "PARTIAL", "BLOCKED"),
+            f"{label}.runtime_evidence.runtime_result.status is invalid")
+    for field in ("workflow_hash", "artifact_content_hash", "observation_content_hash"):
+        _hash(evidence.get(field), f"{label}.runtime_evidence.{field}")
+    for field in ("artifact_ref", "observation_ref"):
+        _nonempty(evidence.get(field), f"{label}.runtime_evidence.{field}")
+    _verify_observed_bytes(evidence["artifact_ref"], evidence["artifact_content_hash"],
+                           f"{label}.runtime_evidence.artifact", required=True)
+    _verify_observed_bytes(evidence["observation_ref"], evidence["observation_content_hash"],
+                           f"{label}.runtime_evidence.observation", required=True)
+    return {"status": "OBSERVED", "accepted": True,
+            "workflow_hash": evidence["workflow_hash"],
+            "artifact_ref": evidence["artifact_ref"],
+            "observation_ref": evidence["observation_ref"]}
+
+
 def adapter_differential(canonical_sections, adapters, canonical_state=None):
     """Compare adapters against one canonical source, exposing loss explicitly."""
     _object(canonical_sections, "canonical_sections")
@@ -1348,15 +1436,23 @@ def adapter_differential(canonical_sections, adapters, canonical_state=None):
     for result in compiled:
         preserved = {item["source"] for item in result["mappings"] if item["status"] == "PRESERVED"}
         unsupported = sorted(baseline - preserved)
+        adapter = next(item for item in adapters if item.get("id") == result["adapter_id"])
+        runtime_evidence = _validate_adapter_runtime_evidence(adapter, f"adapter[{result['adapter_id']}]" )
+        structural_status = "PASS" if not unsupported and result["canonical_state_hash"] == canonical_state_hash else "DEGRADED"
         reports.append({"adapter_id": result["adapter_id"], "source_hash": result["source_hash"],
                         "canonical_state_hash": result["canonical_state_hash"],
                         "preserved_sections": sorted(preserved), "degraded_sections": unsupported,
                         "canonical_semantics_preserved": result["canonical_state_hash"] == canonical_state_hash,
-                        "status": "PASS" if not unsupported and result["canonical_state_hash"] == canonical_state_hash else "DEGRADED",
+                        "structural_status": structural_status, "runtime_evidence": runtime_evidence,
+                        "status": structural_status if structural_status != "PASS" else
+                        ("PASS" if runtime_evidence["accepted"] else "PARTIAL"),
                         "omissions": result["omissions"]})
+    status = "DEGRADED" if any(item["structural_status"] == "DEGRADED" for item in reports) else \
+             "PASS" if all(item["runtime_evidence"]["accepted"] for item in reports) else "PARTIAL"
     return {"schema_version": 1, "canonical_hash": digest(canonical_sections), "adapters": reports,
             "canonical_state_hash": canonical_state_hash,
-            "status": "PASS" if all(item["status"] == "PASS" for item in reports) else "DEGRADED"}
+            "status": status, "accepted": status == "PASS",
+            "limitations": ["Textual adapter parity is structural; capability promotion requires bound runtime/artifact observation"]}
 
 
 def profile_fingerprint(profile):
@@ -1687,15 +1783,39 @@ def _validate_repair_lineage(lineage, required_pairs=None):
                                 failed_artifact, failed_media_path)
     _, after = observation_ref(lineage.get("after_observation"), "repair lineage.after_observation",
                                new_artifact, new_media_path)
+    require(_timestamp(before.get("observed_at"), "repair lineage.before_observation.observed_at") <=
+            _timestamp(after.get("observed_at"), "repair lineage.after_observation.observed_at"),
+            "Repair lineage observations are not chronological")
+    validate_semantic_observation(before)
+    validate_semantic_observation(after)
     require(before["status"] in ("FAIL", "PARTIAL"),
             "Repair lineage before_observation must expose a failed or partial result")
     require(after["status"] == "PASS", "Repair lineage after_observation must be PASS")
     improvement = _object(lineage.get("improvement"), "repair lineage.improvement")
     require(improvement.get("dimension") == lineage.get("failed_dimension"),
             "Repair lineage improvement dimension mismatch")
+    failed_dimension = SEMANTIC_DIMENSION_ALIASES.get(lineage["failed_dimension"], lineage["failed_dimension"])
+    require(failed_dimension in SEMANTIC_DIMENSIONS,
+            "Repair lineage.failed_dimension must identify a semantic dimension")
+    before_dimension = next((item for item in before["checks"]
+                             if SEMANTIC_DIMENSION_ALIASES.get(item.get("semantic_dimension", item.get("dimension")),
+                                                             item.get("semantic_dimension", item.get("dimension"))) == failed_dimension), None)
+    after_dimension = next((item for item in after["checks"]
+                            if SEMANTIC_DIMENSION_ALIASES.get(item.get("semantic_dimension", item.get("dimension")),
+                                                            item.get("semantic_dimension", item.get("dimension"))) == failed_dimension), None)
+    require(isinstance(before_dimension, dict) and before_dimension.get("result") in ("FAIL", "PARTIAL"),
+            "Repair lineage before observation does not expose the failed dimension")
+    require(isinstance(after_dimension, dict) and after_dimension.get("result") == "PASS",
+            "Repair lineage after observation does not show improvement in the failed dimension")
     require(improvement.get("before") == before["status"] and improvement.get("after") == after["status"],
             "Repair lineage improvement does not match before/after observations")
     _nonempty(improvement.get("reason"), "repair lineage.improvement.reason")
+    _nonempty(lineage.get("diagnosis"), "repair lineage.diagnosis")
+    _nonempty(lineage.get("repair_owner"), "repair lineage.repair_owner")
+    repair_delta = lineage.get("repair_delta")
+    require((isinstance(repair_delta, dict) and bool(repair_delta)) or
+            (isinstance(repair_delta, str) and bool(repair_delta.strip())),
+            "repair lineage.repair_delta must describe the bounded change")
 
     transition_results = _list(lineage.get("adjacent_transition_results"),
                                "repair lineage.adjacent_transition_results", allow_empty=not required_pairs)
@@ -1901,6 +2021,13 @@ def _validate_collection_envelope(attempt, attempt_path, label):
     require(collection.get("schema_version") == 1, f"{label}.schema_version is unsupported")
     require(collection.get("status") == "COLLECTED", f"{label}.status must be COLLECTED")
     require(collection.get("collector") == "vge_runtime.collect", f"{label}.collector is not the runtime collector")
+    expected_scope = "CAPABILITY_PROBE" if attempt.get("purpose") == "CAPABILITY_PROBE" else "PRODUCTION"
+    require(collection.get("evidence_scope") == expected_scope,
+            f"{label}.evidence_scope must be {expected_scope}")
+    require(collection.get("evidence_origin") == "vge_runtime.collect",
+            f"{label}.evidence_origin is not the trusted runtime collector")
+    require(attempt.get("runtime", {}).get("evidence_origin") == "vge_runtime.submit",
+            f"{label} attempt is not sealed by the trusted runtime submit path")
     require(collection.get("prompt_id") == attempt.get("workflow", {}).get("queue_id"),
             f"{label}.prompt_id is not bound to the attempt queue")
     history_path = _resolve_quality_path(collection.get("history_ref"), f"{label}.history_ref", Path(attempt_path).parent)
@@ -2098,6 +2225,178 @@ def _validate_long_form_canonical_bundle(case, canonical_records):
             "content_hash": bundle_hash, "records": len(manifest)}
 
 
+LF003_SCENE_BIBLE_FIELDS = (
+    "characters", "identity_anchors", "wardrobe", "relationships", "environment",
+    "time_of_day", "light_direction", "persistent_objects", "voice_identity",
+    "visual_style", "camera_language", "prohibited_drift",
+)
+LF003_TIMELINE_STAGES = {
+    "ESTABLISH", "DIALOGUE", "CONVERSATION", "REACTION", "MOVEMENT", "INTERACTION",
+    "OBJECT_OR_VEHICLE_INTERACTION", "TRANSITION", "SECOND_BEAT", "RESOLUTION",
+    "HERO", "CLOSING_HERO_SHOT",
+}
+
+
+def _inline_or_file_quality_record(value, label, base_dir=None):
+    """Resolve a case quality contract that may be inline or hash-bound by file."""
+    if isinstance(value, dict) and ("ref" not in value and "record_ref" not in value):
+        return None, value
+    return _validate_long_form_file_ref(value, label, base_dir)
+
+
+def _require_nonempty_collection(value, label):
+    if isinstance(value, dict):
+        require(bool(value), f"{label} must be nonempty")
+    else:
+        require(isinstance(value, (list, tuple, set)) and bool(value), f"{label} must be nonempty")
+
+
+def _validate_case_specific_contracts(case, canonical_records, production, base_dir):
+    """Apply the ladder-specific production bar before generic lineage checks."""
+    case_id = case["id"]
+    plan = canonical_records["plan_ref"][1]
+    bible = canonical_records["scene_bible_ref"][1]
+    continuity = canonical_records["continuity_ref"][1]
+
+    if case_id == "LF-001":
+        contact_value = next((case.get(key) for key in ("contact_ref", "contact_contract_ref") if case.get(key) is not None), None)
+        if contact_value is None:
+            contact_value = next((production.get(key) for key in ("contact_ref", "contact_contract_ref", "contact_contract")
+                                  if production.get(key) is not None), None)
+        require(contact_value is not None,
+                "LF-001 production acceptance requires an observed contact contract")
+        _, contact = _inline_or_file_quality_record(contact_value, "LF-001.contact_contract", base_dir)
+        require(validate_contact_phases(contact)["status"] == "PASS",
+                "LF-001 contact contract must be observed and PASS")
+
+        vehicle_value = next((case.get(key) for key in ("vehicle_state_ref", "vehicle_ref") if case.get(key) is not None), None)
+        if vehicle_value is None:
+            vehicle_value = next((production.get(key) for key in ("vehicle_state_ref", "vehicle_ref", "vehicle_state")
+                                  if production.get(key) is not None), None)
+        require(vehicle_value is not None,
+                "LF-001 production acceptance requires an observed vehicle-state contract")
+        _, vehicle = _inline_or_file_quality_record(vehicle_value, "LF-001.vehicle_state", base_dir)
+        validate_vehicle_state(vehicle)
+        require(vehicle.get("artifact_ref") and vehicle.get("artifact_content_hash") and vehicle.get("observed_at")
+                and vehicle.get("procedure"),
+                "LF-001 vehicle state must carry an observed artifact envelope")
+        _hash(vehicle["artifact_content_hash"], "LF-001.vehicle_state.artifact_content_hash")
+        _timestamp(vehicle["observed_at"], "LF-001.vehicle_state.observed_at")
+        _verify_observed_bytes(vehicle["artifact_ref"], vehicle["artifact_content_hash"],
+                               "LF-001 vehicle state artifact", required=True)
+
+    if case_id == "LF-002":
+        dialogue = canonical_records["dialogue_contract_ref"][1]
+        dialogue_report = validate_dialogue_contract(dialogue)
+        require(dialogue_report["status"] == "PASS",
+                "LF-002 dialogue contract must be observed and PASS")
+        audio = canonical_records["audio_timeline_ref"][1]
+        audio_report = validate_audio_timeline(audio)
+        require(audio_report["status"] == "PASS",
+                "LF-002 audio timeline must be observed and PASS")
+
+    if case_id == "LF-003":
+        for field in LF003_SCENE_BIBLE_FIELDS:
+            require(field in bible, f"LF-003 Scene Bible is missing {field}")
+        characters = bible["characters"]
+        if isinstance(characters, dict):
+            character_items = list(characters.values())
+        else:
+            character_items = characters
+        require(isinstance(character_items, list) and len(character_items) >= 2,
+                "LF-003 Scene Bible requires two recurring identities")
+        require(all(isinstance(item, (str, dict)) for item in character_items),
+                "LF-003 Scene Bible characters must be explicit records")
+        _require_nonempty_collection(bible["identity_anchors"], "LF-003 Scene Bible.identity_anchors")
+        _require_nonempty_collection(bible["wardrobe"], "LF-003 Scene Bible.wardrobe")
+        _require_nonempty_collection(bible["relationships"], "LF-003 Scene Bible.relationships")
+        _require_nonempty_collection(bible["environment"], "LF-003 Scene Bible.environment")
+        _require_nonempty_collection(bible["persistent_objects"], "LF-003 Scene Bible.persistent_objects")
+        _require_nonempty_collection(bible["voice_identity"], "LF-003 Scene Bible.voice_identity")
+        for field in ("time_of_day", "light_direction", "visual_style", "camera_language"):
+            _nonempty(bible[field], f"LF-003 Scene Bible.{field}")
+        require(isinstance(bible["prohibited_drift"], (list, dict)),
+                "LF-003 Scene Bible.prohibited_drift must be explicit")
+
+        timeline = next((plan.get(key) for key in ("narrative_timeline", "timeline") if plan.get(key) is not None), None)
+        if timeline is None:
+            timeline = next((continuity.get(key) for key in ("narrative_timeline", "timeline") if continuity.get(key) is not None), None)
+        if timeline is None:
+            timeline = case.get("narrative_timeline", case.get("timeline"))
+        timeline = _list(timeline, "LF-003 narrative timeline", allow_empty=False)
+        require(len(timeline) >= 5, "LF-003 narrative timeline needs at least five ordered beats")
+        stages = set()
+        previous_end = None
+        for index, beat in enumerate(timeline):
+            label = f"LF-003 narrative timeline[{index}]"
+            if isinstance(beat, str):
+                stage = beat.upper().replace(" ", "_")
+                start = end = None
+            else:
+                _object(beat, label)
+                stage = str(beat.get("stage", beat.get("kind", beat.get("beat", "")))).upper().replace(" ", "_")
+                start, end = beat.get("start_s"), beat.get("end_s")
+                require(number(start) and number(end) and 0 <= start < end,
+                        f"{label} needs a positive timed interval")
+                if previous_end is not None:
+                    require(start >= previous_end, f"{label} is out of chronological order")
+                previous_end = end
+            require(stage in LF003_TIMELINE_STAGES, f"{label} has no canonical narrative stage")
+            stages.add(stage)
+        require({"ESTABLISH", "REACTION", "MOVEMENT", "RESOLUTION"} <= stages,
+                "LF-003 narrative timeline lacks establish/reaction/movement/resolution beats")
+
+        shots = _list(plan.get("shots"), "LF-003 production plan.shots", allow_empty=False)
+        require(6 <= len(shots) <= 12, "LF-003 production requires 6-12 dependent shots")
+        camera_signatures = set()
+        for index, shot in enumerate(shots):
+            label = f"LF-003 production plan.shots[{index}]"
+            _object(shot, label)
+            for field in ("id", "purpose", "duration_s", "dependency_ids", "references", "camera", "performance", "acceptance_ids"):
+                require(field in shot, f"{label} is missing {field}")
+            _nonempty(shot.get("id"), f"{label}.id")
+            _nonempty(shot.get("purpose"), f"{label}.purpose")
+            require(number(shot.get("duration_s"), True), f"{label}.duration_s must be positive")
+            require(isinstance(shot.get("dependency_ids"), list), f"{label}.dependency_ids must be an array")
+            require(isinstance(shot.get("references"), list), f"{label}.references must be an array")
+            _object(shot.get("camera"), f"{label}.camera")
+            require(isinstance(shot.get("performance"), (list, dict, str)), f"{label}.performance must be explicit")
+            require(isinstance(shot.get("acceptance_ids"), list) and bool(shot["acceptance_ids"]),
+                    f"{label}.acceptance_ids must be nonempty")
+            require("start_state_ref" in shot or "start_state" in shot or "start_state_delta" in shot,
+                    f"{label} lacks a start state")
+            require("end_state_delta" in shot or "end_state" in shot or "state_changes" in shot,
+                    f"{label} lacks an end state")
+            require(any(key in shot for key in ("audio", "audio_event_ids", "audio_timeline")),
+                    f"{label} lacks an explicit audio binding")
+            camera_signatures.add(canonical(shot["camera"]))
+        require(len(camera_signatures) >= 2, "LF-003 production requires multiple camera setups")
+        require(isinstance(plan.get("dialogue_timeline"), list) and bool(plan["dialogue_timeline"]),
+                "LF-003 production requires a dialogue timeline")
+        require(isinstance(plan.get("contact_graphs"), list) and bool(plan["contact_graphs"]),
+                "LF-003 production requires a physical-interaction/contact graph")
+        audio_report = validate_audio_timeline(canonical_records["audio_timeline_ref"][1])
+        require(audio_report["status"] == "PASS", "LF-003 audio timeline must be observed and PASS")
+
+        repair_status = production.get("repair_status")
+        require(repair_status in ("DEMONSTRATED", "NO_NATURAL_REPAIR_CASE"),
+                "LF-003 production requires DEMONSTRATED repair or NO_NATURAL_REPAIR_CASE")
+        if repair_status == "DEMONSTRATED":
+            lineage = production.get("repair_lineage") or production.get("repair_execution")
+            require(isinstance(lineage, dict), "LF-003 DEMONSTRATED repair requires a repair lineage record")
+            _validate_repair_lineage(lineage)
+        else:
+            _nonempty(production.get("repair_justification"),
+                      "LF-003 NO_NATURAL_REPAIR_CASE requires a bounded justification")
+            evidence_refs = _list(production.get("repair_justification_evidence"),
+                                  "LF-003 repair_justification_evidence", allow_empty=False)
+            for index, evidence in enumerate(evidence_refs):
+                _object(evidence, f"LF-003 repair_justification_evidence[{index}]")
+                _hash(evidence.get("content_hash"), f"LF-003 repair_justification_evidence[{index}].content_hash")
+                _verify_observed_bytes(evidence.get("ref"), evidence["content_hash"],
+                                       f"LF-003 repair_justification_evidence[{index}]", required=True)
+
+
 def _validate_long_form_production_evidence(case, base_dir=None):
     """Fail closed: a long-form PASS must resolve its complete evidence graph."""
     production = _object(case.get("production_evidence"), "long_form_case.production_evidence")
@@ -2150,6 +2449,12 @@ def _validate_long_form_production_evidence(case, base_dir=None):
         endpoint = str(runtime.get("endpoint", "")).strip().lower()
         require(provider not in {"fixture", "fake", "synthetic", "test"},
                 f"production_evidence.attempts[{index}] fixture/synthetic runtime cannot prove production acceptance")
+        require(provider == "comfyui",
+                f"production_evidence.attempts[{index}] must use the canonical runtime provider")
+        require(runtime.get("execution_kind") == "PRODUCTION",
+                f"production_evidence.attempts[{index}] must be an explicitly collected PRODUCTION attempt")
+        require(runtime.get("evidence_origin") == "vge_runtime.submit",
+                f"production_evidence.attempts[{index}] is not sealed by the trusted runtime submit path")
         require(endpoint not in {"http://127.0.0.1:1", "http://localhost:1"},
                 f"production_evidence.attempts[{index}] placeholder runtime endpoint cannot prove production acceptance")
         require(record.get("purpose") == "GENERATION",
@@ -2336,6 +2641,10 @@ def _validate_long_form_production_evidence(case, base_dir=None):
                              for segment in segments]
     require(source_shots == expected_source_shots,
             "production_evidence.assembly final artifact is not bound to ordered source shot hashes")
+    declared_duration = sum(segment["duration_s"] for segment in segments)
+    duration_tolerance = max(0.25, float(case["target_duration_s"]) * 0.02)
+    require(abs(declared_duration - float(case["target_duration_s"])) <= duration_tolerance,
+            "production_evidence.assembly declared duration is outside the long-form target")
     require(artifact_shots == set(case_shot_ids), "Production evidence does not cover exactly every canonical shot")
     require(artifact_ids == {segment["artifact"]["id"] for segment in segments},
             "Assembly does not cover exactly every generated artifact")
@@ -2383,6 +2692,11 @@ def _validate_long_form_production_evidence(case, base_dir=None):
     from vge_media import media_qa, validate_assembly_manifest
     validate_assembly_manifest(assembly_for_validation,
                                final_artifact=assembly_for_validation["final_artifact_binding"])
+    final_probe = __import__("vge_media", fromlist=["probe"]).probe(final_path)
+    require(final_probe.get("video_streams") and final_probe.get("duration_s", 0) > 0,
+            "production_evidence final artifact must be a positive-duration video")
+    require(abs(final_probe["duration_s"] - float(case["target_duration_s"])) <= duration_tolerance,
+            "production_evidence final artifact duration is outside the long-form target")
     media_qa_report = _validate_long_form_file_ref(
         production.get("final_media_qa"), "production_evidence.final_media_qa", base_dir)[1]
     require(media_qa_report.get("kind") == "MEDIA_QA" and media_qa_report.get("status") == "PASS",
@@ -2402,6 +2716,7 @@ def _validate_long_form_production_evidence(case, base_dir=None):
             "production_evidence.editorial_acceptance artifact hash mismatch")
     validate_editorial_acceptance(editorial_copy,
                                   {"artifact_ref": str(final_path), "content_hash": final_binding["content_hash"]})
+    _validate_case_specific_contracts(case, canonical, production, base_dir)
     return {
         "attempts": len(production["attempts"]),
         "artifacts": len(production["artifacts"]),
@@ -2570,10 +2885,10 @@ def validate_long_form_execution_envelope(envelope, base_dir=None):
             require(file_hash(assembly_path) == assembly["content_hash"],
                     "long_form_execution_envelope.assembly bytes changed")
 
-    status = envelope.get("status", "NOT_RUN")
-    require(status in ("NOT_RUN", "PARTIAL", "PASS", "BLOCKED", "UNKNOWN"),
+    requested_status = envelope.get("status", "NOT_RUN")
+    require(requested_status in ("NOT_RUN", "PARTIAL", "PASS", "BLOCKED", "UNKNOWN"),
             "long_form_execution_envelope.status is invalid")
-    if status == "PASS":
+    if requested_status == "PASS":
         require(all(shot.get("status") == "PASS" for shot in shots),
                 "Long-form execution PASS requires every shot to be PASS")
         require(transition_pairs == set(zip(shot_order, shot_order[1:])),
@@ -2582,11 +2897,29 @@ def validate_long_form_execution_envelope(envelope, base_dir=None):
                 "Long-form execution PASS requires every transition to be PASS")
         require(isinstance(assembly, dict) and assembly.get("status") == "PASS",
                 "Long-form execution PASS requires a PASS assembly")
-    accepted = status == "PASS"
-    return {"status": status, "accepted": accepted, "case_id": envelope["case_id"],
+    status = requested_status
+    acceptance_status = "NOT_RUN"
+    acceptance_ref = envelope.get("case_ref", envelope.get("long_form_case_ref"))
+    limitations = ["This recorder validates case lineage and never executes runtime or semantic acceptance"]
+    if requested_status == "PASS":
+        if acceptance_ref is None:
+            status = "PARTIAL"
+            limitations.append("A structurally complete envelope is not a production acceptance without a strict long-form case reference")
+        else:
+            _, case_record = _inline_or_file_quality_record(acceptance_ref,
+                                                             "long_form_execution_envelope.case_ref", base_dir)
+            require(case_record.get("id") == envelope["case_id"],
+                    "long_form_execution_envelope.case_ref does not match case_id")
+            case_result = validate_long_form_case(case_record, base_dir=base_dir)
+            require(case_result["status"] == "PASS" and case_result.get("production_evidence_complete") is True,
+                    "Long-form envelope cannot be accepted until its strict production case is PASS")
+            acceptance_status = "PASS"
+    accepted = status == "PASS" and acceptance_status == "PASS"
+    return {"status": status, "requested_status": requested_status, "accepted": accepted,
+            "production_acceptance_status": acceptance_status, "case_id": envelope["case_id"],
             "shot_order": shot_order, "shot_count": len(shots),
             "transition_count": len(transitions), "assembly_status": assembly.get("status") if assembly else "NOT_RUN",
-            "limitations": ["This recorder validates case lineage and never executes runtime or semantic acceptance"]}
+            "limitations": limitations}
 
 
 MATURITY_GATE_KEYS = (

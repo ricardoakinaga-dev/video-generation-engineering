@@ -37,6 +37,7 @@ from vge_quality import (
     validate_editorial_acceptance,
     validate_feature_profile,
     validate_first_last_frame,
+    validate_first_last_frame_suite,
     prepare_first_last_frame_probe,
     validate_long_form_execution_envelope,
     validate_long_form_case,
@@ -330,6 +331,14 @@ class QualityContractTests(unittest.TestCase):
                 record = factory()
                 provenance = quality_provenance(shot_id, artifact_id, media_path, media_hash,
                                                 runtime_provider="local_comfyui", runtime_endpoint="http://127.0.0.1:8188")
+                attempt_path = Path(provenance["attempt"]["ref"])
+                attempt_record = json.loads(attempt_path.read_text(encoding="utf-8"))
+                attempt_record["runtime"].update(provider="comfyui", execution_kind="PRODUCTION",
+                                                  evidence_origin="vge_runtime.submit")
+                attempt_record["collection"].update(evidence_scope="PRODUCTION",
+                                                     evidence_origin="vge_runtime.collect")
+                attempt_path.write_text(json.dumps(attempt_record, sort_keys=True), encoding="utf-8")
+                provenance["attempt"]["content_hash"] = file_hash(attempt_path)
                 attempts.append({"ref": provenance["attempt"]["ref"], "content_hash": provenance["attempt"]["content_hash"]})
                 artifacts.append({"ref": provenance["artifact"]["record_ref"],
                                   "content_hash": provenance["artifact"]["record_content_hash"],
@@ -346,6 +355,23 @@ class QualityContractTests(unittest.TestCase):
                 observations.append(file_ref(path))
                 shot_records.append((record, provenance))
 
+            # The fixture factory writes deterministic helper records; restore
+            # the first production record after the second factory invocation
+            # so the immutable sidecar hash remains bound to its observation.
+            first_attempt_path = Path(attempts[0]["ref"])
+            first_attempt_record = json.loads(first_attempt_path.read_text(encoding="utf-8"))
+            first_attempt_record["runtime"].update(provider="comfyui", execution_kind="PRODUCTION",
+                                                     evidence_origin="vge_runtime.submit")
+            first_attempt_record["collection"].update(evidence_scope="PRODUCTION",
+                                                        evidence_origin="vge_runtime.collect")
+            first_attempt_path.write_text(json.dumps(first_attempt_record, sort_keys=True), encoding="utf-8")
+            attempts[0]["content_hash"] = file_hash(first_attempt_path)
+            first_observation_path = Path(observations[0]["ref"])
+            first_observation = json.loads(first_observation_path.read_text(encoding="utf-8"))
+            first_observation["provenance"]["attempt"]["content_hash"] = attempts[0]["content_hash"]
+            first_observation_path.write_text(json.dumps(first_observation, sort_keys=True), encoding="utf-8")
+            observations[0]["content_hash"] = file_hash(first_observation_path)
+
             next_scorecard = scorecard()
             next_media = root / "shot_2.mp4"
             next_media_hash = file_hash(next_media)
@@ -356,6 +382,20 @@ class QualityContractTests(unittest.TestCase):
                 for item in dimension.get("evidence", []):
                     item["ref"] = str(next_media)
                     item["content_hash"] = next_media_hash
+            second_attempt_path = Path(attempts[1]["ref"])
+            second_attempt_record = json.loads(second_attempt_path.read_text(encoding="utf-8"))
+            second_attempt_record["runtime"].update(provider="comfyui", execution_kind="PRODUCTION",
+                                                      evidence_origin="vge_runtime.submit")
+            second_attempt_record["collection"].update(evidence_scope="PRODUCTION",
+                                                         evidence_origin="vge_runtime.collect")
+            second_attempt_path.write_text(json.dumps(second_attempt_record, sort_keys=True), encoding="utf-8")
+            attempts[1]["content_hash"] = file_hash(second_attempt_path)
+            second_observation_path = Path(observations[1]["ref"])
+            second_observation = json.loads(second_observation_path.read_text(encoding="utf-8"))
+            second_observation["provenance"]["attempt"]["content_hash"] = attempts[1]["content_hash"]
+            second_observation_path.write_text(json.dumps(second_observation, sort_keys=True), encoding="utf-8")
+            observations[1]["content_hash"] = file_hash(second_observation_path)
+            next_scorecard["provenance"]["attempt"]["content_hash"] = attempts[1]["content_hash"]
             transition = {
                 "schema_version": 1,
                 "id": "transition_1",
@@ -380,7 +420,7 @@ class QualityContractTests(unittest.TestCase):
             final_media_qa = media_qa(QUALITY_ARTIFACT)
             final_media_qa["id"] = "final_media_qa_1"
             write_json(final_media_qa_path, final_media_qa)
-            final_semantic = semantic_observation()
+            final_semantic = copy.deepcopy(shot_records[0][0])
             final_semantic.update(id="final_semantic_1", shot_id="assembly_1", artifact_id="assembly_1",
                                   artifact_ref=str(QUALITY_ARTIFACT), observed_content_hash=QUALITY_ARTIFACT_HASH,
                                   provenance=quality_provenance("assembly_1", "assembly_1"))
@@ -454,7 +494,8 @@ class QualityContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="vge-lf-semantic-contract-") as raw:
             root = Path(raw)
             valid = build_case(semantic_observation, root)
-            self.assertEqual("PASS", validate_long_form_case(valid, base_dir=root)["status"])
+            with self.assertRaisesRegex(ContractError, "final artifact duration"):
+                validate_long_form_case(valid, base_dir=root)
 
             canonical_ref_names = [
                 ("intent_ref", "intent"), ("plan_ref", "plan"),
@@ -660,10 +701,23 @@ class QualityContractTests(unittest.TestCase):
         for check_id in ("endpoint_identity", "motion_path", "object_state", "artifact_delivery"):
             kind = "SEQUENCE" if check_id in ("motion_path", "object_state") else "METADATA" if check_id == "artifact_delivery" else "FRAME"
             checks.append({"id": check_id, "category": "visual", "result": "PASS", "oracle": oracle(kind), "confidence": "HIGH", "evidence": [{"type": "FRAME", "ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH, "time_s": 0.5}], "limitations": []})
-        record = {"schema_version": 1, "profile_id": "h3-r2v", "shot_id": "shot_flf", "capability_status": "CONFIRMED", "workflow_hash": digest("workflow"),
-                  "inputs": {"first_frame": {"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}, "last_frame": {"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}},
-                  "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH, "provenance": quality_provenance("shot_flf", "artifact_flf"),
-                  "checks": checks}
+        provenance = quality_provenance("shot_flf", "artifact_flf")
+        attempt_path = Path(provenance["attempt"]["ref"])
+        attempt_record = json.loads(attempt_path.read_text(encoding="utf-8"))
+        attempt_record["purpose"] = "CAPABILITY_PROBE"
+        attempt_path.write_text(json.dumps(attempt_record, sort_keys=True), encoding="utf-8")
+        provenance["attempt"]["content_hash"] = file_hash(attempt_path)
+        first_path = PROVENANCE_ROOT / "flf-first-frame.dat"
+        last_path = PROVENANCE_ROOT / "flf-last-frame.dat"
+        first_path.write_bytes(b"first boundary frame")
+        last_path.write_bytes(b"last boundary frame")
+        first_hash, last_hash = file_hash(first_path), file_hash(last_path)
+        record = {"schema_version": 1, "profile_id": "h3-r2v", "shot_id": "shot_flf", "capability_status": "CONFIRMED", "workflow_hash": attempt_record["workflow"]["content_hash"],
+                  "inputs": {"first_frame": {"ref": str(first_path), "content_hash": first_hash}, "last_frame": {"ref": str(last_path), "content_hash": last_hash}},
+                  "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH,
+                  "attempt_ref": str(attempt_path), "attempt_content_hash": provenance["attempt"]["content_hash"],
+                  "model": copy.deepcopy(attempt_record["model"]), "parameters": copy.deepcopy(attempt_record["parameters"]),
+                  "provenance": provenance, "checks": checks}
         self.assertTrue(validate_first_last_frame(record)["accepted"])
         first_only = copy.deepcopy(record)
         first_only["mode"] = "FIRST_ONLY"
@@ -673,6 +727,17 @@ class QualityContractTests(unittest.TestCase):
         last_only["mode"] = "LAST_ONLY"
         last_only["inputs"].pop("first_frame")
         self.assertTrue(validate_first_last_frame(last_only)["accepted"])
+        self.assertTrue(validate_first_last_frame_suite([first_only, last_only, record])["accepted"])
+        same_input = copy.deepcopy(record)
+        same_input["inputs"]["first_frame"] = {"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}
+        with self.assertRaisesRegex(ContractError, "output must differ"):
+            validate_first_last_frame(same_input)
+        copied_input = PROVENANCE_ROOT / "flf-copied-input.mp4"
+        shutil.copyfile(QUALITY_ARTIFACT, copied_input)
+        copied_same_bytes = copy.deepcopy(record)
+        copied_same_bytes["inputs"]["first_frame"] = {"ref": str(copied_input), "content_hash": QUALITY_ARTIFACT_HASH}
+        with self.assertRaisesRegex(ContractError, "output bytes must differ"):
+            validate_first_last_frame(copied_same_bytes)
         record["artifact_ref"] = "/tmp/vge-flf-artifact-does-not-exist.mp4"
         with self.assertRaisesRegex(ContractError, "existing artifact bytes"):
             validate_first_last_frame(record)
@@ -731,6 +796,29 @@ class QualityContractTests(unittest.TestCase):
         bad["status"] = "PASS"
         with self.assertRaisesRegex(ContractError, "every shot|adjacent transition"):
             validate_long_form_execution_envelope(bad)
+        with tempfile.TemporaryDirectory(prefix="vge-case-envelope-pass-", dir=PROVENANCE_ROOT) as raw:
+            root = Path(raw)
+            record_path = root / "record.json"
+            record_path.write_text(json.dumps({"id": "bound-record"}), encoding="utf-8")
+            assembly_path = root / "assembly.json"
+            assembly_path.write_text(json.dumps({"id": "bound-assembly"}), encoding="utf-8")
+            record_ref = {"ref": str(record_path), "content_hash": file_hash(record_path)}
+            complete = {
+                "schema_version": 1, "id": "case-envelope-structural-pass", "case_id": "LF-001",
+                "project_id": "project-1", "scene_id": "scene-1", "shot_order": ["a"],
+                "shots": [{"shot_id": "a", "dependency_ids": [], "state_start": {"door": "closed"},
+                           "state_end_declared": {"door": "closed"}, "attempt_refs": [record_ref],
+                           "artifact_refs": [record_ref], "observation_refs": [record_ref],
+                           "transition_refs": [], "status": "PASS"}],
+                "transitions": [],
+                "assembly": {"status": "PASS", "ref": str(assembly_path), "content_hash": file_hash(assembly_path)},
+                "status": "PASS",
+            }
+            result = validate_long_form_execution_envelope(complete)
+            self.assertEqual("PARTIAL", result["status"])
+            self.assertEqual("PASS", result["requested_status"])
+            self.assertFalse(result["accepted"])
+            self.assertEqual("NOT_RUN", result["production_acceptance_status"])
 
     def test_contact_dialogue_and_audio_contracts_separate_channels(self):
         phases = []
@@ -947,24 +1035,48 @@ class QualityContractTests(unittest.TestCase):
         new_attempt_record["parent_attempt_id"] = failed_provenance["attempt"]["id"]
         new_attempt_path.write_text(json.dumps(new_attempt_record, sort_keys=True) + "\n", encoding="utf-8")
         new_provenance["attempt"]["content_hash"] = file_hash(new_attempt_path)
+        before_record = semantic_observation("FAIL")
+        before_record.update(id="repair-before", shot_id="a", artifact_id="artifact_repair_failed",
+                             artifact_ref=str(QUALITY_ARTIFACT), observed_content_hash=QUALITY_ARTIFACT_HASH,
+                             provenance=failed_provenance)
         before_path = PROVENANCE_ROOT / "repair-before.json"
-        before_path.write_text(json.dumps({"schema_version": 1, "id": "repair-before", "status": "FAIL",
-                                           "artifact_id": "artifact_repair_failed",
-                                           "artifact_ref": str(QUALITY_ARTIFACT),
-                                           "observed_content_hash": QUALITY_ARTIFACT_HASH}, sort_keys=True), encoding="utf-8")
+        before_path.write_text(json.dumps(before_record, sort_keys=True), encoding="utf-8")
+        after_record = semantic_observation("PASS")
+        after_record.update(id="repair-after", shot_id="a", artifact_id="artifact_repair_new",
+                            artifact_ref=str(repaired_media), observed_content_hash=repaired_media_hash,
+                            provenance=new_provenance)
+        for check in after_record["checks"]:
+            for item in check.get("evidence", []):
+                item["ref"] = str(repaired_media)
+                item["content_hash"] = repaired_media_hash
         after_path = PROVENANCE_ROOT / "repair-after.json"
-        after_path.write_text(json.dumps({"schema_version": 1, "id": "repair-after", "status": "PASS",
-                                          "artifact_id": "artifact_repair_new",
-                                          "artifact_ref": str(repaired_media),
-                                          "observed_content_hash": repaired_media_hash}, sort_keys=True), encoding="utf-8")
+        after_path.write_text(json.dumps(after_record, sort_keys=True), encoding="utf-8")
         ref = lambda path: {"ref": str(path), "content_hash": file_hash(path)}
         repair["execution_ledger"] = {"schema_version": 1, "status": "COMPLETE", "attempts": 2, "regenerations": 1, "runtime_s": 10, "cost_usd": 0, "human_reviews": 0, "observed_at": datetime.now(timezone.utc).isoformat(), "completed_at": datetime.now(timezone.utc).isoformat(), "evidence": evidence(), "provenance": failed_provenance,
             "lineage": {"failed_attempt": ref(failed_provenance["attempt"]["ref"]), "new_attempt": ref(new_provenance["attempt"]["ref"]),
                         "failed_artifact": ref(failed_provenance["artifact"]["record_ref"]), "new_artifact": ref(new_provenance["artifact"]["record_ref"]),
-                        "failed_dimension": "identity", "before_observation": ref(before_path), "after_observation": ref(after_path),
+                        "failed_dimension": "identity", "diagnosis": "Observed identity drift in the failed artifact",
+                        "repair_owner": "reference_conditioning", "repair_delta": {"anchor": "canonical_reference"},
+                        "before_observation": ref(before_path), "after_observation": ref(after_path),
                         "improvement": {"dimension": "identity", "before": "FAIL", "after": "PASS", "reason": "Re-anchored generation restored the declared identity dimension"},
                         "adjacent_transition_results": [{"pair": "a->b", "status": "PASS", "evidence": evidence()}]}}
         self.assertEqual("BLOCKED", validate_repair_plan(repair)["status"])
+        non_chronological = copy.deepcopy(repair)
+        non_chronological["transition_revalidation"].update(
+            status="PASS", validated_pairs=["a->b"],
+            evidence_refs=[{"pair": "a->b", "ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}])
+        late_before = json.loads(before_path.read_text(encoding="utf-8"))
+        early_after = json.loads(after_path.read_text(encoding="utf-8"))
+        late_before["observed_at"] = "2026-09-09T18:00:00+00:00"
+        early_after["observed_at"] = "2026-09-09T17:00:00+00:00"
+        late_before_path = PROVENANCE_ROOT / "repair-before-late.json"
+        early_after_path = PROVENANCE_ROOT / "repair-after-early.json"
+        late_before_path.write_text(json.dumps(late_before, sort_keys=True), encoding="utf-8")
+        early_after_path.write_text(json.dumps(early_after, sort_keys=True), encoding="utf-8")
+        non_chronological["execution_ledger"]["lineage"]["before_observation"] = ref(late_before_path)
+        non_chronological["execution_ledger"]["lineage"]["after_observation"] = ref(early_after_path)
+        with self.assertRaisesRegex(ContractError, "not chronological"):
+            validate_repair_plan(non_chronological)
         repair["transition_revalidation"].update(
             status="PASS", validated_pairs=["a->b"],
             evidence_refs=[{"pair": "a->b", "ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}])

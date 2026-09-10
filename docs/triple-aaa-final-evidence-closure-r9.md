@@ -31,7 +31,7 @@ The supplied sources were read before implementation and recorded in the frozen 
 | `pasted-text-2.txt` | `7de047adb66fee247330629e2c5ed07b57d5b9d5739089468a4921a04ac9d1f3` | 1,192 | 18,546 |
 | `pasted-text-3.txt` | `311bbb58ad4ed8c2a60aee8539bd3f7a122ad7366361ab240f9233ecc19ebf65` | 448 | 7,993 |
 
-The pre-hardening baseline was 143 passing tests with no failures, errors or skips. The final applicable suite is 159 passing tests with no failures, errors or skips, recorded in [`software-triple-aaa-r9.json`](../verification/software-triple-aaa-r9.json). The baseline and R8 records remain historical; R8 is not reused after R9 changes.
+The pre-hardening baseline was 143 passing tests with no failures, errors or skips. The current applicable suite is 161 passing tests with no failures, errors or skips, recorded in [`software-triple-aaa-r9.json`](../verification/software-triple-aaa-r9.json). The baseline and earlier R9 records remain historical; this report is refreshed after the final hardening pass.
 
 ## Changes Made
 
@@ -47,12 +47,15 @@ The pre-hardening baseline was 143 passing tests with no failures, errors or ski
 - Added hash-bound local frame/audio capture with immutable derived paths, explicit `NOT_RUN` semantic status, strict audio-stream evidence for dialogue/timeline claims and paired face-frame/audio evidence for visible lip-sync claims.
 - Sealed collected runtime attempts with immutable history snapshots, append-only collection events, exact output-entry manifests and pre-save attempt validation; added a case-level ordered execution envelope for shot/state/transition/assembly lineage.
 - Added explicit mode-specific FLF probe preparation, exact maturity levels (`DOCUMENTED` through `PRODUCTION_ACCEPTED`), reviewer authority/decision binding, and `parent_attempt_id` repair lineage requirements.
+- Added independent `FIRST_ONLY`, `LAST_ONLY` and `FIRST_AND_LAST` FLF suite validation, complete model identity/asset-hash binding and a distinct-output-byte requirement; a different path containing copied input bytes cannot pass as generated capability evidence.
 - Required assembly segments to resolve to the declared shot artifact and execution attempt.
 - Added a hash-bound canonical bundle gate for future long-form production `PASS`: intent, plan, Scene Bible, shot graph, continuity and case evidence must share one case/scene/revision identity and an explicit record hash chain; mismatched canonical bundles are rejected before production acceptance.
-- Made quality CLI commands nonzero for `FAIL`, `FAILED`, `BLOCKED`, `UNKNOWN`, `PARTIAL`, `NOT_OBSERVED` and `NOT_RUN` states.
-- Fixed `tools/verify.py` discovery so the executable verification command runs the same complete 159-test suite as the documented direct command.
+- Made quality CLI commands nonzero for `FAIL`, `FAILED`, `BLOCKED`, `UNKNOWN`, `PARTIAL`, `NOT_OBSERVED`, `NOT_RUN` and `NOT_APPLICABLE` states, with explicit `accepted: false` output for aggregate results that are not PASS.
+- Added case-specific long-form production gates: LF-001 observed contact/vehicle evidence, LF-002 observed dialogue/audio evidence, and LF-003 Scene Bible/timed-beat/6–12-shot/multi-camera/audio/repair/target-duration requirements. Production attempts must be sealed by the trusted ComfyUI submit/collect path; fixture, synthetic, placeholder and copied-short-media records are rejected.
+- Added runtime queue discovery as a read-only point-in-time snapshot, adapter differential runtime-evidence requirements, chronological repair observations and progressive disclosure exclusions for specialist references that the scene does not need.
+- Fixed `tools/verify.py` discovery so the executable verification command runs the same complete 161-test suite as the documented direct command.
 - Added static local import-cycle detection and private-DNS rejection for provider image references.
-- Added [`tools/release_audit.py`](../tools/release_audit.py) for deterministic Skill packaging, ZIP/CRC/SHA checks, path/security scans, compileall and external-CWD smoke.
+- Added [`tools/release_audit.py`](../tools/release_audit.py) for deterministic Skill packaging, ZIP/CRC/SHA checks, path/security scans, compileall, static import-cycle audit, complete project verification, documentation/link audit and external-CWD smoke.
 - Added [`tools/candidate_fingerprint.py`](../tools/candidate_fingerprint.py) for a reproducible candidate scope and mutation sentinel.
 - Added regression cases for each demonstrated false-positive boundary and deterministic distribution portability.
 
@@ -73,11 +76,11 @@ The ownership boundaries remain cohesive: [`vge_core.py`](../.agents/skills/vide
 | Gate | Result | Evidence |
 |---|---|---|
 | Focused regression | PASS | Capture, collection, audio/editorial, FLF, case-envelope, repair-lineage, provider-DNS, release and import-cycle regressions pass. |
-| Complete no-bytecode suite | PASS | 159 tests, 0 failures, 0 errors, 0 skips. |
-| Executable offline verifier | PASS | `tools/verify.py`; 159 tests, 0 failures/errors/skips; package manifest `93cf70d5a7a03201c1f7c78a25b4e2042f1041d3d153c366db1aad7bb1bd7509`; static import-cycle audit PASS. |
+| Complete no-bytecode suite | PASS | 161 tests, 0 failures, 0 errors, 0 skips. |
+| Executable offline verifier | PASS | `tools/verify.py`; 161 tests, 0 failures/errors/skips; current package manifest is recorded in `software-triple-aaa-r9.json`; static import-cycle audit PASS. |
 | Skill package/link checks | PASS | 15 Skill-local links, manifest stable during verification. |
 | Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 549 local links, 80 requirements, no errors. |
-| Release audit | PASS | [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json); 30 package files, deterministic archive, CRC/security/compile/external-CWD checks. |
+| Release audit | FAIL (assurance gate; structural checks PASS) | [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json); archive, CRC/security/compile/import-cycle/full-verifier/docs/external-CWD checks pass, while the exact critic binding is valid but its terminal verdict is `INCOMPLETE`. |
 
 Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions including an actor approaching an object already held, incomplete dialogue declarations/causal order, mismatched canonical bundle identity/hash chains, fixture production provenance, repair fake references/lineage, invalid audio evidence, manifest-only assembly, case-envelope gaps, import cycles and non-PASS CLI statuses.
 
@@ -89,22 +92,22 @@ This proves runtime availability and workflow-schema compatibility only. It does
 
 ## Resource State
 
-The snapshot recorded approximately 41.0 GiB free system RAM, `cuda:0` with 11.68 GB free and `cuda:1` with 12.30 GB free. A read-only queue observation recorded 10 existing rows: 9 queued and 1 cancelled. None was cancelled, cleared, retried, or otherwise changed. No POST, download, upload, purchase, provider call or `free_memory` action was performed. Resource guards remain executable preflight protections, not evidence of successful inference.
+The snapshot recorded approximately 41.0 GiB free system RAM, `cuda:0` with 11.68 GB free and `cuda:1` with 12.30 GB free. A read-only queue observation recorded 10 existing rows: 9 queued and 1 cancelled. None was cancelled, cleared, retried, or otherwise changed. The runtime implementation now records the queue response hash and visible prompt IDs on every fresh discovery and submission context; that snapshot is observational only and does not reserve capacity or authorize mutation. No POST, download, upload, purchase, provider call or `free_memory` action was performed. Resource guards remain executable preflight protections, not evidence of successful inference.
 
 ## H3 Capability State
 
-- **H3 T2V:** `PROVEN (scoped)` for the observed local runtime/workflow/resource envelope and hash-bound historical execution records. Semantic and editorial acceptance remain separate.
+- **H3 T2V:** `PROVEN (scoped)` only for the observed local runtime/workflow/resource envelope and hash-bound historical execution records. The shipped summary profile is now explicitly `UNKNOWN`/`EXTERNAL_ONLY` because its raw external artifact bytes are not portable; semantic and editorial acceptance remain separate.
 - **H3 R2V/I2V:** `PARTIAL`; local workflow/profile/artifacts exist, but reference retention and cross-shot identity observations do not close the claim.
 - **FLF:** `NOT_RUN`; H3 input schemas do not prove endpoint behavior.
 - **Second runtime/adapter:** `BLOCKED`; no authorized alternate execution exists and no model was downloaded.
 
 ## LF-001
 
-The 15-second vehicle-entry ladder remains `PARTIAL`, not production accepted. [`LF-001-r4-case.json`](../verification/long-form/LF-001-r4-case.json) records S01/S02 accepted records, S03 partial semantic/continuity evidence, T01 `PARTIAL`, T02 `FAIL`, a mechanical `PREVIEW_ONLY` assembly, and missing editorial closure. The current production media records pass mechanical readability/timing checks, but they do not override semantic drift or transition failure. The repair plan is `AWAITING_AUTHORIZATION`; no new attempt, before/after observation, transition revalidation or final accepted reassembly exists. The validator now requires distinct immutable attempts/artifacts, a `parent_attempt_id`, hash-bound before/after observations and all affected transition results when a repair ledger is supplied.
+The 15-second vehicle-entry ladder remains `PARTIAL`, not production accepted. [`LF-001-r4-case.json`](../verification/long-form/LF-001-r4-case.json) records S01/S02 accepted records, S03 partial semantic/continuity evidence, T01 `PARTIAL`, T02 `FAIL`, a mechanical `PREVIEW_ONLY` assembly, and missing editorial closure. The current production media records pass mechanical readability/timing checks, but they do not override semantic drift or transition failure. The repair plan is `AWAITING_AUTHORIZATION`; no new attempt, before/after observation, transition revalidation or final accepted reassembly exists. The validator now requires distinct immutable attempts/artifacts, a `parent_attempt_id`, diagnosis/owner/delta, chronological semantic before/after observations that show the failed dimension improving, and all affected transition results when a repair ledger is supplied. LF-001 production `PASS` additionally requires observed contact phases and vehicle state bound to current artifact bytes.
 
 ## FLF
 
-[`FLF-r4-evidence.json`](../verification/long-form/FLF-r4-evidence.json) remains `NOT_RUN` for `FIRST_ONLY`, `LAST_ONLY` and `FIRST_AND_LAST`. The public `flf-probe` command now prepares a bounded mode-specific envelope with explicit `NOT_RUN` checks and no POST; endpoint identity, motion path, object state and artifact delivery still require a later collected runtime observation.
+[`FLF-r4-evidence.json`](../verification/long-form/FLF-r4-evidence.json) remains `NOT_RUN` for `FIRST_ONLY`, `LAST_ONLY` and `FIRST_AND_LAST`. The public `flf-probe` command now prepares a bounded mode-specific envelope with explicit `NOT_RUN` checks and no POST; `flf-suite` requires all three independently observed modes. Endpoint identity, motion path, object state, complete model identity/hash, distinct output bytes and artifact delivery still require later collected runtime observations.
 
 ## LF-002
 
@@ -120,7 +123,7 @@ LF-004 is optional and was not authorized or required in this run. It remains `N
 
 ## Second Adapter
 
-The existing [`adapter-differential-r4.json`](../verification/adapter-differential-r4.json) remains `PARTIAL`: it documents a structural constrained adapter and a blocked second real adapter. R9 now prevents empty canonical state and unproved section remapping from passing. It does not create a second renderer or authorize model acquisition, so the production/differential claim remains `BLOCKED`.
+The existing [`adapter-differential-r4.json`](../verification/adapter-differential-r4.json) remains `PARTIAL`: it documents a structural constrained adapter and a blocked second real adapter. R9 now prevents empty canonical state, unproved section remapping and missing collected runtime/problem/artifact evidence from passing. It does not create a second renderer or authorize model acquisition, so the production/differential claim remains `BLOCKED`.
 
 ## Prompt Compiler Findings
 
@@ -132,7 +135,7 @@ Semantic PASS now requires the exact observed artifact bytes, current shot/attem
 
 ## Repairability Findings
 
-Repair scope now consumes both dependency IDs and explicit transition contracts, so affected adjacent pairs are not silently omitted. Successful repair revalidation requires a real pair, a real evidence reference and the actual content hash; a completed lineage also requires a distinct new attempt with `parent_attempt_id` and a distinct new artifact. The repository preserves the failed/partial state and repair plan, but no new repair was authorized; therefore repairability is structurally strengthened and production repair remains `BLOCKED`.
+Repair scope now consumes both dependency IDs and explicit transition contracts, so affected adjacent pairs are not silently omitted. Successful repair revalidation requires a real pair, a real evidence reference and the actual content hash; a completed lineage also requires a distinct new attempt with `parent_attempt_id`, a distinct new artifact, an explicit diagnosis/owner/bounded delta, and chronological before/after semantic observations that show the failed dimension improving. The repository preserves the failed/partial state and repair plan, but no new repair was authorized; therefore repairability is structurally strengthened and production repair remains `BLOCKED`.
 
 ## Architecture/Cohesion Audit
 
@@ -140,7 +143,7 @@ The implementation stays modular and evidence-oriented. Changes were placed at t
 
 ## Progressive Disclosure Audit
 
-The existing Skill keeps the compact `SKILL.md` entry point and routes detailed contracts through references. R9 prompt copies, bar, plan and reports are repository evidence, not silently injected runtime context. The release audit confirms the portable Skill package has no dependency on the repository's absolute path, private media, weights, bytecode or credentials.
+The existing Skill keeps the compact `SKILL.md` entry point and routes detailed contracts through references. R9 prompt copies, bar, plan and reports are repository evidence, not silently injected runtime context. Progressive disclosure now keeps the simple portrait path on core guidance and activates directing, evaluation and observability references only on concrete signals. The release audit confirms the portable Skill package has no dependency on the repository's absolute path, private media, weights, bytecode or credentials.
 
 ## Failed Attempts Preserved
 
@@ -152,7 +155,7 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 |---|---|---|---|
 | R9-P0-01 Fresh baseline and prompt provenance | PROVEN | Frozen bar, prompt copies, source hashes, software/runtime/release records | Production records remain separately scoped. |
 | R9-P0-02 Truth-layer separation | PROVEN | Hash-bound validators, fixture boundary tests, current report | Semantic truth still needs real/oracle/human observation. |
-| R9-P0-03 Regression and harness gate | PROVEN | 159-test suite, `tools/verify.py`, release audit, docs audit | Production gates are not implied by offline PASS. |
+| R9-P0-03 Regression and harness gate | PROVEN | 161-test suite, `tools/verify.py`, release audit, docs audit | Production gates are not implied by offline PASS. |
 | R9-P0-04 Resource and side-effect safety | PROVEN | Runtime snapshot, queue untouched, runtime guard tests | No generation was authorized in this run. |
 | R9-P0-05 Immutable failures and artifacts | PROVEN | Attempt/artifact/observation lineage validators and preserved history | No repair artifact exists to validate. |
 | R9-P0-06 Oracle and canonical gates | PROVEN | Canonical contradiction/risk/semantic gates, hash-bound oracle mappings, canonical bundle identity and known-bad tests | Oracle execution itself is outside this structural package. |
@@ -165,7 +168,7 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 | R9-P6-01 Second real adapter | BLOCKED | Differential record and explicit blocked runtime state | No authorized alternate runtime; no download. |
 | R9-P7-01 Architecture/disclosure | PROVEN | Skill structure, references, release scans and current audit | Maintainability remains subject to future observed changes. |
 | R9-P8-01 Fresh independent critic | PARTIAL | [`triple-aaa-independent-critic-current.md`](../.gauntlet/triple-aaa-independent-critic-current.md) is the post-freeze reviewer-owned matrix, scope binding and mutation-sentinel record. | The reviewer result is independently bound but does not provide the `PASS` required by the release bar. |
-| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, freeze/final fingerprints, release audit and current critic binding account for the package | Structural distribution is not production proof and does not close the production bar. |
+| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, freeze/final fingerprints, release audit, full verifier/docs/import-cycle checks and current critic binding account for the package | Structural distribution is not production proof and does not close the production bar. |
 
 ## Independent Critic
 
@@ -179,13 +182,13 @@ independent `PASS`, and earlier timeout records are not reused as approval.
 
 ## Distribution
 
-The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited structurally by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json). The release audit also binds the exact current critic record; that binding proves review-record integrity, not an independent `PASS` or audiovisual production acceptance:
+The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited structurally by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json). The final release report is `FAIL` only because the frozen assurance gate requires an independent critic `PASS`; its exact current critic binding is valid, but the critic terminal verdict is `INCOMPLETE`. That binding proves review-record integrity, not audiovisual production acceptance:
 
-- package: 30 files; manifest `sha256:8f3cd4b6f16586913dd10e0d4ced2341a0df4445d33f26c791345762ed7331e0`;
-- archive: 147,554 bytes; SHA-256 `sha256:3b851f398ad0cb522230b5fc4c4b63bce5b17969e5d62b8b7a637f0c5055b247`;
+- package: 30 files; manifest `sha256:d416fa6eacec467de67030c117bd77aa69d7a49a68e66369fcc72fa54fd2457b`;
+- archive: 153,445 bytes; SHA-256 `sha256:009f9b6b48131cb35cbfe8e892ce4183ee5a1de2198e27c385a621190a0f16ba`;
 - ZIP entries sorted/unique, CRC PASS, unsafe-path PASS;
 - secret-like values, model weights, private/generated media and absolute workspace paths: PASS;
-- Skill compileall and external-CWD `--help → prepare → validate → compile`: PASS.
+- Skill compileall, static import-cycle audit, complete project verifier, documentation audit and external-CWD `--help → prepare → validate → compile`: PASS.
 
 The archive is the portable Skill only; repository reports, verification media, credentials and model weights are not included.
 
@@ -212,7 +215,7 @@ The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple
 
 ## Remaining Gaps
 
-- Complete a genuinely authorized LF-001 S03 repair/re-anchor with immutable failed/new attempts, before/after semantic observations, T02 revalidation and accepted reassembly/editorial review.
+- Complete a genuinely authorized LF-001 S03 repair/re-anchor with immutable failed/new attempts, diagnosis/owner/delta, chronological before/after semantic observations, T02 revalidation and accepted reassembly/editorial review.
 - Run and observe all three FLF modes with endpoint-specific evidence.
 - Produce and review LF-002 dialogue/audio/lip-sync evidence with separate channels and A/V timing.
 - Produce and review LF-003 45–60 second dependent multi-shot continuity with repair and editorial acceptance.
@@ -222,9 +225,9 @@ The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple
 ## Claims Now Supported
 
 - The three user-supplied prompts are preserved with source hashes and documented normalization.
-- The repository Skill has fail-closed canonical, provenance, semantic/oracle, transition, repair, adapter, audio, FLF-preparation, dialogue, case-envelope and production-vs-fixture contract boundaries covered by 159 passing tests.
-- The offline verifier, deterministic portable package audit, security scans and external-CWD smoke pass for the current candidate.
-- The local ComfyUI runtime and bundled H3 R2V workflow were observed at the dated snapshot, with queue and side effects left untouched.
+- The repository Skill has fail-closed canonical, provenance, semantic/oracle, transition, repair, adapter, audio, FLF-suite, dialogue, case-envelope and production-vs-fixture contract boundaries covered by 161 passing tests.
+- The offline verifier, deterministic portable package-integrity/security subchecks and external-CWD smoke pass for the current candidate; the overall release status remains `FAIL` only at the separate critic-assurance gate.
+- The local ComfyUI runtime and bundled H3 R2V workflow were observed at the dated snapshot, with queue and side effects left untouched; future runtime records retain a hash-bound read-only queue snapshot.
 - The package can be distributed as a reproducible Skill archive within the declared scope.
 - The post-freeze independent critic record is byte-bound to the final candidate and contains a complete criterion matrix, exact scope and mutation sentinel.
 

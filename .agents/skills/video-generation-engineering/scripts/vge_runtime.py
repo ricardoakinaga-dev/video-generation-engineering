@@ -98,12 +98,27 @@ class ComfyClient:
     def discover(self):
         stats = self.request("/system_stats")
         nodes = self.request("/object_info")
+        queue = self.request("/queue")
         system = stats.get("system", {}) if isinstance(stats, dict) else {}
         devices = stats.get("devices", []) if isinstance(stats, dict) else []
         if not isinstance(system, dict):
             system = {}
         if not isinstance(devices, list):
             devices = []
+        require(isinstance(queue, dict), "Runtime queue discovery response is malformed")
+        running = queue.get("queue_running", [])
+        pending = queue.get("queue_pending", [])
+        require(isinstance(running, list) and isinstance(pending, list),
+                "Runtime queue discovery must expose queue_running and queue_pending arrays")
+        queue_ids = []
+        for item in running + pending:
+            if isinstance(item, (list, tuple)) and len(item) > 1 and isinstance(item[1], str) and item[1]:
+                queue_ids.append(item[1])
+            elif isinstance(item, dict) and isinstance(item.get("prompt_id"), str) and item["prompt_id"]:
+                queue_ids.append(item["prompt_id"])
+        queue_state = {"status": "OBSERVED", "running_count": len(running),
+                       "pending_count": len(pending), "prompt_ids": sorted(set(queue_ids)),
+                       "content_hash": digest(queue)}
         resources = [{"id": str(index), "device_id": f"cuda:{device.get('index', index)}", "name": device.get("name", "UNKNOWN"),
                       "type": device.get("type", "GPU"), "vram_total": device.get("vram_total"),
                       "vram_free": device.get("vram_free"), "observed": True}
@@ -111,6 +126,7 @@ class ComfyClient:
         node_types = sorted(key for key in nodes if isinstance(key, str)) if isinstance(nodes, dict) else []
         return {"schema_version": 1, "endpoint": self.endpoint, "observed_at": datetime.now(timezone.utc).isoformat(),
                 "system_stats": stats, "object_info": nodes, "node_inventory_hash": digest(nodes),
+                "queue_state": queue_state,
                 "runtime_version": system.get("comfyui_version", "UNKNOWN"),
                 "runtime_context": {"python_version": system.get("python_version", "UNKNOWN"),
                                     "pytorch_version": system.get("pytorch_version", "UNKNOWN"),
@@ -123,6 +139,7 @@ class ComfyClient:
                 "custom_node_inventory": {"status": "OBSERVED_NODE_TYPES_ONLY", "node_types": node_types},
                 "limitations": ["Node metadata confirms availability, not successful model inference or media quality",
                                 "ComfyUI API discovery does not enumerate every local model file; bind model hashes from the immutable profile/runtime context",
+                                "Queue state is a point-in-time read-only snapshot; it does not reserve capacity or authorize queue mutation",
                                 "Resource values are observations, not a guarantee that a queued graph will fit"]}
 
 
@@ -583,7 +600,7 @@ def submit(client, workflow, context, destination, authorized=False, probe_mode=
     profile_identity["content_hash"] = digest(profile)
     attempt = {"schema_version": 1, "id": attempt_id, "revision": 1, "execution_plan_ref": context["execution_plan_ref"], "shot_id": context["shot_id"], "shot_contract_hash": digest(shot), "attempt_index": context["attempt_index"], "status": "UNKNOWN",
                "started_at": datetime.now(timezone.utc).isoformat(), "ended_at": None, "profile": profile_identity, "model": model,
-               "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "version": version, "node_inventory_hash": observed["node_inventory_hash"], "selected_device": selected_device, "resource_context_hash": resource_context_hash, "resource_snapshot": observed.get("resource_inventory", []), "resource_status": resource_report, "runtime_context": observed.get("runtime_context", {})},
+               "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "version": version, "node_inventory_hash": observed["node_inventory_hash"], "selected_device": selected_device, "resource_context_hash": resource_context_hash, "resource_snapshot": observed.get("resource_inventory", []), "resource_status": resource_report, "queue_state": observed.get("queue_state"), "execution_kind": "CAPABILITY_PROBE" if probe_mode else "PRODUCTION", "evidence_origin": "vge_runtime.submit", "runtime_context": observed.get("runtime_context", {})},
                "workflow": {"ref": str((run / "workflow.json").resolve()), "content_hash": digest(workflow), "fingerprint": validation["workflow_fingerprint"], "prompt_ref": context["execution_plan_ref"], "queue_id": None},
                "nodes": node_records, "inputs": inputs, "parameters": context["parameters"], "progress_ref": str((run / "events.jsonl").resolve()), "error_ref": None, "unknown_fields": unknown + ["workflow.queue_id"]}
     attempt["purpose"] = "CAPABILITY_PROBE" if probe_mode else "GENERATION"
@@ -727,6 +744,8 @@ def collect(client, attempt, history, destination):
                                   "observed_at": completed["ended_at"], "source": "vge_runtime.collect"})
     completed["collection"] = {
         "schema_version": 1, "status": "COLLECTED", "collector": "vge_runtime.collect",
+        "evidence_scope": "CAPABILITY_PROBE" if attempt.get("purpose") == "CAPABILITY_PROBE" else "PRODUCTION",
+        "evidence_origin": "vge_runtime.collect",
         "prompt_id": history["prompt_id"], "history_ref": str(history_path.resolve()),
         "history_content_hash": file_hash(history_path), "history_output_hash": digest(outputs_by_node),
         "event_log_ref": str(progress_path.resolve()), "event_log_content_hash": file_hash(progress_path),
