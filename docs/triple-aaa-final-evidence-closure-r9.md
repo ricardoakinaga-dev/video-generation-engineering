@@ -19,7 +19,7 @@ The R9 implementation closes the demonstrated structural fail-open gaps and prov
 - Candidate scope: 470 textual/source files plus the R9 distribution archive. The exact scope digest is recorded in the freeze/final fingerprint records; this report is itself in scope and intentionally does not duplicate a self-referential digest.
 - Mutation sentinel: `.gauntlet/bar.json`, `sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80` at freeze.
 - The scope excludes generated media/model-weight bytes and derivative/reviewer-owned R9 reports; their hash-bound records and release scans remain explicit. The distribution archive itself is included.
-- The three supplied prompts were preserved in [`docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt), [`part-2.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-2.txt) and [`part-3.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-3.txt). Parts 1–2 are byte-exact; part 3 records one final LF normalization by `apply_patch`, with the original source hash and byte count retained in the frozen bar.
+- The three supplied prompts were preserved byte-for-byte in [`docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt), [`part-2.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-2.txt) and [`part-3.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-3.txt), with exact source hashes recorded in the frozen bar.
 
 ## Baseline
 
@@ -73,7 +73,7 @@ The ownership boundaries remain cohesive: [`vge_core.py`](../.agents/skills/vide
 | Complete no-bytecode suite | PASS | 157 tests, 0 failures, 0 errors, 0 skips. |
 | Executable offline verifier | PASS | `tools/verify.py`; 157 tests, 0 failures/errors/skips; package manifest `10ad9af17dc1210f4d791ae9de61ee1ddfceb362f4faa4e694511f05d620dfd4`; static import-cycle audit PASS. |
 | Skill package/link checks | PASS | 15 Skill-local links, manifest stable during verification. |
-| Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 545 local links, 80 requirements, no errors. |
+| Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 546 local links, 80 requirements, no errors. |
 | Release audit | PASS | [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json); 30 package files, deterministic archive, CRC/security/compile/external-CWD checks. |
 
 Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions, fixture production provenance, repair fake references/lineage, invalid audio evidence, manifest-only assembly, case-envelope gaps, import cycles and non-PASS CLI statuses.

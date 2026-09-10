@@ -12,7 +12,7 @@ Implement the three user-supplied Triple-AAA Evidence Closure prompts against th
 - Repository copies: `docs/master-prompt-triple-aaa-evidence-closure-20260909-part-{1,2,3}.txt`
 - Frozen bar: `docs/triple-aaa-quality-bar-r9.json`
 - Original source hashes: part 1 `60e20d753558dc877f1477ee0625dc7f9a22fd9d6068dbf519c14199d3be4b2c`; part 2 `7de047adb66fee247330629e2c5ed07b57d5b9d5739089468a4921a04ac9d1f3`; part 3 `311bbb58ad4ed8c2a60aee8539bd3f7a122ad7366361ab240f9233ecc19ebf65`.
-- Repository copies preserve parts 1–2 byte-for-byte; part 3 has one final LF added by `apply_patch`, recorded explicitly in the bar.
+- Repository copies preserve all three supplied prompt files byte-for-byte, with source hashes recorded in the frozen bar.
 
 ## Current classification
 

@@ -28,7 +28,7 @@
     "repository_copies": [
       {"path": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt", "sha256": "60e20d753558dc877f1477ee0625dc7f9a22fd9d6068dbf519c14199d3be4b2c", "bytes": 16201, "lines": 1190, "byte_exact": true},
       {"path": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-2.txt", "sha256": "7de047adb66fee247330629e2c5ed07b57d5b9d5739089468a4921a04ac9d1f3", "bytes": 18546, "lines": 1192, "byte_exact": true},
-      {"path": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-3.txt", "sha256": "215e95b721c95e38cc4de9d834ad9fe3e27d5a9d1a5d798ed852fe6955508727", "bytes": 7994, "lines": 449, "byte_exact": false, "normalization": "one final LF added by apply_patch; source hash and original byte count retained above"}
+      {"path": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-3.txt", "sha256": "311bbb58ad4ed8c2a60aee8539bd3f7a122ad7366361ab240f9233ecc19ebf65", "bytes": 7993, "lines": 448, "byte_exact": true}
     ]
   },
   "allowed_matrix_statuses": ["PROVEN", "PARTIAL", "UNKNOWN", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"],
