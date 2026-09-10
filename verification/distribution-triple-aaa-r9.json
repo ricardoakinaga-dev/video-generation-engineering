@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "id": "distribution-triple-aaa-r9",
-  "observed_at": "2026-09-10T03:35:04.629744+00:00",
-  "completed_at": "2026-09-10T03:35:05.465518+00:00",
+  "observed_at": "2026-09-10T03:50:15.494575+00:00",
+  "completed_at": "2026-09-10T03:50:16.654841+00:00",
   "status": "PASS",
   "scope": "FRESH_DETERMINISTIC_PORTABLE_SKILL_DISTRIBUTION",
   "package_scope": ".agents/skills/video-generation-engineering",
@@ -61,25 +61,25 @@
     "working_directory": "temporary directory outside repository",
     "checks": [
       {
-        "command": "/usr/bin/python3 /tmp/vge-release-audit-juyhc7i1/.agents/skills/video-generation-engineering/scripts/vge.py --help",
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-lpj30pnd/.agents/skills/video-generation-engineering/scripts/vge.py --help",
         "returncode": 0,
         "status": "PASS",
         "stderr": ""
       },
       {
-        "command": "/usr/bin/python3 /tmp/vge-release-audit-juyhc7i1/.agents/skills/video-generation-engineering/scripts/vge.py prepare /tmp/vge-release-audit-juyhc7i1/.agents/skills/video-generation-engineering/assets/templates/treatment.json --output /tmp/vge-release-audit-juyhc7i1/prepared.json",
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-lpj30pnd/.agents/skills/video-generation-engineering/scripts/vge.py prepare /tmp/vge-release-audit-lpj30pnd/.agents/skills/video-generation-engineering/assets/templates/treatment.json --output /tmp/vge-release-audit-lpj30pnd/prepared.json",
         "returncode": 0,
         "status": "PASS",
         "stderr": ""
       },
       {
-        "command": "/usr/bin/python3 /tmp/vge-release-audit-juyhc7i1/.agents/skills/video-generation-engineering/scripts/vge.py validate /tmp/vge-release-audit-juyhc7i1/prepared.json",
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-lpj30pnd/.agents/skills/video-generation-engineering/scripts/vge.py validate /tmp/vge-release-audit-lpj30pnd/prepared.json",
         "returncode": 0,
         "status": "PASS",
         "stderr": ""
       },
       {
-        "command": "/usr/bin/python3 /tmp/vge-release-audit-juyhc7i1/.agents/skills/video-generation-engineering/scripts/vge.py compile /tmp/vge-release-audit-juyhc7i1/prepared.json",
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-lpj30pnd/.agents/skills/video-generation-engineering/scripts/vge.py compile /tmp/vge-release-audit-lpj30pnd/prepared.json",
         "returncode": 0,
         "status": "PASS",
         "stderr": ""
@@ -92,8 +92,35 @@
     "stderr": ""
   },
   "critic_binding": {
-    "status": "NOT_REQUESTED",
-    "errors": []
+    "status": "PASS",
+    "errors": [],
+    "fingerprint": {
+      "status": "PASS",
+      "ref": "verification/candidate-fingerprint-r9-final.json",
+      "content_sha256": "sha256:c83bd6979f42e5b71ad8e159759f1b3ca4b79bb44812cd8245ec174acf56681c",
+      "errors": [],
+      "scope_sha256": "sha256:4fb0ec6bc385bc5bb37d4a9e6ac1083dfd089fc96cff9413d9b48b5977111164",
+      "candidate_file_count": 471
+    },
+    "fingerprint_ref": "verification/candidate-fingerprint-r9-final.json",
+    "fingerprint_content_sha256": "sha256:c83bd6979f42e5b71ad8e159759f1b3ca4b79bb44812cd8245ec174acf56681c",
+    "fingerprint_scope_sha256": "sha256:4fb0ec6bc385bc5bb37d4a9e6ac1083dfd089fc96cff9413d9b48b5977111164",
+    "fingerprint_candidate_file_count": 471,
+    "freeze": {
+      "status": "PASS",
+      "ref": "verification/candidate-fingerprint-r9-freeze.json",
+      "content_sha256": "sha256:38355b9e18eec78014e278eed392e37013fd0d24636793685f50529e7f816ed0",
+      "errors": [],
+      "scope_sha256": "sha256:4fb0ec6bc385bc5bb37d4a9e6ac1083dfd089fc96cff9413d9b48b5977111164",
+      "candidate_file_count": 471
+    },
+    "freeze_ref": "verification/candidate-fingerprint-r9-freeze.json",
+    "freeze_content_sha256": "sha256:38355b9e18eec78014e278eed392e37013fd0d24636793685f50529e7f816ed0",
+    "freeze_scope_sha256": "sha256:4fb0ec6bc385bc5bb37d4a9e6ac1083dfd089fc96cff9413d9b48b5977111164",
+    "freeze_final_scope": {
+      "status": "PASS",
+      "differences": []
+    }
   },
   "security": {
     "status": "PASS",

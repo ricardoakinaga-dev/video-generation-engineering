@@ -14,7 +14,7 @@
   "active_execplan": ".agent/plans/triple-aaa-r9-closure.md",
   "active_task": "VGE-TRIPLE-AAA-R9",
   "verification_state": "PARTIAL",
-  "repository_state": "GIT main; the R9 closure candidate is clean and has fail-closed hardening, prompt copies, current reports, 157-test verification, a fresh independent critic and a 30-file deterministic distribution; local software is READY_WITH_RISKS while audiovisual Triple-AAA remains blocked by absent authorized production observations",
+  "repository_state": "GIT main; the R9 reconciliation candidate is the current working set; final Git status and remote equality are separate handoff evidence; fail-closed hardening, prompt copies, current 159-test verification, a 30-file deterministic distribution and an incomplete fresh-critic attempt are recorded; local software is READY_WITH_RISKS while audiovisual Triple-AAA and P8 remain unproven",
   "instruction_scope_refs": [
     ".agent/PLANS.md",
     ".agent/plans/triple-aaa-r4-closure.md",
@@ -28,22 +28,24 @@
     "tools/release_audit.py"
   ],
   "last_gate_record": null,
-  "last_event_id": "EVT-VGE-AAA-R9-RECOVERY-28",
-  "state_revision": 109,
+  "last_event_id": "EVT-VGE-AAA-R9-HANDOFF-PREP-31",
+  "state_revision": 112,
   "next_gate": "AUDIT_RESOLVED",
   "active_action_id": "VGE-TRIPLE-AAA-R9:PRODUCTION-EVIDENCE-BOUNDARY",
   "blocked_by": [
     "Authorized production observations are still required for LF-001 semantic/editorial acceptance, repair/re-anchor and final assembly",
     "LF-002/LF-003, FLF, second real adapter, repair execution and dialogue/lip-sync remain BLOCKED or NOT_RUN; no runtime POST was authorized",
-    "Production acceptance cannot be inferred from synthetic/fixture media, declarative semantic records or mechanical media QA"
+    "Production acceptance cannot be inferred from synthetic/fixture media, declarative semantic records or mechanical media QA",
+    "Three fresh non-inherited critic attempts returned no reviewer-owned matrix, candidate fingerprint or mutation sentinel; P8 remains NOT_RUN"
   ],
   "human_approval_required": [],
-  "updated_at": "2026-09-10T01:51:02Z",
+  "updated_at": "2026-09-10T03:49:46Z",
   "remaining_capability_limits": [
     "Full audiovisual production acceptance",
     "Paid provider and external transfer authority",
     "Unprobed I2V/FLF/voice/reference modes",
     "LF-001..LF-003 accepted production chains not yet available",
-    "Second independent model unavailable in the targeted local catalog; other adapter families remain unexhaustively searched"
+    "Second independent model unavailable in the targeted local catalog; other adapter families remain unexhaustively searched",
+    "Independent final review capacity did not return a reviewer-owned result for the current candidate"
   ]
 }

@@ -15,8 +15,8 @@ The R9 implementation closes the demonstrated structural fail-open gaps and prov
 
 ## Frozen Candidate
 
-- Candidate freeze record: [`candidate-fingerprint-r9-freeze.json`](../verification/candidate-fingerprint-r9-freeze.json); final matching record: [`candidate-fingerprint-r9-final.json`](../verification/candidate-fingerprint-r9-final.json). A fresh independent critic was attempted but did not return a reviewer-owned record in this handoff.
-- Candidate scope: 470 textual/source files plus the R9 distribution archive. The exact scope digest is recorded in the freeze/final fingerprint records; this report is itself in scope and intentionally does not duplicate a self-referential digest.
+- Candidate freeze record: [`candidate-fingerprint-r9-freeze.json`](../verification/candidate-fingerprint-r9-freeze.json); final matching record: [`candidate-fingerprint-r9-final.json`](../verification/candidate-fingerprint-r9-final.json). The lead-owned operational record [`triple-aaa-independent-critic-r19.md`](../verification/triple-aaa-independent-critic-r19.md) records three fresh attempts that returned no reviewer-owned record; it is not independent acceptance evidence.
+- Candidate scope: 471 textual/source files plus the R9 distribution archive. The exact scope digest is recorded in the freeze/final fingerprint records; this report is itself in scope and intentionally does not duplicate a self-referential digest.
 - Mutation sentinel: `.gauntlet/bar.json`, `sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80` at freeze.
 - The scope excludes generated media/model-weight bytes and derivative/reviewer-owned R9 reports; their hash-bound records and release scans remain explicit. The distribution archive itself is included.
 - The three supplied prompts were preserved byte-for-byte in [`docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt), [`part-2.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-2.txt) and [`part-3.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-3.txt), with exact source hashes recorded in the frozen bar.
@@ -76,7 +76,7 @@ The ownership boundaries remain cohesive: [`vge_core.py`](../.agents/skills/vide
 | Complete no-bytecode suite | PASS | 159 tests, 0 failures, 0 errors, 0 skips. |
 | Executable offline verifier | PASS | `tools/verify.py`; 159 tests, 0 failures/errors/skips; package manifest `93cf70d5a7a03201c1f7c78a25b4e2042f1041d3d153c366db1aad7bb1bd7509`; static import-cycle audit PASS. |
 | Skill package/link checks | PASS | 15 Skill-local links, manifest stable during verification. |
-| Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 545 local links, 80 requirements, no errors. |
+| Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 549 local links, 80 requirements, no errors. |
 | Release audit | PASS | [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json); 30 package files, deterministic archive, CRC/security/compile/external-CWD checks. |
 
 Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions including an actor approaching an object already held, incomplete dialogue declarations/causal order, mismatched canonical bundle identity/hash chains, fixture production provenance, repair fake references/lineage, invalid audio evidence, manifest-only assembly, case-envelope gaps, import cycles and non-PASS CLI statuses.
@@ -164,16 +164,16 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 | R9-P5-01 LF-003 long form | BLOCKED | Structural ten-shot ladder and blocked case | No accepted 45–60 s production chain/editorial review. |
 | R9-P6-01 Second real adapter | BLOCKED | Differential record and explicit blocked runtime state | No authorized alternate runtime; no download. |
 | R9-P7-01 Architecture/disclosure | PROVEN | Skill structure, references, release scans and current audit | Maintainability remains subject to future observed changes. |
-| R9-P8-01 Fresh independent critic | NOT_RUN | Fresh critic workers were attempted in non-inherited contexts but returned no reviewer-owned record; no independent PASS is claimed. | Repeat the critic gate before calling the package fully Triple-AAA audited. |
-| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, final fingerprint and release audit bind package accounting without a critic binding | Structural distribution is not production proof and does not close P8. |
+| R9-P8-01 Fresh independent critic | NOT_RUN | [`triple-aaa-independent-critic-r19.md`](../verification/triple-aaa-independent-critic-r19.md) records three incomplete fresh attempts; no reviewer-owned matrix, fingerprint or sentinel was returned. | Repeat the critic gate before calling the package fully Triple-AAA audited. |
+| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, freeze/final fingerprints and release audit bind package accounting; no reviewer-owned critic record is bound | Structural distribution is not production proof and does not close P8. |
 
 ## Independent Critic
 
-Fresh non-inherited critic workers were attempted with read-only scope, but the workers timed out before producing the reviewer-owned record. The prior critic record is not reused as current evidence because it binds an earlier candidate scope. Consequently P8 is explicitly `NOT_RUN`; the local software and distribution audits below are not presented as an independent critic verdict.
+Fresh non-inherited critic workers were attempted with read-only scope, but the workers timed out before producing a reviewer-owned record. The operational attempt is preserved in [`triple-aaa-independent-critic-r19.md`](../verification/triple-aaa-independent-critic-r19.md). The prior critic record is not reused as current evidence because it binds an earlier candidate scope. Consequently P8 is explicitly `NOT_RUN`; the local software and distribution audits below are not presented as an independent critic verdict.
 
 ## Distribution
 
-The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited structurally by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json). It has no current critic binding because P8 was not completed:
+The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited structurally by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json). The report binds the current freeze/final fingerprints, but no reviewer-owned critic record is bound because P8 was not completed:
 
 - package: 30 files; manifest `sha256:8f3cd4b6f16586913dd10e0d4ced2341a0df4445d33f26c791345762ed7331e0`;
 - archive: 147,554 bytes; SHA-256 `sha256:3b851f398ad0cb522230b5fc4c4b63bce5b17969e5d62b8b7a637f0c5055b247`;

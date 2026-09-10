@@ -25,7 +25,7 @@ Scores are diagnostic, claim-scoped indicators, not an average-based release gat
 | 19 | Provenance | 92 | Attempts, history, events, artifacts, observations and output hashes are bound and immutable. | Hashes prove lineage, not semantic correctness. |
 | 20 | Portability | 94 | 30-file deterministic archive, external-CWD smoke, compile and local-link checks pass. | Portable structure does not prove provider capability. |
 | 21 | Maintainability | 84 | No static import cycles; module ownership and repository-only release boundary are documented. | Future runtime integrations may expose new cohesion risks. |
-| 22 | Production Evidence | 30 | Final release accounting preserves LF-001 partial evidence and explicit LF-002/LF-003/FLF/adapter blockers; the fresh independent critic gate is not run to completion. | The overall verdict remains `PARTIAL`, not `TRIPLE_AAA_PROVEN`. |
+| 22 | Production Evidence | 30 | Final release accounting preserves LF-001 partial evidence and explicit LF-002/LF-003/FLF/adapter blockers; the fresh independent critic gate is recorded as incomplete in [`triple-aaa-independent-critic-r19.md`](../verification/triple-aaa-independent-critic-r19.md). | The overall verdict remains `PARTIAL`, not `TRIPLE_AAA_PROVEN`. |
 
 ## Score interpretation
 
