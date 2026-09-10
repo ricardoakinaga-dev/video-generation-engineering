@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "candidate-fingerprint-r9",
   "status": "FROZEN",
-  "observed_at": "2026-09-10T01:42:08.730309+00:00",
+  "observed_at": "2026-09-10T02:05:27.551923+00:00",
   "scope_policy": {
     "included_roots": [
       ".agent",
@@ -54,8 +54,8 @@
   "files_sha256": {
     ".agent/PLANS.md": "sha256:fc4f23fdad4f48355decee3d6bd9b72b9c49344e3c88027c9696d02c6478fb8e",
     ".agent/authority.jsonl": "sha256:abe0518681beeed45d1e788aaefd1b08e98a43bd07d7029b4a3f41d2140d4aba",
-    ".agent/backlog.json": "sha256:35beaa68bfd3ab4fb03e1e15c129618541b260a7f65639963de3097ec1e79f19",
-    ".agent/execution-log.jsonl": "sha256:5d3ab724b4fc663587b051e540bafb9e45c698dff4f052269ba0f5aaf7739e6f",
+    ".agent/backlog.json": "sha256:93103743f599365eef26072edf1b7c05763cd2f785dca9db1507892b1dc79483",
+    ".agent/execution-log.jsonl": "sha256:be080951dca53fcbcae1c344b0434793d7b71fa82b25a370f37e37bcb347b92e",
     ".agent/gauntlet-inputs/bar.json": "sha256:38e5f8e0ae175b8d29c2d05327ec874536efe44aaf5be467dc02e52ad99d7ccd",
     ".agent/gauntlet-inputs/budget.json": "sha256:4c7d8a964604ccc54c158e458b69f800f9e97e8c4d65e4bc4af37238004444c1",
     ".agent/gauntlet-inputs/capabilities.json": "sha256:bfbc6fcb0f619645888552c3b95cfe9893f957edf4df3ec20127fd1b11d45348",
@@ -66,9 +66,9 @@
     ".agent/plans/triple-aaa-r2-closure.md": "sha256:37fc5081a71d5d1a02a0a6314278b7cd7834e8021dc18b1dc60ef3d643abd2dd",
     ".agent/plans/triple-aaa-r3-closure.md": "sha256:50234ce3f78085a8d2bdb45aa1fa48db6f98df25f9bb8b22c49f6f49035485c6",
     ".agent/plans/triple-aaa-r4-closure.md": "sha256:809f714c8f804be87b8a6a47048daf1abebc9713b6cc9f9722e8d91f9d310c45",
-    ".agent/plans/triple-aaa-r9-closure.md": "sha256:cebaf3ddf1cb8265b4c13ca87e4d9473eb48751a5584d855199c01ddd5ec4b50",
-    ".agent/state.json": "sha256:a4a99e12a8cc28a5f1f3e3654c3a04d52985aa365ac9fff551808ab2fc468c1c",
-    ".agent/verification.jsonl": "sha256:67691cc41124613b8724f09a8ba0217e9a554836d3063742cd94b5bd5cbb0093",
+    ".agent/plans/triple-aaa-r9-closure.md": "sha256:aa17dbaf21c09d8703f77a76f8974e0717e2ebefa6098ad898229474222b84c2",
+    ".agent/state.json": "sha256:ad00f6cfd06df1d9d989da6016579e749df33ba2430b37e0bcf0c1c057f165f9",
+    ".agent/verification.jsonl": "sha256:82016c77ebc3c8562db0a9f8425674a05988ef06a34d2129f1e78e01a53ec3df",
     ".agents/skills/video-generation-engineering/SKILL.md": "sha256:bb240b13121965ee30e3a3d62c86a15b930e043b971a618c1a708105e1bf6afd",
     ".agents/skills/video-generation-engineering/agents/openai.yaml": "sha256:2c6fe2911002b105809693f5bd0950e933c7577058de3701982fede3d91ca81a",
     ".agents/skills/video-generation-engineering/assets/templates/treatment.json": "sha256:7a3f4e9ae792cd6b64ea14fb62ab5fcbd7d9af596ecfbf9031561dc1f00eb5de",
@@ -506,7 +506,7 @@
     "verification/software-triple-aaa-r6.json": "sha256:c3b9881ee4f0f653c77c739f68ea28380cbac400d32ecb52482aba8d0e0f2696",
     "verification/software-triple-aaa-r7.json": "sha256:6e001a2053220ac55870aa60f6d18eb9f0dcf4ca879408d1d497d4c5fe22fe54",
     "verification/software-triple-aaa-r8.json": "sha256:c3abcfe438912970f00aa8c9233dc9a877e021c6cfe788882c6715b9f23c6e2c",
-    "verification/software-triple-aaa-r9.json": "sha256:2e7e8e9152797c7f41655e89409a25bc3b999485fb3afc5cec000d1509d46755",
+    "verification/software-triple-aaa-r9.json": "sha256:32fb5f146454f4787723cb207daed85f29ffda009d500ed77f991d50d2f5bcfc",
     "verification/triple-aaa-independent-critic-r10.md": "sha256:2288e73096632cec9c6bec9574f7d82ab288262930ec9bd692ad429f6c565350",
     "verification/triple-aaa-independent-critic-r11.md": "sha256:cab47847c1dee838bcb5b7b39913bbd15e59d193b730f3f59063ca7e1e7d2bc0",
     "verification/triple-aaa-independent-critic-r12.md": "sha256:7d7886bfc41289f02e745b959db15b361902f2f43ac5cc473541a437c91175ec",
@@ -523,7 +523,7 @@
     "verification/triple-aaa-independent-critic-r7.md": "sha256:88c388423e140a2bddf050c989a2041f01366efdd9351a73f15af999052d06b1",
     "verification/triple-aaa-independent-critic-r8.md": "sha256:bd62557ee0d0d1e11fef6239e6d0b9a3dfcfe69750bfe394ad9b59c3d9ffeb3e"
   },
-  "scope_sha256": "sha256:708020dcff51c36d48b13299a05f533762edc2713fcade2680fe10359218a30a",
+  "scope_sha256": "sha256:11dc6bcf1142f4f19c517f9443d3f5a3708dce86ecbd930fd480b3f7138be531",
   "mutation_sentinel": {
     "path": ".gauntlet/bar.json",
     "content_hash": "sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80"
@@ -534,7 +534,7 @@
       "docs/triple-aaa-final-evidence-closure-r9.md": "sha256:b66eb8f9c51ef80b257353c4de798208303f61c5f80749242bed44f0aae49f5a",
       "docs/capability-matrix-r9.md": "sha256:47809edf14de3abbd619b19f3867ffb3f228539c6f50a3257aa61d45e8864cfd",
       "docs/triple-aaa-scorecard-r9.md": "sha256:46b64691354df57aad5215bd274c2b6f7285e4fe487e489d2ba4c97758d758be",
-      "verification/software-triple-aaa-r9.json": "sha256:2e7e8e9152797c7f41655e89409a25bc3b999485fb3afc5cec000d1509d46755",
+      "verification/software-triple-aaa-r9.json": "sha256:32fb5f146454f4787723cb207daed85f29ffda009d500ed77f991d50d2f5bcfc",
       "verification/docs-current-r9.json": "sha256:da336dff0c3cecfc4504c315df8257853627313a4a5481633f9274a8c2228f0d"
     },
     "exact_hash_bound_exclusions": {}

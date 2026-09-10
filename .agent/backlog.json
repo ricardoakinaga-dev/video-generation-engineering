@@ -232,9 +232,9 @@
     {
       "id": "VGE-TRIPLE-AAA-R9",
       "title": "Implement the evidence-closure Triple-AAA master prompt with a truthful release boundary",
-      "stage": "BUILD",
+      "stage": "AUDIT",
       "priority": "P0",
-    "status": "IN_PROGRESS",
+    "status": "BLOCKED",
       "origin": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt, part-2.txt and part-3.txt; user request 2026-09-09",
       "dependencies": [],
       "owner": "Codex",
@@ -251,11 +251,11 @@
         "tools/release_audit.py"
       ],
     "next_action": {
-      "id": "VGE-TRIPLE-AAA-R9:HANDOFF",
-      "kind": "COMMIT_PUSH",
-      "summary": "Commit and push the independently reviewed R9 candidate, then verify the remote tip and clean worktree",
-      "target": "Current worktree, R9 prompt/bar/plan, Skill contracts, tests, release audit and truthful production matrix",
-      "completion_signal": "Fresh final report, capability matrix, scorecard, critic, fingerprint, distribution audit and post-push remote verification exist; production blockers remain explicit"
+      "id": "VGE-TRIPLE-AAA-R9:PRODUCTION-EVIDENCE-BOUNDARY",
+      "kind": "WAIT",
+      "summary": "Obtain authorized production observations for the remaining Triple-AAA acceptance boundary",
+      "target": "LF-001/LF-002/LF-003, FLF modes, repair/re-anchor, second adapter and editorial acceptance",
+      "completion_signal": "Authorized runtime and editorial observations bind the remaining real artifacts, semantic/audio oracles, repairs, transitions and final acceptance records"
       }
     }
   ]
