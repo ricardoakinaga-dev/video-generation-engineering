@@ -9,7 +9,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / '.agents/skills/video-generation-engineering'
 sys.path.insert(0, str(SKILL / 'scripts'))
-from vge_core import ContractError, prepare, validate, compile_plan, duration_floor, ordered, negotiate, load, save
+from vge_core import (ContractError, compile_plan, duration_floor, load, negotiate, normalize_dialogue_line,
+                       ordered, prepare, save, validate)
 
 
 def treatment():
@@ -44,6 +45,17 @@ class PlanningTests(unittest.TestCase):
         self.assertEqual(self.t['scene_intent']['hard_constraints'], c['sections']['constraints']['hard'])
         self.assertEqual(self.t['scene_intent'], c['sections']['setting_and_time']['scene_intent'])
         self.assertEqual(self.t['scene_bible']['relationships'], c['sections']['subject_and_identity']['relationships'])
+
+    def test_compile_projects_occupancy_into_canonical_contradiction_gate(self):
+        t = copy.deepcopy(self.t)
+        t['scene_bible']['initial_state']['subject_courier']['right_hand'] = 'vehicle_van'
+        t['shots'][0]['state_changes'][0]['prior'] = 'vehicle_van'
+        t['shots'][0]['action_primitives'].insert(0, 'approach')
+        t['contact_graphs'][0]['phases'].insert(0, 'approach')
+        p = prepare(t)
+        self.assertEqual('PASS', p['validation']['status'])
+        with self.assertRaisesRegex(ContractError, 'Canonical state contradictions|already holds'):
+            compile_plan(p)
     def test_duration_boundaries(self):
         for value, count in [(0.1,1),(30,1),(30.01,2),(45,2),(45.01,5),(59.99,5),(60,7),(90,11),(120,11)]:
             with self.subTest(value=value): self.assertEqual(count,len(duration_floor(value)))
@@ -204,8 +216,48 @@ class PlanningTests(unittest.TestCase):
             'intention': 'reassure', 'delivery': 'quiet', 'emotion': 'focused',
             'gaze': 'listener', 'pause_policy': 'none', 'overlap_policy': 'none',
             'reaction_at_s': 2, 'visible_speech': False,
+            'listener_reaction': 'listener remains attentive and acknowledges the line',
+            'reaction_order': {'events': [
+                {'id': 'stimulus_1', 'stage': 'STIMULUS', 'start_s': 0.8, 'end_s': 0.9},
+                {'id': 'processing_1', 'stage': 'PROCESSING', 'start_s': 0.9, 'end_s': 1.0},
+                {'id': 'reaction_1', 'stage': 'REACTION', 'start_s': 1.2, 'end_s': 1.4},
+                {'id': 'response_1', 'stage': 'RESPONSE', 'start_s': 2.0, 'end_s': 2.2},
+            ]},
+            'voice_strategy': {'status': 'PROPOSED', 'reference': 'fixture_voice'},
+            'lip_sync_strategy': {'status': 'PROPOSED', 'path': 'fixture_lip_sync'},
         }]
         return treatment
+
+    def test_dialogue_contract_normalizes_aliases_and_rejects_implicit_fields(self):
+        line = copy.deepcopy(self.dialogue_treatment()['dialogue_timeline'][0])
+        line['dialogue_id'] = line.pop('id')
+        line['line'] = line.pop('text')
+        line['intent'] = line.pop('intention')
+        line['start'] = line.pop('start_s')
+        line['end'] = line.pop('end_s')
+        line['causality'] = line.pop('reaction_order')
+        line['voice_reference'] = 'fixture_voice'
+        line.pop('voice_strategy')
+        line['lip_sync_mode'] = 'FAILED'
+        line.pop('lip_sync_strategy')
+        normalized = normalize_dialogue_line(line, 'dialogue_alias')
+        self.assertEqual('line_1', normalized['id'])
+        self.assertEqual('Ready.', normalized['text'])
+        self.assertEqual('fixture_voice', normalized['voice_strategy']['reference'])
+        self.assertEqual('FAILED', normalized['lip_sync_strategy']['status'])
+        incomplete = copy.deepcopy(line)
+        incomplete.pop('listener_reaction')
+        with self.assertRaisesRegex(ContractError, 'listener_reaction'):
+            normalize_dialogue_line(incomplete, 'dialogue_incomplete')
+        empty_reaction = copy.deepcopy(line)
+        empty_reaction['listener_reaction'] = {}
+        with self.assertRaisesRegex(ContractError, 'listener_reaction'):
+            normalize_dialogue_line(empty_reaction, 'dialogue_empty_reaction')
+        early_response = copy.deepcopy(line)
+        early_response['causality']['events'][-1]['start_s'] = 1.5
+        early_response['causality']['events'][-1]['end_s'] = 1.8
+        with self.assertRaisesRegex(ContractError, 'response must follow line end'):
+            normalize_dialogue_line(early_response, 'dialogue_early_response')
 
     def route_ids(self, plan):
         return {item['id'] for item in plan['reference_route']['required_references']}

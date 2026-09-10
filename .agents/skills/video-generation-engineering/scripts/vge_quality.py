@@ -15,8 +15,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from vge_core import (
-    ContractError, canonical, digest, file_hash, indexed, number, require, repair_scope,
-    validate_canonical_state,
+    ContractError, DIALOGUE_STRATEGY_STATUSES, canonical, digest, file_hash, indexed, number,
+    normalize_dialogue_line, require, repair_scope, validate_canonical_state,
 )
 from vge_quality_common import aggregate_quality
 
@@ -1087,7 +1087,7 @@ def validate_dialogue_contract(dialogue):
     seen_line_ids = set()
     for index, line in enumerate(lines):
         label = f"dialogue.lines[{index}]"
-        _object(line, label)
+        line = normalize_dialogue_line(line, label)
         line_id = _alias_value(line, ("id", "dialogue_id"), f"{label}.id")
         _nonempty(line_id, f"{label}.id")
         require(line_id not in seen_line_ids, f"Duplicate dialogue line id: {line_id}")
@@ -1122,12 +1122,14 @@ def validate_dialogue_contract(dialogue):
             if field in line and isinstance(line[field], str):
                 _nonempty(line[field], f"{label}.{field}")
         if "lip_sync_mode" in line:
-            require(line["lip_sync_mode"] in ("NATIVE_CONFIRMED", "EXTERNAL_CONFIRMED", "PARTIAL", "UNSUPPORTED", "UNKNOWN"),
+            require(line["lip_sync_mode"] in DIALOGUE_STRATEGY_STATUSES,
                     f"{label}.lip_sync_mode is invalid")
         if "listener_mouthing_explicit" in line:
             require(type(line["listener_mouthing_explicit"]) is bool, f"{label}.listener_mouthing_explicit must be boolean")
         mouthing = line.get("listener_mouthing", line.get("listener_articulation"))
-        sustained_mouthing = mouthing is True or (isinstance(mouthing, str) and mouthing.upper() in ("SUSTAINED", "FULL_LINE", "ACTIVE_SPEECH"))
+        sustained_mouthing = mouthing is True or (isinstance(mouthing, str) and mouthing.upper() in (
+            "SUSTAINED", "FULL_LINE", "ACTIVE_SPEECH", "MOUTHING", "MOUTHING_ACTIVE", "MOUTH"
+        ))
         require(not sustained_mouthing or line.get("listener_mouthing_explicit") is True,
                 f"{label}: listener must not mouth the active speaker line without explicit scripting")
         channels = _object(line.get("channels"), f"{label}.channels")

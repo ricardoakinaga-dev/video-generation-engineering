@@ -9,7 +9,7 @@ This is the current, claim-scoped matrix for `VGE-TRIPLE-AAA-R9-EVIDENCE-CLOSURE
 | Shot Graph | PROVEN | NOT_RUN | PROVEN | PARTIAL | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | Ordered dependencies and state deltas are represented; no dependent production chain is closed. |
 | Continuity state | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L2 `RUNTIME_EXECUTED` | PARTIAL | LF-001 runtime records exist, but S03 drift and T02 failure remain. |
 | Reference Retention | PROVEN | PARTIAL | PARTIAL | PARTIAL | BLOCKED | L2 `RUNTIME_EXECUTED` | PARTIAL | R2V/I2V records and inventory exist; reference identity/retention is not accepted. |
-| Canonical Contradiction Gate | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | State, ownership, door, motion and action contradictions fail before compilation. |
+| Canonical Contradiction Gate | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | State, ownership, door, motion and approach-held-target contradictions fail before compilation. |
 | Prompt Compiler | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | Density, truncation, canonical-state identity, loss and remapping contracts are explicit. |
 | Risk-Based Constraints | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | Vehicle, dialogue, audio and portrait risk families are selected by scene risk. |
 | H3 T2V | PROVEN | PROVEN | PROVEN | NOT_APPLICABLE | PARTIAL | L3 `ARTIFACT_OBSERVED` | PROVEN (scoped) | Local ComfyUI/workflow and hash-bound historical output are observed; semantics/editorial remain separate. |
@@ -18,7 +18,7 @@ This is the current, claim-scoped matrix for `VGE-TRIPLE-AAA-R9-EVIDENCE-CLOSURE
 | FLF `LAST_ONLY` | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | NOT_RUN | `flf-probe` can prepare the mode; no endpoint execution or artifact exists. |
 | FLF `FIRST_AND_LAST` | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | NOT_RUN | `flf-probe` can prepare the mode; no endpoint execution or artifact exists. |
 | Re-anchor | PROVEN | NOT_RUN | PROVEN | PARTIAL | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | PARTIAL | Decision and route exist; no authorized new generation or accepted downstream revalidation exists. |
-| Dialogue | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Channel contract exists; no real line-level semantic artifact/review. |
+| Dialogue | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Canonical speaker/listener, reaction, causal-order and voice/lip strategy declarations are enforced; no real line-level semantic artifact/review. |
 | Voice | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Actual audio-stream binding is enforced; no authorized voice artifact or listening review. |
 | Lip-sync | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Visible speech requires paired face-frame/audio evidence; no sync observation exists. |
 | Audio | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Timeline and stream checks are strict; no accepted dialogue/mix artifact exists. |

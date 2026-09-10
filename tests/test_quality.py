@@ -762,7 +762,7 @@ class QualityContractTests(unittest.TestCase):
                     for channel in channel_oracles}
         channels["voice"]["audio_ref"] = str(QUALITY_ARTIFACT)
         channels["lip_sync"]["paired_evidence"] = evidence() + audio_evidence()
-        dialogue = {"schema_version": 1, "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH, "provenance": quality_provenance("shot_1", "artifact_dialogue"), "lines": [{"id": "line_1", "shot_id": "shot_1", "speaker": "a", "listener": "b", "text": "Ready.", "start_s": 1, "end_s": 2, "intention": "warn", "delivery": "quiet", "emotion": "focused", "gaze": "listener", "pause_policy": "none", "overlap_policy": "none", "visible_speech": True, "channels": channels}]}
+        dialogue = {"schema_version": 1, "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH, "provenance": quality_provenance("shot_1", "artifact_dialogue"), "lines": [{"id": "line_1", "shot_id": "shot_1", "speaker": "a", "listener": "b", "text": "Ready.", "start_s": 1, "end_s": 2, "intention": "warn", "delivery": "quiet", "emotion": "focused", "gaze": "listener", "pause_policy": "none", "overlap_policy": "none", "listener_reaction": "listener remains attentive", "reaction_order": {"events": [{"id": "stimulus_1", "stage": "STIMULUS", "start_s": 0.5, "end_s": 0.8}, {"id": "processing_1", "stage": "PROCESSING", "start_s": 0.8, "end_s": 1.0}, {"id": "reaction_1", "stage": "REACTION", "start_s": 1.2, "end_s": 1.4}, {"id": "response_1", "stage": "RESPONSE", "start_s": 2.0, "end_s": 2.2}]}, "voice_strategy": {"status": "NATIVE_CONFIRMED", "reference": "fixture_voice"}, "lip_sync_strategy": {"status": "EXTERNAL_CONFIRMED", "path": "fixture_lip_sync"}, "visible_speech": True, "channels": channels}]}
         self.assertEqual("PASS", validate_dialogue_contract(dialogue)["status"])
         saved_dialogue_provenance = dialogue.pop("provenance")
         with self.assertRaisesRegex(ContractError, "dialogue.provenance"):
@@ -847,6 +847,21 @@ class QualityContractTests(unittest.TestCase):
         self.assertIn("OWNERSHIP_TRANSFER", {item["id"] for item in ownership["contradictions"]})
         motion = detect_canonical_contradictions({"vehicle": {"motion_state": "PARKED", "velocity_phase": "ACCELERATING"}})
         self.assertIn("VEHICLE_MOTION_STATE", {item["id"] for item in motion["contradictions"]})
+        held_target = detect_canonical_contradictions({
+            "subject": {"id": "subject_001", "hand_occupancy": {"right_hand": "object_001"}},
+            "interaction": {"actor": "subject_001", "target": "object_001", "phases": ["APPROACH"]},
+        })
+        self.assertIn("APPROACH_HELD_TARGET", {item["id"] for item in held_target["contradictions"]})
+        handoff = detect_canonical_contradictions({
+            "subject": {"id": "subject_001", "hand_occupancy": {"right_hand": "object_001"}},
+            "interaction": {"actor": "subject_002", "target": "object_001", "phases": ["APPROACH"]},
+        })
+        self.assertNotIn("APPROACH_HELD_TARGET", {item["id"] for item in handoff["contradictions"]})
+        different_effector = detect_canonical_contradictions({
+            "subject": {"id": "subject_001", "hand_occupancy": {"right_hand": "object_001"}},
+            "interaction": {"actor": "subject_001", "target": "object_001", "effector": "left_hand", "phases": ["APPROACH"]},
+        })
+        self.assertNotIn("APPROACH_HELD_TARGET", {item["id"] for item in different_effector["contradictions"]})
 
     def test_negative_constraints_are_scene_risk_scoped(self):
         scene = {
@@ -1030,7 +1045,12 @@ class QualityContractTests(unittest.TestCase):
                     "delivery": "quiet", "emotion": "focused", "start": 1, "end": 2,
                     "pause_before": 0.2, "pause_after": 0.2, "overlap_policy": "none", "gaze_target": "listener",
                     "pause_policy": "explicit",
-                    "voice_reference": "voice-a", "lip_sync_mode": "UNKNOWN", "channels": {
+                    "listener_reaction": "listener remains attentive", "causality": {"events": [
+                        {"id": "stimulus_alias", "stage": "STIMULUS", "start_s": 0.5, "end_s": 0.8},
+                        {"id": "processing_alias", "stage": "PROCESSING", "start_s": 0.8, "end_s": 1.0},
+                        {"id": "reaction_alias", "stage": "REACTION", "start_s": 1.2, "end_s": 1.4},
+                        {"id": "response_alias", "stage": "RESPONSE", "start_s": 2.0, "end_s": 2.2},
+                    ]}, "voice_reference": "voice-a", "lip_sync_mode": "UNKNOWN", "channels": {
                         channel: {"status": "UNKNOWN", "oracle": oracle("AUDIO" if channel in ("voice", "mix") else "FRAME"),
                                   "reason": "not run", "evidence": []}
                         for channel in ("semantics", "voice", "performance", "lip_sync", "mix")}}]}

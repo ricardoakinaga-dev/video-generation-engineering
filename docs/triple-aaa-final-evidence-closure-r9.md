@@ -15,7 +15,7 @@ The R9 implementation closes the demonstrated structural fail-open gaps and prov
 
 ## Frozen Candidate
 
-- Reviewer-independent freeze record: [`candidate-fingerprint-r9-freeze.json`](../verification/candidate-fingerprint-r9-freeze.json); final matching record: [`candidate-fingerprint-r9-final.json`](../verification/candidate-fingerprint-r9-final.json).
+- Candidate freeze record: [`candidate-fingerprint-r9-freeze.json`](../verification/candidate-fingerprint-r9-freeze.json); final matching record: [`candidate-fingerprint-r9-final.json`](../verification/candidate-fingerprint-r9-final.json). A fresh independent critic was attempted but did not return a reviewer-owned record in this handoff.
 - Candidate scope: 470 textual/source files plus the R9 distribution archive. The exact scope digest is recorded in the freeze/final fingerprint records; this report is itself in scope and intentionally does not duplicate a self-referential digest.
 - Mutation sentinel: `.gauntlet/bar.json`, `sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80` at freeze.
 - The scope excludes generated media/model-weight bytes and derivative/reviewer-owned R9 reports; their hash-bound records and release scans remain explicit. The distribution archive itself is included.
@@ -31,13 +31,15 @@ The supplied sources were read before implementation and recorded in the frozen 
 | `pasted-text-2.txt` | `7de047adb66fee247330629e2c5ed07b57d5b9d5739089468a4921a04ac9d1f3` | 1,192 | 18,546 |
 | `pasted-text-3.txt` | `311bbb58ad4ed8c2a60aee8539bd3f7a122ad7366361ab240f9233ecc19ebf65` | 448 | 7,993 |
 
-The pre-hardening baseline was 143 passing tests with no failures, errors or skips. The final applicable suite is 157 passing tests with no failures, errors or skips, recorded in [`software-triple-aaa-r9.json`](../verification/software-triple-aaa-r9.json). The baseline and R8 records remain historical; R8 is not reused after R9 changes.
+The pre-hardening baseline was 143 passing tests with no failures, errors or skips. The final applicable suite is 159 passing tests with no failures, errors or skips, recorded in [`software-triple-aaa-r9.json`](../verification/software-triple-aaa-r9.json). The baseline and R8 records remain historical; R8 is not reused after R9 changes.
 
 ## Changes Made
 
 - Required a non-empty canonical state for prompt adaptation and exposed its hash in adapter output and differential evidence.
 - Made adapter section loss explicit: every canonical section must be preserved or unsupported, and remapping requires source/target, semantic-preservation and preserved-field proof.
 - Strengthened canonical contradiction detection for door/entry, seating, motion-state and ownership-transfer conflicts; added audio to risk-scoped negative constraints.
+- Added a structured `APPROACH_HELD_TARGET` contradiction gate that projects Scene Bible hand occupancy/relationships into compilation, while preserving explicit transfer, release, reposition and distinct-effector exceptions.
+- Normalized dialogue aliases into one canonical contract and made listener reaction, timed `STIMULUS → PROCESSING → REACTION → RESPONSE`, voice strategy and lip-sync strategy explicit; incomplete authored dialogue remains diagnostic in planning and fails closed at compilation/quality validation.
 - Bound semantic evidence to the observed artifact and its exact content hash, including explicit source lineage for derived evidence.
 - Required claim-specific oracle families for first/last-frame, contact phases, dialogue/audio channels and transition semantic PASS.
 - Required distinct media bytes for a transition and added transition-contract consumption to repair scope planning.
@@ -48,7 +50,7 @@ The pre-hardening baseline was 143 passing tests with no failures, errors or ski
 - Required assembly segments to resolve to the declared shot artifact and execution attempt.
 - Added a hash-bound canonical bundle gate for future long-form production `PASS`: intent, plan, Scene Bible, shot graph, continuity and case evidence must share one case/scene/revision identity and an explicit record hash chain; mismatched canonical bundles are rejected before production acceptance.
 - Made quality CLI commands nonzero for `FAIL`, `FAILED`, `BLOCKED`, `UNKNOWN`, `PARTIAL`, `NOT_OBSERVED` and `NOT_RUN` states.
-- Fixed `tools/verify.py` discovery so the executable verification command runs the same complete 157-test suite as the documented direct command.
+- Fixed `tools/verify.py` discovery so the executable verification command runs the same complete 159-test suite as the documented direct command.
 - Added static local import-cycle detection and private-DNS rejection for provider image references.
 - Added [`tools/release_audit.py`](../tools/release_audit.py) for deterministic Skill packaging, ZIP/CRC/SHA checks, path/security scans, compileall and external-CWD smoke.
 - Added [`tools/candidate_fingerprint.py`](../tools/candidate_fingerprint.py) for a reproducible candidate scope and mutation sentinel.
@@ -71,13 +73,13 @@ The ownership boundaries remain cohesive: [`vge_core.py`](../.agents/skills/vide
 | Gate | Result | Evidence |
 |---|---|---|
 | Focused regression | PASS | Capture, collection, audio/editorial, FLF, case-envelope, repair-lineage, provider-DNS, release and import-cycle regressions pass. |
-| Complete no-bytecode suite | PASS | 157 tests, 0 failures, 0 errors, 0 skips. |
-| Executable offline verifier | PASS | `tools/verify.py`; 157 tests, 0 failures/errors/skips; package manifest `99d9a3aac36242ac9ec752033a8572c709fd193f7d260590118f4a2823fe4784`; static import-cycle audit PASS. |
+| Complete no-bytecode suite | PASS | 159 tests, 0 failures, 0 errors, 0 skips. |
+| Executable offline verifier | PASS | `tools/verify.py`; 159 tests, 0 failures/errors/skips; package manifest `93cf70d5a7a03201c1f7c78a25b4e2042f1041d3d153c366db1aad7bb1bd7509`; static import-cycle audit PASS. |
 | Skill package/link checks | PASS | 15 Skill-local links, manifest stable during verification. |
-| Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 546 local links, 80 requirements, no errors. |
+| Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 545 local links, 80 requirements, no errors. |
 | Release audit | PASS | [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json); 30 package files, deterministic archive, CRC/security/compile/external-CWD checks. |
 
-Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions, mismatched canonical bundle identity/hash chains, fixture production provenance, repair fake references/lineage, invalid audio evidence, manifest-only assembly, case-envelope gaps, import cycles and non-PASS CLI statuses.
+Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions including an actor approaching an object already held, incomplete dialogue declarations/causal order, mismatched canonical bundle identity/hash chains, fixture production provenance, repair fake references/lineage, invalid audio evidence, manifest-only assembly, case-envelope gaps, import cycles and non-PASS CLI statuses.
 
 ## Runtime Environment
 
@@ -122,7 +124,7 @@ The existing [`adapter-differential-r4.json`](../verification/adapter-differenti
 
 ## Prompt Compiler Findings
 
-The compiler now fails closed on canonical contradictions, empty canonical state, unclassified section loss, unsupported remapping proof, density overflow and missing canonical-state identity. Differential output includes the canonical state hash and explicit preservation/loss metadata. These changes establish compiler contract integrity; they do not establish model adherence to a prompt.
+The compiler now fails closed on canonical contradictions, including an actor approaching an object already held, empty canonical state, unclassified section loss, unsupported remapping proof, density overflow and missing canonical-state identity. Dialogue is compiled only after its canonical aliases, listener reaction, causal order and voice/lip-sync strategies normalize successfully. Differential output includes the canonical state hash and explicit preservation/loss metadata. These changes establish compiler contract integrity; they do not establish model adherence to a prompt.
 
 ## Semantic QA Findings
 
@@ -150,7 +152,7 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 |---|---|---|---|
 | R9-P0-01 Fresh baseline and prompt provenance | PROVEN | Frozen bar, prompt copies, source hashes, software/runtime/release records | Production records remain separately scoped. |
 | R9-P0-02 Truth-layer separation | PROVEN | Hash-bound validators, fixture boundary tests, current report | Semantic truth still needs real/oracle/human observation. |
-| R9-P0-03 Regression and harness gate | PROVEN | 157-test suite, `tools/verify.py`, release audit, docs audit | Production gates are not implied by offline PASS. |
+| R9-P0-03 Regression and harness gate | PROVEN | 159-test suite, `tools/verify.py`, release audit, docs audit | Production gates are not implied by offline PASS. |
 | R9-P0-04 Resource and side-effect safety | PROVEN | Runtime snapshot, queue untouched, runtime guard tests | No generation was authorized in this run. |
 | R9-P0-05 Immutable failures and artifacts | PROVEN | Attempt/artifact/observation lineage validators and preserved history | No repair artifact exists to validate. |
 | R9-P0-06 Oracle and canonical gates | PROVEN | Canonical contradiction/risk/semantic gates, hash-bound oracle mappings, canonical bundle identity and known-bad tests | Oracle execution itself is outside this structural package. |
@@ -162,19 +164,19 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 | R9-P5-01 LF-003 long form | BLOCKED | Structural ten-shot ladder and blocked case | No accepted 45–60 s production chain/editorial review. |
 | R9-P6-01 Second real adapter | BLOCKED | Differential record and explicit blocked runtime state | No authorized alternate runtime; no download. |
 | R9-P7-01 Architecture/disclosure | PROVEN | Skill structure, references, release scans and current audit | Maintainability remains subject to future observed changes. |
-| R9-P8-01 Fresh independent critic | PROVEN | Fresh non-inherited reviewer record recomputes the frozen candidate scope and mutation sentinel before/after and records a complete P0-P9 matrix | Its `INCOMPLETE` verdict correctly keeps audiovisual production unpromoted. |
-| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, final fingerprint, fresh critic and post-critic release audit bind the final accounting | Structural distribution is not production proof. |
+| R9-P8-01 Fresh independent critic | NOT_RUN | Fresh critic workers were attempted in non-inherited contexts but returned no reviewer-owned record; no independent PASS is claimed. | Repeat the critic gate before calling the package fully Triple-AAA audited. |
+| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, final fingerprint and release audit bind package accounting without a critic binding | Structural distribution is not production proof and does not close P8. |
 
 ## Independent Critic
 
-The previous Dirac review is retained as historical evidence. The final reviewer-owned record [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md) is fresh, non-inherited and read-only; it independently binds the frozen candidate scope and mutation sentinel, reports the P0-P9 matrix, and concludes `INCOMPLETE`. The post-critic release audit binds its exact bytes to the final fingerprint and distribution report. Its verdict does not promote audiovisual production.
+Fresh non-inherited critic workers were attempted with read-only scope, but the workers timed out before producing the reviewer-owned record. The prior critic record is not reused as current evidence because it binds an earlier candidate scope. Consequently P8 is explicitly `NOT_RUN`; the local software and distribution audits below are not presented as an independent critic verdict.
 
 ## Distribution
 
-The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json):
+The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited structurally by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json). It has no current critic binding because P8 was not completed:
 
-- package: 30 files; manifest `sha256:e4d2a6e884b1abf1c3613b3bc688e3dc82b82c446fa83bb0c74bba41bdf19c7b`;
-- archive: 143,451 bytes; SHA-256 `sha256:1a56038ca193daf7026c46301964389d1d91f204f7d53254cbd95818f1da2ed6`;
+- package: 30 files; manifest `sha256:8f3cd4b6f16586913dd10e0d4ced2341a0df4445d33f26c791345762ed7331e0`;
+- archive: 147,554 bytes; SHA-256 `sha256:3b851f398ad0cb522230b5fc4c4b63bce5b17969e5d62b8b7a637f0c5055b247`;
 - ZIP entries sorted/unique, CRC PASS, unsafe-path PASS;
 - secret-like values, model weights, private/generated media and absolute workspace paths: PASS;
 - Skill compileall and external-CWD `--help → prepare → validate → compile`: PASS.
@@ -200,7 +202,7 @@ Maturity is per capability, not inherited from a model or profile name. A lower-
 
 ## Quality Scores
 
-The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple-aaa-scorecard-r9.md). The scores are evidence-weighted indicators and deliberately do not average away the required P1–P6 blockers. The independent-review category is bounded by the fresh critic record and remains distinct from the `PARTIAL` production verdict.
+The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple-aaa-scorecard-r9.md). The scores are evidence-weighted indicators and deliberately do not average away the required P1–P6 blockers. The independent-review category remains `NOT_RUN` and distinct from the `PARTIAL` production verdict.
 
 ## Remaining Gaps
 
@@ -209,12 +211,12 @@ The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple
 - Produce and review LF-002 dialogue/audio/lip-sync evidence with separate channels and A/V timing.
 - Produce and review LF-003 45–60 second dependent multi-shot continuity with repair and editorial acceptance.
 - Execute the same canonical scene on an authorized second runtime, or preserve the explicit blocked record until one exists.
-- Maintain fresh independent review and distribution binding after any material candidate mutation.
+- Complete the fresh independent review and bind its exact record to the final fingerprint before calling the package fully Triple-AAA audited.
 
 ## Claims Now Supported
 
 - The three user-supplied prompts are preserved with source hashes and documented normalization.
-- The repository Skill has fail-closed canonical, provenance, semantic/oracle, transition, repair, adapter, audio, FLF-preparation, case-envelope and production-vs-fixture contract boundaries covered by 157 passing tests.
+- The repository Skill has fail-closed canonical, provenance, semantic/oracle, transition, repair, adapter, audio, FLF-preparation, dialogue, case-envelope and production-vs-fixture contract boundaries covered by 159 passing tests.
 - The offline verifier, deterministic portable package audit, security scans and external-CWD smoke pass for the current candidate.
 - The local ComfyUI runtime and bundled H3 R2V workflow were observed at the dated snapshot, with queue and side effects left untouched.
 - The package can be distributed as a reproducible Skill archive within the declared scope.
@@ -228,4 +230,4 @@ The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple
 
 ## Accounting and Handoff
 
-R9 is ready for Git handoff with an honest `PARTIAL` production verdict. Any future material code, evidence, runtime, distribution or report mutation must invalidate the current reviewer fingerprint and trigger a new freeze/critic cycle.
+R9 is ready for Git handoff with an honest `PARTIAL` production verdict and an explicit P8 review gap. Any future material code, evidence, runtime, distribution or report mutation must invalidate the current fingerprint and trigger a new freeze/critic cycle.
