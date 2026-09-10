@@ -46,6 +46,7 @@ The pre-hardening baseline was 143 passing tests with no failures, errors or ski
 - Sealed collected runtime attempts with immutable history snapshots, append-only collection events, exact output-entry manifests and pre-save attempt validation; added a case-level ordered execution envelope for shot/state/transition/assembly lineage.
 - Added explicit mode-specific FLF probe preparation, exact maturity levels (`DOCUMENTED` through `PRODUCTION_ACCEPTED`), reviewer authority/decision binding, and `parent_attempt_id` repair lineage requirements.
 - Required assembly segments to resolve to the declared shot artifact and execution attempt.
+- Added a hash-bound canonical bundle gate for future long-form production `PASS`: intent, plan, Scene Bible, shot graph, continuity and case evidence must share one case/scene/revision identity and an explicit record hash chain; mismatched canonical bundles are rejected before production acceptance.
 - Made quality CLI commands nonzero for `FAIL`, `FAILED`, `BLOCKED`, `UNKNOWN`, `PARTIAL`, `NOT_OBSERVED` and `NOT_RUN` states.
 - Fixed `tools/verify.py` discovery so the executable verification command runs the same complete 157-test suite as the documented direct command.
 - Added static local import-cycle detection and private-DNS rejection for provider image references.
@@ -71,12 +72,12 @@ The ownership boundaries remain cohesive: [`vge_core.py`](../.agents/skills/vide
 |---|---|---|
 | Focused regression | PASS | Capture, collection, audio/editorial, FLF, case-envelope, repair-lineage, provider-DNS, release and import-cycle regressions pass. |
 | Complete no-bytecode suite | PASS | 157 tests, 0 failures, 0 errors, 0 skips. |
-| Executable offline verifier | PASS | `tools/verify.py`; 157 tests, 0 failures/errors/skips; package manifest `10ad9af17dc1210f4d791ae9de61ee1ddfceb362f4faa4e694511f05d620dfd4`; static import-cycle audit PASS. |
+| Executable offline verifier | PASS | `tools/verify.py`; 157 tests, 0 failures/errors/skips; package manifest `99d9a3aac36242ac9ec752033a8572c709fd193f7d260590118f4a2823fe4784`; static import-cycle audit PASS. |
 | Skill package/link checks | PASS | 15 Skill-local links, manifest stable during verification. |
 | Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 546 local links, 80 requirements, no errors. |
 | Release audit | PASS | [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json); 30 package files, deterministic archive, CRC/security/compile/external-CWD checks. |
 
-Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions, fixture production provenance, repair fake references/lineage, invalid audio evidence, manifest-only assembly, case-envelope gaps, import cycles and non-PASS CLI statuses.
+Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions, mismatched canonical bundle identity/hash chains, fixture production provenance, repair fake references/lineage, invalid audio evidence, manifest-only assembly, case-envelope gaps, import cycles and non-PASS CLI statuses.
 
 ## Runtime Environment
 
@@ -152,9 +153,9 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 | R9-P0-03 Regression and harness gate | PROVEN | 157-test suite, `tools/verify.py`, release audit, docs audit | Production gates are not implied by offline PASS. |
 | R9-P0-04 Resource and side-effect safety | PROVEN | Runtime snapshot, queue untouched, runtime guard tests | No generation was authorized in this run. |
 | R9-P0-05 Immutable failures and artifacts | PROVEN | Attempt/artifact/observation lineage validators and preserved history | No repair artifact exists to validate. |
-| R9-P0-06 Oracle and canonical gates | PROVEN | Canonical, risk, semantic, FLF/contact/dialogue oracle mappings and known-bad tests | Oracle execution itself is outside this structural package. |
+| R9-P0-06 Oracle and canonical gates | PROVEN | Canonical contradiction/risk/semantic gates, hash-bound oracle mappings, canonical bundle identity and known-bad tests | Oracle execution itself is outside this structural package. |
 | R9-P0-07 Compiler and adapter differential | PROVEN | Explicit loss/remapping/canonical hash contracts and tests | Alternate real adapter remains unavailable. |
-| R9-P1-01 LF-001 vehicle-entry closure | PARTIAL | LF-001 case, S01/S02 records, S03/T01/T02 and preview records | S03 semantic drift, T02 FAIL, no accepted final assembly/editorial review. |
+| R9-P1-01 LF-001 vehicle-entry closure | PARTIAL | LF-001 case, S01/S02 records, S03/T01/T02 and preview records; future production PASS now requires a shared canonical bundle chain | S03 semantic drift, T02 FAIL, no accepted final assembly/editorial review. |
 | R9-P2-01 Real repair and re-anchor | BLOCKED | Re-anchor decision and repair plan | No authorized new attempt, before/after proof or reassembly. |
 | R9-P3-01 FLF evidence | NOT_RUN | FLF validator and not-run record | No endpoint probe for the three modes. |
 | R9-P4-01 LF-002 dialogue/audio | BLOCKED | Separate dialogue/audio contracts and blocked case | No real voice, audio, sync or listening evidence. |
@@ -172,8 +173,8 @@ The previous Dirac review is retained as historical evidence. The final reviewer
 
 The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json):
 
-- package: 30 files; manifest `sha256:e41a8f06d1bb6b646c2abcae45505c83e0b0306248a9715b76302a94d2e0b612`;
-- archive: 142,727 bytes; SHA-256 `sha256:da153d5a5092fe1174d80277ed6208a561e739e1016c3372407eda2d589483bf`;
+- package: 30 files; manifest `sha256:e4d2a6e884b1abf1c3613b3bc688e3dc82b82c446fa83bb0c74bba41bdf19c7b`;
+- archive: 143,451 bytes; SHA-256 `sha256:1a56038ca193daf7026c46301964389d1d91f204f7d53254cbd95818f1da2ed6`;
 - ZIP entries sorted/unique, CRC PASS, unsafe-path PASS;
 - secret-like values, model weights, private/generated media and absolute workspace paths: PASS;
 - Skill compileall and external-CWD `--help → prepare → validate → compile`: PASS.

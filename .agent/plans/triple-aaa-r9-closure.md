@@ -31,7 +31,7 @@ Implement the three user-supplied Triple-AAA Evidence Closure prompts against th
 
 1. [VGE-TRIPLE-AAA-R9:PRODUCTION-EVIDENCE-BOUNDARY] — obtain authorized runtime and editorial observations for the remaining real Triple-AAA acceptance boundary. **BLOCKED — external authority and production evidence required.**
 2. [VGE-TRIPLE-AAA-R9:BASELINE-AUDIT] — complete the fresh baseline, reconcile current control state, and record the bar/candidate fingerprint before implementation. **DONE.**
-3. [VGE-TRIPLE-AAA-R9:CONTRACT-HARDENING] — implement only evidence-backed gaps in production acceptance, compiler differential, release packaging and their regressions. **DONE.**
+3. [VGE-TRIPLE-AAA-R9:CONTRACT-HARDENING] — implement only evidence-backed gaps in production acceptance, compiler differential, release packaging and their regressions. **DONE — includes the post-handoff canonical-bundle traceability hardening and its known-bad coverage.**
 4. [VGE-TRIPLE-AAA-R9:REPORTING] — update current capability/maturity/score/report artifacts with exact statuses, claims, blockers and rejected overengineering. **DONE.**
 5. [VGE-TRIPLE-AAA-R9:FULL-VERIFY] — rerun focused checks, full regression, compile, Skill validation, offline package checks, external-CWD smoke and scans. **DONE.**
 6. [VGE-TRIPLE-AAA-R9:FINAL-CRITIC] — freeze the candidate and obtain a fresh non-inherited read-only critic with a reviewer-owned fingerprint and mutation sentinel. **DONE.**
@@ -51,6 +51,7 @@ Keep canonical planning in `vge_core.py`, deterministic quality contracts in `vg
 ## Validation strategy
 
 - Focused: new known-bad tests for observation shot/attempt lineage, adapter canonical-state invariance, deterministic package scans/build and unsafe package members.
+- Current re-audit focus: long-form production `PASS` now requires one hash-bound case/scene/revision identity across all canonical planning references; mismatched bundle tests reject valid-but-unrelated records without touching runtime or media.
 - Regression: `PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 python3 -B -m unittest discover -s tests -v`; `PYTHONDONTWRITEBYTECODE=1 python3 -B tools/verify.py --output <new verification record>`.
 - Static/runtime-safe: compileall or equivalent no-bytecode syntax check, Skill doctor/quick validation, import DAG, docs/link checks, secret/credential/weight/private-media/absolute-path scans, external-CWD CLI help→prepare→validate→compile smoke.
 - Audiovisual: no new generation submission until a fresh explicit resource/authority boundary exists; current production remains evidence-scoped and cannot be promoted by structural changes.
@@ -77,3 +78,10 @@ Preserve current and historical R1–R8 artifacts. A runtime timeout remains tie
 ## Completion signal
 
 The integrated repository has the preserved prompts, frozen R9 bar, current evidence report/matrix/maturity/scorecard, complete regression evidence, a fresh critic result or an explicit blocked/incomplete record, and a distribution whose hashes match the frozen candidate. Production claims remain limited to observed artifacts and valid oracles.
+
+## Post-handoff re-audit — 2026-09-10
+
+- An independent scout identified a real fail-open join in `_validate_long_form_production_evidence`: shared shot IDs did not prove that intent, plan, Scene Bible, shot graph, continuity and evidence belonged to one canonical revision.
+- `vge_quality.py` now requires the explicit `canonical_bundle` identity and content hash chain for a future production `PASS`; `tests/test_quality.py` covers aligned and mismatched case, scene, revision and manifest records.
+- Focused and full no-bytecode regression pass with 157 tests, zero failures/errors/skips; no runtime POST, queue mutation, provider call or production claim was added.
+- The candidate must be re-fingerprinted, independently re-criticized and redistributed before the next commit/push. The remaining production boundary is still the authorized LF/FLF/audio/editorial evidence gate.

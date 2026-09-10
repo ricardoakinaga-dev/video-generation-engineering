@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "candidate-fingerprint-r9",
   "status": "FROZEN",
-  "observed_at": "2026-09-10T02:19:16.364213+00:00",
+  "observed_at": "2026-09-10T02:49:33.109665+00:00",
   "scope_policy": {
     "included_roots": [
       ".agent",
@@ -66,7 +66,7 @@
     ".agent/plans/triple-aaa-r2-closure.md": "sha256:37fc5081a71d5d1a02a0a6314278b7cd7834e8021dc18b1dc60ef3d643abd2dd",
     ".agent/plans/triple-aaa-r3-closure.md": "sha256:50234ce3f78085a8d2bdb45aa1fa48db6f98df25f9bb8b22c49f6f49035485c6",
     ".agent/plans/triple-aaa-r4-closure.md": "sha256:809f714c8f804be87b8a6a47048daf1abebc9713b6cc9f9722e8d91f9d310c45",
-    ".agent/plans/triple-aaa-r9-closure.md": "sha256:d92a1cc0aa0b11bd71e7ae568f0ed73c2f92a6eef3986c5b2316275b5b876ac3",
+    ".agent/plans/triple-aaa-r9-closure.md": "sha256:e547e24caa08c51b20d5ff160c3aad589635d841a750a0e009acc2deb54caebd",
     ".agent/state.json": "sha256:ad00f6cfd06df1d9d989da6016579e749df33ba2430b37e0bcf0c1c057f165f9",
     ".agent/verification.jsonl": "sha256:82016c77ebc3c8562db0a9f8425674a05988ef06a34d2129f1e78e01a53ec3df",
     ".agents/skills/video-generation-engineering/SKILL.md": "sha256:bb240b13121965ee30e3a3d62c86a15b930e043b971a618c1a708105e1bf6afd",
@@ -96,10 +96,10 @@
     ".agents/skills/video-generation-engineering/scripts/vge_evidence.py": "sha256:25ca8d421eddbeff15ef91d6bcc47c53025c0cc398ef783adf62658c7c7bd28e",
     ".agents/skills/video-generation-engineering/scripts/vge_media.py": "sha256:55aa8c865f98b41b94ec7c3cd27dc4e3c0ed66c82ccd7baa171fbafe502f455f",
     ".agents/skills/video-generation-engineering/scripts/vge_provider.py": "sha256:628cc1fc151768eb014d6f6df214ec4075459e67d8190e702f6670d0dbaedbf5",
-    ".agents/skills/video-generation-engineering/scripts/vge_quality.py": "sha256:22f3c99333e3963e3f7f8a9e7ee0e03c2f3d0750ac10e29ec5eceb5892de8b68",
+    ".agents/skills/video-generation-engineering/scripts/vge_quality.py": "sha256:603b7c543ebd84d9b52f88eb375a200d19a162602d8f874f114bacbcab4aadd6",
     ".agents/skills/video-generation-engineering/scripts/vge_quality_common.py": "sha256:2dcd22a4c2d7662bc77937f54baf5f35a79a17da6569c9c84a278697f8a34d1a",
     ".agents/skills/video-generation-engineering/scripts/vge_runtime.py": "sha256:282fc1e5fba551345ca1c27f20f88d8be5e24cf7554df9b3eea5617fec0676ae",
-    "dist/video-generation-engineering-triple-aaa-r9.zip": "sha256:da153d5a5092fe1174d80277ed6208a561e739e1016c3372407eda2d589483bf",
+    "dist/video-generation-engineering-triple-aaa-r9.zip": "sha256:1a56038ca193daf7026c46301964389d1d91f204f7d53254cbd95818f1da2ed6",
     "docs/00-index.md": "sha256:489b1626faec1fd23086cb33aa406594613e1f3f8874feb6660c9d1f03102966",
     "docs/BLUEPRINT.md": "sha256:62c04a55fe991a8f094db47d661ab6fa70fbe20e26f0adbfda402eba78f6fc1d",
     "docs/README.md": "sha256:5b5234d385a3e0af89eea8074d6597291ee4f9938415d7629230b91923d35e2c",
@@ -152,7 +152,7 @@
     "docs/scene-and-continuity.md": "sha256:c2fd226bdebe6df3af7a1a649ad1831346d6523cbae373cd8a7087e16452f321",
     "docs/state-model.md": "sha256:4a722db59212663425d55bad202ac2cc2c6408ab308dac5ae2fc110c22c73129",
     "docs/traceability.md": "sha256:03737c68102b1f7f96abc743ba8ed4d8d22c0be2b3ffb08c55f817e15c62a41d",
-    "docs/triple-aaa-final-evidence-closure-r9.md": "sha256:9e48eed09c3220a208e5fff149f603ea615d4d16789c1980d5a0e4d8b897af2c",
+    "docs/triple-aaa-final-evidence-closure-r9.md": "sha256:77a1cd346eeba2542b3d27025d45f3fa064995c551d2dfc59cde2f3b072b586f",
     "docs/triple-aaa-final-production-closure-r4.md": "sha256:132827665e3a7741f57b9a62764c9f4aaa502227426e75d8ffdedfafdaffd488",
     "docs/triple-aaa-final-production-closure.md": "sha256:d42ce6aa9a61327544de470a4f02d9a9ef7ab4ef4459822886ce2097cea28195",
     "docs/triple-aaa-final-report.md": "sha256:1d94a0c15ef2ecac8991f1929ab1743df3865d64ceecbd378795a606dd4111c2",
@@ -170,7 +170,7 @@
     "tests/test_evidence_runtime_media.py": "sha256:162d157d25498fcee0d902d3ac2031e35e2eef08dd020abdd7c91949085b5d1a",
     "tests/test_extensions.py": "sha256:baa7c0018395767636bf12d371ccfbe1a53710b789e90bd82fc61a5894167190",
     "tests/test_planning.py": "sha256:ea6e0e2e57f4de1ee80410aaf3ab76a81be345932c598da7a719d7703d0b190f",
-    "tests/test_quality.py": "sha256:0c2a032ffbd20b14f504718e5bd37c215355c72c90c1540c92493d377ff3fb88",
+    "tests/test_quality.py": "sha256:63d1b305d05405b898591cf2c537bc91937b7e0546698cf7a936899421bcae1f",
     "tests/test_release_audit.py": "sha256:669fb362b6547d79f31341adcd549146ca93f4558503af596a9b7ef314651ceb",
     "tools/candidate_fingerprint.py": "sha256:b642bb681f8110cc2ba6ac931ef06b367ea90e0bf592a4b3e6797e65f69b4d57",
     "tools/release_audit.py": "sha256:adbc2378ded835bc3b39cd9c1c5436b337debf44372893041e2a7ae311b81c81",
@@ -224,7 +224,7 @@
     "verification/docs-current-r27.json": "sha256:e12b7b064ad4a3404e60bd78d6d5a9a5f08af46ede637524344187c176958515",
     "verification/docs-current-r28.json": "sha256:8da4896361f4056d0081e1926d9c586008511194550d1e60a2e4608b6360b832",
     "verification/docs-current-r29.json": "sha256:b5c8af505db97fd84482c9ac8b5707aff8a025b1a0133c5b4c5a97d783a0e843",
-    "verification/docs-current-r9.json": "sha256:da336dff0c3cecfc4504c315df8257853627313a4a5481633f9274a8c2228f0d",
+    "verification/docs-current-r9.json": "sha256:12b46b2ad907e9abb30f2c7b40a457be3f577c17072ac20a87645886ccf51ce4",
     "verification/docs-final.json": "sha256:bc1f6c189cc07c6f01e7a76384d05c4093a96f7d382c65c197303f28049357ef",
     "verification/forward-plan-example.json": "sha256:01a8f743888c3ef121ad80342ab3a1febbb4264da50e7cfc4ddbd4a536608131",
     "verification/forward-requests.json": "sha256:05174ee0968b7bb7d55f2d6782b5797be57111bc67ce6a635ed91fd408d91289",
@@ -506,7 +506,7 @@
     "verification/software-triple-aaa-r6.json": "sha256:c3b9881ee4f0f653c77c739f68ea28380cbac400d32ecb52482aba8d0e0f2696",
     "verification/software-triple-aaa-r7.json": "sha256:6e001a2053220ac55870aa60f6d18eb9f0dcf4ca879408d1d497d4c5fe22fe54",
     "verification/software-triple-aaa-r8.json": "sha256:c3abcfe438912970f00aa8c9233dc9a877e021c6cfe788882c6715b9f23c6e2c",
-    "verification/software-triple-aaa-r9.json": "sha256:bf6010a735f9e490a0be82644821a3f96c860b5571f30207e658525d04453c4f",
+    "verification/software-triple-aaa-r9.json": "sha256:35db25f8e71b5051d9058710a76b2f98c453bdc6146189b6dcae7247c28223ed",
     "verification/triple-aaa-independent-critic-r10.md": "sha256:2288e73096632cec9c6bec9574f7d82ab288262930ec9bd692ad429f6c565350",
     "verification/triple-aaa-independent-critic-r11.md": "sha256:cab47847c1dee838bcb5b7b39913bbd15e59d193b730f3f59063ca7e1e7d2bc0",
     "verification/triple-aaa-independent-critic-r12.md": "sha256:7d7886bfc41289f02e745b959db15b361902f2f43ac5cc473541a437c91175ec",
@@ -523,7 +523,7 @@
     "verification/triple-aaa-independent-critic-r7.md": "sha256:88c388423e140a2bddf050c989a2041f01366efdd9351a73f15af999052d06b1",
     "verification/triple-aaa-independent-critic-r8.md": "sha256:bd62557ee0d0d1e11fef6239e6d0b9a3dfcfe69750bfe394ad9b59c3d9ffeb3e"
   },
-  "scope_sha256": "sha256:96636171ef864612d0a49601d5c44dcd4f60b0b935185484114c973dad3670fe",
+  "scope_sha256": "sha256:7c9b4f57126605a61f52b9f3d526765af3c55aef7c94e5f88e846d548b922045",
   "mutation_sentinel": {
     "path": ".gauntlet/bar.json",
     "content_hash": "sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80"
@@ -531,11 +531,11 @@
   "release_critical_surfaces": {
     "policy": "Each release-critical claim surface is included in the candidate manifest. Post-freeze reviewer/distribution records are validated by release_audit after the candidate is frozen.",
     "in_scope": {
-      "docs/triple-aaa-final-evidence-closure-r9.md": "sha256:9e48eed09c3220a208e5fff149f603ea615d4d16789c1980d5a0e4d8b897af2c",
+      "docs/triple-aaa-final-evidence-closure-r9.md": "sha256:77a1cd346eeba2542b3d27025d45f3fa064995c551d2dfc59cde2f3b072b586f",
       "docs/capability-matrix-r9.md": "sha256:47809edf14de3abbd619b19f3867ffb3f228539c6f50a3257aa61d45e8864cfd",
       "docs/triple-aaa-scorecard-r9.md": "sha256:46b64691354df57aad5215bd274c2b6f7285e4fe487e489d2ba4c97758d758be",
-      "verification/software-triple-aaa-r9.json": "sha256:bf6010a735f9e490a0be82644821a3f96c860b5571f30207e658525d04453c4f",
-      "verification/docs-current-r9.json": "sha256:da336dff0c3cecfc4504c315df8257853627313a4a5481633f9274a8c2228f0d"
+      "verification/software-triple-aaa-r9.json": "sha256:35db25f8e71b5051d9058710a76b2f98c453bdc6146189b6dcae7247c28223ed",
+      "verification/docs-current-r9.json": "sha256:12b46b2ad907e9abb30f2c7b40a457be3f577c17072ac20a87645886ccf51ce4"
     },
     "exact_hash_bound_exclusions": {}
   },

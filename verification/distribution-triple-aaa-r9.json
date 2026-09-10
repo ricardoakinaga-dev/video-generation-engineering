@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "id": "distribution-triple-aaa-r9",
-  "observed_at": "2026-09-10T02:19:28.066374+00:00",
-  "completed_at": "2026-09-10T02:19:29.081283+00:00",
+  "observed_at": "2026-09-10T02:49:40.436144+00:00",
+  "completed_at": "2026-09-10T02:49:42.116119+00:00",
   "status": "PASS",
   "scope": "FRESH_DETERMINISTIC_PORTABLE_SKILL_DISTRIBUTION",
   "package_scope": ".agents/skills/video-generation-engineering",
-  "package_manifest_sha256": "sha256:e41a8f06d1bb6b646c2abcae45505c83e0b0306248a9715b76302a94d2e0b612",
+  "package_manifest_sha256": "sha256:e4d2a6e884b1abf1c3613b3bc688e3dc82b82c446fa83bb0c74bba41bdf19c7b",
   "package_file_count": 30,
   "package_files_sha256": {
     ".agents/skills/video-generation-engineering/SKILL.md": "sha256:bb240b13121965ee30e3a3d62c86a15b930e043b971a618c1a708105e1bf6afd",
@@ -36,15 +36,15 @@
     ".agents/skills/video-generation-engineering/scripts/vge_evidence.py": "sha256:25ca8d421eddbeff15ef91d6bcc47c53025c0cc398ef783adf62658c7c7bd28e",
     ".agents/skills/video-generation-engineering/scripts/vge_media.py": "sha256:55aa8c865f98b41b94ec7c3cd27dc4e3c0ed66c82ccd7baa171fbafe502f455f",
     ".agents/skills/video-generation-engineering/scripts/vge_provider.py": "sha256:628cc1fc151768eb014d6f6df214ec4075459e67d8190e702f6670d0dbaedbf5",
-    ".agents/skills/video-generation-engineering/scripts/vge_quality.py": "sha256:22f3c99333e3963e3f7f8a9e7ee0e03c2f3d0750ac10e29ec5eceb5892de8b68",
+    ".agents/skills/video-generation-engineering/scripts/vge_quality.py": "sha256:603b7c543ebd84d9b52f88eb375a200d19a162602d8f874f114bacbcab4aadd6",
     ".agents/skills/video-generation-engineering/scripts/vge_quality_common.py": "sha256:2dcd22a4c2d7662bc77937f54baf5f35a79a17da6569c9c84a278697f8a34d1a",
     ".agents/skills/video-generation-engineering/scripts/vge_runtime.py": "sha256:282fc1e5fba551345ca1c27f20f88d8be5e24cf7554df9b3eea5617fec0676ae"
   },
   "archive": {
     "status": "BUILT",
     "path": "dist/video-generation-engineering-triple-aaa-r9.zip",
-    "sha256": "sha256:da153d5a5092fe1174d80277ed6208a561e739e1016c3372407eda2d589483bf",
-    "bytes": 142727,
+    "sha256": "sha256:1a56038ca193daf7026c46301964389d1d91f204f7d53254cbd95818f1da2ed6",
+    "bytes": 143451,
     "entry_count": 30,
     "file_count": 30,
     "verification": {
@@ -61,25 +61,25 @@
     "working_directory": "temporary directory outside repository",
     "checks": [
       {
-        "command": "/usr/bin/python3 /tmp/vge-release-audit-5yfbhrbe/.agents/skills/video-generation-engineering/scripts/vge.py --help",
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-lg96yhxh/.agents/skills/video-generation-engineering/scripts/vge.py --help",
         "returncode": 0,
         "status": "PASS",
         "stderr": ""
       },
       {
-        "command": "/usr/bin/python3 /tmp/vge-release-audit-5yfbhrbe/.agents/skills/video-generation-engineering/scripts/vge.py prepare /tmp/vge-release-audit-5yfbhrbe/.agents/skills/video-generation-engineering/assets/templates/treatment.json --output /tmp/vge-release-audit-5yfbhrbe/prepared.json",
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-lg96yhxh/.agents/skills/video-generation-engineering/scripts/vge.py prepare /tmp/vge-release-audit-lg96yhxh/.agents/skills/video-generation-engineering/assets/templates/treatment.json --output /tmp/vge-release-audit-lg96yhxh/prepared.json",
         "returncode": 0,
         "status": "PASS",
         "stderr": ""
       },
       {
-        "command": "/usr/bin/python3 /tmp/vge-release-audit-5yfbhrbe/.agents/skills/video-generation-engineering/scripts/vge.py validate /tmp/vge-release-audit-5yfbhrbe/prepared.json",
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-lg96yhxh/.agents/skills/video-generation-engineering/scripts/vge.py validate /tmp/vge-release-audit-lg96yhxh/prepared.json",
         "returncode": 0,
         "status": "PASS",
         "stderr": ""
       },
       {
-        "command": "/usr/bin/python3 /tmp/vge-release-audit-5yfbhrbe/.agents/skills/video-generation-engineering/scripts/vge.py compile /tmp/vge-release-audit-5yfbhrbe/prepared.json",
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-lg96yhxh/.agents/skills/video-generation-engineering/scripts/vge.py compile /tmp/vge-release-audit-lg96yhxh/prepared.json",
         "returncode": 0,
         "status": "PASS",
         "stderr": ""
@@ -97,26 +97,26 @@
     "fingerprint": {
       "status": "PASS",
       "ref": "verification/candidate-fingerprint-r9-final.json",
-      "content_sha256": "sha256:3db1fb0b4faa91488de1e2a9b551d81a3aabc544b3e76a53a2122f8bfb64ab39",
+      "content_sha256": "sha256:48b6bb7f4464800d3168aa1599e82d420d4a18ea7852ab0db490bcdcf9d1101c",
       "errors": [],
-      "scope_sha256": "sha256:96636171ef864612d0a49601d5c44dcd4f60b0b935185484114c973dad3670fe",
+      "scope_sha256": "sha256:7c9b4f57126605a61f52b9f3d526765af3c55aef7c94e5f88e846d548b922045",
       "candidate_file_count": 470
     },
     "fingerprint_ref": "verification/candidate-fingerprint-r9-final.json",
-    "fingerprint_content_sha256": "sha256:3db1fb0b4faa91488de1e2a9b551d81a3aabc544b3e76a53a2122f8bfb64ab39",
-    "fingerprint_scope_sha256": "sha256:96636171ef864612d0a49601d5c44dcd4f60b0b935185484114c973dad3670fe",
+    "fingerprint_content_sha256": "sha256:48b6bb7f4464800d3168aa1599e82d420d4a18ea7852ab0db490bcdcf9d1101c",
+    "fingerprint_scope_sha256": "sha256:7c9b4f57126605a61f52b9f3d526765af3c55aef7c94e5f88e846d548b922045",
     "fingerprint_candidate_file_count": 470,
     "freeze": {
       "status": "PASS",
       "ref": "verification/candidate-fingerprint-r9-freeze.json",
-      "content_sha256": "sha256:f86f3a2d32f83531018e8c7b0cfc7b8572b00afe7e8a7d86ed2e4427646c13ff",
+      "content_sha256": "sha256:5e169e284451e95c52eccd67b18d53f4d5e03afbe2b9d74d7533a09bdc59f3f5",
       "errors": [],
-      "scope_sha256": "sha256:96636171ef864612d0a49601d5c44dcd4f60b0b935185484114c973dad3670fe",
+      "scope_sha256": "sha256:7c9b4f57126605a61f52b9f3d526765af3c55aef7c94e5f88e846d548b922045",
       "candidate_file_count": 470
     },
     "freeze_ref": "verification/candidate-fingerprint-r9-freeze.json",
-    "freeze_content_sha256": "sha256:f86f3a2d32f83531018e8c7b0cfc7b8572b00afe7e8a7d86ed2e4427646c13ff",
-    "freeze_scope_sha256": "sha256:96636171ef864612d0a49601d5c44dcd4f60b0b935185484114c973dad3670fe",
+    "freeze_content_sha256": "sha256:5e169e284451e95c52eccd67b18d53f4d5e03afbe2b9d74d7533a09bdc59f3f5",
+    "freeze_scope_sha256": "sha256:7c9b4f57126605a61f52b9f3d526765af3c55aef7c94e5f88e846d548b922045",
     "freeze_final_scope": {
       "status": "PASS",
       "differences": []
@@ -124,13 +124,13 @@
     "critic": {
       "status": "PASS",
       "ref": "verification/triple-aaa-independent-critic-r9.md",
-      "content_sha256": "sha256:350e30c5e8fded712ecb61c70977abde82f36fd5c7cbc47b1fad7c16eee9c9bf",
+      "content_sha256": "sha256:9ac1c7a03b91b07a8ed0d5ee0c0318e40537c2dd3d0a0e96ccf389a4e0f1a594",
       "errors": [],
-      "scope_sha256": "sha256:96636171ef864612d0a49601d5c44dcd4f60b0b935185484114c973dad3670fe",
+      "scope_sha256": "sha256:7c9b4f57126605a61f52b9f3d526765af3c55aef7c94e5f88e846d548b922045",
       "candidate_file_count": 470
     },
     "critic_ref": "verification/triple-aaa-independent-critic-r9.md",
-    "critic_content_sha256": "sha256:350e30c5e8fded712ecb61c70977abde82f36fd5c7cbc47b1fad7c16eee9c9bf"
+    "critic_content_sha256": "sha256:9ac1c7a03b91b07a8ed0d5ee0c0318e40537c2dd3d0a0e96ccf389a4e0f1a594"
   },
   "security": {
     "status": "PASS",

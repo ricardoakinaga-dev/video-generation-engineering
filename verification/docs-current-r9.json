@@ -1,32 +1,207 @@
 {
-  "schema_version": 1,
-  "id": "docs-current-r9",
-  "observed_at": "2026-09-10T01:20:21.124589+00:00",
-  "status": "PASS",
-  "scope": "CURRENT_DOCS_AND_PROMPT_COPY_AUDIT",
-  "files": 67,
-  "markdown_or_text_files": 62,
-  "fenced_code_blocks": 74,
-  "local_links_checked": 546,
-  "link_errors": [],
-  "prompt_parts_checked": 3,
-  "required_report_sections": 31,
-  "missing_report_sections": [],
-  "authoritative_markdown_audit": {
-    "checker": "audit-artifacts/docs-2026-09-08-r5/check_docs.py",
-    "documents": 55,
-    "yaml_blocks": 50,
-    "yaml_errors": [],
-    "local_markdown_links": 546,
-    "local_link_errors": [],
-    "requirements": 80,
-    "missing_traceability_ids": [],
-    "implicit_yaml_booleans": [],
-    "complete_profile_parity": true,
-    "collection_parity": true
+  "observed_at": "2026-09-10T02:44:28.471855+00:00",
+  "scope": "structural documentation inspection; no runtime or external source validation",
+  "python": "3.12.3",
+  "pyyaml": "6.0.1",
+  "documents": 55,
+  "yaml_blocks": 50,
+  "yaml_errors": [],
+  "local_markdown_links": 546,
+  "local_link_errors": [],
+  "requirements": 80,
+  "missing_traceability_ids": [],
+  "implicit_yaml_booleans": [],
+  "profile_comparison": {
+    "same_id_revision": true,
+    "contract_modes": [
+      "T2V",
+      "I2V",
+      "TI2V",
+      "FLF2V"
+    ],
+    "adapter_modes": [
+      "T2V",
+      "I2V",
+      "TI2V",
+      "FLF2V"
+    ],
+    "contract_limit_keys": [
+      "duration_s",
+      "frame_count",
+      "resolution",
+      "vram"
+    ],
+    "adapter_limit_keys": [
+      "duration_s",
+      "frame_count",
+      "resolution",
+      "vram"
+    ],
+    "contract_camera_keys": [
+      "status",
+      "syntax"
+    ],
+    "adapter_camera_keys": [
+      "status",
+      "syntax"
+    ]
   },
-  "limitations": [
-    "This audit verifies local references and documentation structure; it does not prove runtime or audiovisual claims.",
-    "Absolute source attachment paths are recorded in the frozen bar but are not package dependencies."
+  "prompt_view_omissions": {
+    "contract_has_top_level": true,
+    "adapter_has_top_level": true,
+    "adapter_nested_only": false
+  },
+  "observation_example": {
+    "aggregate": "PARTIAL",
+    "checks": [
+      "PARTIAL"
+    ]
+  },
+  "docs_sha256": {
+    "docs/00-index.md": "489b1626faec1fd23086cb33aa406594613e1f3f8874feb6660c9d1f03102966",
+    "docs/BLUEPRINT.md": "62c04a55fe991a8f094db47d661ab6fa70fbe20e26f0adbfda402eba78f6fc1d",
+    "docs/README.md": "5b5234d385a3e0af89eea8074d6597291ee4f9938415d7629230b91923d35e2c",
+    "docs/acceptance.md": "4d84b55b020ce4d3d91c2f29a1c7b341e9c94eea1134e5b456902a6c5a29f686",
+    "docs/adr/ADR-001-documentation-first.md": "38834b4ed785f2ea9913516690e6cada352a39a4d8023aa640073fe572cf3acd",
+    "docs/adr/ADR-002-canonical-scene-model.md": "015f39d9fa849b05ef766c13fd476d4f3212ec1044592acf1e48adff649b730e",
+    "docs/adr/ADR-003-model-agnostic-adapters.md": "c9663b78210dc725f86aa39e5858c3bb99f515776b123cf90472e788d861646d",
+    "docs/adr/ADR-004-continuity-state-and-shot-graph.md": "dc49525ec2666378ae15cf45b9d3e08b59e118169001b7f288c5f9e863f5f3e8",
+    "docs/adr/ADR-005-prompt-compiler.md": "a2c7e135d71da31d25a0f1b2553c170910254124fb7623c69e65c66acd8f4535",
+    "docs/adr/ADR-006-long-form-decomposition.md": "8dae5a62ba1a04e22ac623e9fd7c27961dc19851aaef02efaa9023c56a804cf6",
+    "docs/adr/ADR-007-dialogue-audio-separation.md": "639e0bcf774a2e042631fe0edfa429495dbf2cb9137820cd9bb4d09f4c320a61",
+    "docs/adr/ADR-008-pattern-library.md": "00708e34f1ca48ff91663c1a2bbcf3ef39a7182c3561ba86915391a0c5897d93",
+    "docs/adr/ADR-009-instructions-vs-tools.md": "8c2e33c06938b8515de3e780dd4197dbde1e1bab3d00e28def40e6691c52adaf",
+    "docs/adr/ADR-010-production-skill-structure.md": "bdbb9d94d86d182f2085162bda301d0a9e1280568f4254e22843fbbc51e239b2",
+    "docs/adr/ADR-011-skill-implementation-and-evidence.md": "8609ee370de398dd81611ff4bd98a10408a16da357628b5e678590615d6302f4",
+    "docs/adr/ADR-012-triple-aaa-quality-boundary.md": "b2b8fe262786c3a08daf71808598b622234040e773a0e612aff166cdbf67eaf1",
+    "docs/adversarial-scenarios.md": "fa158d1ace968b98852c629ab2399a64d3db9b3f555ae4094ccbb4cc99f96f70",
+    "docs/architecture.md": "e4d394ce0fa46a6cbcbf4f06953c7a40c25ec1659383b2c35c88424746a95970",
+    "docs/capability-matrix-r1.md": "43c04417a2e846c77b372aa46bf3bc183b02ef658fe3d33d8fbfecb17c631d21",
+    "docs/capability-matrix-r3.md": "7ce1fee48dd0d31f2fd6897c51470d243f70af30a69ec6b11d9da4ed905be9f1",
+    "docs/capability-matrix-r4.md": "17ee7654481b6dce76af438f8ca8ba9ed8d1d6e1834be142714342a37fd7bd40",
+    "docs/capability-matrix-r9.md": "47809edf14de3abbd619b19f3867ffb3f228539c6f50a3257aa61d45e8864cfd",
+    "docs/comfyui-execution.md": "5a80bc4e8ee7ee9ee909cf11a847f39697641d8deeefde6216e2460219612512",
+    "docs/constraints.md": "dcfafdf52c601d235107cfd88be053e7029eb7a9e41fc935a2c48cf50fa6d29a",
+    "docs/continuity-engine.md": "54f88418b5dec1111a5e84c2be0b4f9e9a661bda62da58eee0cac59de0ec29e8",
+    "docs/contracts.md": "e3719cdfce715e2e8035f27b7663f4c82bc835dffa43307a6bd386890ad248c1",
+    "docs/directing.md": "73d609cce5c564d963d208a08c88f0a7d71dc7677e56cde3e24f5aa1ba97184d",
+    "docs/domain-model.md": "64f76ff60a7627945ef7d9d2de49f8ed6fe0ba59d916f2e83546382466599bda",
+    "docs/failure-and-evals.md": "f3ef1bceb014a427179e5a94995dc0752c1fcc41703f325e937d1ac791190126",
+    "docs/golden-scenarios.md": "4b9875e53f57472732ae4e037829f548c55a2d26d5f6cb73c690e10028393873",
+    "docs/long-form-validation.md": "33d292b7f469d906656986ef46d2c8eb153ac746114854c104be90f2113ec19d",
+    "docs/model-adaptation.md": "6581de1210a27e4d323b63cb55ff4622491d105b99459108435935c8f47e4119",
+    "docs/observability.md": "04c37b766b81797c9e05385d6ddff337986361df733d7b2e20c958fc29496377",
+    "docs/open-questions.md": "3c3482b4b09f761140c35a42ebde57b112e398cd8e84267e5119fcb5ab02820b",
+    "docs/pattern-library.md": "1c9ebf42ac82c63752b6a164153b82ff80cf981c4030dfc1a24d890aad0d6aa0",
+    "docs/phase-0-report.md": "3f8ae6fe34837d0bb7b6befda5ff071b928ca4f7cdf76f8ed0f593ab6314d239",
+    "docs/progressive-disclosure.md": "819ae406bc4318bd1c27c80888f3b4f8b1bd59489c5bbbd8b2885a69b397b1a5",
+    "docs/proposed-skill-structure.md": "27c50822a57a944a1ae0ee3eb6a7d34f34e816359f9970d575318f205c8a70f2",
+    "docs/requirements.md": "7e774249a943bbc819121b69ce8fe72d10f527c58315110fa6aba52b28490b74",
+    "docs/research.md": "710e937c7b4650e661998cac668e2f5834d5334ab629c74f541d5900e100b704",
+    "docs/roadmap.md": "24e0130342a1b7a023e7fda67d4452c7cdb6aadb4d45c95582d7c63cfaec5b35",
+    "docs/safety-boundaries.md": "e0eeb78104840582f0f69ad665c089172e6d7b8e5bb8f5032d964c9109855593",
+    "docs/scene-and-continuity.md": "c2fd226bdebe6df3af7a1a649ad1831346d6523cbae373cd8a7087e16452f321",
+    "docs/state-model.md": "4a722db59212663425d55bad202ac2cc2c6408ab308dac5ae2fc110c22c73129",
+    "docs/traceability.md": "03737c68102b1f7f96abc743ba8ed4d8d22c0be2b3ffb08c55f817e15c62a41d",
+    "docs/triple-aaa-final-evidence-closure-r9.md": "77a1cd346eeba2542b3d27025d45f3fa064995c551d2dfc59cde2f3b072b586f",
+    "docs/triple-aaa-final-production-closure-r4.md": "132827665e3a7741f57b9a62764c9f4aaa502227426e75d8ffdedfafdaffd488",
+    "docs/triple-aaa-final-production-closure.md": "d42ce6aa9a61327544de470a4f02d9a9ef7ab4ef4459822886ce2097cea28195",
+    "docs/triple-aaa-final-report.md": "1d94a0c15ef2ecac8991f1929ab1743df3865d64ceecbd378795a606dd4111c2",
+    "docs/triple-aaa-scorecard-r3.md": "fb0e678bf04463bd5ed8615ef3ee9e434abaea25412bce4ffca397d8844d20ab",
+    "docs/triple-aaa-scorecard-r4.md": "f39707509497fb81e5d3a3c8674c1ca47dfcc40719c906a92e3748d19fe69fc0",
+    "docs/triple-aaa-scorecard-r9.md": "46b64691354df57aad5215bd274c2b6f7285e4fe487e489d2ba4c97758d758be",
+    "docs/triple-aaa-scorecard.md": "9f6e2cd8a08a02dce2c1f4f7cfb37bf708948323015b68f5ae251752a2e915f7",
+    "docs/triple-aaa-validation.md": "ef7ec3cf961066b036e6a7ebfc0a524200c28d442585bb3afaec9b814298f78b",
+    "docs/vision-and-scope.md": "51e132e5792c46c032d102ce551a26cee873d190a6add455d4f17b2cde609d2a"
+  },
+  "audit_revision": "r5",
+  "complete_profile_parity": true,
+  "collection_parity": true,
+  "provenance_case": {
+    "attempt_count": 2,
+    "artifact_count": 2,
+    "observation_count": 2,
+    "artifact_attempt_links_resolve": true,
+    "observation_links_and_hashes_match": true,
+    "distinct_output_hashes": 2,
+    "distinct_output_locators": 1
+  },
+  "repeated_attempt_fixture": {
+    "id": "attempt_shot_002_001",
+    "different_top_level_fields": [
+      "runtime"
+    ],
+    "canonical_inputs": [
+      {
+        "ref": "ref_mara_portrait",
+        "role": "identity_reference",
+        "content_hash": "sha256:73af5d7c92634021c9f26db097c0ecd91b36abefd3e58283b2a9741e4b7c469e"
+      },
+      {
+        "ref": "anchor:shot_004:last_frame",
+        "role": "temporal_anchor",
+        "content_hash": "sha256:73af5d7c92634021c9f26db097c0ecd91b36abefd3e58283b2a9741e4b7c469e"
+      }
+    ],
+    "execution_example_inputs": [
+      {
+        "ref": "ref_mara_portrait",
+        "role": "identity_reference",
+        "content_hash": "sha256:73af5d7c92634021c9f26db097c0ecd91b36abefd3e58283b2a9741e4b7c469e"
+      },
+      {
+        "ref": "anchor:shot_004:last_frame",
+        "role": "temporal_anchor",
+        "content_hash": "sha256:73af5d7c92634021c9f26db097c0ecd91b36abefd3e58283b2a9741e4b7c469e"
+      }
+    ]
+  },
+  "changes_since_r4": [
+    "docs/00-index.md",
+    "docs/README.md",
+    "docs/acceptance.md",
+    "docs/adr/ADR-001-documentation-first.md",
+    "docs/adr/ADR-002-canonical-scene-model.md",
+    "docs/adr/ADR-003-model-agnostic-adapters.md",
+    "docs/adr/ADR-004-continuity-state-and-shot-graph.md",
+    "docs/adr/ADR-005-prompt-compiler.md",
+    "docs/adr/ADR-006-long-form-decomposition.md",
+    "docs/adr/ADR-007-dialogue-audio-separation.md",
+    "docs/adr/ADR-008-pattern-library.md",
+    "docs/adr/ADR-009-instructions-vs-tools.md",
+    "docs/adr/ADR-010-production-skill-structure.md",
+    "docs/adr/ADR-011-skill-implementation-and-evidence.md",
+    "docs/adr/ADR-012-triple-aaa-quality-boundary.md",
+    "docs/architecture.md",
+    "docs/capability-matrix-r1.md",
+    "docs/capability-matrix-r3.md",
+    "docs/capability-matrix-r4.md",
+    "docs/capability-matrix-r9.md",
+    "docs/comfyui-execution.md",
+    "docs/contracts.md",
+    "docs/domain-model.md",
+    "docs/long-form-validation.md",
+    "docs/model-adaptation.md",
+    "docs/observability.md",
+    "docs/open-questions.md",
+    "docs/phase-0-report.md",
+    "docs/progressive-disclosure.md",
+    "docs/proposed-skill-structure.md",
+    "docs/requirements.md",
+    "docs/roadmap.md",
+    "docs/safety-boundaries.md",
+    "docs/scene-and-continuity.md",
+    "docs/state-model.md",
+    "docs/traceability.md",
+    "docs/triple-aaa-final-evidence-closure-r9.md",
+    "docs/triple-aaa-final-production-closure-r4.md",
+    "docs/triple-aaa-final-production-closure.md",
+    "docs/triple-aaa-final-report.md",
+    "docs/triple-aaa-scorecard-r3.md",
+    "docs/triple-aaa-scorecard-r4.md",
+    "docs/triple-aaa-scorecard-r9.md",
+    "docs/triple-aaa-scorecard.md",
+    "docs/triple-aaa-validation.md",
+    "docs/vision-and-scope.md"
   ]
 }

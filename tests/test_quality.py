@@ -302,9 +302,17 @@ class QualityContractTests(unittest.TestCase):
 
         def build_case(factory, root):
             refs = {}
+            canonical_ref_names = [
+                ("intent_ref", "intent"), ("plan_ref", "plan"),
+                ("scene_bible_ref", "bible"), ("shot_graph_ref", "graph"),
+                ("continuity_ref", "continuity"), ("evidence_ref", "evidence"),
+                ("audio_timeline_ref", "audio"), ("repair_budget_ref", "repair"),
+                ("human_checkpoint_ref", "human"),
+            ]
             for name in ("intent", "plan", "bible", "graph", "continuity", "evidence", "audio", "repair", "human"):
                 path = root / f"{name}.json"
-                record = {"schema_version": 1, "id": name, "revision": 1}
+                record = {"schema_version": 1, "id": name, "revision": 1,
+                          "case_id": "LF-003", "scene_id": "scene-fixture"}
                 if name == "plan":
                     record["shots"] = [{"id": "shot_1"}, {"id": "shot_2"}]
                 if name in ("graph", "continuity"):
@@ -409,7 +417,7 @@ class QualityContractTests(unittest.TestCase):
             }
             assembly_path = root / "assembly.json"
             write_json(assembly_path, assembly)
-            return {
+            case = {
                 "schema_version": 1,
                 "id": "LF-003",
                 "target_duration_s": 45,
@@ -426,11 +434,73 @@ class QualityContractTests(unittest.TestCase):
                     "editorial_acceptance": file_ref(editorial_path),
                 },
             }
+            records = {
+                field: {"id": json.loads(Path(refs[name]["ref"]).read_text(encoding="utf-8"))["id"],
+                        "content_hash": refs[name]["content_hash"]}
+                for field, name in canonical_ref_names
+            }
+            manifest = [{"field": field, "record_id": records[field]["id"],
+                         "content_hash": records[field]["content_hash"]}
+                        for field, _ in canonical_ref_names]
+            bundle = {"case_id": "LF-003", "scene_id": "scene-fixture", "revision": 1,
+                      "records": records}
+            bundle["content_hash"] = digest({"case_id": bundle["case_id"],
+                                              "scene_id": bundle["scene_id"],
+                                              "revision": bundle["revision"],
+                                              "records": manifest})
+            case["canonical_bundle"] = bundle
+            return case
 
         with tempfile.TemporaryDirectory(prefix="vge-lf-semantic-contract-") as raw:
             root = Path(raw)
             valid = build_case(semantic_observation, root)
             self.assertEqual("PASS", validate_long_form_case(valid, base_dir=root)["status"])
+
+            canonical_ref_names = [
+                ("intent_ref", "intent"), ("plan_ref", "plan"),
+                ("scene_bible_ref", "bible"), ("shot_graph_ref", "graph"),
+                ("continuity_ref", "continuity"), ("evidence_ref", "evidence"),
+                ("audio_timeline_ref", "audio"), ("repair_budget_ref", "repair"),
+                ("human_checkpoint_ref", "human"),
+            ]
+
+            def refresh_canonical_bundle(candidate):
+                records = {}
+                for field, _ in canonical_ref_names:
+                    ref = candidate[field]
+                    path = Path(ref["ref"])
+                    record = json.loads(path.read_text(encoding="utf-8"))
+                    ref["content_hash"] = file_hash(path)
+                    records[field] = {"id": record["id"], "content_hash": ref["content_hash"]}
+                candidate["canonical_bundle"]["records"] = records
+                manifest = [{"field": field, "record_id": records[field]["id"],
+                             "content_hash": records[field]["content_hash"]}
+                            for field, _ in canonical_ref_names]
+                bundle = candidate["canonical_bundle"]
+                bundle["content_hash"] = digest({"case_id": bundle["case_id"],
+                                                   "scene_id": bundle["scene_id"],
+                                                   "revision": bundle["revision"],
+                                                   "records": manifest})
+
+            for field, record_key, mismatched_value, expected_error in (
+                ("intent_ref", "case_id", "LF-OTHER", "record.case_id"),
+                ("scene_bible_ref", "scene_id", "scene-other", "record.scene_id"),
+                ("plan_ref", "revision", 2, "record.revision"),
+            ):
+                mismatched = build_case(semantic_observation, root)
+                record_path = Path(mismatched[field]["ref"])
+                record = json.loads(record_path.read_text(encoding="utf-8"))
+                record[record_key] = mismatched_value
+                write_json(record_path, record)
+                refresh_canonical_bundle(mismatched)
+                with self.assertRaisesRegex(ContractError, expected_error):
+                    validate_long_form_case(mismatched, base_dir=root)
+
+            bundle_mismatch = build_case(semantic_observation, root)
+            bundle_mismatch["canonical_bundle"]["records"]["plan_ref"]["id"] = "wrong-plan"
+            with self.assertRaisesRegex(ContractError, "does not match the referenced record"):
+                validate_long_form_case(bundle_mismatch, base_dir=root)
+
             unsealed = build_case(semantic_observation, root)
             unsealed_attempt = Path(unsealed["production_evidence"]["attempts"][0]["ref"])
             unsealed_record = json.loads(unsealed_attempt.read_text(encoding="utf-8"))

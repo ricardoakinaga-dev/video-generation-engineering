@@ -2047,6 +2047,55 @@ def _normalize_cross_shot_comparison_paths(record, record_path, label):
     return normalized
 
 
+def _validate_long_form_canonical_bundle(case, canonical_records):
+    """Bind every canonical planning record to one case/scene/revision chain.
+
+    Shot IDs alone are not a sufficient join key: a caller could otherwise
+    combine a valid plan, scene bible, graph and continuity record from
+    different revisions or scenes and present the mixed set as one production
+    case.  The bundle manifest is deliberately explicit and hash-bound so a
+    future production ``PASS`` cannot rely on filename or ID coincidence.
+    """
+    label = "long_form_case.canonical_bundle"
+    bundle = _object(case.get("canonical_bundle"), label)
+    case_id = _nonempty(bundle.get("case_id"), f"{label}.case_id")
+    require(case_id == case.get("id"), f"{label}.case_id does not match long_form_case.id")
+    scene_id = _nonempty(bundle.get("scene_id"), f"{label}.scene_id")
+    revision = bundle.get("revision")
+    require(type(revision) is int and revision > 0, f"{label}.revision must be a positive integer")
+    declared_records = _object(bundle.get("records"), f"{label}.records")
+    require(set(declared_records) == set(canonical_records),
+            f"{label}.records must cover exactly the canonical reference fields")
+
+    manifest = []
+    for field, (path, record) in canonical_records.items():
+        record_label = f"{label}.records[{field}]"
+        require(record.get("case_id") == case_id,
+                f"{record_label} record.case_id does not match the canonical case")
+        require(record.get("scene_id") == scene_id,
+                f"{record_label} record.scene_id does not match the canonical scene")
+        require(record.get("revision") == revision,
+                f"{record_label} record.revision does not match the canonical revision")
+        declared = _object(declared_records.get(field), record_label)
+        require(declared.get("id") == record.get("id"),
+                f"{record_label}.id does not match the referenced record")
+        declared_hash = declared.get("content_hash")
+        _hash(declared_hash, f"{record_label}.content_hash")
+        observed_hash = file_hash(path)
+        require(declared_hash == observed_hash,
+                f"{record_label}.content_hash does not match the referenced record bytes")
+        manifest.append({"field": field, "record_id": record.get("id"), "content_hash": observed_hash})
+
+    expected_bundle_hash = digest({"case_id": case_id, "scene_id": scene_id,
+                                   "revision": revision, "records": manifest})
+    bundle_hash = bundle.get("content_hash")
+    _hash(bundle_hash, f"{label}.content_hash")
+    require(bundle_hash == expected_bundle_hash,
+            f"{label}.content_hash does not match the canonical record chain")
+    return {"case_id": case_id, "scene_id": scene_id, "revision": revision,
+            "content_hash": bundle_hash, "records": len(manifest)}
+
+
 def _validate_long_form_production_evidence(case, base_dir=None):
     """Fail closed: a long-form PASS must resolve its complete evidence graph."""
     production = _object(case.get("production_evidence"), "long_form_case.production_evidence")
@@ -2077,6 +2126,7 @@ def _validate_long_form_production_evidence(case, base_dir=None):
             case["repair_budget_ref"], "long_form_case.repair_budget_ref", base_dir)
         canonical["human_checkpoint_ref"] = _validate_long_form_canonical_ref(
             case["human_checkpoint_ref"], "long_form_case.human_checkpoint_ref", base_dir)
+    canonical_bundle = _validate_long_form_canonical_bundle(case, canonical)
     required_sets = ["attempts", "artifacts", "observations", "transitions"]
     resolved = {key: [] for key in required_sets}
     for key in required_sets:
@@ -2355,6 +2405,7 @@ def _validate_long_form_production_evidence(case, base_dir=None):
         "artifacts": len(production["artifacts"]),
         "observations": len(production["observations"]),
         "transitions": len(production["transitions"]),
+        "canonical_bundle": canonical_bundle,
         "assembly": True, "final_media_qa": True, "editorial_acceptance": True,
     }
 
