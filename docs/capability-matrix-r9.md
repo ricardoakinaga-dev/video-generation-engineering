@@ -4,36 +4,36 @@ This is the current, claim-scoped matrix for `VGE-TRIPLE-AAA-R9-EVIDENCE-CLOSURE
 
 | Capability | Structural | Runtime | Artifact | Multi-shot | Production | Maturity | Status | Blocker / boundary |
 |---|---|---|---|---|---|---|---|---|
-| Scene planning and canonical truth | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L4 structural | PROVEN | Canonical records and planning contracts are validated; no video claim follows. |
-| Scene Bible / Shot Graph / continuity state | PROVEN | NOT_RUN | PROVEN | PARTIAL | NOT_APPLICABLE | L4 structural | PROVEN | LF-001 graph exists; observed continuity remains partial. |
-| Canonical contradiction gate | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L4 structural | PROVEN | State, ownership, door and action contradictions fail before compilation. |
-| Prompt density and compiler | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L4 structural | PROVEN | Compression/truncation and loss declarations are structural. |
-| Adapter semantic differential | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L3 | PARTIAL | Canonical-state hash and explicit mapping proof exist; second real renderer is unavailable. |
-| Risk-scoped negative constraints | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L4 structural | PROVEN | Audio, vehicle, dialogue and portrait families are selected by declared scene risk. |
-| H3 T2V workflow graph | PROVEN | PROVEN | PROVEN | NOT_APPLICABLE | PARTIAL | L3 | PROVEN (scoped) | Local ComfyUI workflow and runtime identity were observed; semantics are not proven. |
-| H3 R2V / I2V | PROVEN | PARTIAL | PARTIAL | PARTIAL | BLOCKED | L2 | PARTIAL | Existing artifacts and runtime inventory do not close reference retention/identity observations. |
-| FLF `FIRST_ONLY` | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | NOT_RUN | No endpoint probe or artifact. |
-| FLF `LAST_ONLY` | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | NOT_RUN | No endpoint probe or artifact. |
-| FLF `FIRST_AND_LAST` | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | NOT_RUN | No endpoint probe or artifact. |
-| First/last-frame oracle mapping | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | NOT_RUN | Validator is present; no supported endpoint execution was authorized. |
-| Vehicle-entry causal chain | PROVEN | PROVEN (H3 T2V) | PARTIAL | PARTIAL | BLOCKED | L2 | PARTIAL | LF-001 has S01/S02 accepted records, S03 drift and a failed T02. |
-| Re-anchor decision | PROVEN | NOT_RUN | PROVEN | PARTIAL | BLOCKED | L2 | PARTIAL | Decision and route exist; no authorized new generation. |
-| Repair / revalidation | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L1 | BLOCKED | No immutable repaired attempt, before/after observation, transition revalidation and reassembly. |
-| Dialogue semantics | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | BLOCKED | LF-002 is a contract only; no line-level artifact/review. |
-| Voice identity and performance | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | BLOCKED | No authorized voice artifact or listening review. |
-| Lip-sync | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | BLOCKED | No audiovisual sync observation. |
-| Foley / ambience / mix | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | BLOCKED | Audio timeline is structural; no accepted mix. |
-| Interaction / causality / ownership | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L2 | PARTIAL | Contracts and known-bad cases pass structurally; real semantic observation is absent. |
-| Shot semantic QA | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L2 | PARTIAL | Hash/oracle/lineage rules are fail-closed; existing S03 observation is not accepted. |
-| Transition QA | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L2 | PARTIAL | T01 is partial and T02 fails; direct PASS requires semantic observations and distinct bytes. |
-| Mechanical media QA | PROVEN | PROVEN (local files) | PROVEN | PARTIAL | NOT_APPLICABLE | L4 mechanical | PROVEN (mechanical) | Readability, codec, timing and A/V checks do not prove identity, physics, story or editorial quality. |
-| Assembly / editorial acceptance | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L1 | PARTIAL | Preview assembly and technical checks exist; human editorial acceptance is not observed. |
-| LF-001, 15 s vehicle entry | PROVEN | PROVEN (scoped) | PARTIAL | PARTIAL | BLOCKED | L2 | PARTIAL | S03 drift, T02 failure, preview-only assembly and missing editorial closure. |
-| LF-002, 20–30 s dialogue | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | BLOCKED | No dialogue-capable profile/artifacts/reviews. |
-| LF-003, 45–60 s long form | PROVEN | NOT_RUN | NOT_RUN | NOT_RUN | BLOCKED | L1 | BLOCKED | No dependent 6–12-shot accepted production chain. |
-| LF-004 optional extension | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | NOT_APPLICABLE | L0 | NOT_APPLICABLE | Optional extension was not authorized or required for this run. |
-| Second real adapter | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 | BLOCKED | No authorized alternate runtime; no model download was performed. |
-| Portable Skill distribution | PROVEN | PROVEN (external-CWD smoke) | PROVEN | NOT_APPLICABLE | NOT_APPLICABLE | L4 | READY_WITH_RISKS | Package integrity and portability are covered separately from production semantics. |
+| Scene Planning | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | Canonical planning records are validated; no video claim follows. |
+| Scene Bible | PROVEN | NOT_RUN | PROVEN | PARTIAL | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | Required identity, environment, lighting, voice and drift fields are structural; observed continuity remains partial. |
+| Shot Graph | PROVEN | NOT_RUN | PROVEN | PARTIAL | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | Ordered dependencies and state deltas are represented; no dependent production chain is closed. |
+| Continuity state | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L2 `RUNTIME_EXECUTED` | PARTIAL | LF-001 runtime records exist, but S03 drift and T02 failure remain. |
+| Reference Retention | PROVEN | PARTIAL | PARTIAL | PARTIAL | BLOCKED | L2 `RUNTIME_EXECUTED` | PARTIAL | R2V/I2V records and inventory exist; reference identity/retention is not accepted. |
+| Canonical Contradiction Gate | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | State, ownership, door, motion and action contradictions fail before compilation. |
+| Prompt Compiler | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | Density, truncation, canonical-state identity, loss and remapping contracts are explicit. |
+| Risk-Based Constraints | PROVEN | NOT_RUN | PROVEN | PROVEN | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | PROVEN | Vehicle, dialogue, audio and portrait risk families are selected by scene risk. |
+| H3 T2V | PROVEN | PROVEN | PROVEN | NOT_APPLICABLE | PARTIAL | L3 `ARTIFACT_OBSERVED` | PROVEN (scoped) | Local ComfyUI/workflow and hash-bound historical output are observed; semantics/editorial remain separate. |
+| H3 R2V/I2V | PROVEN | PARTIAL | PARTIAL | PARTIAL | BLOCKED | L2 `RUNTIME_EXECUTED` | PARTIAL | Existing workflow/profile/artifacts do not close reference retention and identity observations. |
+| FLF `FIRST_ONLY` | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | NOT_RUN | `flf-probe` can prepare the mode; no endpoint execution or artifact exists. |
+| FLF `LAST_ONLY` | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | NOT_RUN | `flf-probe` can prepare the mode; no endpoint execution or artifact exists. |
+| FLF `FIRST_AND_LAST` | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | NOT_RUN | `flf-probe` can prepare the mode; no endpoint execution or artifact exists. |
+| Re-anchor | PROVEN | NOT_RUN | PROVEN | PARTIAL | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | PARTIAL | Decision and route exist; no authorized new generation or accepted downstream revalidation exists. |
+| Dialogue | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Channel contract exists; no real line-level semantic artifact/review. |
+| Voice | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Actual audio-stream binding is enforced; no authorized voice artifact or listening review. |
+| Lip-sync | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Visible speech requires paired face-frame/audio evidence; no sync observation exists. |
+| Audio | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Timeline and stream checks are strict; no accepted dialogue/mix artifact exists. |
+| Interaction | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L2 `RUNTIME_EXECUTED` | PARTIAL | Causality, contact, ownership and vehicle contracts pass structurally; semantic observation is incomplete. |
+| Vehicle Entry | PROVEN | PROVEN (H3 T2V) | PARTIAL | PARTIAL | BLOCKED | L3 `ARTIFACT_OBSERVED` | PARTIAL | S01/S02 records exist; S03 drift, T02 failure, repair and editorial closure remain. |
+| Semantic QA | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L2 `RUNTIME_EXECUTED` | PARTIAL | Hash/oracle/lineage rules are fail-closed; existing semantic evidence is not a production PASS. |
+| Transition QA | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L2 `RUNTIME_EXECUTED` | PARTIAL | T01 is partial and T02 fails; PASS needs distinct artifacts and semantic observations. |
+| Repair | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Distinct parent/new attempts, artifacts, before/after observations and affected transitions are required; no real repair ran. |
+| Assembly | PROVEN | NOT_RUN | PARTIAL | PARTIAL | BLOCKED | L3 `ARTIFACT_OBSERVED` | PARTIAL | Preview assembly and final-artifact lineage are validated; editorial acceptance is not observed. |
+| LF-001, 15 s vehicle entry | PROVEN | PROVEN (scoped) | PARTIAL | PARTIAL | BLOCKED | L3 `ARTIFACT_OBSERVED` | PARTIAL | S03 drift, T02 failure, preview-only assembly and missing editorial closure. |
+| LF-002, 20–30 s dialogue | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | No dialogue-capable production artifact, listening review or accepted sync evidence. |
+| LF-003, 45–60 s long form | PROVEN | NOT_RUN | NOT_RUN | NOT_RUN | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | Ordered case envelope exists as a recorder; no accepted dependent 6–12-shot production chain. |
+| LF-004 optional extension | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | NOT_APPLICABLE | L0 `DOCUMENTED` | NOT_APPLICABLE | Optional extension was not authorized or required for this run. |
+| Second Adapter | PROVEN | NOT_RUN | NOT_RUN | NOT_APPLICABLE | BLOCKED | L1 `STRUCTURALLY_VALIDATED` | BLOCKED | No authorized alternate runtime; no model download was performed. |
+| Portable Skill distribution | PROVEN | PROVEN (external-CWD smoke) | PROVEN | NOT_APPLICABLE | NOT_APPLICABLE | L1 `STRUCTURALLY_VALIDATED` | READY_WITH_RISKS | Package integrity and portability are covered separately from production semantics. |
 
 ## Interpretation
 

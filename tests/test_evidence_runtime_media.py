@@ -261,6 +261,15 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(submitted['attempt']['profile']['content_hash'], artifacts[0]['profile_content_hash'])
         self.assertEqual(submitted['attempt']['model']['asset_hash'], artifacts[0]['model_asset_hash'])
         self.assertEqual(submitted['attempt']['inputs'], artifacts[0]['input_hashes'])
+        completed_ref = Path(self.tmp.name) / 'artifacts' / (submitted['attempt']['id'] + '-completed.json')
+        completed = json.loads(completed_ref.read_text())
+        self.assertEqual('SUCCEEDED', completed['status'])
+        self.assertEqual('COLLECTED', completed['collection']['status'])
+        self.assertEqual(artifacts[0]['id'], completed['collection']['artifacts'][0]['id'])
+        self.assertTrue(Path(completed['collection']['history_ref']).is_file())
+        self.assertTrue(Path(completed['collection']['event_log_ref']).is_file())
+        events = [json.loads(line) for line in Path(completed['collection']['event_log_ref']).read_text().splitlines()]
+        self.assertEqual('COLLECTED', events[-1]['status'])
         self.assertTrue(submitted['attempt']['shot_contract_hash'].startswith('sha256:'))
         self.assertEqual(workflow_fingerprint(WORKFLOW,NODE_INFO),submitted['attempt']['workflow']['fingerprint'])
         self.assertEqual('cuda:0', submitted['attempt']['runtime']['selected_device'])
@@ -466,6 +475,10 @@ class MediaTests(unittest.TestCase):
         with self.assertRaises(ContractError):assemble(self.manifest,self.path/'bad.mp4',True)
 
     def test_strict_assembly_manifest_rejects_missing_duplicate_or_unbound_fields(self):
+        structural = validate_assembly_manifest(self.manifest)
+        self.assertEqual('PASS', structural['structural_status'])
+        self.assertEqual('NOT_RUN', structural['status'])
+        self.assertFalse(structural['accepted'])
         with self.assertRaisesRegex(ContractError,'shot_order'):
             validate_assembly_manifest({**self.manifest, 'shot_order': ['shot_1']})
         duplicate=copy.deepcopy(self.manifest)

@@ -1,6 +1,6 @@
 # Triple-AAA Evidence Closure R9 — state-of-the-art hardening
 
-<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R9:HANDOFF -->
+<!-- engineering-framework: active_action_id=VGE-TRIPLE-AAA-R9:FINAL-CRITIC-REFREEZE -->
 
 ## Purpose
 
@@ -16,9 +16,9 @@ Implement the three user-supplied Triple-AAA Evidence Closure prompts against th
 
 ## Current classification
 
-- Project: BROWNFIELD; work mode: FEATURE with audit/release review overlays; lifecycle: BUILD; activity: VERIFY; tier: T3_SYSTEM; risk: MEDIUM; blast radius: SYSTEM.
+- Project: BROWNFIELD; work mode: FEATURE with audit/release review overlays; lifecycle: VERIFY; activity: FINAL_CRITIC_REFREEZE; tier: T3_SYSTEM; risk: MEDIUM; blast radius: SYSTEM.
 - Authorization: local repository implementation and safe read-only runtime inspection. No new paid call, upload, publication, voice/likeness transfer, large model download or destructive queue mutation is authorized by this request.
-- Baseline: `tools/verify.py` PASS, 146 tests PASS, no failures/errors/skips, with current R9 prompt copies, structural hardening and release tooling recorded. Existing R8/R6 audiovisual boundary remains historical/current evidence to re-audit, not automatic PASS.
+- Baseline: `tools/verify.py` PASS, 157 tests PASS, no failures/errors/skips, with current R9 prompt copies, structural hardening and release tooling recorded. Existing R8/R6 audiovisual boundary remains historical/current evidence to re-audit, not automatic PASS.
 
 ## Quality bar and gates
 
@@ -33,8 +33,8 @@ Implement the three user-supplied Triple-AAA Evidence Closure prompts against th
 2. [VGE-TRIPLE-AAA-R9:CONTRACT-HARDENING] — implement only evidence-backed gaps in production acceptance, compiler differential, release packaging and their regressions. **DONE.**
 3. [VGE-TRIPLE-AAA-R9:REPORTING] — update current capability/maturity/score/report artifacts with exact statuses, claims, blockers and rejected overengineering. **DONE.**
 4. [VGE-TRIPLE-AAA-R9:FULL-VERIFY] — rerun focused checks, full regression, compile, Skill validation, offline package checks, external-CWD smoke and scans. **DONE.**
-5. [VGE-TRIPLE-AAA-R9:FINAL-CRITIC] — freeze the candidate and obtain a fresh non-inherited read-only critic with a reviewer-owned fingerprint and mutation sentinel. **DONE.**
-6. [VGE-TRIPLE-AAA-R9:DISTRIBUTION] — build and validate a new portable distribution from the frozen candidate and bind it to the critic/fingerprint. **DONE.**
+5. [VGE-TRIPLE-AAA-R9:FINAL-CRITIC] — freeze the candidate and obtain a fresh non-inherited read-only critic with a reviewer-owned fingerprint and mutation sentinel. **IN PROGRESS — re-freeze required after release-critical report update.**
+6. [VGE-TRIPLE-AAA-R9:DISTRIBUTION] — build and validate a new portable distribution from the frozen candidate and bind it to the critic/fingerprint. **PRELIMINARY PASS; FINAL BINDING PENDING.**
 7. [VGE-TRIPLE-AAA-R9:HANDOFF] — record the final verdict, preserve blockers, commit and push only the integrated verified candidate. **ACTIVE.**
 
 ## Architecture and ownership

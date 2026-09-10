@@ -1,17 +1,30 @@
 {
   "schema_version": 1,
   "id": "docs-current-r9",
-  "observed_at": "2026-09-09T23:28:00Z",
+  "observed_at": "2026-09-10T01:20:21.124589+00:00",
   "status": "PASS",
   "scope": "CURRENT_DOCS_AND_PROMPT_COPY_AUDIT",
   "files": 67,
   "markdown_or_text_files": 62,
-  "fenced_code_blocks": 76,
-  "local_links_checked": 545,
+  "fenced_code_blocks": 74,
+  "local_links_checked": 546,
   "link_errors": [],
   "prompt_parts_checked": 3,
   "required_report_sections": 31,
   "missing_report_sections": [],
+  "authoritative_markdown_audit": {
+    "checker": "audit-artifacts/docs-2026-09-08-r5/check_docs.py",
+    "documents": 55,
+    "yaml_blocks": 50,
+    "yaml_errors": [],
+    "local_markdown_links": 546,
+    "local_link_errors": [],
+    "requirements": 80,
+    "missing_traceability_ids": [],
+    "implicit_yaml_booleans": [],
+    "complete_profile_parity": true,
+    "collection_parity": true
+  },
   "limitations": [
     "This audit verifies local references and documentation structure; it does not prove runtime or audiovisual claims.",
     "Absolute source attachment paths are recorded in the frozen bar but are not package dependencies."

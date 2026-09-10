@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from test_planning import treatment, profile
 from test_evidence_runtime_media import evidence
@@ -46,6 +47,11 @@ class ProviderTests(unittest.TestCase):
     def test_no_silent_prompt_truncation(self):
         self.spec['prompt']='x'*2001
         with self.assertRaises(ContractError):hailuo_request(self.spec)
+    def test_image_url_dns_private_target_is_rejected(self):
+        self.spec['shot']['generation_mode']='I2V';self.spec['first_frame_image']='https://public.example/image.png'
+        with patch('vge_provider.socket.getaddrinfo', return_value=[('', '', '', '', ('127.0.0.1', 443))]):
+            with self.assertRaisesRegex(ContractError, 'globally routable'):
+                hailuo_request(self.spec)
     def test_unsupported_duration_resolution(self):
         self.spec['resolution']='1080P';self.spec['shot']['duration_s']=10
         with self.assertRaises(ContractError):hailuo_request(self.spec)

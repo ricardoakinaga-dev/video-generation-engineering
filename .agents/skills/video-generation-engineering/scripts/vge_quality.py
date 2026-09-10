@@ -76,12 +76,12 @@ REPAIR_OWNERS = (
     "dialogue", "audio", "performance", "human_review"
 )
 MATURITY_LEVELS = {
-    0: "INTENT_ONLY",
-    1: "STRUCTURAL_PLAN",
-    2: "DETERMINISTIC_VERIFICATION",
-    3: "RUNTIME_PROVENANCE",
-    4: "AUDIOVISUAL_EVALUATION",
-    5: "REPEATABLE_BOUNDED_PRODUCTION",
+    0: "DOCUMENTED",
+    1: "STRUCTURALLY_VALIDATED",
+    2: "RUNTIME_EXECUTED",
+    3: "ARTIFACT_OBSERVED",
+    4: "MULTI_SHOT_ACCEPTED",
+    5: "PRODUCTION_ACCEPTED",
 }
 
 
@@ -182,6 +182,34 @@ def _verify_evidence_bytes(evidence, label, required=False):
             continue
         if required:
             _verify_observed_bytes(item["ref"], item["content_hash"], f"{label}[{index}]", required=True)
+
+
+def _verify_audio_evidence(evidence, label):
+    """Require hash-bound bytes that actually contain an audio stream.
+
+    A textual filename or a video frame is not sufficient evidence for voice,
+    mix, dialogue, or an audio-timeline event.  The media probe is deliberately
+    mechanical; it establishes only that an audio stream exists, not that it is
+    intelligible, correctly mixed, or semantically appropriate.
+    """
+    evidence = _evidence(evidence, label, required=True)
+    audio_types = {"AUDIO", "AUDIO_WINDOW", "AUDIO_BYTES"}
+    from vge_media import probe
+    for index, item in enumerate(evidence):
+        require(item.get("type") in audio_types,
+                f"{label}[{index}] must be an audio evidence record")
+        _hash(item.get("content_hash"), f"{label}[{index}].content_hash")
+        _verify_observed_bytes(item["ref"], item["content_hash"],
+                               f"{label}[{index}]", required=True)
+        metadata = probe(item["ref"])
+        require(metadata.get("audio_streams"),
+                f"{label}[{index}] does not contain an audio stream")
+        if item.get("type") == "AUDIO_WINDOW":
+            require(number(item.get("duration_s"), True),
+                    f"{label}[{index}] audio window needs a positive duration")
+            require(number(item.get("time_s")) and item["time_s"] >= 0,
+                    f"{label}[{index}] audio window needs a nonnegative start")
+    return evidence
 
 
 def _quality_provenance(value, label, shot_id=None, artifact_id=None, artifact_ref=None, artifact_hash=None):
@@ -377,6 +405,10 @@ def validate_editorial_acceptance(acceptance, artifact=None, required_dimensions
     _timestamp(acceptance.get("observed_at"), "editorial_acceptance.observed_at")
     _nonempty(acceptance.get("procedure"), "editorial_acceptance.procedure")
     require(isinstance(acceptance.get("limitations", []), list), "editorial_acceptance.limitations must be an array")
+    reviewer = _object(acceptance.get("reviewer"), "editorial_acceptance.reviewer")
+    for field in ("id", "role", "authority", "attestation"):
+        _nonempty(reviewer.get(field), f"editorial_acceptance.reviewer.{field}")
+    _nonempty(acceptance.get("decision"), "editorial_acceptance.decision")
     dimensions = tuple(required_dimensions or EDITORIAL_DIMENSIONS)
     require(set(dimensions) <= set(EDITORIAL_DIMENSIONS), "Unknown editorial acceptance dimension")
     checks = _list(acceptance.get("checks"), "editorial_acceptance.checks", allow_empty=False)
@@ -398,6 +430,8 @@ def validate_editorial_acceptance(acceptance, artifact=None, required_dimensions
     require(not missing, "Missing editorial acceptance dimensions: " + ", ".join(missing))
     status = aggregate_quality([{"result": item["result"]} for item in checks])
     require(acceptance.get("status") == status, "Editorial acceptance aggregate is inconsistent")
+    require(acceptance.get("decision") == status,
+            "Editorial acceptance decision must match the observed aggregate")
     if artifact is not None:
         _object(artifact, "editorial artifact")
         _nonempty(artifact.get("artifact_ref"), "editorial artifact.artifact_ref")
@@ -761,7 +795,7 @@ def validate_first_last_frame(record):
     require(record.get("schema_version") == 1, "Unsupported first-last-frame schema")
     _nonempty(record.get("profile_id"), "first_last_frame.profile_id")
     _nonempty(record.get("shot_id"), "first_last_frame.shot_id")
-    require(record.get("capability_status") in ("CONFIRMED", "PARTIAL", "UNSUPPORTED", "UNKNOWN"), "Invalid first-last-frame capability_status")
+    require(record.get("capability_status") in ("CONFIRMED", "PARTIAL", "UNSUPPORTED", "UNKNOWN", "NOT_RUN"), "Invalid first-last-frame capability_status")
     _hash(record.get("workflow_hash"), "first_last_frame.workflow_hash")
     inputs = _object(record.get("inputs"), "first_last_frame.inputs")
     mode = record.get("mode", "FIRST_AND_LAST")
@@ -792,7 +826,8 @@ def validate_first_last_frame(record):
         if check["id"] in minimum_oracles and check["result"] in ("PASS", "FAIL", "PARTIAL"):
             require(check["oracle"]["kind"] in minimum_oracles[check["id"]],
                     f"first_last_frame.{check['id']} uses an oracle too weak for its claim")
-    require(any(check["oracle"]["kind"] in ("FRAME", "SEQUENCE", "MULTI_FRAME", "HUMAN") for check in checks), "First-last-frame probe cannot rely on node metadata alone")
+    if any(check["result"] in ("PASS", "FAIL", "PARTIAL") for check in checks):
+        require(any(check["oracle"]["kind"] in ("FRAME", "SEQUENCE", "MULTI_FRAME", "HUMAN") for check in checks), "First-last-frame probe cannot rely on node metadata alone")
     status = aggregate_quality(checks)
     observed = status in ("PASS", "FAIL", "PARTIAL")
     if observed:
@@ -808,11 +843,62 @@ def validate_first_last_frame(record):
         for index, check in enumerate(checks):
             if check["result"] in ("PASS", "FAIL", "PARTIAL"):
                 _verify_evidence_bytes(check["evidence"], f"first_last_frame.checks[{index}].evidence", required=True)
-    if record["capability_status"] in ("UNSUPPORTED", "UNKNOWN"):
+    if record["capability_status"] in ("UNSUPPORTED", "UNKNOWN", "NOT_RUN"):
         require(status != "PASS", "Unavailable first-last-frame capability cannot have PASS evidence")
     return {"status": record["capability_status"], "checks_status": status,
             "accepted": record["capability_status"] == "CONFIRMED" and status == "PASS",
             "limitations": list(record.get("limitations", []))}
+
+
+def prepare_first_last_frame_probe(spec):
+    """Create a non-executing FLF probe envelope without claiming capability.
+
+    This is the safe public preparation path.  It records the mode, endpoint,
+    model, parameters, workflow binding and exact reference hashes, then emits
+    explicit ``NOT_RUN`` checks.  Only a separately collected runtime attempt
+    may replace those checks and promote the capability through
+    :func:`validate_first_last_frame`.
+    """
+    _object(spec, "flf_probe")
+    require(spec.get("schema_version") == 1, "Unsupported FLF probe schema")
+    _nonempty(spec.get("probe_id"), "flf_probe.probe_id")
+    _nonempty(spec.get("profile_id"), "flf_probe.profile_id")
+    _nonempty(spec.get("shot_id"), "flf_probe.shot_id")
+    _nonempty(spec.get("endpoint"), "flf_probe.endpoint")
+    model = _object(spec.get("model"), "flf_probe.model")
+    _nonempty(model.get("id"), "flf_probe.model.id")
+    _nonempty(model.get("version"), "flf_probe.model.version")
+    _object(spec.get("parameters"), "flf_probe.parameters")
+    mode = spec.get("mode", "FIRST_AND_LAST")
+    require(mode in ("FIRST_ONLY", "LAST_ONLY", "FIRST_AND_LAST"), "Invalid FLF probe mode")
+    inputs = _object(spec.get("inputs"), "flf_probe.inputs")
+    required_inputs = {"FIRST_ONLY": ("first_frame",), "LAST_ONLY": ("last_frame",),
+                       "FIRST_AND_LAST": ("first_frame", "last_frame")}[mode]
+    for key in required_inputs:
+        item = _object(inputs.get(key), f"flf_probe.inputs.{key}")
+        _nonempty(item.get("ref"), f"flf_probe.inputs.{key}.ref")
+        _hash(item.get("content_hash"), f"flf_probe.inputs.{key}.content_hash")
+        _verify_observed_bytes(item["ref"], item["content_hash"], f"flf_probe.inputs.{key}", required=True)
+    record = {
+        "schema_version": 1, "probe_id": spec["probe_id"], "profile_id": spec["profile_id"],
+        "shot_id": spec["shot_id"], "mode": mode, "endpoint": spec["endpoint"],
+        "model": copy.deepcopy(model), "parameters": copy.deepcopy(spec["parameters"]),
+        "workflow_hash": spec.get("workflow_hash", digest(spec.get("workflow", {}))),
+        "inputs": copy.deepcopy(inputs), "capability_status": "NOT_RUN",
+        "execution": {"status": "NOT_RUN", "attempt_ref": None, "artifact_ref": None,
+                       "reason": "No authorized runtime generation was executed by this preparation command"},
+        "checks": [{"id": check_id, "category": "visual", "result": "NOT_RUN",
+                    "oracle": {"kind": "RUNTIME", "question": "Was the FLF endpoint behavior observed in a collected runtime artifact?", "version": "vge-flf-probe-preparation-1"},
+                    "confidence": "UNKNOWN", "evidence": [],
+                    "reason": "No runtime attempt or delivered artifact was observed",
+                    "limitations": ["Preparation is not capability evidence"]}
+                   for check_id in ("endpoint_identity", "motion_path", "object_state", "artifact_delivery")],
+        "limitations": ["This command prepares a bounded mode-specific probe and performs no generation POST",
+                        "Node metadata, workflow declarations and reference hashes cannot confirm FLF support"],
+    }
+    validation = validate_first_last_frame(record)
+    return {"status": "NOT_RUN", "accepted": False, "probe": record,
+            "validation": validation, "next_action": "Run one authorized mode-specific runtime attempt, collect its artifact, and replace NOT_RUN checks with hash-bound observations"}
 
 
 def validate_contact_phases(contact):
@@ -1061,12 +1147,32 @@ def validate_dialogue_contract(dialogue):
                         f"{label}.channels.{channel} uses an oracle too weak for its claim")
                 evidence = _evidence(entry.get("evidence"), f"{label}.channels.{channel}.evidence")
                 _verify_evidence_bytes(evidence, f"{label}.channels.{channel}.evidence", required=True)
+                if channel in ("voice", "mix") or (channel == "semantics" and entry["oracle"]["kind"] == "AUDIO"):
+                    _verify_audio_evidence(evidence, f"{label}.channels.{channel}.evidence")
             else:
                 _nonempty(entry.get("reason"), f"{label}.channels.{channel}.reason")
+        if line.get("visible_speech") is True and channels["lip_sync"]["status"] in ("PASS", "PARTIAL"):
+            paired = _evidence(channels["lip_sync"].get("paired_evidence"),
+                               f"{label}.channels.lip_sync.paired_evidence", required=True)
+            _verify_evidence_bytes(paired, f"{label}.channels.lip_sync.paired_evidence", required=True)
+            paired_types = {item.get("type") for item in paired}
+            require(paired_types & {"FRAME", "MULTI_FRAME", "FRAME_SEQUENCE", "CONTACT_SHEET"},
+                    f"{label}.channels.lip_sync.paired_evidence needs face/frame evidence")
+            require(paired_types & {"AUDIO", "AUDIO_WINDOW", "AUDIO_BYTES"},
+                    f"{label}.channels.lip_sync.paired_evidence needs audio evidence")
+            _verify_audio_evidence(
+                [item for item in paired if item.get("type") in {"AUDIO", "AUDIO_WINDOW", "AUDIO_BYTES"}],
+                f"{label}.channels.lip_sync.paired_evidence.audio")
         if line.get("visible_speech") is True:
             require(channels["lip_sync"]["status"] not in ("NOT_APPLICABLE",), f"{label}: visible speech needs a lip-sync channel")
             require(channels["voice"]["status"] not in ("NOT_APPLICABLE",), f"{label}: visible speech needs a voice channel")
             require(channels["voice"].get("audio_ref") or channels["voice"].get("evidence"), f"{label}: visible speech needs voice/audio evidence")
+            if channels["voice"].get("audio_ref"):
+                audio_ref = channels["voice"]["audio_ref"]
+                audio_refs = {item.get("ref") for item in channels["voice"].get("evidence", [])}
+                require(audio_ref in audio_refs or str(Path(audio_ref).resolve()) in {
+                    str(Path(ref).resolve()) for ref in audio_refs if isinstance(ref, str)
+                }, f"{label}.channels.voice.audio_ref is not bound to voice evidence")
     status = aggregate_quality([{"result": line["channels"][channel]["status"]} for line in lines for channel in ("semantics", "voice", "performance", "lip_sync", "mix")])
     if status in ("PASS", "FAIL", "PARTIAL"):
         _nonempty(dialogue.get("artifact_ref"), "dialogue.artifact_ref")
@@ -1092,6 +1198,7 @@ def validate_audio_timeline(timeline):
         return normalized
 
     explicit_scope = isinstance(timeline, dict)
+    artifact_duration = None
     if explicit_scope:
         events = _list(timeline.get("events"), "audio_timeline.events", allow_empty=False)
         required_layers = set(normalize_layers(timeline.get("required_layers", sorted(allowed)), "audio_timeline.required_layers"))
@@ -1103,6 +1210,11 @@ def validate_audio_timeline(timeline):
         _timestamp(timeline.get("observed_at"), "audio_timeline.observed_at")
         _nonempty(timeline.get("procedure"), "audio_timeline.procedure")
         _verify_observed_bytes(timeline["artifact_ref"], timeline["artifact_content_hash"], "audio timeline artifact", required=True)
+        _verify_audio_evidence([{"type": "AUDIO", "ref": timeline["artifact_ref"],
+                                "content_hash": timeline["artifact_content_hash"]}],
+                               "audio_timeline.artifact")
+        from vge_media import probe
+        artifact_duration = probe(timeline["artifact_ref"]).get("duration_s")
         _nonempty(timeline.get("shot_id"), "audio_timeline.shot_id")
     else:
         events = _list(timeline, "audio_timeline", allow_empty=False)
@@ -1116,12 +1228,16 @@ def validate_audio_timeline(timeline):
         layer = AUDIO_LAYER_ALIASES.get(item.get("layer"), item.get("layer"))
         require(layer in allowed, f"audio_timeline[{index}].layer is invalid")
         require(number(item.get("start_s")) and number(item.get("end_s")) and 0 <= item["start_s"] < item["end_s"], f"audio_timeline[{index}] interval is invalid")
+        if explicit_scope:
+            require(item["end_s"] <= artifact_duration + 0.02,
+                    f"audio_timeline[{index}] interval exceeds the bound artifact duration")
         _nonempty(item.get("cause"), f"audio_timeline[{index}].cause")
         _nonempty(item.get("source"), f"audio_timeline[{index}].source")
         if explicit_scope:
             _oracle(item.get("oracle"), f"audio_timeline[{index}].oracle")
             evidence = _evidence(item.get("evidence"), f"audio_timeline[{index}].evidence")
             _verify_evidence_bytes(evidence, f"audio_timeline[{index}].evidence", required=True)
+            _verify_audio_evidence(evidence, f"audio_timeline[{index}].evidence")
             require(item.get("priority") not in (None, ""), f"audio_timeline[{index}].priority is required")
             _nonempty(item.get("mix_role"), f"audio_timeline[{index}].mix_role")
     present = {AUDIO_LAYER_ALIASES.get(item["layer"], item["layer"]) for item in events}
@@ -1506,7 +1622,99 @@ def build_repair_plan(plan, changed_shot_ids, findings, budget):
             "limitations": ["Cost/runtime estimates are declarations until a runtime ledger is attached"]}
 
 
-def _validate_repair_ledger(ledger, budget, shot_id=None):
+def _validate_repair_lineage(lineage, required_pairs=None):
+    """Validate evidence for a real repair lineage and measured improvement."""
+    _object(lineage, "repair execution ledger.lineage")
+    required_pairs = set(required_pairs or [])
+
+    def record_ref(item, label):
+        path, record = _validate_long_form_file_ref(item, label)
+        return path, record
+
+    failed_attempt_path, failed_attempt = record_ref(lineage.get("failed_attempt"), "repair lineage.failed_attempt")
+    new_attempt_path, new_attempt = record_ref(lineage.get("new_attempt"), "repair lineage.new_attempt")
+    from vge_evidence import validate_attempt
+    validate_attempt(failed_attempt)
+    validate_attempt(new_attempt)
+    require(failed_attempt.get("id") != new_attempt.get("id"),
+            "Repair lineage requires distinct failed and new attempts")
+    require(failed_attempt.get("shot_id") == new_attempt.get("shot_id"),
+            "Repair lineage attempts must target the same shot")
+    require(new_attempt.get("parent_attempt_id") == failed_attempt.get("id"),
+            "Repair lineage new attempt must declare its failed parent_attempt_id")
+    require(new_attempt.get("status") == "SUCCEEDED" and new_attempt.get("purpose") == "GENERATION",
+            "Repair lineage new attempt must be a successful generation attempt")
+    _nonempty(lineage.get("failed_dimension"), "repair lineage.failed_dimension")
+
+    def artifact_ref(item, label, expected_attempt):
+        path, record = record_ref(item, label)
+        require(record.get("schema_version") == 1, f"{label} schema is unsupported")
+        _nonempty(record.get("id"), f"{label}.id")
+        _hash(record.get("content_hash"), f"{label}.content_hash")
+        require(record.get("execution_attempt_ref") == expected_attempt.get("id"),
+                f"{label} is not bound to its attempt")
+        media_path = _resolve_quality_path(record.get("artifact_ref"), f"{label}.artifact_ref", path.parent)
+        require(file_hash(media_path) == record["content_hash"], f"{label} media bytes changed")
+        return path, record, media_path
+
+    failed_artifact_path, failed_artifact, failed_media_path = artifact_ref(
+        lineage.get("failed_artifact"), "repair lineage.failed_artifact", failed_attempt)
+    new_artifact_path, new_artifact, new_media_path = artifact_ref(
+        lineage.get("new_artifact"), "repair lineage.new_artifact", new_attempt)
+    require(failed_artifact.get("id") != new_artifact.get("id"),
+            "Repair lineage requires distinct failed and new artifacts")
+    require(failed_artifact.get("content_hash") != new_artifact.get("content_hash"),
+            "Repair lineage requires new artifact bytes")
+
+    def observation_ref(item, label, expected_artifact, expected_media):
+        path, record = record_ref(item, label)
+        _nonempty(record.get("id"), f"{label}.id")
+        require(record.get("status") in ("FAIL", "PARTIAL", "PASS"), f"{label}.status is invalid")
+        _nonempty(record.get("artifact_id"), f"{label}.artifact_id")
+        require(record["artifact_id"] == expected_artifact.get("id"),
+                f"{label} is not bound to its artifact")
+        require(record.get("artifact_ref") == expected_artifact.get("artifact_ref"),
+                f"{label}.artifact_ref is not bound to its artifact")
+        require(record.get("observed_content_hash") == expected_artifact.get("content_hash"),
+                f"{label}.observed_content_hash is not bound to its artifact")
+        _hash(record.get("observed_content_hash"), f"{label}.observed_content_hash")
+        require(file_hash(expected_media) == record["observed_content_hash"], f"{label} media bytes changed")
+        return path, record
+
+    _, before = observation_ref(lineage.get("before_observation"), "repair lineage.before_observation",
+                                failed_artifact, failed_media_path)
+    _, after = observation_ref(lineage.get("after_observation"), "repair lineage.after_observation",
+                               new_artifact, new_media_path)
+    require(before["status"] in ("FAIL", "PARTIAL"),
+            "Repair lineage before_observation must expose a failed or partial result")
+    require(after["status"] == "PASS", "Repair lineage after_observation must be PASS")
+    improvement = _object(lineage.get("improvement"), "repair lineage.improvement")
+    require(improvement.get("dimension") == lineage.get("failed_dimension"),
+            "Repair lineage improvement dimension mismatch")
+    require(improvement.get("before") == before["status"] and improvement.get("after") == after["status"],
+            "Repair lineage improvement does not match before/after observations")
+    _nonempty(improvement.get("reason"), "repair lineage.improvement.reason")
+
+    transition_results = _list(lineage.get("adjacent_transition_results"),
+                               "repair lineage.adjacent_transition_results", allow_empty=not required_pairs)
+    seen_pairs = set()
+    for index, item in enumerate(transition_results):
+        label = f"repair lineage.adjacent_transition_results[{index}]"
+        _object(item, label)
+        pair = _nonempty(item.get("pair"), f"{label}.pair")
+        require(pair not in seen_pairs, f"Duplicate repair transition result: {pair}")
+        seen_pairs.add(pair)
+        require(item.get("status") == "PASS", f"{label}.status must be PASS")
+        evidence = _evidence(item.get("evidence"), f"{label}.evidence", required=True)
+        _verify_evidence_bytes(evidence, f"{label}.evidence", required=True)
+    require(required_pairs <= seen_pairs,
+            "Repair lineage does not revalidate every affected adjacent transition")
+    return {"status": "PASS", "failed_attempt": failed_attempt["id"], "new_attempt": new_attempt["id"],
+            "failed_artifact": failed_artifact["id"], "new_artifact": new_artifact["id"],
+            "improved_dimension": lineage["failed_dimension"], "transition_pairs": sorted(seen_pairs)}
+
+
+def _validate_repair_ledger(ledger, budget, shot_id=None, required_pairs=None):
     """Validate measured repair usage before calling a repair plan complete."""
     _object(ledger, "repair_plan.execution_ledger")
     require(ledger.get("schema_version") == 1, "Unsupported repair execution ledger schema")
@@ -1527,6 +1735,7 @@ def _validate_repair_ledger(ledger, budget, shot_id=None):
     if ledger["status"] == "COMPLETE":
         _timestamp(ledger.get("completed_at"), "repair execution ledger.completed_at")
         _quality_provenance(ledger.get("provenance"), "repair execution ledger.provenance", shot_id=shot_id)
+        _validate_repair_lineage(ledger.get("lineage"), required_pairs=required_pairs)
     return ledger
 
 
@@ -1596,7 +1805,9 @@ def validate_repair_plan(repair):
         status = "BLOCKED" if repair["status"] == "BLOCKED" else "PARTIAL"
         ledger_status = "NOT_RUN"
     else:
-        ledger_report = _validate_repair_ledger(ledger, repair["budget"], shot_id=changed[0])
+        ledger_report = _validate_repair_ledger(
+            ledger, repair["budget"], shot_id=changed[0],
+            required_pairs=revalidation.get("required_pairs", []) if isinstance(revalidation, dict) else [])
         ledger_status = ledger_report["status"]
         if ledger_status == "COMPLETE" and repair["status"] == "AUTHORIZED":
             status = "PASS" if revalidation_status in ("PASS", "NOT_REQUIRED") else "BLOCKED"
@@ -1674,6 +1885,125 @@ def _normalize_quality_record_paths(record, record_path, label):
                     if section.get(field):
                         section[field] = resolve(section[field], f"provenance.{owner}.{field}")
     return normalized
+
+
+def _validate_collection_envelope(attempt, attempt_path, label):
+    """Verify that a production attempt was sealed by the runtime collector.
+
+    A provider label and a copied media file are caller-authored fields.  The
+    production boundary therefore also requires the immutable history snapshot,
+    append-only event log, runtime output entries, and collected artifact-record
+    hashes emitted by :func:`vge_runtime.collect`.
+    """
+    collection = _object(attempt.get("collection"), label)
+    require(collection.get("schema_version") == 1, f"{label}.schema_version is unsupported")
+    require(collection.get("status") == "COLLECTED", f"{label}.status must be COLLECTED")
+    require(collection.get("collector") == "vge_runtime.collect", f"{label}.collector is not the runtime collector")
+    require(collection.get("prompt_id") == attempt.get("workflow", {}).get("queue_id"),
+            f"{label}.prompt_id is not bound to the attempt queue")
+    history_path = _resolve_quality_path(collection.get("history_ref"), f"{label}.history_ref", Path(attempt_path).parent)
+    _hash(collection.get("history_content_hash"), f"{label}.history_content_hash")
+    require(file_hash(history_path) == collection["history_content_hash"],
+            f"{label}.history_ref bytes changed")
+    try:
+        history = json.loads(history_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ContractError(f"{label}.history_ref is not readable JSON") from exc
+    _object(history, f"{label}.history")
+    require(history.get("status") == "SUCCEEDED" and history.get("prompt_id") == collection["prompt_id"],
+            f"{label}.history does not confirm the collected queue")
+    raw_history = _object(history.get("history"), f"{label}.history.history")
+    require(raw_history.get("status", {}).get("completed") is True
+            and raw_history.get("status", {}).get("status_str") == "success",
+            f"{label}.history does not confirm successful completion")
+    outputs = _object(raw_history.get("outputs"), f"{label}.history.history.outputs")
+    require(collection.get("history_output_hash") == digest(outputs),
+            f"{label}.history_output_hash does not match runtime outputs")
+    history_output_keys = set()
+    for node_id, node_outputs in outputs.items():
+        _object(node_outputs, f"{label}.history.history.outputs[{node_id}]")
+        for bucket in ("images", "gifs", "videos", "audio"):
+            entries = node_outputs.get(bucket, [])
+            require(isinstance(entries, list), f"{label}.history.history.outputs[{node_id}].{bucket} must be an array")
+            for output in entries:
+                _object(output, f"{label}.history.history.outputs[{node_id}].{bucket}")
+                name = output.get("filename")
+                _nonempty(name, f"{label}.history.history.outputs[{node_id}].{bucket}.filename")
+                folder = output.get("subfolder", "")
+                require(isinstance(folder, str), f"{label}.history.history.outputs[{node_id}].{bucket}.subfolder must be a string")
+                output_type = output.get("type", "output")
+                require(output_type in ("output", "temp"), f"{label}.history.history.outputs[{node_id}].{bucket}.type is invalid")
+                history_output_keys.add((str(node_id), bucket, name, folder, output_type))
+
+    event_path = _resolve_quality_path(collection.get("event_log_ref"), f"{label}.event_log_ref", Path(attempt_path).parent)
+    _hash(collection.get("event_log_content_hash"), f"{label}.event_log_content_hash")
+    require(file_hash(event_path) == collection["event_log_content_hash"], f"{label}.event_log_ref bytes changed")
+    try:
+        events = [json.loads(line) for line in event_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ContractError(f"{label}.event_log_ref is not valid JSONL") from exc
+    require(all(isinstance(event, dict) for event in events), f"{label}.event_log_ref contains a non-object event")
+    collected_events = [event for event in events if event.get("status") == "COLLECTED"]
+    require(len(collected_events) == 1, f"{label}.event_log_ref must contain one COLLECTED event")
+    collected_event = collected_events[0]
+    require(collected_event.get("attempt_id") == attempt.get("id")
+            and collected_event.get("queue_id") == collection["prompt_id"],
+            f"{label}.COLLECTED event is not bound to the attempt")
+    require(collected_event.get("history_content_hash") == collection["history_content_hash"],
+            f"{label}.COLLECTED event/history hash mismatch")
+
+    output_entries = _list(collection.get("output_entries"), f"{label}.output_entries", allow_empty=False)
+    artifacts = _list(collection.get("artifacts"), f"{label}.artifacts", allow_empty=False)
+    top_level_artifacts = _list(attempt.get("artifacts"), f"{label}.attempt.artifacts", allow_empty=False)
+    require(top_level_artifacts == artifacts,
+            f"{label}.attempt.artifacts must exactly mirror the collected artifact manifest")
+    artifact_ids = set()
+    artifact_by_id = {}
+    for index, item in enumerate(artifacts):
+        item_label = f"{label}.artifacts[{index}]"
+        _object(item, item_label)
+        _nonempty(item.get("id"), f"{item_label}.id")
+        require(item["id"] not in artifact_ids, f"Duplicate {label} artifact id: {item['id']}")
+        artifact_ids.add(item["id"])
+        record_path = _resolve_quality_path(item.get("record_ref"), f"{item_label}.record_ref", Path(attempt_path).parent)
+        _hash(item.get("record_content_hash"), f"{item_label}.record_content_hash")
+        require(file_hash(record_path) == item["record_content_hash"], f"{item_label}.record_ref bytes changed")
+        try:
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            raise ContractError(f"{item_label}.record_ref is not readable JSON") from exc
+        _object(record, f"{item_label}.record")
+        require(record.get("id") == item["id"] and record.get("execution_attempt_ref") == attempt.get("id"),
+                f"{item_label}.record is not bound to the attempt")
+        media_path = _resolve_quality_path(item.get("artifact_ref"), f"{item_label}.artifact_ref", record_path.parent)
+        _hash(item.get("content_hash"), f"{item_label}.content_hash")
+        require(record.get("artifact_ref") == item.get("artifact_ref")
+                and record.get("content_hash") == item.get("content_hash"),
+                f"{item_label} disagrees with its artifact record")
+        require(file_hash(media_path) == item["content_hash"], f"{item_label}.artifact_ref bytes changed")
+        artifact_by_id[item["id"]] = item
+    entry_ids = set()
+    for index, item in enumerate(output_entries):
+        item_label = f"{label}.output_entries[{index}]"
+        _object(item, item_label)
+        _nonempty(item.get("artifact_id"), f"{item_label}.artifact_id")
+        require(item["artifact_id"] in artifact_ids, f"{item_label} is not bound to a collected artifact")
+        require(item["artifact_id"] not in entry_ids, f"Duplicate {item_label}.artifact_id")
+        entry_ids.add(item["artifact_id"])
+        _hash(item.get("content_hash"), f"{item_label}.content_hash")
+        require(item["content_hash"] == artifact_by_id[item["artifact_id"]]["content_hash"],
+                f"{item_label}.content_hash disagrees with the collected artifact")
+        output_key = (str(item.get("node_id")), item.get("bucket"), item.get("filename"),
+                      item.get("subfolder", ""), item.get("type", "output"))
+        require(output_key in history_output_keys,
+                f"{item_label} is not present in the immutable runtime history")
+        history_output_keys.remove(output_key)
+    require(entry_ids == artifact_ids, f"{label}.output_entries do not cover every collected artifact")
+    require(not history_output_keys, f"{label}.output_entries omit runtime history outputs")
+    require(set(collected_event.get("artifact_ids", [])) == artifact_ids,
+            f"{label}.COLLECTED event does not cover every collected artifact")
+    return {"status": "PASS", "history_ref": str(history_path), "event_log_ref": str(event_path),
+            "artifact_count": len(artifacts)}
 
 
 def _normalize_scorecard_paths(record, record_path, label):
@@ -1772,6 +2102,7 @@ def _validate_long_form_production_evidence(case, base_dir=None):
                 f"production_evidence.attempts[{index}] placeholder runtime endpoint cannot prove production acceptance")
         require(record.get("purpose") == "GENERATION",
                 f"production_evidence.attempts[{index}] must be a generation attempt")
+        _validate_collection_envelope(record, path, f"production_evidence.attempts[{index}].collection")
         require(record["id"] not in attempt_ids, f"Duplicate production attempt id: {record['id']}")
         attempt_ids.add(record["id"])
         attempt_by_id[record["id"]] = record
@@ -1960,6 +2291,25 @@ def _validate_long_form_production_evidence(case, base_dir=None):
     require(transitioned_shot_pairs == set(zip(case_shot_ids, case_shot_ids[1:])),
             "Production evidence transitions do not cover every adjacent canonical shot pair")
 
+    final_semantic_path, final_semantic = _validate_long_form_file_ref(
+        production.get("final_semantic_observation"),
+        "production_evidence.final_semantic_observation", base_dir)
+    assembly_semantic = _object(assembly.get("semantic_observation"),
+                                "production_evidence.assembly.semantic_observation")
+    require(assembly_semantic.get("ref") == str(final_semantic_path),
+            "production_evidence.assembly semantic observation ref is not bound")
+    require(assembly_semantic.get("content_hash") == file_hash(final_semantic_path),
+            "production_evidence.assembly semantic observation hash is not bound")
+    final_semantic = _normalize_quality_record_paths(
+        final_semantic, final_semantic_path, "production_evidence.final_semantic_observation")
+    require(final_semantic.get("status") == "PASS",
+            "production_evidence.final_semantic_observation must be PASS")
+    require(final_semantic.get("artifact_ref") == str(final_path),
+            "production_evidence.final_semantic_observation artifact locator mismatch")
+    require(final_semantic.get("observed_content_hash") == final_binding["content_hash"],
+            "production_evidence.final_semantic_observation artifact hash mismatch")
+    validate_semantic_observation(final_semantic)
+
     assembly_for_validation = copy.deepcopy(assembly)
     for index, segment in enumerate(assembly_for_validation["segments"]):
         artifact = segment["artifact"]
@@ -2082,16 +2432,142 @@ def validate_long_form_case(case, base_dir=None):
             "production_evidence": evidence_summary}
 
 
+def validate_long_form_execution_envelope(envelope, base_dir=None):
+    """Validate the case-level recorder without executing or accepting media.
+
+    The envelope is the explicit join between a ladder case, ordered shots,
+    predecessor state, runtime attempts, artifacts, observations, transitions
+    and assembly.  It prevents a caller from presenting a bag of per-shot
+    files as a case result; the referenced records still need their respective
+    runtime and quality validators before the case can become production PASS.
+    """
+    _object(envelope, "long_form_execution_envelope")
+    require(envelope.get("schema_version") == 1, "Unsupported long-form execution envelope schema")
+    _nonempty(envelope.get("id"), "long_form_execution_envelope.id")
+    _nonempty(envelope.get("case_id"), "long_form_execution_envelope.case_id")
+    _nonempty(envelope.get("project_id"), "long_form_execution_envelope.project_id")
+    _nonempty(envelope.get("scene_id"), "long_form_execution_envelope.scene_id")
+    shot_order = _list(envelope.get("shot_order"), "long_form_execution_envelope.shot_order", allow_empty=False)
+    require(all(isinstance(item, str) and item for item in shot_order),
+            "long_form_execution_envelope.shot_order must contain nonempty ids")
+    require(len(shot_order) == len(set(shot_order)),
+            "long_form_execution_envelope.shot_order contains duplicate ids")
+    shots = _list(envelope.get("shots"), "long_form_execution_envelope.shots", allow_empty=False)
+    require(len(shots) == len(shot_order),
+            "long_form_execution_envelope.shots must cover shot_order exactly")
+    shot_by_id = {}
+
+    def validate_record_refs(values, label):
+        values = _list(values, label, allow_empty=False)
+        validated = []
+        for index, item in enumerate(values):
+            path, record = _validate_long_form_file_ref(item, f"{label}[{index}]", base_dir)
+            validated.append((path, record))
+        return validated
+
+    for index, shot in enumerate(shots):
+        label = f"long_form_execution_envelope.shots[{index}]"
+        _object(shot, label)
+        shot_id = _nonempty(shot.get("shot_id"), f"{label}.shot_id")
+        require(shot_id == shot_order[index], f"{label}.shot_id is out of order")
+        require(shot_id not in shot_by_id, f"Duplicate case shot: {shot_id}")
+        shot_by_id[shot_id] = shot
+        dependencies = _list(shot.get("dependency_ids", []), f"{label}.dependency_ids")
+        require(len(dependencies) == len(set(dependencies)),
+                f"{label}.dependency_ids contains duplicates")
+        require(all(isinstance(item, str) and item in shot_by_id for item in dependencies),
+                f"{label}.dependency_ids reference an unknown or future shot")
+        require(shot_id not in dependencies, f"{label}.dependency_ids cannot contain itself")
+        _object(shot.get("state_start"), f"{label}.state_start")
+        _object(shot.get("state_end_declared"), f"{label}.state_end_declared")
+        for field in ("attempt_refs", "artifact_refs", "observation_refs", "transition_refs"):
+            _list(shot.get(field, []), f"{label}.{field}")
+        require(shot.get("status", "NOT_RUN") in ("NOT_RUN", "PARTIAL", "PASS", "BLOCKED", "UNKNOWN"),
+                f"{label}.status is invalid")
+        if shot.get("status") == "PASS":
+            for field in ("attempt_refs", "artifact_refs", "observation_refs"):
+                validate_record_refs(shot.get(field), f"{label}.{field}")
+
+    transitions = _list(envelope.get("transitions", []), "long_form_execution_envelope.transitions")
+    transition_pairs = set()
+    for index, transition in enumerate(transitions):
+        label = f"long_form_execution_envelope.transitions[{index}]"
+        _object(transition, label)
+        previous = _nonempty(transition.get("previous_shot_id"), f"{label}.previous_shot_id")
+        following = _nonempty(transition.get("next_shot_id"), f"{label}.next_shot_id")
+        require(previous in shot_by_id and following in shot_by_id and previous != following,
+                f"{label} references unknown or identical shots")
+        pair = (previous, following)
+        require(pair not in transition_pairs, f"Duplicate case transition: {previous}->{following}")
+        transition_pairs.add(pair)
+        require(transition.get("status", "NOT_RUN") in ("NOT_RUN", "PARTIAL", "PASS", "BLOCKED", "UNKNOWN"),
+                f"{label}.status is invalid")
+        if transition.get("status") == "PASS":
+            _validate_long_form_file_ref(transition.get("record_ref"), f"{label}.record_ref", base_dir)
+
+    assembly = envelope.get("assembly")
+    if assembly is not None:
+        _object(assembly, "long_form_execution_envelope.assembly")
+        require(assembly.get("status", "NOT_RUN") in ("NOT_RUN", "PARTIAL", "PASS", "BLOCKED", "UNKNOWN"),
+                "long_form_execution_envelope.assembly.status is invalid")
+        if assembly.get("status") == "PASS":
+            _nonempty(assembly.get("ref"), "long_form_execution_envelope.assembly.ref")
+            _hash(assembly.get("content_hash"), "long_form_execution_envelope.assembly.content_hash")
+            assembly_path = _resolve_quality_path(assembly["ref"], "long_form_execution_envelope.assembly", base_dir)
+            require(file_hash(assembly_path) == assembly["content_hash"],
+                    "long_form_execution_envelope.assembly bytes changed")
+
+    status = envelope.get("status", "NOT_RUN")
+    require(status in ("NOT_RUN", "PARTIAL", "PASS", "BLOCKED", "UNKNOWN"),
+            "long_form_execution_envelope.status is invalid")
+    if status == "PASS":
+        require(all(shot.get("status") == "PASS" for shot in shots),
+                "Long-form execution PASS requires every shot to be PASS")
+        require(transition_pairs == set(zip(shot_order, shot_order[1:])),
+                "Long-form execution PASS requires every adjacent transition")
+        require(all(transition.get("status") == "PASS" for transition in transitions),
+                "Long-form execution PASS requires every transition to be PASS")
+        require(isinstance(assembly, dict) and assembly.get("status") == "PASS",
+                "Long-form execution PASS requires a PASS assembly")
+    accepted = status == "PASS"
+    return {"status": status, "accepted": accepted, "case_id": envelope["case_id"],
+            "shot_order": shot_order, "shot_count": len(shots),
+            "transition_count": len(transitions), "assembly_status": assembly.get("status") if assembly else "NOT_RUN",
+            "limitations": ["This recorder validates case lineage and never executes runtime or semantic acceptance"]}
+
+
 MATURITY_GATE_KEYS = (
     "structural", "deterministic_tests", "runtime_provenance", "audiovisual",
     "bounded_production", "independent_critic"
 )
 
 
-def _validate_maturity_gate(record, label):
+MATURITY_GATE_IDS = {
+    "structural": "STRUCTURAL_VALIDATION",
+    "deterministic_tests": "DETERMINISTIC_VERIFICATION",
+    "runtime_provenance": "RUNTIME_EXECUTION",
+    "audiovisual": "ARTIFACT_OBSERVATION",
+    "bounded_production": "MULTI_SHOT_ACCEPTANCE",
+    "independent_critic": "INDEPENDENT_CRITIC",
+}
+MATURITY_GATE_EVIDENCE_TYPES = {
+    "structural": {"CONTRACT", "TEST_REPORT", "DOCUMENT", "MEDIA_QA"},
+    "deterministic_tests": {"TEST_REPORT"},
+    "runtime_provenance": {"RUNTIME", "RUNTIME_HISTORY", "ATTEMPT"},
+    "audiovisual": {"MEDIA_BYTES", "MEDIA_QA", "FRAME", "AUDIO", "AUDIO_WINDOW", "HUMAN"},
+    "bounded_production": {"PRODUCTION_CASE", "TRANSITION", "ASSEMBLY", "EDITORIAL", "HUMAN"},
+    "independent_critic": {"CRITIC"},
+}
+
+
+def _validate_maturity_gate(record, label, key):
     """Validate one maturity gate as a current, hash-bound evidence envelope."""
     _object(record, label)
     require(record.get("status") == "PASS", f"{label}.status must be PASS")
+    require(record.get("gate_id") == MATURITY_GATE_IDS[key],
+            f"{label}.gate_id must be {MATURITY_GATE_IDS[key]}")
+    _nonempty(record.get("scope"), f"{label}.scope")
+    _nonempty(record.get("criteria"), f"{label}.criteria")
     _timestamp(record.get("observed_at"), f"{label}.observed_at")
     _nonempty(record.get("procedure"), f"{label}.procedure")
     _list(record.get("limitations"), f"{label}.limitations")
@@ -2099,9 +2575,13 @@ def _validate_maturity_gate(record, label):
     _verify_evidence_bytes(evidence, f"{label}.evidence", required=True)
     for index, item in enumerate(evidence):
         _hash(item.get("content_hash"), f"{label}.evidence[{index}].content_hash")
+    allowed_types = MATURITY_GATE_EVIDENCE_TYPES[key]
+    require(any(item.get("type") in allowed_types for item in evidence),
+            f"{label}.evidence does not contain a {key} gate evidence type")
     return {"status": "PASS", "observed_at": record["observed_at"],
             "procedure": record["procedure"], "evidence": copy.deepcopy(evidence),
-            "limitations": copy.deepcopy(record["limitations"])}
+            "limitations": copy.deepcopy(record["limitations"]), "gate_id": record["gate_id"],
+            "scope": record["scope"], "criteria": record["criteria"]}
 
 
 def maturity_report(evidence):
@@ -2114,21 +2594,23 @@ def maturity_report(evidence):
             gates[key] = {"status": "NOT_OBSERVED", "reason": "A validated gate record is required"}
             continue
         try:
-            gates[key] = _validate_maturity_gate(record, f"maturity.{key}")
+            gates[key] = _validate_maturity_gate(record, f"maturity.{key}", key)
         except ContractError as exc:
             gates[key] = {"status": "BLOCKED", "reason": str(exc)}
     level = 0
     if gates["structural"]["status"] == "PASS":
         level = 1
-    if level >= 1 and gates["deterministic_tests"]["status"] == "PASS":
+    if level >= 1 and gates["runtime_provenance"]["status"] == "PASS":
         level = 2
-    if level >= 2 and gates["runtime_provenance"]["status"] == "PASS":
+    if level >= 2 and gates["audiovisual"]["status"] == "PASS":
         level = 3
-    if level >= 3 and gates["audiovisual"]["status"] == "PASS":
+    if level >= 3 and gates["bounded_production"]["status"] == "PASS":
         level = 4
-    if level >= 4 and gates["bounded_production"]["status"] == "PASS" and gates["independent_critic"]["status"] == "PASS":
+    if (level >= 4 and gates["deterministic_tests"]["status"] == "PASS"
+            and gates["independent_critic"]["status"] == "PASS"):
         level = 5
-    return {"level": level, "name": MATURITY_LEVELS[level], "gates": gates,
+    status = "PASS" if level == 5 else "PARTIAL" if level > 0 else "NOT_OBSERVED"
+    return {"status": status, "accepted": status == "PASS", "level": level, "name": MATURITY_LEVELS[level], "gates": gates,
             "evidence": copy.deepcopy(evidence),
             "limitations": ["Maturity is bounded to validated gate records whose evidence bytes exist and match their declared hashes"]}
 
@@ -2139,10 +2621,10 @@ __all__ = [
     "AUDIO_LAYERS", "AUDIO_LAYER_ALIASES", "REANCHOR_ACTIONS",
     "validate_observation_contract", "validate_semantic_observation", "validate_editorial_acceptance", "validate_continuity_scorecard",
     "validate_cross_shot_comparison",
-    "validate_shot_acceptance", "validate_transition_contract", "reanchor_decision", "validate_first_last_frame",
+    "validate_shot_acceptance", "validate_transition_contract", "reanchor_decision", "validate_first_last_frame", "prepare_first_last_frame_probe",
     "validate_contact_phases", "validate_causal_sequence", "validate_object_ownership", "validate_vehicle_state",
     "validate_dialogue_contract", "validate_audio_timeline", "aggregate_quality",
     "analyze_prompt_density", "adapt_prompt", "adapter_differential", "profile_fingerprint",
     "profile_expiration_triggers", "validate_feature_profile", "validate_repair_budget", "build_repair_plan",
-    "validate_repair_plan", "validate_long_form_case", "maturity_report",
+    "validate_repair_plan", "validate_long_form_case", "validate_long_form_execution_envelope", "maturity_report",
 ]

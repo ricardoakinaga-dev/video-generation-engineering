@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import ipaddress
 import os
 from pathlib import Path
+import socket
 import time
 import uuid
 from urllib.parse import urlencode, urlsplit
@@ -28,11 +29,11 @@ def _approved_image_url(value):
     host = url.hostname.lower()
     require(host not in ('localhost',) and not host.endswith('.local'), 'First-frame URL must not target a local host')
     try:
-        address = ipaddress.ip_address(host)
-    except ValueError:
-        address = None
-    if address is not None:
-        require(not (address.is_private or address.is_loopback or address.is_link_local or address.is_reserved), 'First-frame URL must not target a private or reserved address')
+        addresses = {ipaddress.ip_address(item[4][0]) for item in socket.getaddrinfo(host, 443, type=socket.SOCK_STREAM)}
+    except (OSError, ValueError) as exc:
+        raise ContractError('First-frame URL host could not be resolved safely') from exc
+    require(addresses and all(address.is_global for address in addresses),
+            'First-frame URL must resolve only to globally routable addresses')
     return value
 
 

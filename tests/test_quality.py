@@ -15,6 +15,7 @@ sys.path.insert(0, str(SKILL / "scripts"))
 
 from vge_core import ContractError, digest, file_hash, detect_canonical_contradictions, select_negative_constraints, validate_canonical_state
 from vge_media import media_qa, run
+from vge_capture import capture_evidence
 from vge_quality import (
     AUDIO_LAYERS,
     CONTACT_PHASES,
@@ -36,6 +37,8 @@ from vge_quality import (
     validate_editorial_acceptance,
     validate_feature_profile,
     validate_first_last_frame,
+    prepare_first_last_frame_probe,
+    validate_long_form_execution_envelope,
     validate_long_form_case,
     validate_object_ownership,
     validate_observation_contract,
@@ -54,6 +57,12 @@ PROVENANCE_ROOT = Path(tempfile.mkdtemp(prefix="vge-quality-provenance-"))
 def evidence(ref=None):
     ref = str(QUALITY_ARTIFACT) if ref is None else ref
     return [{"type": "FRAME", "ref": ref, "content_hash": QUALITY_ARTIFACT_HASH if ref == str(QUALITY_ARTIFACT) else digest(ref), "time_s": 0.5}]
+
+
+def audio_evidence(ref=None):
+    ref = str(QUALITY_ARTIFACT) if ref is None else ref
+    content_hash = QUALITY_ARTIFACT_HASH if ref == str(QUALITY_ARTIFACT) else digest(ref)
+    return [{"type": "AUDIO", "ref": ref, "content_hash": content_hash, "time_s": 0.5}]
 
 
 def decision_evidence():
@@ -94,6 +103,34 @@ def quality_provenance(shot_id, artifact_id, media_ref=None, media_hash=None,
                        "media": {"kind": "video"}}
     artifact_ref = PROVENANCE_ROOT / f"{safe}-artifact.json"
     artifact_ref.write_text(json.dumps(artifact_record, sort_keys=True), encoding="utf-8")
+    history_ref = PROVENANCE_ROOT / f"{safe}-history.json"
+    history_outputs = {"1": {"videos": [{"filename": Path(media_ref).name, "subfolder": "", "type": "output"}]}}
+    history_ref.write_text(json.dumps({"status": "SUCCEEDED", "prompt_id": "queue-fixture",
+                                       "history": {"status": {"completed": True, "status_str": "success"},
+                                                    "outputs": history_outputs}}, sort_keys=True), encoding="utf-8")
+    event_ref = PROVENANCE_ROOT / f"{safe}-events.jsonl"
+    event_ref.write_text(json.dumps({"schema_version": 1, "event_id": "event-submitted",
+                                     "attempt_id": attempt_id, "queue_id": "queue-fixture",
+                                     "status": "SUBMITTED"}, sort_keys=True) + "\n" +
+                         json.dumps({"schema_version": 1, "event_id": "event-collected",
+                                     "attempt_id": attempt_id, "queue_id": "queue-fixture",
+                                     "status": "COLLECTED", "history_content_hash": file_hash(history_ref),
+                                     "artifact_ids": [artifact_id]}, sort_keys=True) + "\n", encoding="utf-8")
+    attempt_record["collection"] = {
+        "schema_version": 1, "status": "COLLECTED", "collector": "vge_runtime.collect",
+        "prompt_id": "queue-fixture", "history_ref": str(history_ref),
+        "history_content_hash": file_hash(history_ref), "history_output_hash": digest(history_outputs),
+        "event_log_ref": str(event_ref), "event_log_content_hash": file_hash(event_ref),
+        "output_entries": [{"artifact_id": artifact_id, "node_id": "1", "bucket": "videos",
+                            "filename": Path(media_ref).name, "subfolder": "", "type": "output",
+                            "content_hash": media_hash}],
+        "artifacts": [{"id": artifact_id, "record_ref": str(artifact_ref),
+                       "record_content_hash": file_hash(artifact_ref), "artifact_ref": media_ref,
+                       "content_hash": media_hash}],
+        "collected_at": "2026-09-08T17:00:02+00:00",
+    }
+    attempt_record["artifacts"] = copy.deepcopy(attempt_record["collection"]["artifacts"])
+    attempt_ref.write_text(json.dumps(attempt_record, sort_keys=True), encoding="utf-8")
     return {"attempt": {"id": attempt_id, "ref": str(attempt_ref), "content_hash": file_hash(attempt_ref)},
             "shot": {"id": shot_id, "ref": str(shot_ref), "content_hash": file_hash(shot_ref),
                      "contract_hash": digest(shot_record)},
@@ -159,7 +196,10 @@ def editorial_acceptance(status="PASS"):
         checks.append(item)
     return {"schema_version": 1, "id": "editorial_1", "artifact_ref": str(QUALITY_ARTIFACT),
             "artifact_content_hash": QUALITY_ARTIFACT_HASH, "observed_at": datetime.now(timezone.utc).isoformat(),
-            "procedure": "Independent editorial fixture review", "checks": checks, "status": status,
+            "procedure": "Independent editorial fixture review", "reviewer": {
+                "id": "reviewer-fixture", "role": "editorial-reviewer",
+                "authority": "fixture-review-scope", "attestation": "fixture-attested",
+            }, "decision": status, "checks": checks, "status": status,
             "limitations": ["Human editorial fixture"]}
 
 
@@ -332,6 +372,12 @@ class QualityContractTests(unittest.TestCase):
             final_media_qa = media_qa(QUALITY_ARTIFACT)
             final_media_qa["id"] = "final_media_qa_1"
             write_json(final_media_qa_path, final_media_qa)
+            final_semantic = semantic_observation()
+            final_semantic.update(id="final_semantic_1", shot_id="assembly_1", artifact_id="assembly_1",
+                                  artifact_ref=str(QUALITY_ARTIFACT), observed_content_hash=QUALITY_ARTIFACT_HASH,
+                                  provenance=quality_provenance("assembly_1", "assembly_1"))
+            final_semantic_path = root / "final-semantic.json"
+            write_json(final_semantic_path, final_semantic)
             editorial_path = root / "editorial.json"
             write_json(editorial_path, editorial_acceptance())
             assembly = {
@@ -359,6 +405,7 @@ class QualityContractTests(unittest.TestCase):
                         {"shot_id": "shot_2", "artifact_id": "artifact_2", "content_hash": next_media_hash},
                     ],
                 },
+                "semantic_observation": file_ref(final_semantic_path),
             }
             assembly_path = root / "assembly.json"
             write_json(assembly_path, assembly)
@@ -375,6 +422,7 @@ class QualityContractTests(unittest.TestCase):
                     "attempts": attempts, "artifacts": artifacts, "observations": observations,
                     "transitions": [file_ref(transition_path)], "assembly": file_ref(assembly_path),
                     "final_media_qa": file_ref(final_media_qa_path),
+                    "final_semantic_observation": file_ref(final_semantic_path),
                     "editorial_acceptance": file_ref(editorial_path),
                 },
             }
@@ -383,6 +431,15 @@ class QualityContractTests(unittest.TestCase):
             root = Path(raw)
             valid = build_case(semantic_observation, root)
             self.assertEqual("PASS", validate_long_form_case(valid, base_dir=root)["status"])
+            unsealed = build_case(semantic_observation, root)
+            unsealed_attempt = Path(unsealed["production_evidence"]["attempts"][0]["ref"])
+            unsealed_record = json.loads(unsealed_attempt.read_text(encoding="utf-8"))
+            unsealed_record.pop("collection")
+            unsealed_record.pop("artifacts", None)
+            write_json(unsealed_attempt, unsealed_record)
+            unsealed["production_evidence"]["attempts"][0]["content_hash"] = file_hash(unsealed_attempt)
+            with self.assertRaisesRegex(ContractError, "collection"):
+                validate_long_form_case(unsealed, base_dir=root)
             lineage_bad = build_case(semantic_observation, root)
             assembly_ref = Path(lineage_bad["production_evidence"]["assembly"]["ref"])
             assembly_record = json.loads(assembly_ref.read_text(encoding="utf-8"))
@@ -559,6 +616,52 @@ class QualityContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "too weak|metadata alone"):
             validate_first_last_frame(record)
 
+    def test_flf_probe_preparation_is_explicitly_not_run(self):
+        spec = {"schema_version": 1, "probe_id": "flf-test", "profile_id": "profile-test",
+                "shot_id": "shot-test", "mode": "FIRST_AND_LAST",
+                "endpoint": "http://127.0.0.1:8188", "model": {"id": "model-test", "version": "1"},
+                "parameters": {"seed": 1}, "workflow_hash": digest("flf-workflow"),
+                "inputs": {"first_frame": {"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH},
+                           "last_frame": {"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}}}
+        result = prepare_first_last_frame_probe(spec)
+        self.assertEqual("NOT_RUN", result["status"])
+        self.assertFalse(result["accepted"])
+        self.assertEqual("NOT_RUN", result["probe"]["capability_status"])
+        for check in result["probe"]["checks"]:
+            self.assertEqual("NOT_RUN", check["result"])
+
+    def test_flf_probe_cli_does_not_promote_metadata_to_capability(self):
+        with tempfile.TemporaryDirectory(prefix="vge-flf-probe-cli-") as raw:
+            root = Path(raw)
+            spec = {"schema_version": 1, "probe_id": "flf-cli", "profile_id": "profile-test",
+                    "shot_id": "shot-test", "mode": "FIRST_ONLY", "endpoint": "http://127.0.0.1:8188",
+                    "model": {"id": "model-test", "version": "1"}, "parameters": {"seed": 1},
+                    "workflow_hash": digest("flf-workflow"),
+                    "inputs": {"first_frame": {"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}}}
+            source = root / "probe.json"
+            source.write_text(json.dumps(spec), encoding="utf-8")
+            completed = subprocess.run([sys.executable, str(SKILL / "scripts/vge.py"), "flf-probe", str(source)],
+                                       capture_output=True, text=True, check=False)
+            self.assertEqual(2, completed.returncode)
+            result = json.loads(completed.stdout)
+            self.assertEqual("NOT_RUN", result["status"])
+
+    def test_case_execution_envelope_requires_ordered_lineage(self):
+        envelope = {"schema_version": 1, "id": "case-envelope-1", "case_id": "LF-001",
+                    "project_id": "project-1", "scene_id": "scene-1", "shot_order": ["a", "b"],
+                    "shots": [{"shot_id": "a", "dependency_ids": [], "state_start": {"door": "closed"},
+                               "state_end_declared": {"door": "open"}, "status": "NOT_RUN"},
+                              {"shot_id": "b", "dependency_ids": ["a"], "state_start": {"door": "open"},
+                               "state_end_declared": {"door": "closed"}, "status": "NOT_RUN"}],
+                    "transitions": [], "assembly": {"status": "NOT_RUN"}, "status": "NOT_RUN"}
+        result = validate_long_form_execution_envelope(envelope)
+        self.assertEqual("NOT_RUN", result["status"])
+        self.assertFalse(result["accepted"])
+        bad = copy.deepcopy(envelope)
+        bad["status"] = "PASS"
+        with self.assertRaisesRegex(ContractError, "every shot|adjacent transition"):
+            validate_long_form_execution_envelope(bad)
+
     def test_contact_dialogue_and_audio_contracts_separate_channels(self):
         phases = []
         for index, phase in enumerate(CONTACT_PHASES):
@@ -584,8 +687,11 @@ class QualityContractTests(unittest.TestCase):
             validate_contact_phases(contact)
         contact["provenance"] = saved_contact_provenance
         channel_oracles = {"semantics": "AUDIO", "voice": "AUDIO", "performance": "SEQUENCE", "lip_sync": "SEQUENCE", "mix": "AUDIO"}
-        channels = {channel: {"status": "PASS", "oracle": oracle(channel_oracles[channel]), "evidence": evidence()} for channel in channel_oracles}
-        channels["voice"]["audio_ref"] = "voice.wav"
+        channels = {channel: {"status": "PASS", "oracle": oracle(channel_oracles[channel]),
+                              "evidence": audio_evidence() if channel in ("semantics", "voice", "mix") else evidence()}
+                    for channel in channel_oracles}
+        channels["voice"]["audio_ref"] = str(QUALITY_ARTIFACT)
+        channels["lip_sync"]["paired_evidence"] = evidence() + audio_evidence()
         dialogue = {"schema_version": 1, "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH, "provenance": quality_provenance("shot_1", "artifact_dialogue"), "lines": [{"id": "line_1", "shot_id": "shot_1", "speaker": "a", "listener": "b", "text": "Ready.", "start_s": 1, "end_s": 2, "intention": "warn", "delivery": "quiet", "emotion": "focused", "gaze": "listener", "pause_policy": "none", "overlap_policy": "none", "visible_speech": True, "channels": channels}]}
         self.assertEqual("PASS", validate_dialogue_contract(dialogue)["status"])
         saved_dialogue_provenance = dialogue.pop("provenance")
@@ -607,7 +713,7 @@ class QualityContractTests(unittest.TestCase):
         events = [{"id": "a_" + layer, "layer": layer, "start_s": 1, "end_s": 2,
                    "cause": "fixture", "source": layer + ".wav", "priority": "HIGH",
                    "mix_role": "DIEGETIC" if layer != "silence" else "NONE",
-                   "oracle": oracle("AUDIO"), "evidence": evidence()} for layer in AUDIO_LAYERS]
+                   "oracle": oracle("AUDIO"), "evidence": audio_evidence()} for layer in AUDIO_LAYERS]
         timeline = {"events": events, "required_layers": [item["layer"] for item in events],
                     "not_applicable_layers": [], "shot_id": "shot_audio", "artifact_ref": str(QUALITY_ARTIFACT),
                     "artifact_content_hash": QUALITY_ARTIFACT_HASH, "observed_at": datetime.now(timezone.utc).isoformat(),
@@ -746,12 +852,42 @@ class QualityContractTests(unittest.TestCase):
         repair = build_repair_plan(plan, ["a"], [{"id": "f", "shot_id": "a", "repair_owner": "continuity", "reason": "drift"}], {"max_regenerations": 2, "max_attempts": 3, "max_runtime_s": 60, "max_cost_usd": 0, "human_review_threshold": 1, "authorized": False})
         self.assertEqual("AWAITING_AUTHORIZATION", repair["status"]); self.assertEqual("PARTIAL", validate_repair_plan(repair)["status"])
         repair["status"] = "AUTHORIZED"
-        repair["execution_ledger"] = {"schema_version": 1, "status": "COMPLETE", "attempts": 1, "regenerations": 1, "runtime_s": 10, "cost_usd": 0, "human_reviews": 0, "observed_at": datetime.now(timezone.utc).isoformat(), "completed_at": datetime.now(timezone.utc).isoformat(), "evidence": evidence(), "provenance": quality_provenance("a", "artifact_repair")}
+        failed_provenance = quality_provenance("a", "artifact_repair_failed")
+        repaired_media = PROVENANCE_ROOT / "artifact_repair_new.mp4"
+        shutil.copyfile(ROOT / "verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4", repaired_media)
+        repaired_media_hash = file_hash(repaired_media)
+        new_provenance = quality_provenance("a", "artifact_repair_new", repaired_media, repaired_media_hash)
+        new_attempt_path = Path(new_provenance["attempt"]["ref"])
+        new_attempt_record = json.loads(new_attempt_path.read_text(encoding="utf-8"))
+        new_attempt_record["parent_attempt_id"] = failed_provenance["attempt"]["id"]
+        new_attempt_path.write_text(json.dumps(new_attempt_record, sort_keys=True) + "\n", encoding="utf-8")
+        new_provenance["attempt"]["content_hash"] = file_hash(new_attempt_path)
+        before_path = PROVENANCE_ROOT / "repair-before.json"
+        before_path.write_text(json.dumps({"schema_version": 1, "id": "repair-before", "status": "FAIL",
+                                           "artifact_id": "artifact_repair_failed",
+                                           "artifact_ref": str(QUALITY_ARTIFACT),
+                                           "observed_content_hash": QUALITY_ARTIFACT_HASH}, sort_keys=True), encoding="utf-8")
+        after_path = PROVENANCE_ROOT / "repair-after.json"
+        after_path.write_text(json.dumps({"schema_version": 1, "id": "repair-after", "status": "PASS",
+                                          "artifact_id": "artifact_repair_new",
+                                          "artifact_ref": str(repaired_media),
+                                          "observed_content_hash": repaired_media_hash}, sort_keys=True), encoding="utf-8")
+        ref = lambda path: {"ref": str(path), "content_hash": file_hash(path)}
+        repair["execution_ledger"] = {"schema_version": 1, "status": "COMPLETE", "attempts": 2, "regenerations": 1, "runtime_s": 10, "cost_usd": 0, "human_reviews": 0, "observed_at": datetime.now(timezone.utc).isoformat(), "completed_at": datetime.now(timezone.utc).isoformat(), "evidence": evidence(), "provenance": failed_provenance,
+            "lineage": {"failed_attempt": ref(failed_provenance["attempt"]["ref"]), "new_attempt": ref(new_provenance["attempt"]["ref"]),
+                        "failed_artifact": ref(failed_provenance["artifact"]["record_ref"]), "new_artifact": ref(new_provenance["artifact"]["record_ref"]),
+                        "failed_dimension": "identity", "before_observation": ref(before_path), "after_observation": ref(after_path),
+                        "improvement": {"dimension": "identity", "before": "FAIL", "after": "PASS", "reason": "Re-anchored generation restored the declared identity dimension"},
+                        "adjacent_transition_results": [{"pair": "a->b", "status": "PASS", "evidence": evidence()}]}}
         self.assertEqual("BLOCKED", validate_repair_plan(repair)["status"])
         repair["transition_revalidation"].update(
             status="PASS", validated_pairs=["a->b"],
             evidence_refs=[{"pair": "a->b", "ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}])
         self.assertEqual("PASS", validate_repair_plan(repair)["status"])
+        same_parent = copy.deepcopy(repair)
+        same_parent["execution_ledger"]["lineage"]["new_attempt"] = same_parent["execution_ledger"]["lineage"]["failed_attempt"]
+        with self.assertRaisesRegex(ContractError, "distinct failed and new attempts"):
+            validate_repair_plan(same_parent)
         saved_repair_provenance = repair["execution_ledger"].pop("provenance")
         with self.assertRaisesRegex(ContractError, "provenance"):
             validate_repair_plan(repair)
@@ -763,12 +899,23 @@ class QualityContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "existing file"):
             validate_long_form_case(placeholder_pass)
         self.assertEqual(0, maturity_report({"structural": "PASS", "deterministic_tests": "PASS", "runtime_provenance": "PASS"})["level"])
-        gate = lambda procedure: {"status": "PASS", "observed_at": datetime.now(timezone.utc).isoformat(),
-                                  "procedure": procedure, "limitations": [], "evidence": [
-                                      {"type": "MEDIA_QA", **item} for item in decision_evidence()]}
-        validated = maturity_report({"structural": gate("structural"), "deterministic_tests": gate("tests"),
-                                     "runtime_provenance": gate("runtime"), "audiovisual": gate("av")})
-        self.assertEqual(4, validated["level"])
+        gate_types = {"structural": "CONTRACT", "deterministic_tests": "TEST_REPORT",
+                      "runtime_provenance": "RUNTIME", "audiovisual": "MEDIA_BYTES",
+                      "bounded_production": "PRODUCTION_CASE", "independent_critic": "CRITIC"}
+        gate = lambda key: {"status": "PASS", "gate_id": {
+                                      "structural": "STRUCTURAL_VALIDATION",
+                                      "deterministic_tests": "DETERMINISTIC_VERIFICATION",
+                                      "runtime_provenance": "RUNTIME_EXECUTION",
+                                      "audiovisual": "ARTIFACT_OBSERVATION",
+                                      "bounded_production": "MULTI_SHOT_ACCEPTANCE",
+                                      "independent_critic": "INDEPENDENT_CRITIC",
+                                  }[key], "scope": "fixture-scope", "criteria": "fixture criterion",
+                                  "observed_at": datetime.now(timezone.utc).isoformat(),
+                                  "procedure": key, "limitations": [], "evidence": [
+                                      {"type": gate_types[key], **item} for item in decision_evidence()]}
+        validated = maturity_report({key: gate(key) for key in gate_types})
+        self.assertEqual(5, validated["level"])
+        self.assertEqual("PASS", validated["status"])
 
     def test_causality_ownership_vehicle_and_dialogue_known_bad_cases(self):
         sequence = {"events": [
@@ -835,6 +982,39 @@ class QualityContractTests(unittest.TestCase):
 
 
 class MediaQualityTests(unittest.TestCase):
+    def test_capture_evidence_is_hash_bound_and_not_semantic_acceptance(self):
+        with tempfile.TemporaryDirectory(prefix="vge-capture-test-") as raw:
+            report = capture_evidence(QUALITY_ARTIFACT, Path(raw) / "evidence", [0.2, 1.0], [[0.1, 0.4]])
+            self.assertEqual("CAPTURED", report["status"])
+            self.assertEqual("NOT_RUN", report["semantic_acceptance"])
+            self.assertEqual(QUALITY_ARTIFACT_HASH, report["source_content_hash"])
+            self.assertEqual(2, len(report["frames"]))
+            self.assertEqual(1, len(report["audio_windows"]))
+            self.assertTrue(report["source_media_metadata"]["audio_streams"])
+            self.assertIn("source_audio_stream", report["audio_windows"][0])
+            self.assertIn("derived_audio_stream", report["audio_windows"][0])
+            for item in report["frames"] + report["audio_windows"]:
+                self.assertEqual(str(QUALITY_ARTIFACT), item["source_ref"])
+                self.assertEqual(QUALITY_ARTIFACT_HASH, item["source_content_hash"])
+                self.assertTrue(Path(item["ref"]).is_file())
+                self.assertTrue(item["content_hash"].startswith("sha256:"))
+            with self.assertRaisesRegex(ContractError, "exists"):
+                capture_evidence(QUALITY_ARTIFACT, Path(raw) / "evidence", [0.2], [])
+            with self.assertRaisesRegex(ContractError, "before source duration"):
+                capture_evidence(QUALITY_ARTIFACT, Path(raw) / "another-evidence", [5.167], [])
+
+    def test_capture_evidence_cli_public_path(self):
+        with tempfile.TemporaryDirectory(prefix="vge-capture-cli-test-") as raw:
+            output_dir = Path(raw) / "evidence"
+            completed = subprocess.run(
+                [sys.executable, str(SKILL / "scripts/vge.py"), "capture-evidence", str(QUALITY_ARTIFACT),
+                 "--output-dir", str(output_dir), "--frame", "0.2", "--audio-window", "0.1", "0.4"],
+                capture_output=True, text=True, check=False)
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            result = json.loads(completed.stdout)
+            self.assertEqual("CAPTURED", result["status"])
+            self.assertEqual("NOT_RUN", result["semantic_acceptance"])
+
     def test_media_qa_observes_real_fixture_and_corrupt_bytes(self):
         if not shutil.which("ffmpeg"):
             self.skipTest("ffmpeg unavailable")

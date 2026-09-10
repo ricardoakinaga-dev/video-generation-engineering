@@ -347,8 +347,12 @@ def validate_assembly_manifest(manifest, inspections=None, final_artifact=None):
                             "content_hash": segment["artifact"]["content_hash"]} for segment in segments]
         require(final_artifact.get("source_shots") == expected_sources,
                 "Final assembly artifact is not bound to every ordered source shot hash")
-    return {"status": "PASS", "accepted": True, "shot_count": len(segments),
-            "shot_order": list(shot_order), "final_artifact_bound": final_artifact is not None}
+    acceptance_status = "PASS" if final_artifact is not None else "NOT_RUN"
+    return {"status": acceptance_status, "accepted": acceptance_status == "PASS", "shot_count": len(segments),
+            "shot_order": list(shot_order), "structural_status": "PASS",
+            "final_artifact_bound": final_artifact is not None,
+            "limitations": [] if final_artifact is not None else [
+                "Manifest structure and source hashes are valid, but no assembled final artifact was supplied"]}
 
 
 def assemble(manifest, output, preview=False):

@@ -46,6 +46,9 @@ python3 scripts/vge.py compile plan.json --output prompts.json
 python3 scripts/vge.py negotiate shot.json --profile profiles/comfyui-wan22-candidate.json
 python3 scripts/vge.py trim source.mp4 derived-5s.mp4 --duration 5 --report trim.json
 python3 scripts/vge.py assemble assembly.json --video preview.mp4 --preview
+python3 scripts/vge.py capture-evidence source.mp4 --output-dir evidence-r1 --frame 0.5 --audio-window 1 2 --report evidence-r1.json
+python3 scripts/vge.py flf-probe flf-probe.json --output flf-probe-report.json
+python3 scripts/vge.py case-envelope long-form-execution.json --output case-envelope-report.json
 ```
 
 [Treatment example](assets/templates/treatment.json) is a small complete invented scene for adapting, not a mandatory narrative. JSON scripts use the standard library. FFmpeg/ffprobe are required only for media commands. `--help` lists the execution and media commands. Writes refuse existing files; create new revisions.
@@ -54,17 +57,36 @@ The helper compiles lossless structured prompt views. As director, turn those vi
 
 `trim` creates an explicit, newly hashed derived asset with source provenance and post-trim metadata; it does not silently overwrite the source. `assemble` consumes an assembly manifest and enforces the declared preview duration while retaining segment lineage. A runtime submission may include `accepted_dependency_refs` only when each referenced JSON bundle is readable, hash-bound and already accepted by the caller's policy. This is a continuity handoff, not proof that the renderer preserved visual identity.
 
+`capture-evidence` extracts timestamped PNG frames and bounded stereo 48 kHz PCM
+windows from an existing local artifact. It creates a new output directory,
+binds every derived byte to the source hash, and always returns
+`semantic_acceptance=NOT_RUN`; capture is not a visual, audio, or editorial
+oracle. `flf-probe` prepares one mode-specific first/last-frame probe envelope
+without making a generation request. Its explicit `NOT_RUN` checks must be
+replaced by a collected runtime attempt and artifact observations before a mode
+can become `CONFIRMED`. `case-envelope` validates the case-level join from
+ordered shots and predecessor state to attempts, artifacts, observations,
+transitions and assembly; it is a recorder/lineage gate, not a runtime executor
+or a semantic acceptance shortcut.
+
 ## Execute and evaluate
 
 For execution, confirm target, mode and destination from the current request. Existing explicit authorization persists within that scope. `LOCAL_DRY_RUN` only reads metadata; `LOCAL_EXECUTE` queues the inspected workflow. `CLOUD_EXECUTE` additionally needs a selected provider, current API contract, credentials held outside artifacts, and transfer/cost authorization. Use installed compatible tools when present; tool names are host-dependent.
 
-Record concrete runtime/model/node/workflow/input/parameter context per submission, then collect with an immutable attempt reference and output hash. On timeout, reconcile the same queue ID; do not submit again automatically. Model/runtime changes invalidate affected capability evidence. Use one bounded repair attempt by default; propose a new budget before further costly regeneration unless already authorized.
+Record concrete runtime/model/node/workflow/input/parameter context per submission, then collect with an immutable attempt reference, runtime history snapshot, append-only event log, output-entry manifest and output hashes. On timeout, reconcile the same queue ID; do not submit again automatically. Model/runtime changes invalidate affected capability evidence. Use one bounded repair attempt by default; propose a new budget before further costly regeneration unless already authorized.
 
 Validate collected bytes and observed hashes before QA acceptance. Run metadata checks and inspect actual frames/audio where available. Use `NOT_RUN` for unperformed checks and `PARTIAL` when the evidence is incomplete. Generation acceptance and editorial acceptance are separate. A contact sheet or ffprobe result cannot prove physics, identity, emotion or lip-sync.
 
-Production quality is a separate evidence contract. Use `vge_quality.py` for category-separated observations, the 12-dimension semantic artifact contract, the 14-dimension continuity scorecard, the hash-bound 14-dimension `cross_shot_comparison`, adjacent-shot transition acceptance, re-anchor decisions, first/last-frame capability probes, dialogue/audio/contact contracts, adapter differentials, bounded repair plans and separate human editorial acceptance. Use `vge_media.py media-qa` only for deterministic byte/metadata/decode heuristics, and use strict assembly validation for shot order, lineage, transition timing and final-artifact binding. A `PASS` is valid only when its oracle, exact artifact hash and limitations are present; otherwise retain `NOT_OBSERVED`, `UNKNOWN`, `NOT_RUN`, `PARTIAL` or `BLOCKED`.
+Production quality is a separate evidence contract. Use `vge_quality.py` for category-separated observations, the 12-dimension semantic artifact contract, the 14-dimension continuity scorecard, the hash-bound 14-dimension `cross_shot_comparison`, adjacent-shot transition acceptance, re-anchor decisions, first/last-frame capability probes, dialogue/audio/contact contracts, adapter differentials, bounded repair plans with before/after lineage, and separate human editorial acceptance with reviewer authority. Audio claims must reference hash-bound bytes that actually contain an audio stream; visible lip-sync claims require paired face-frame and audio evidence. Use `vge_media.py media-qa` only for deterministic byte/metadata/decode heuristics, and use strict assembly validation for shot order, lineage, transition timing and final-artifact binding. A manifest-only assembly is structural `PASS` but acceptance `NOT_RUN`. A `PASS` is valid only when its oracle, exact artifact hash and limitations are present; otherwise retain `NOT_OBSERVED`, `UNKNOWN`, `NOT_RUN`, `PARTIAL` or `BLOCKED`.
 
 The compiler's contradiction result, adapter differential and scene-aware negative-constraint selection are structural evidence only; they never substitute for generated-media observation.
+
+Maturity is monotonic and evidence-bound: Level 0 `DOCUMENTED`, Level 1
+`STRUCTURALLY_VALIDATED`, Level 2 `RUNTIME_EXECUTED`, Level 3
+`ARTIFACT_OBSERVED`, Level 4 `MULTI_SHOT_ACCEPTED`, and Level 5
+`PRODUCTION_ACCEPTED`. A generic hash-bound fixture cannot advance a gate whose
+evidence type, runtime envelope, artifact observation, transition or critic is
+missing.
 
 ## Deliver
 

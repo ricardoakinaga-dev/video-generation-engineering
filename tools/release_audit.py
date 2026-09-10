@@ -13,11 +13,31 @@ import hashlib
 import json
 from pathlib import Path
 import re
-import shutil
 import subprocess
 import sys
 import tempfile
 import zipfile
+
+try:
+    from tools.candidate_fingerprint import (
+        EXCLUDED_NAMES as FINGERPRINT_EXCLUDED_NAMES,
+        EXCLUSION_JUSTIFICATIONS,
+        RELEASE_CRITICAL_SURFACES,
+        candidate_files as candidate_scope_files,
+        file_manifest as candidate_scope_manifest,
+        manifest_digest as candidate_scope_digest,
+        sentinel_record as candidate_sentinel_record,
+    )
+except ModuleNotFoundError:  # pragma: no cover - supports direct script execution
+    from candidate_fingerprint import (
+        EXCLUDED_NAMES as FINGERPRINT_EXCLUDED_NAMES,
+        EXCLUSION_JUSTIFICATIONS,
+        RELEASE_CRITICAL_SURFACES,
+        candidate_files as candidate_scope_files,
+        file_manifest as candidate_scope_manifest,
+        manifest_digest as candidate_scope_digest,
+        sentinel_record as candidate_sentinel_record,
+    )
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,6 +50,7 @@ SECRET_PATTERNS = (
     re.compile(r"(?i)\b(?:aws_access_key_id|aws_secret_access_key|api[_-]?key|access[_-]?token|client_secret)\s*[:=]\s*['\"]?[A-Za-z0-9_./+:-]{12,}"),
     re.compile(r"(?i)\b(?:sk|key|token|secret)_[A-Za-z0-9]{20,}\b"),
 )
+SHA256_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -100,15 +121,267 @@ def _zip_info(name: str) -> zipfile.ZipInfo:
     return info
 
 
+def _display_path(path: Path) -> str:
+    try:
+        return path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def _resolve_reference(value: str | Path) -> Path:
+    path = Path(value)
+    # Normalize the reference without following symlinks; validators reject
+    # symlinked references so the measured bytes are the addressed file's own.
+    return (ROOT / path).absolute() if not path.is_absolute() else path.absolute()
+
+
+def _is_sha256(value: object) -> bool:
+    return isinstance(value, str) and SHA256_PATTERN.fullmatch(value) is not None
+
+
+def _public_validation(result: dict) -> dict:
+    return {key: value for key, value in result.items() if key != "_record"}
+
+
+def validate_fingerprint_reference(reference: str | Path) -> dict:
+    """Validate a fingerprint's bytes, scope and claim-surface bindings."""
+    path = _resolve_reference(reference)
+    result = {"status": "FAIL", "ref": _display_path(path), "content_sha256": None, "errors": []}
+    if not path.is_file() or path.is_symlink():
+        result["errors"].append(f"fingerprint reference is unavailable or not a regular file: {path}")
+        return result
+    try:
+        raw = path.read_bytes()
+        result["content_sha256"] = sha256_bytes(raw)
+        record = json.loads(raw.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        result["errors"].append(f"fingerprint reference is not valid UTF-8 JSON: {path} ({exc})")
+        return result
+    if not isinstance(record, dict):
+        result["errors"].append("fingerprint reference must contain a JSON object")
+        return result
+    result["_record"] = record
+    result["scope_sha256"] = record.get("scope_sha256")
+    result["candidate_file_count"] = record.get("candidate_file_count")
+    if record.get("schema_version") != 1:
+        result["errors"].append("fingerprint schema_version must be 1")
+    if record.get("id") != "candidate-fingerprint-r9":
+        result["errors"].append("fingerprint id is not candidate-fingerprint-r9")
+    if record.get("status") != "FROZEN":
+        result["errors"].append("fingerprint status must be FROZEN")
+
+    records = record.get("files_sha256")
+    if not isinstance(records, dict):
+        result["errors"].append("fingerprint files_sha256 must be an object")
+        records = {}
+    invalid_paths = []
+    invalid_hashes = []
+    for rel, digest in records.items():
+        if not isinstance(rel, str) or Path(rel).is_absolute() or ".." in Path(rel).parts:
+            invalid_paths.append(str(rel))
+        if not _is_sha256(digest):
+            invalid_hashes.append(str(rel))
+    if invalid_paths:
+        result["errors"].append("fingerprint contains unsafe paths: " + ", ".join(sorted(invalid_paths)))
+    if invalid_hashes:
+        result["errors"].append("fingerprint contains invalid SHA-256 records: " + ", ".join(sorted(invalid_hashes)))
+    if record.get("candidate_file_count") != len(records):
+        result["errors"].append("fingerprint candidate_file_count does not match files_sha256")
+    if not _is_sha256(record.get("scope_sha256")):
+        result["errors"].append("fingerprint scope_sha256 is not a valid SHA-256")
+    elif candidate_scope_digest(records) != record.get("scope_sha256"):
+        result["errors"].append("fingerprint scope_sha256 does not match files_sha256")
+
+    actual_records = candidate_scope_manifest(candidate_scope_files())
+    missing = sorted(set(actual_records) - set(records))
+    unexpected = sorted(set(records) - set(actual_records))
+    mismatched = sorted(
+        rel for rel in set(actual_records) & set(records) if actual_records[rel] != records[rel]
+    )
+    if missing:
+        result["errors"].append("fingerprint omits current candidate files: " + ", ".join(missing[:12]))
+    if unexpected:
+        result["errors"].append("fingerprint contains files outside current candidate scope: " + ", ".join(unexpected[:12]))
+    if mismatched:
+        result["errors"].append("fingerprint has stale file hashes: " + ", ".join(mismatched[:12]))
+    if record.get("candidate_file_count") != len(actual_records):
+        result["errors"].append("fingerprint candidate_file_count does not match current candidate scope")
+
+    policy = record.get("scope_policy")
+    if not isinstance(policy, dict):
+        result["errors"].append("fingerprint scope_policy must be an object")
+    else:
+        excluded = policy.get("excluded_derivative_records")
+        if sorted(excluded or []) != sorted(FINGERPRINT_EXCLUDED_NAMES):
+            result["errors"].append("fingerprint exclusions do not match the current explicit policy")
+        if policy.get("excluded_record_justifications") != {
+            name: EXCLUSION_JUSTIFICATIONS[name] for name in sorted(FINGERPRINT_EXCLUDED_NAMES)
+        }:
+            result["errors"].append("fingerprint exclusions are missing exact justifications")
+
+    expected_sentinel = candidate_sentinel_record()
+    if record.get("mutation_sentinel") != expected_sentinel:
+        result["errors"].append("fingerprint mutation sentinel is stale or malformed")
+
+    coverage = record.get("release_critical_surfaces")
+    if not isinstance(coverage, dict):
+        result["errors"].append("fingerprint release_critical_surfaces binding is missing")
+    else:
+        expected_in_scope = {}
+        expected_excluded = {}
+        missing_surfaces = []
+        for rel in RELEASE_CRITICAL_SURFACES:
+            surface = ROOT / rel
+            if not surface.is_file() or surface.is_symlink():
+                missing_surfaces.append(rel)
+                continue
+            digest = file_hash(surface)
+            if rel in actual_records:
+                expected_in_scope[rel] = digest
+            elif rel in FINGERPRINT_EXCLUDED_NAMES:
+                expected_excluded[rel] = digest
+            else:
+                result["errors"].append(f"claim surface has no permitted coverage mode: {rel}")
+        if missing_surfaces:
+            result["errors"].append("release-critical claim surface is unavailable: " + ", ".join(missing_surfaces))
+        if coverage.get("in_scope") != expected_in_scope:
+            result["errors"].append("fingerprint in-scope claim-surface hashes are stale or incomplete")
+        if coverage.get("exact_hash_bound_exclusions") != expected_excluded:
+            result["errors"].append("fingerprint excluded claim-surface bindings are stale or incomplete")
+
+    result["status"] = "PASS" if not result["errors"] else "FAIL"
+    return result
+
+
+def compare_fingerprint_scopes(freeze: dict, final: dict) -> list[str]:
+    """Return differences that invalidate a freeze/final fingerprint pair."""
+    differences = []
+    for field in ("candidate_file_count", "files_sha256", "scope_sha256", "mutation_sentinel",
+                  "release_critical_surfaces"):
+        if freeze.get(field) != final.get(field):
+            differences.append(f"freeze/final fingerprint {field} differs")
+    return differences
+
+
+def validate_critic_reference(reference: str | Path, fingerprint: dict) -> dict:
+    """Validate exact critic bytes, scope binding and the required review record."""
+    path = _resolve_reference(reference)
+    result = {"status": "FAIL", "ref": _display_path(path), "content_sha256": None, "errors": []}
+    if not path.is_file() or path.is_symlink():
+        result["errors"].append(f"critic reference is unavailable or not a regular file: {path}")
+        return result
+    try:
+        raw = path.read_bytes()
+        text = raw.decode("utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        result["errors"].append(f"critic reference is not valid UTF-8 text: {path} ({exc})")
+        return result
+    result["content_sha256"] = sha256_bytes(raw)
+    expected_scope = fingerprint.get("scope_sha256")
+    expected_count = fingerprint.get("candidate_file_count")
+    sentinel = fingerprint.get("mutation_sentinel")
+    result["scope_sha256"] = expected_scope
+    result["candidate_file_count"] = expected_count
+    required_sections = (
+        "Review mode", "Reviewer", "Review window", "Independent freeze checks",
+        "Criterion verdicts", "Critical conclusion", "Supported claims",
+        "Unsupported claims", "Final verdict",
+    )
+    for section in required_sections:
+        if section.lower() not in text.lower():
+            result["errors"].append(f"critic is missing required section: {section}")
+    if not re.search(r"(?im)^\s*\|\s*Criterion\s*\|", text):
+        result["errors"].append("critic criteria matrix is missing a Criterion column")
+    if not re.search(r"(?im)^\s*\|\s*Criterion\s*\|\s*Status\s*\|", text):
+        result["errors"].append("critic criteria matrix is missing a Status column")
+    if not re.search(r"(?i)severity", text):
+        result["errors"].append("critic is missing severity findings")
+    if not re.search(r"(?i)evidence", text):
+        result["errors"].append("critic is missing evidence references")
+    if not re.search(r"(?i)\bfresh\b", text) or not re.search(r"(?i)\bread.only\b", text):
+        result["errors"].append("critic is not explicitly marked fresh and read-only")
+    if not re.search(r"(?is)Final verdict.{0,200}\b(?:PASS|REJECT|INCOMPLETE)\b", text):
+        result["errors"].append("critic final verdict must be PASS, REJECT or INCOMPLETE")
+    if not _is_sha256(expected_scope) or expected_scope not in text:
+        result["errors"].append("critic does not state the exact fingerprint scope digest")
+    if not isinstance(sentinel, dict) or not sentinel.get("path") or not _is_sha256(sentinel.get("content_hash")):
+        result["errors"].append("fingerprint mutation sentinel is unavailable for critic binding")
+    else:
+        if sentinel["path"] not in text or sentinel["content_hash"] not in text:
+            result["errors"].append("critic does not state the exact mutation sentinel binding")
+    if not isinstance(expected_count, int) or f"{expected_count} files" not in text:
+        result["errors"].append("critic does not state the exact candidate file count")
+    if "Independent scope digest" not in text or "Mutation sentinel" not in text:
+        result["errors"].append("critic is missing the required independent scope binding labels")
+    result["status"] = "PASS" if not result["errors"] else "FAIL"
+    return result
+
+
+def validate_release_references(freeze_ref=None, fingerprint_ref=None, critic_ref=None) -> dict:
+    """Validate optional freeze/final/critic references as one binding."""
+    requested = any(value is not None for value in (freeze_ref, fingerprint_ref, critic_ref))
+    if not requested:
+        return {"status": "NOT_REQUESTED", "errors": []}
+
+    binding = {"status": "FAIL", "errors": []}
+    final_validation = None
+    freeze_validation = None
+    if fingerprint_ref is None:
+        binding["errors"].append("fingerprint_ref is required when release references are supplied")
+    else:
+        final_validation = validate_fingerprint_reference(fingerprint_ref)
+        binding["fingerprint"] = _public_validation(final_validation)
+        binding["fingerprint_ref"] = final_validation["ref"]
+        binding["fingerprint_content_sha256"] = final_validation.get("content_sha256")
+        binding["fingerprint_scope_sha256"] = final_validation.get("scope_sha256")
+        binding["fingerprint_candidate_file_count"] = final_validation.get("candidate_file_count")
+        binding["errors"].extend("fingerprint: " + error for error in final_validation["errors"])
+
+    if freeze_ref is not None:
+        freeze_validation = validate_fingerprint_reference(freeze_ref)
+        binding["freeze"] = _public_validation(freeze_validation)
+        binding["freeze_ref"] = freeze_validation["ref"]
+        binding["freeze_content_sha256"] = freeze_validation.get("content_sha256")
+        binding["freeze_scope_sha256"] = freeze_validation.get("scope_sha256")
+        binding["errors"].extend("freeze: " + error for error in freeze_validation["errors"])
+        if fingerprint_ref is None:
+            binding["errors"].append("freeze_ref requires fingerprint_ref for freeze/final scope comparison")
+
+    if final_validation and freeze_validation:
+        final_record = final_validation.get("_record")
+        freeze_record = freeze_validation.get("_record")
+        if final_record and freeze_record:
+            binding["freeze_final_scope"] = {
+                "status": "PASS" if not compare_fingerprint_scopes(freeze_record, final_record) else "FAIL",
+                "differences": compare_fingerprint_scopes(freeze_record, final_record),
+            }
+            binding["errors"].extend(binding["freeze_final_scope"]["differences"])
+
+    if critic_ref is not None:
+        if final_validation and final_validation.get("_record"):
+            critic_validation = validate_critic_reference(critic_ref, final_validation["_record"])
+            binding["critic"] = critic_validation
+            binding["critic_ref"] = critic_validation["ref"]
+            binding["critic_content_sha256"] = critic_validation.get("content_sha256")
+            binding["errors"].extend("critic: " + error for error in critic_validation["errors"])
+        else:
+            binding["errors"].append("critic_ref requires a valid fingerprint_ref for exact scope validation")
+
+    binding["errors"] = sorted(set(binding["errors"]))
+    binding["status"] = "PASS" if not binding["errors"] else "FAIL"
+    return binding
+
+
 def build_archive(output: Path, paths: list[Path]) -> dict:
-    if output.exists():
-        output.unlink()
+    if output.exists() or output.is_symlink():
+        raise FileExistsError(f"Refusing to overwrite existing archive: {output}")
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in paths:
             name = relative_name(path)
             archive.writestr(_zip_info(name), path.read_bytes())
-    return {"path": str(output.relative_to(ROOT)) if output.is_relative_to(ROOT) else str(output),
+    return {"status": "BUILT",
+            "path": str(output.relative_to(ROOT)) if output.is_relative_to(ROOT) else str(output),
             "sha256": file_hash(output), "bytes": output.stat().st_size,
             "entry_count": len(paths), "file_count": len(paths)}
 
@@ -118,10 +391,20 @@ def verify_archive(archive_path: Path, records: dict[str, str]) -> dict:
     with zipfile.ZipFile(archive_path) as archive:
         entries = archive.infolist()
         names = [entry.filename for entry in entries]
+        manifest_names = set(records)
+        archive_names = set(names)
         if names != sorted(names):
             errors.append("archive entries are not sorted")
         if len(names) != len(set(names)):
             errors.append("archive contains duplicate entries")
+        missing = sorted(manifest_names - archive_names)
+        unexpected = sorted(archive_names - manifest_names)
+        if missing:
+            errors.append("archive is missing manifest entries: " + ", ".join(missing))
+        if unexpected:
+            errors.append("archive contains entries absent from manifest: " + ", ".join(unexpected))
+        if names != sorted(records):
+            errors.append("archive member order/set does not exactly match manifest")
         for entry in entries:
             path = Path(entry.filename)
             if path.is_absolute() or ".." in path.parts:
@@ -138,7 +421,8 @@ def verify_archive(archive_path: Path, records: dict[str, str]) -> dict:
             errors.append("CRC test failed")
     return {"status": "PASS" if not errors else "FAIL", "errors": sorted(set(errors)),
             "unsafe_paths": "PASS" if not any("unsafe" in item for item in errors) else "FAIL",
-            "crc_test": "PASS" if "CRC test failed" not in errors else "FAIL"}
+            "crc_test": "PASS" if "CRC test failed" not in errors else "FAIL",
+            "archive_entry_count": len(names), "manifest_entry_count": len(records)}
 
 
 def run_external_smoke(archive_path: Path) -> dict:
@@ -179,8 +463,9 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--archive", default="dist/video-generation-engineering-triple-aaa-r9.zip")
     parser.add_argument("--report", default="verification/distribution-triple-aaa-r9.json")
+    parser.add_argument("--freeze-ref", help="frozen candidate fingerprint to compare with the final reference")
     parser.add_argument("--critic-ref")
-    parser.add_argument("--fingerprint-ref")
+    parser.add_argument("--fingerprint-ref", help="final candidate fingerprint to validate")
     args = parser.parse_args(argv)
     archive_path = (ROOT / args.archive).resolve() if not Path(args.archive).is_absolute() else Path(args.archive)
     report_path = (ROOT / args.report).resolve() if not Path(args.report).is_absolute() else Path(args.report)
@@ -188,20 +473,23 @@ def main(argv=None) -> int:
     paths = package_files()
     records = manifest(paths)
     errors = scan_package(paths)
-    archive = build_archive(archive_path, paths) if not errors else {"path": str(archive_path), "status": "NOT_BUILT"}
-    archive_check = verify_archive(archive_path, records) if not errors else {"status": "BLOCKED", "errors": errors}
+    reference_binding = validate_release_references(args.freeze_ref, args.fingerprint_ref, args.critic_ref)
+    if reference_binding["status"] == "FAIL":
+        errors.extend("release reference: " + error for error in reference_binding["errors"])
+
+    archive = {"path": str(archive_path), "status": "NOT_BUILT"}
+    if not errors:
+        try:
+            archive = build_archive(archive_path, paths)
+        except FileExistsError as exc:
+            errors.append(str(exc))
+    archive_check = (
+        verify_archive(archive_path, records)
+        if archive.get("status") == "BUILT"
+        else {"status": "BLOCKED", "errors": sorted(set(errors))}
+    )
     smoke = run_external_smoke(archive_path) if archive_check.get("status") == "PASS" else {"status": "BLOCKED", "checks": []}
     compileall = run_compileall()
-    critic = None
-    for field, value in (("critic_ref", args.critic_ref), ("fingerprint_ref", args.fingerprint_ref)):
-        if value:
-            path = (ROOT / value).resolve() if not Path(value).is_absolute() else Path(value)
-            if not path.is_file():
-                errors.append(f"{field} is unavailable: {value}")
-            else:
-                if critic is None:
-                    critic = {}
-                critic[field] = str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path)
     status = "PASS" if not errors and archive_check.get("status") == "PASS" and smoke.get("status") == "PASS" and compileall.get("status") == "PASS" else "FAIL"
     report = {
         "schema_version": 1, "id": "distribution-triple-aaa-r9", "observed_at": started,
@@ -210,7 +498,7 @@ def main(argv=None) -> int:
         "package_scope": str(SKILL.relative_to(ROOT)), "package_manifest_sha256": manifest_digest(records),
         "package_file_count": len(records), "package_files_sha256": records,
         "archive": {**archive, "verification": archive_check}, "external_cwd_smoke": smoke,
-        "compileall": compileall, "critic_binding": critic,
+        "compileall": compileall, "critic_binding": reference_binding,
         "security": {"status": "PASS" if not errors else "FAIL", "errors": sorted(set(errors)),
                       "secret_value_scan": "PASS" if not any("secret" in error for error in errors) else "FAIL",
                       "model_weight_files": "PASS" if not any("weight" in error for error in errors) else "FAIL",

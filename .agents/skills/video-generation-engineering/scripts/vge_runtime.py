@@ -666,10 +666,12 @@ def collect(client, attempt, history, destination):
             "Runtime history does not match the sealed workflow")
     out = Path(destination)
     out.mkdir(parents=True, exist_ok=True)
+    history_path = out / (attempt["id"] + "-history.json")
+    save(history_path, history)
     completed = copy.deepcopy(attempt)
     completed.update(status="SUCCEEDED", revision=attempt.get("revision", 1)+1, supersedes_hash=digest(attempt), ended_at=datetime.now(timezone.utc).isoformat())
-    save(out / (attempt["id"] + "-completed.json"), completed)
     records = []
+    output_entries = []
     outputs_by_node = raw.get("outputs", {})
     require(isinstance(outputs_by_node, dict), "Runtime history outputs must be an object")
     for node, outputs in outputs_by_node.items():
@@ -707,8 +709,35 @@ def collect(client, attempt, history, destination):
                             "profile_content_hash": attempt["profile"].get("content_hash"),
                             "model_asset_hash": attempt["model"].get("asset_hash"),
                             "input_hashes": copy.deepcopy(attempt.get("inputs", [])),
-                            "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "workflow_hash": attempt["workflow"]["content_hash"], "runtime_history_workflow_hash": digest(submitted_prompt[2]), "workflow_fingerprint": attempt["workflow"].get("fingerprint"), "shot_contract_hash": attempt["shot_contract_hash"], "profile_id": attempt["profile"].get("id"), "profile_revision": attempt["profile"].get("revision"), "profile_content_hash": attempt["profile"].get("content_hash"), "model_asset_hash": attempt["model"].get("asset_hash"), "input_hashes": copy.deepcopy(attempt.get("inputs", [])), "selected_device": attempt["runtime"].get("selected_device"), "resource_context_hash": attempt["runtime"].get("resource_context_hash"), "runtime_context": copy.deepcopy(attempt["runtime"].get("runtime_context", {}))}, "quality_review": {"lifecycle": "NOT_STARTED", "observation_ref": None}}
+                            "runtime": {"provider": "comfyui", "endpoint": client.endpoint, "workflow_hash": attempt["workflow"]["content_hash"], "runtime_history_workflow_hash": digest(submitted_prompt[2]), "workflow_fingerprint": attempt["workflow"].get("fingerprint"), "shot_contract_hash": attempt["shot_contract_hash"], "profile_id": attempt["profile"].get("id"), "profile_revision": attempt["profile"].get("revision"), "profile_content_hash": attempt["profile"].get("content_hash"), "model_asset_hash": attempt["model"].get("asset_hash"), "input_hashes": copy.deepcopy(attempt.get("inputs", [])), "selected_device": attempt["runtime"].get("selected_device"), "resource_context_hash": attempt["runtime"].get("resource_context_hash"), "runtime_context": copy.deepcopy(attempt["runtime"].get("runtime_context", {}))}, "runtime_output": {"node_id": str(node), "bucket": kind, "filename": name, "subfolder": folder, "type": output.get("type", "output"), "content_hash": file_hash(path)}, "quality_review": {"lifecycle": "NOT_STARTED", "observation_ref": None}}
                 save(out / (aid + ".json"), artifact)
                 records.append(artifact)
+                output_entries.append({"artifact_id": aid, "node_id": str(node), "bucket": kind,
+                                       "filename": name, "subfolder": folder,
+                                       "type": output.get("type", "output"),
+                                       "content_hash": artifact["content_hash"]})
     require(records, "Job completed without collectible outputs")
+    progress_path = Path(attempt["progress_ref"])
+    require(progress_path.is_file(), "Runtime event log is unavailable for collection")
+    _append_event(progress_path, {"schema_version": 1, "event_id": "event-collected", "attempt_id": attempt["id"],
+                                  "queue_id": history["prompt_id"], "status": "COLLECTED",
+                                  "history_ref": str(history_path.resolve()),
+                                  "history_content_hash": file_hash(history_path),
+                                  "artifact_ids": [item["id"] for item in records],
+                                  "observed_at": completed["ended_at"], "source": "vge_runtime.collect"})
+    completed["collection"] = {
+        "schema_version": 1, "status": "COLLECTED", "collector": "vge_runtime.collect",
+        "prompt_id": history["prompt_id"], "history_ref": str(history_path.resolve()),
+        "history_content_hash": file_hash(history_path), "history_output_hash": digest(outputs_by_node),
+        "event_log_ref": str(progress_path.resolve()), "event_log_content_hash": file_hash(progress_path),
+        "output_entries": output_entries,
+        "artifacts": [{"id": item["id"], "record_ref": str((out / (item["id"] + ".json")).resolve()),
+                       "record_content_hash": file_hash(out / (item["id"] + ".json")),
+                       "artifact_ref": item["artifact_ref"], "content_hash": item["content_hash"]}
+                      for item in records],
+        "collected_at": completed["ended_at"],
+    }
+    completed["artifacts"] = copy.deepcopy(completed["collection"]["artifacts"])
+    validate_attempt(completed)
+    save(out / (attempt["id"] + "-completed.json"), completed)
     return records

@@ -4,6 +4,7 @@
 Does not queue generation, call a provider, download models or change the skill.
 """
 import argparse
+import ast
 import contextlib
 from datetime import datetime, timezone
 import hashlib
@@ -17,6 +18,57 @@ from urllib.parse import unquote, urlsplit
 
 ROOT=Path(__file__).resolve().parents[1]
 SKILL=ROOT/'.agents/skills/video-generation-engineering'
+
+
+def import_cycle_audit(root=None):
+    """Find cycles in the Skill's static local-module import graph."""
+    root = Path(root or (SKILL / 'scripts')).resolve()
+    modules = {path.stem: path for path in root.glob('*.py') if path.is_file() and path.name != '__init__.py'}
+    graph = {name: set() for name in modules}
+    errors = []
+    for name, path in modules.items():
+        try:
+            tree = ast.parse(path.read_text(encoding='utf-8'), filename=str(path))
+        except (OSError, SyntaxError, UnicodeError) as exc:
+            errors.append(f'{name}: cannot parse for import-cycle audit ({type(exc).__name__})')
+            continue
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    candidate = alias.name.split('.')[0]
+                    if candidate in modules:
+                        graph[name].add(candidate)
+            elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+                candidate = node.module.split('.')[0]
+                if candidate in modules:
+                    graph[name].add(candidate)
+
+    cycles = []
+    visiting, visited = set(), set()
+
+    def visit(name, path):
+        if name in visiting:
+            cycle = path[path.index(name):]
+            normalized = tuple(cycle)
+            reverse = tuple(reversed(cycle))
+            if normalized not in cycles and reverse not in cycles:
+                cycles.append(normalized)
+            return
+        if name in visited:
+            return
+        visiting.add(name)
+        for dependency in sorted(graph[name]):
+            visit(dependency, path + [dependency])
+        visiting.remove(name)
+        visited.add(name)
+
+    for name in sorted(graph):
+        visit(name, [name])
+    for cycle in cycles:
+        errors.append('import cycle: ' + ' -> '.join(cycle))
+    return {'status': 'PASS' if not errors else 'FAIL', 'modules': sorted(modules),
+            'cycles': [list(cycle) for cycle in cycles], 'errors': sorted(errors),
+            'scope': str(root)}
 
 
 def production_media_summary():
@@ -62,6 +114,9 @@ def manifest():
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output');args=parser.parse_args()
     started=datetime.now(timezone.utc).isoformat();before=manifest();errors=[];links=0
+    import_audit = import_cycle_audit()
+    if import_audit['status'] != 'PASS':
+        errors.append('Import-cycle audit failed')
     text=(SKILL/'SKILL.md').read_text()
     front=re.match(r'\A---\n(.*?)\n---\n',text,re.S)
     if not front or not re.search(r'^name: video-generation-engineering$',front[1],re.M) or not re.search(r'^description: .{20,}',front[1],re.M):errors.append('Invalid skill frontmatter')
@@ -95,6 +150,7 @@ def main():
             'package_files_sha256':after,'test_output':stream.getvalue(),
             'limitations':['Unit/integration tests and fake provider are not real paid-provider execution','Native synthetic media tests do not certify generated-media quality','Independent forward-use and real ComfyUI generation have separate dated evidence'],
             'production_media_quality': quality,
+            'import_cycle_audit': import_audit,
             'production_gate_status': 'PARTIAL' if quality['status'] not in ('PASS',) else 'MECHANICAL_ONLY',
             'quality_policy': 'Mechanical media findings are reported separately from offline software status; semantic PASS requires category/oracle/evidence-bound observations.'}
     if args.output:

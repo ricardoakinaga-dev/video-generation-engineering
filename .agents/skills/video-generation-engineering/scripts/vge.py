@@ -11,6 +11,7 @@ from vge_core import (
 )
 from vge_runtime import ComfyClient, validate_workflow, bind_workflow, submit, poll, collect
 from vge_media import probe, assemble, contact_sheet, trim, validate_assembly_manifest
+from vge_capture import capture_evidence
 from vge_evidence import aggregate, validate_observation
 from vge_provider import hailuo_request, hailuo_submit, hailuo_poll
 from vge_quality import (validate_continuity_scorecard, validate_transition_contract, validate_semantic_observation,
@@ -18,7 +19,8 @@ from vge_quality import (validate_continuity_scorecard, validate_transition_cont
                          validate_causal_sequence, validate_object_ownership, validate_vehicle_state,
                          validate_dialogue_contract, validate_audio_timeline, analyze_prompt_density, adapt_prompt,
                          adapter_differential, validate_feature_profile, build_repair_plan, validate_repair_plan,
-                         validate_long_form_case, maturity_report, validate_editorial_acceptance)
+                         validate_long_form_case, maturity_report, validate_editorial_acceptance,
+                         prepare_first_last_frame_probe, validate_long_form_execution_envelope)
 
 
 def main(argv=None):
@@ -42,12 +44,17 @@ def main(argv=None):
     p = sub.add_parser("contact-sheet"); p.add_argument("input"); p.add_argument("image"); p.add_argument("--frames", type=int, default=8)
     p = sub.add_parser("trim", help="create an explicit derived media trim"); p.add_argument("input"); p.add_argument("output_path"); p.add_argument("--duration", type=float, required=True); p.add_argument("--report")
     p = sub.add_parser("media-qa"); p.add_argument("input"); p.add_argument("--output"); p.add_argument("--audio-required", action="store_true"); p.add_argument("--allow-black", action="store_true"); p.add_argument("--allow-freeze", action="store_true"); p.add_argument("--expected-duration", type=float); p.add_argument("--expected-fps", type=float); p.add_argument("--expected-width", type=int); p.add_argument("--expected-height", type=int); p.add_argument("--expected-frame-count", type=int); p.add_argument("--expected-codec"); p.add_argument("--expected-container")
+    p = sub.add_parser("capture-evidence", help="capture hash-bound frames/audio without semantic acceptance")
+    p.add_argument("input"); p.add_argument("--output-dir", required=True); p.add_argument("--frame", dest="frames", action="append", type=float, default=[])
+    p.add_argument("--audio-window", dest="audio_windows", action="append", nargs=2, type=float, metavar=("START_S", "DURATION_S"), default=[])
+    p.add_argument("--report")
     for name, help_text in (("scorecard", "continuity scorecard JSON"), ("transition", "adjacent transition JSON"),
                             ("semantic", "category-separated observation JSON"), ("shot-acceptance", "shot acceptance contract JSON"),
                             ("contact", "contact phases JSON"), ("dialogue", "dialogue contract JSON"), ("audio", "audio timeline JSON"),
                             ("causality", "stimulus-processing-reaction-response JSON"),
                             ("ownership", "object ownership transition JSON"), ("vehicle-state", "vehicle state JSON"),
                             ("repair-validate", "repair plan JSON"), ("long-form", "long-form ladder case JSON"),
+                            ("case-envelope", "case-level long-form execution envelope JSON"),
                             ("maturity", "maturity evidence JSON"), ("adapter-diff", "adapter differential JSON"),
                             ("assembly-validate", "strict assembly manifest JSON"), ("editorial", "editorial acceptance JSON")):
         p = sub.add_parser(name, help=help_text); p.add_argument("input"); p.add_argument("--output")
@@ -59,6 +66,7 @@ def main(argv=None):
     p = sub.add_parser("adapt-prompt"); p.add_argument("input"); p.add_argument("--adapter", required=True); p.add_argument("--output")
     p = sub.add_parser("profile-check"); p.add_argument("input"); p.add_argument("--feature", required=True); p.add_argument("--output")
     p = sub.add_parser("first-last-frame"); p.add_argument("input"); p.add_argument("--output")
+    p = sub.add_parser("flf-probe", help="prepare a mode-specific FLF probe without executing generation"); p.add_argument("input"); p.add_argument("--output")
     for name in ("discover", "preflight", "bind", "submit", "poll", "collect"):
         p = sub.add_parser(name)
         p.add_argument("--endpoint", default="http://127.0.0.1:8188")
@@ -76,7 +84,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         cmd = args.command
-        data = load(args.input) if hasattr(args, "input") and cmd not in ("probe", "contact-sheet", "media-qa", "trim") else None
+        data = load(args.input) if hasattr(args, "input") and cmd not in ("probe", "contact-sheet", "media-qa", "trim", "capture-evidence") else None
         if cmd == "prepare": result = prepare(data)
         elif cmd == "validate": result = validate(data)
         elif cmd == "compile": result = compile_plan(data, load(args.profile) if args.profile else None)
@@ -100,10 +108,16 @@ def main(argv=None):
                 expected_duration_s=args.expected_duration, expected_fps=args.expected_fps,
                 expected_resolution=expected_resolution, expected_frame_count=args.expected_frame_count,
                 expected_codec=args.expected_codec, expected_container=args.expected_container)
+        elif cmd == "capture-evidence":
+            result = capture_evidence(args.input, args.output_dir, args.frames, args.audio_windows)
+            if args.report:
+                save(args.report, result)
         elif cmd == "scorecard": result = validate_continuity_scorecard(data)
         elif cmd == "transition": result = validate_transition_contract(data)
         elif cmd == "semantic": result = validate_semantic_observation(data)
-        elif cmd == "shot-acceptance": result = __import__("vge_quality", fromlist=["validate_shot_acceptance"]).validate_shot_acceptance(data)
+        elif cmd == "shot-acceptance":
+            result = __import__("vge_quality", fromlist=["validate_shot_acceptance"]).validate_shot_acceptance(
+                data.get("contract", data), data.get("artifact"), data.get("observation"), data.get("scorecard"))
         elif cmd == "contact": result = validate_contact_phases(data)
         elif cmd == "causality": result = validate_causal_sequence(data)
         elif cmd == "ownership": result = validate_object_ownership(data)
@@ -119,7 +133,9 @@ def main(argv=None):
         elif cmd == "adapt-prompt": result = adapt_prompt(data["sections"], load(args.adapter), canonical_state=data.get("canonical_state"))
         elif cmd == "profile-check": result = validate_feature_profile(data.get("profile", data), args.feature, observed=data.get("observed"), base_dir=Path(args.input).resolve().parent)
         elif cmd == "first-last-frame": result = validate_first_last_frame(data)
+        elif cmd == "flf-probe": result = prepare_first_last_frame_probe(data)
         elif cmd == "long-form": result = validate_long_form_case(data, base_dir=Path(args.input).resolve().parent)
+        elif cmd == "case-envelope": result = validate_long_form_execution_envelope(data, base_dir=Path(args.input).resolve().parent)
         elif cmd == "maturity": result = maturity_report(data)
         elif cmd == "adapter-diff": result = adapter_differential(data["canonical_sections"], data["adapters"], canonical_state=data.get("canonical_state"))
         elif cmd == "assembly-validate": result = validate_assembly_manifest(data)
@@ -144,9 +160,11 @@ def main(argv=None):
             "scorecard", "transition", "semantic", "shot-acceptance", "contact", "dialogue", "audio",
             "causality", "ownership", "vehicle-state", "repair-validate", "long-form", "maturity",
             "adapter-diff", "assembly-validate", "editorial", "profile-check", "first-last-frame",
-            "media-qa",
+            "flf-probe", "case-envelope", "media-qa",
         }
-        non_accepting_quality_status = exit_status in ("FAIL", "FAILED", "BLOCKED", "UNKNOWN", "PARTIAL", "NOT_OBSERVED", "NOT_RUN")
+        non_accepting_quality_status = exit_status in (
+            "FAIL", "FAILED", "BLOCKED", "UNKNOWN", "PARTIAL", "NOT_OBSERVED", "NOT_RUN",
+            "EXPIRED", "DEGRADED", "UNSUPPORTED", "PROPOSED", "INFERRED")
         if non_accepting_quality_status and getattr(args, "output", None):
             print(json.dumps({"status": status, "report": args.output, "next_action": "Inspect issues/gaps in the saved report; the output is not accepted"}), file=sys.stderr)
         return 2 if (exit_status in ("FAIL", "FAILED", "BLOCKED", "UNKNOWN") or

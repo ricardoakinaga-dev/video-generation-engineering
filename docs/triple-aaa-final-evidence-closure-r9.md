@@ -16,7 +16,7 @@ The R9 implementation closes the demonstrated structural fail-open gaps and prov
 ## Frozen Candidate
 
 - Reviewer-independent freeze record: [`candidate-fingerprint-r9-freeze.json`](../verification/candidate-fingerprint-r9-freeze.json); final matching record: [`candidate-fingerprint-r9-final.json`](../verification/candidate-fingerprint-r9-final.json).
-- Candidate scope: 464 textual/source files plus the R9 distribution archive; scope digest `sha256:4499d34200f9520a8544f14437285e926678ab21420ce97140511f1f614128d3`.
+- Candidate scope: 470 textual/source files plus the R9 distribution archive. The exact scope digest is recorded in the freeze/final fingerprint records; this report is itself in scope and intentionally does not duplicate a self-referential digest.
 - Mutation sentinel: `.gauntlet/bar.json`, `sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80` at freeze.
 - The scope excludes generated media/model-weight bytes and derivative/reviewer-owned R9 reports; their hash-bound records and release scans remain explicit. The distribution archive itself is included.
 - The three supplied prompts were preserved in [`docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt), [`part-2.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-2.txt) and [`part-3.txt`](master-prompt-triple-aaa-evidence-closure-20260909-part-3.txt). Parts 1–2 are byte-exact; part 3 records one final LF normalization by `apply_patch`, with the original source hash and byte count retained in the frozen bar.
@@ -31,7 +31,7 @@ The supplied sources were read before implementation and recorded in the frozen 
 | `pasted-text-2.txt` | `7de047adb66fee247330629e2c5ed07b57d5b9d5739089468a4921a04ac9d1f3` | 1,192 | 18,546 |
 | `pasted-text-3.txt` | `311bbb58ad4ed8c2a60aee8539bd3f7a122ad7366361ab240f9233ecc19ebf65` | 448 | 7,993 |
 
-The pre-hardening baseline was 143 passing tests with no failures, errors or skips. The final applicable suite is 146 passing tests with no failures, errors or skips, recorded in [`software-triple-aaa-r9.json`](../verification/software-triple-aaa-r9.json). The baseline and R8 records remain historical; R8 is not reused after R9 changes.
+The pre-hardening baseline was 143 passing tests with no failures, errors or skips. The final applicable suite is 157 passing tests with no failures, errors or skips, recorded in [`software-triple-aaa-r9.json`](../verification/software-triple-aaa-r9.json). The baseline and R8 records remain historical; R8 is not reused after R9 changes.
 
 ## Changes Made
 
@@ -42,9 +42,13 @@ The pre-hardening baseline was 143 passing tests with no failures, errors or ski
 - Required claim-specific oracle families for first/last-frame, contact phases, dialogue/audio channels and transition semantic PASS.
 - Required distinct media bytes for a transition and added transition-contract consumption to repair scope planning.
 - Required hash-bound, pair-specific evidence references for repair revalidation and successful production attempt/artifact lineage for long-form acceptance; rejected fixture/synthetic runtime provenance and duplicate media across distinct shots.
+- Added hash-bound local frame/audio capture with immutable derived paths, explicit `NOT_RUN` semantic status, strict audio-stream evidence for dialogue/timeline claims and paired face-frame/audio evidence for visible lip-sync claims.
+- Sealed collected runtime attempts with immutable history snapshots, append-only collection events, exact output-entry manifests and pre-save attempt validation; added a case-level ordered execution envelope for shot/state/transition/assembly lineage.
+- Added explicit mode-specific FLF probe preparation, exact maturity levels (`DOCUMENTED` through `PRODUCTION_ACCEPTED`), reviewer authority/decision binding, and `parent_attempt_id` repair lineage requirements.
 - Required assembly segments to resolve to the declared shot artifact and execution attempt.
 - Made quality CLI commands nonzero for `FAIL`, `FAILED`, `BLOCKED`, `UNKNOWN`, `PARTIAL`, `NOT_OBSERVED` and `NOT_RUN` states.
-- Fixed `tools/verify.py` discovery so the executable verification command runs the same complete 146-test suite as the documented direct command.
+- Fixed `tools/verify.py` discovery so the executable verification command runs the same complete 157-test suite as the documented direct command.
+- Added static local import-cycle detection and private-DNS rejection for provider image references.
 - Added [`tools/release_audit.py`](../tools/release_audit.py) for deterministic Skill packaging, ZIP/CRC/SHA checks, path/security scans, compileall and external-CWD smoke.
 - Added [`tools/candidate_fingerprint.py`](../tools/candidate_fingerprint.py) for a reproducible candidate scope and mutation sentinel.
 - Added regression cases for each demonstrated false-positive boundary and deterministic distribution portability.
@@ -59,20 +63,20 @@ The pre-hardening baseline was 143 passing tests with no failures, errors or ski
 
 ## Architecture State
 
-The ownership boundaries remain cohesive: [`vge_core.py`](../.agents/skills/video-generation-engineering/scripts/vge_core.py) owns canonical planning and contradictions; [`vge_quality.py`](../.agents/skills/video-generation-engineering/scripts/vge_quality.py) owns deterministic quality contracts; runtime identity and side-effect guards remain in `vge_runtime.py`; media probing/assembly remains in `vge_media.py`; provenance remains in `vge_evidence.py`; provider authorization remains in `vge_provider.py`; and CLI routing remains in `vge.py`. The repository-only release tools are intentionally outside the portable Skill payload.
+The ownership boundaries remain cohesive: [`vge_core.py`](../.agents/skills/video-generation-engineering/scripts/vge_core.py) owns canonical planning and contradictions; [`vge_quality.py`](../.agents/skills/video-generation-engineering/scripts/vge_quality.py) owns deterministic quality contracts; runtime identity and side-effect guards remain in `vge_runtime.py`; media probing/assembly remains in `vge_media.py`; capture remains in `vge_capture.py`; provenance remains in `vge_evidence.py`; provider authorization remains in `vge_provider.py`; and CLI routing remains in `vge.py`. A static local import graph has no cycles. The repository-only release tools are intentionally outside the portable Skill payload.
 
 ## Regression Results
 
 | Gate | Result | Evidence |
 |---|---|---|
-| Focused regression | PASS | Motion contradiction and explicit adapter-remapping tests pass. |
-| Complete no-bytecode suite | PASS | 146 tests, 0 failures, 0 errors, 0 skips. |
-| Executable offline verifier | PASS | `tools/verify.py`; 146 tests, 0 failures/errors/skips; package manifest `aa4948ec9329cfa77440dd3843cb27df5c03ab3ab307cb9b88afbb0f5b199420`. |
+| Focused regression | PASS | Capture, collection, audio/editorial, FLF, case-envelope, repair-lineage, provider-DNS, release and import-cycle regressions pass. |
+| Complete no-bytecode suite | PASS | 157 tests, 0 failures, 0 errors, 0 skips. |
+| Executable offline verifier | PASS | `tools/verify.py`; 157 tests, 0 failures/errors/skips; package manifest `10ad9af17dc1210f4d791ae9de61ee1ddfceb362f4faa4e694511f05d620dfd4`; static import-cycle audit PASS. |
 | Skill package/link checks | PASS | 15 Skill-local links, manifest stable during verification. |
-| Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json), with current report counts refreshed at handoff. |
-| Release audit | PASS | [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json); 29 package files, deterministic archive, CRC/security/compile/external-CWD checks. |
+| Documentation audit | PASS | [`docs-current-r9.json`](../verification/docs-current-r9.json); 55 Markdown documents, 50 YAML blocks, 545 local links, 80 requirements, no errors. |
+| Release audit | PASS | [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json); 30 package files, deterministic archive, CRC/security/compile/external-CWD checks. |
 
-Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions, fixture production provenance, repair fake references, and non-PASS CLI statuses.
+Known-bad tests cover missing/wrong hashes, stale artifacts, unrelated semantic evidence, weak oracles, identical transition bytes, missing semantic transition observations, canonical contradictions, fixture production provenance, repair fake references/lineage, invalid audio evidence, manifest-only assembly, case-envelope gaps, import cycles and non-PASS CLI statuses.
 
 ## Runtime Environment
 
@@ -93,19 +97,19 @@ The snapshot recorded approximately 41.0 GiB free system RAM, `cuda:0` with 11.6
 
 ## LF-001
 
-The 15-second vehicle-entry ladder remains `PARTIAL`, not production accepted. [`LF-001-r4-case.json`](../verification/long-form/LF-001-r4-case.json) records S01/S02 accepted records, S03 partial semantic/continuity evidence, T01 `PARTIAL`, T02 `FAIL`, a mechanical `PREVIEW_ONLY` assembly, and missing editorial closure. The current production media records pass mechanical readability/timing checks, but they do not override semantic drift or transition failure. The repair plan is `AWAITING_AUTHORIZATION`; no new attempt, before/after observation, transition revalidation or final accepted reassembly exists.
+The 15-second vehicle-entry ladder remains `PARTIAL`, not production accepted. [`LF-001-r4-case.json`](../verification/long-form/LF-001-r4-case.json) records S01/S02 accepted records, S03 partial semantic/continuity evidence, T01 `PARTIAL`, T02 `FAIL`, a mechanical `PREVIEW_ONLY` assembly, and missing editorial closure. The current production media records pass mechanical readability/timing checks, but they do not override semantic drift or transition failure. The repair plan is `AWAITING_AUTHORIZATION`; no new attempt, before/after observation, transition revalidation or final accepted reassembly exists. The validator now requires distinct immutable attempts/artifacts, a `parent_attempt_id`, hash-bound before/after observations and all affected transition results when a repair ledger is supplied.
 
 ## FLF
 
-[`FLF-r4-evidence.json`](../verification/long-form/FLF-r4-evidence.json) remains `NOT_RUN` for `FIRST_ONLY`, `LAST_ONLY` and `FIRST_AND_LAST`. The validator now maps endpoint identity, motion path, object state and artifact delivery to appropriate oracle families, but validation of a supplied record is not a runtime probe.
+[`FLF-r4-evidence.json`](../verification/long-form/FLF-r4-evidence.json) remains `NOT_RUN` for `FIRST_ONLY`, `LAST_ONLY` and `FIRST_AND_LAST`. The public `flf-probe` command now prepares a bounded mode-specific envelope with explicit `NOT_RUN` checks and no POST; endpoint identity, motion path, object state and artifact delivery still require a later collected runtime observation.
 
 ## LF-002
 
-[`LF-002-r4-case.json`](../verification/long-form/LF-002-r4-case.json) remains `BLOCKED`. Structural contracts separate dialogue semantics, voice, performance, lip-sync, foley, ambience, mix, timing and editorial review. No authorized 20–30 second dialogue production, line-level voice artifact, listening review or accepted sync observation exists.
+[`LF-002-r4-case.json`](../verification/long-form/LF-002-r4-case.json) remains `BLOCKED`. Structural contracts separate dialogue semantics, voice, performance, lip-sync, foley, ambience, mix, timing and editorial review. Audio claims now require hash-bound bytes with an actual audio stream, and visible lip-sync requires paired face-frame/audio evidence. No authorized 20–30 second dialogue production, line-level voice artifact, listening review or accepted sync observation exists.
 
 ## LF-003
 
-[`LF-003-r4-case.json`](../verification/long-form/LF-003-r4-case.json) remains `BLOCKED`. The ten-shot structural ladder and 50-second target exist, but there is no accepted 6–12-shot dependent production chain, real repair ledger, transition closure, final assembly or human editorial checkpoint.
+[`LF-003-r4-case.json`](../verification/long-form/LF-003-r4-case.json) remains `BLOCKED`. The ten-shot structural ladder and 50-second target exist, and a case-level execution envelope can now record ordered state/attempt/transition lineage, but there is no accepted 6–12-shot dependent production chain, real repair ledger, transition closure, final assembly or human editorial checkpoint.
 
 ## LF-004
 
@@ -121,11 +125,11 @@ The compiler now fails closed on canonical contradictions, empty canonical state
 
 ## Semantic QA Findings
 
-Semantic PASS now requires the exact observed artifact bytes, current shot/attempt lineage, twelve explicit dimensions, a claim-appropriate oracle, evidence hash/locator binding, confidence and limitations. Derived evidence must name and hash its source artifact. Mechanical `media_qa` remains separate and is reported as mechanical only. Existing S03 semantic evidence is therefore not promoted.
+Semantic PASS now requires the exact observed artifact bytes, current shot/attempt lineage, twelve explicit dimensions, a claim-appropriate oracle, evidence hash/locator binding, confidence and limitations. Derived evidence must name and hash its source artifact. Final long-form acceptance additionally requires a hash-bound final semantic observation wrapper and exact assembly binding. Mechanical `media_qa` remains separate and is reported as mechanical only. Existing S03 semantic evidence is therefore not promoted.
 
 ## Repairability Findings
 
-Repair scope now consumes both dependency IDs and explicit transition contracts, so affected adjacent pairs are not silently omitted. Successful repair revalidation requires a real pair, a real evidence reference and the actual content hash. The repository preserves the failed/partial state and repair plan, but no new repair was authorized; therefore repairability is structurally strengthened and production repair remains `BLOCKED`.
+Repair scope now consumes both dependency IDs and explicit transition contracts, so affected adjacent pairs are not silently omitted. Successful repair revalidation requires a real pair, a real evidence reference and the actual content hash; a completed lineage also requires a distinct new attempt with `parent_attempt_id` and a distinct new artifact. The repository preserves the failed/partial state and repair plan, but no new repair was authorized; therefore repairability is structurally strengthened and production repair remains `BLOCKED`.
 
 ## Architecture/Cohesion Audit
 
@@ -145,7 +149,7 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 |---|---|---|---|
 | R9-P0-01 Fresh baseline and prompt provenance | PROVEN | Frozen bar, prompt copies, source hashes, software/runtime/release records | Production records remain separately scoped. |
 | R9-P0-02 Truth-layer separation | PROVEN | Hash-bound validators, fixture boundary tests, current report | Semantic truth still needs real/oracle/human observation. |
-| R9-P0-03 Regression and harness gate | PROVEN | 146-test suite, `tools/verify.py`, release audit, docs audit | Production gates are not implied by offline PASS. |
+| R9-P0-03 Regression and harness gate | PROVEN | 157-test suite, `tools/verify.py`, release audit, docs audit | Production gates are not implied by offline PASS. |
 | R9-P0-04 Resource and side-effect safety | PROVEN | Runtime snapshot, queue untouched, runtime guard tests | No generation was authorized in this run. |
 | R9-P0-05 Immutable failures and artifacts | PROVEN | Attempt/artifact/observation lineage validators and preserved history | No repair artifact exists to validate. |
 | R9-P0-06 Oracle and canonical gates | PROVEN | Canonical, risk, semantic, FLF/contact/dialogue oracle mappings and known-bad tests | Oracle execution itself is outside this structural package. |
@@ -157,19 +161,19 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 | R9-P5-01 LF-003 long form | BLOCKED | Structural ten-shot ladder and blocked case | No accepted 45–60 s production chain/editorial review. |
 | R9-P6-01 Second real adapter | BLOCKED | Differential record and explicit blocked runtime state | No authorized alternate runtime; no download. |
 | R9-P7-01 Architecture/disclosure | PROVEN | Skill structure, references, release scans and current audit | Maintainability remains subject to future observed changes. |
-| R9-P8-01 Fresh independent critic | PROVEN | [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md), final fresh post-fix review, independent fingerprint and sentinel match | Review supports the structural candidate only; it rejects production promotion. |
-| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, release audit, report/matrix/scorecard | Structural distribution is not production proof. |
+| R9-P8-01 Fresh independent critic | PROVEN | Fresh non-inherited reviewer record recomputes the frozen candidate scope and mutation sentinel before/after and records a complete P0-P9 matrix | Its `INCOMPLETE` verdict correctly keeps audiovisual production unpromoted. |
+| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, final fingerprint, fresh critic and post-critic release audit bind the final accounting | Structural distribution is not production proof. |
 
 ## Independent Critic
 
-The final fresh non-inherited reviewer, Dirac, completed a read-only review from `2026-09-09T23:54:12.885975Z` through `2026-09-09T23:59:15.984475Z`. It independently recomputed 464/464 candidate files and matched scope `sha256:4499d34200f9520a8544f14437285e926678ab21420ce97140511f1f614128d3`; the `.gauntlet/bar.json` sentinel matched `sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80` before and after. The earlier stale `a085…` accounting issue was fixed and the distribution audit was rerun against the current critic path. The reviewer-owned record is [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md), with final verdict `PARTIAL`. It confirms the structural candidate while rejecting Triple-AAA production promotion.
+The previous Dirac review is retained as historical evidence. The final reviewer-owned record [`triple-aaa-independent-critic-r9.md`](../verification/triple-aaa-independent-critic-r9.md) is fresh, non-inherited and read-only; it independently binds the frozen candidate scope and mutation sentinel, reports the P0-P9 matrix, and concludes `INCOMPLETE`. The post-critic release audit binds its exact bytes to the final fingerprint and distribution report. Its verdict does not promote audiovisual production.
 
 ## Distribution
 
 The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json):
 
-- package: 29 files; manifest `sha256:ae029130cfeec425ac9dbc147cea0d75e2ea5a5d161587a3391701e4c8d7093b`;
-- archive: 132,482 bytes; SHA-256 `sha256:cdddaf35ecba70a323e46f2ba132a0b5b1b24dc25d124daaa9b5fa4df79edf90`;
+- package: 30 files; manifest `sha256:e41a8f06d1bb6b646c2abcae45505c83e0b0306248a9715b76302a94d2e0b612`;
+- archive: 142,727 bytes; SHA-256 `sha256:da153d5a5092fe1174d80277ed6208a561e739e1016c3372407eda2d589483bf`;
 - ZIP entries sorted/unique, CRC PASS, unsafe-path PASS;
 - secret-like values, model weights, private/generated media and absolute workspace paths: PASS;
 - Skill compileall and external-CWD `--help → prepare → validate → compile`: PASS.
@@ -184,18 +188,18 @@ See the full claim-scoped matrix in [`capability-matrix-r9.md`](capability-matri
 
 | Maturity band | Current scope | Status |
 |---|---|---|
-| L0 — declared | Prompt intent, plans, schemas and optional capability declarations | PROVEN as declaration only |
-| L1 — structural | Canonical gates, contracts, fixtures, known-bad tests and deterministic release checks | PROVEN |
-| L2 — hash-bound observation | Local runtime/resource snapshots, artifact lineage and mechanical media checks | PARTIAL/PROVEN by scope |
-| L3 — capability runtime | H3 T2V local workflow/execution boundary | PROVEN (scoped); R2V/FLF/second adapter partial or blocked |
-| L4 — accepted production | Semantic multi-shot continuity, repair, dialogue/audio/lip-sync, editorial and long-form closure | BLOCKED/PARTIAL |
-| L5 — Triple-AAA distribution claim | Fresh critic plus all required production criteria and no critical blocker | NOT PROVEN |
+| L0 — `DOCUMENTED` | Prompt intent, plans, schemas and optional capability declarations | PROVEN as declaration only |
+| L1 — `STRUCTURALLY_VALIDATED` | Canonical gates, contracts, fixtures, known-bad tests and deterministic release checks | PROVEN |
+| L2 — `RUNTIME_EXECUTED` | Local runtime execution and sealed attempt history | PARTIAL/PROVEN by scoped records |
+| L3 — `ARTIFACT_OBSERVED` | Hash-bound collected media and mechanical observations | PARTIAL/PROVEN by scope |
+| L4 — `MULTI_SHOT_ACCEPTED` | Dependent real artifacts, transitions and accepted case envelope | BLOCKED/PARTIAL |
+| L5 — `PRODUCTION_ACCEPTED` | Complete mechanical, semantic, continuity, assembly and editorial gates | NOT PROVEN |
 
 Maturity is per capability, not inherited from a model or profile name. A lower-status capability cannot be promoted by a higher structural score.
 
 ## Quality Scores
 
-The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple-aaa-scorecard-r9.md). The scores are evidence-weighted indicators and deliberately do not average away the required P1–P6 blockers. The provisional independent-review category remains capped until the fresh critic record is finalized.
+The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple-aaa-scorecard-r9.md). The scores are evidence-weighted indicators and deliberately do not average away the required P1–P6 blockers. The independent-review category is bounded by the fresh critic record and remains distinct from the `PARTIAL` production verdict.
 
 ## Remaining Gaps
 
@@ -209,7 +213,7 @@ The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple
 ## Claims Now Supported
 
 - The three user-supplied prompts are preserved with source hashes and documented normalization.
-- The repository Skill has fail-closed canonical, provenance, semantic/oracle, transition, repair, adapter and production-vs-fixture contract boundaries covered by 146 passing tests.
+- The repository Skill has fail-closed canonical, provenance, semantic/oracle, transition, repair, adapter, audio, FLF-preparation, case-envelope and production-vs-fixture contract boundaries covered by 157 passing tests.
 - The offline verifier, deterministic portable package audit, security scans and external-CWD smoke pass for the current candidate.
 - The local ComfyUI runtime and bundled H3 R2V workflow were observed at the dated snapshot, with queue and side effects left untouched.
 - The package can be distributed as a reproducible Skill archive within the declared scope.
