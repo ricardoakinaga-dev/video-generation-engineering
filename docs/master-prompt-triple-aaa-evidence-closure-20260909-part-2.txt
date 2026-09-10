@@ -1,0 +1,1192 @@
+# 51. PROMPT COMPILER — EVIDENCE-DRIVEN TUNING
+
+Only change compiler behavior in response to:
+
+real generation failure;
+clear semantic omission;
+demonstrated model sensitivity;
+prompt contradiction;
+unnecessary prompt inflation;
+loss of canonical meaning;
+adapter incompatibility;
+observed failure that can reasonably be attributed to prompt representation.
+
+Do NOT tune the compiler based only on subjective preference.
+
+Every material compiler change should identify:
+
+OBSERVED PROBLEM
+→ CANONICAL INTENT
+→ CURRENT COMPILED REPRESENTATION
+→ SUSPECTED FAILURE
+→ MINIMAL COMPILER CHANGE
+→ REGRESSION TEST
+→ RUNTIME RESULT IF AVAILABLE
+
+Do not modify canonical scene semantics merely to make a model accept the prompt.
+
+---
+
+# 52. PROMPT INFORMATION PRIORITY
+
+When prompt length or model sensitivity requires compression, preserve information in approximately this priority:
+
+1. identity/reference locks;
+2. causal action order;
+3. physical interaction;
+4. start/end state;
+5. continuity-critical properties;
+6. active speaker/dialogue timing;
+7. camera intent;
+8. environment/lighting anchors;
+9. model-sensitive controls;
+10. sound intent;
+11. secondary aesthetic language.
+
+Remove low-information repetition before removing state-critical meaning.
+
+---
+
+# 53. PROMPT DENSITY BY RISK
+
+Use scene-risk-aware prompt density.
+
+LOW-RISK STATIC SHOT:
+concise.
+
+IDENTITY-SENSITIVE SHOT:
+identity/reference emphasis.
+
+DIALOGUE SHOT:
+speaker/listener/performance/timing emphasis.
+
+CONTACT SHOT:
+contact phases/anatomy/object-state emphasis.
+
+VEHICLE SHOT:
+geometry/articulation/road-contact emphasis.
+
+LONG-FORM DEPENDENT SHOT:
+state inheritance/reference-anchor emphasis.
+
+Do not use maximum verbosity as a default.
+
+---
+
+# 54. PROMPT COMPRESSION
+
+Remove redundant phrases that do not materially improve generation.
+
+Examples of likely low-value repetition:
+
+photorealistic
+ultra realistic
+highly detailed
+cinematic
+professional
+premium
+4K
+
+when repeated multiple times without adding distinct meaning.
+
+Prefer concrete instructions:
+
+"driver door rotates around its physical hinge"
+
+over:
+
+"extremely realistic cinematic premium door movement."
+
+---
+
+# 55. CANONICAL PROMPT SCHEMA
+
+Preserve the useful canonical representation:
+
+subject_definitions:
+
+environment_definitions:
+
+summary:
+
+retention_analysis:
+
+detailed_description:
+
+global_physical_constraints:
+
+cinematography:
+
+overall_soundscape:
+
+negative_constraints:
+
+However:
+
+do not force empty or irrelevant sections.
+
+The canonical representation exists to preserve meaning.
+
+It is not a ceremonial formatting requirement.
+
+---
+
+# 56. MODEL-SPECIFIC COMPILATION
+
+Model adapters may transform:
+
+wording
+section order
+prompt density
+conditioning representation
+reference bindings
+workflow inputs
+camera-control representation
+negative constraints
+duration representation
+audio instructions
+fallback behavior
+
+Adapters MUST NOT change:
+
+creative objective
+subject identity
+reference locks
+causal action order
+declared state
+continuity requirements
+acceptance criteria
+
+If adapter compilation changes canonical semantics:
+
+FAIL.
+
+---
+
+# 57. CANONICAL CONTRADICTION GATE
+
+Before any adapter compilation reject contradictions such as:
+
+door OPEN and CLOSED simultaneously;
+
+vehicle PARKED and ACCELERATING simultaneously;
+
+subject OUTSIDE and SEATED simultaneously;
+
+subject approaching an object already held;
+
+night environment with locked golden-hour sunlight;
+
+camera STATIC with mandatory continuous orbit;
+
+speaker A and speaker B owning the same exclusive dialogue turn;
+
+LOCKED wardrobe changing without declared transition;
+
+object ownership changing without transfer;
+
+shot start state contradicting previous shot end state.
+
+Repair canonical state first.
+
+Do not repair contradictions only in prose.
+
+---
+
+# 58. NEGATIVE CONSTRAINT SELECTION
+
+Negative constraints must be selected from actual scene risks.
+
+Possible risk families:
+
+IDENTITY
+ANATOMY
+HANDS
+CONTACT
+OBJECT
+VEHICLE
+ENVIRONMENT
+TEMPORAL
+CAMERA
+DIALOGUE
+LIP_SYNC
+TEXT
+AUDIO
+
+Do not emit all families automatically.
+
+Examples:
+
+portrait:
+identity + anatomy may matter.
+
+vehicle entry:
+identity + hands + contact + vehicle + temporal.
+
+dialogue:
+identity + dialogue + lip-sync + temporal.
+
+driving:
+vehicle + environment + camera + temporal.
+
+---
+
+# 59. NEGATIVE CONSTRAINT AUDIT
+
+For compiled prompts expose, in structured diagnostics:
+
+selected risk families;
+omitted risk families;
+reason for selection;
+reason for material omission where relevant.
+
+Do not expose hidden chain-of-thought.
+
+Expose only decision facts.
+
+---
+
+# 60. PROMPT A/B VALIDATION
+
+Where runtime budget allows, perform a controlled prompt comparison for at least one stable scene:
+
+CURRENT COMPILER
+
+versus:
+
+EVIDENCE-TUNED COMPILER
+
+Keep other material variables stable where practical.
+
+Compare actual observations:
+
+identity
+instruction compliance
+motion
+interaction
+environment
+temporal behavior
+
+Do not declare one prompt superior based only on prose quality.
+
+---
+
+# 61. SEMANTIC QA — CLAIM-SPECIFIC ORACLES
+
+Maintain strict oracle discipline.
+
+METADATA oracle may prove:
+
+duration
+codec
+resolution
+FPS
+stream presence.
+
+FRAME oracle may support:
+
+appearance
+identity cues
+wardrobe
+static object state.
+
+MULTI_FRAME / SEQUENCE oracle may support:
+
+motion
+contact
+physics
+lip movement
+temporal continuity.
+
+AUDIO oracle may support:
+
+speech
+intelligibility
+sound event
+mix.
+
+TRANSITION oracle may support:
+
+cross-shot state continuity.
+
+HUMAN oracle may support:
+
+editorial
+acting
+emotion
+subjective cinematic quality.
+
+A weaker oracle must never promote a stronger claim.
+
+---
+
+# 62. SEMANTIC OBSERVATION CONTRACT
+
+Every semantic observation must bind:
+
+observation_id
+artifact_id
+artifact_hash
+shot_id
+oracle
+dimension
+result
+evidence
+confidence
+limitations
+timestamp
+
+Production PASS must resolve to actual artifact bytes.
+
+---
+
+# 63. SEMANTIC DIMENSIONS
+
+Preserve the existing semantic dimensions unless real production evidence demonstrates a missing diagnostic category.
+
+Current expected dimensions include:
+
+identity
+wardrobe
+object_retention
+environment
+lighting
+physics
+interaction
+camera
+performance
+dialogue
+lip_sync
+temporal_continuity
+
+Do not add categories merely to increase sophistication.
+
+---
+
+# 64. CONTINUITY SCORECARD
+
+Keep continuity dimensions independent.
+
+Example:
+
+IDENTITY — PASS
+
+WARDROBE — PASS
+
+OBJECT_STATE — FAIL
+
+ENVIRONMENT — PARTIAL
+
+LIGHTING — PASS
+
+CAMERA — PASS
+
+AUDIO — NOT_OBSERVED
+
+Do not allow an aggregate score to hide a critical failure.
+
+---
+
+# 65. MECHANICAL MEDIA QA
+
+Keep deterministic mechanical checks separate from semantic QA.
+
+Validate where applicable:
+
+file existence
+file hash
+container readability
+video codec
+audio codec
+duration
+FPS
+resolution
+frame count
+audio stream
+audio duration
+A/V duration mismatch
+decode
+black frames
+freeze frames
+missing media
+duplicate media
+
+Mechanical PASS does NOT prove:
+
+identity
+physics
+acting
+emotion
+interaction
+dialogue
+lip-sync
+continuity
+cinematography.
+
+---
+
+# 66. ATTEMPT IMMUTABILITY
+
+Every runtime submission creates a new immutable attempt.
+
+Record:
+
+attempt_id
+parent_attempt_id if repaired
+project_id
+scene_id
+shot_id
+runtime
+workflow
+workflow_fingerprint
+model
+profile
+device
+resource_snapshot
+inputs
+input_hashes
+seed
+parameters
+queue_id
+start_time
+end_time
+status
+artifacts
+
+Never overwrite a failed attempt.
+
+---
+
+# 67. ARTIFACT IMMUTABILITY
+
+Every generated artifact must bind:
+
+artifact_id
+attempt_id
+shot_id
+artifact_ref
+content_hash
+media_kind
+media_metadata
+generation_status
+
+If bytes change:
+
+create a new artifact identity.
+
+---
+
+# 68. FAILED EVIDENCE PRESERVATION
+
+Preserve real failures including:
+
+OOM
+identity drift
+vehicle deformation
+bad hand contact
+door articulation failure
+body collision
+speaker swap
+listener mouthing
+bad lip-sync
+environment drift
+transition mismatch
+failed repair
+assembly failure
+
+Do not delete failures merely to clean the release history.
+
+Failures are valuable regression evidence.
+
+---
+
+# 69. PRODUCTION EVIDENCE VS TEST FIXTURE
+
+Maintain a hard boundary:
+
+SYNTHETIC FIXTURE
+≠
+PRODUCTION ARTIFACT.
+
+Synthetic duplicated media may test validators.
+
+It cannot satisfy production acceptance.
+
+Production acceptance requires actual generated artifacts associated with the relevant production attempt.
+
+---
+
+# 70. ASSEMBLY LINEAGE
+
+Every assembled artifact must resolve:
+
+FINAL ARTIFACT
+↓
+SOURCE SHOTS
+↓
+SOURCE ARTIFACT HASHES
+↓
+SOURCE ATTEMPTS
+↓
+SHOT CONTRACTS
+↓
+TRANSITION CONTRACTS
+↓
+REPAIR LINEAGE
+
+Reject stale assembly manifests.
+
+---
+
+# 71. ASSEMBLY AFTER REPAIR
+
+When a source shot is repaired:
+
+invalidate any assembly that depends on the previous rejected artifact.
+
+Create a new assembly manifest.
+
+Re-run applicable:
+
+mechanical QA;
+transition QA;
+semantic sequence QA;
+editorial review.
+
+---
+
+# 72. MATURITY MODEL
+
+Classify capabilities using evidence maturity.
+
+LEVEL 0 — DOCUMENTED
+
+Only documentation/specification exists.
+
+LEVEL 1 — STRUCTURALLY_VALIDATED
+
+Contracts/tests pass.
+
+LEVEL 2 — RUNTIME_EXECUTED
+
+Real runtime execution occurred.
+
+LEVEL 3 — ARTIFACT_OBSERVED
+
+Actual artifact was collected and observed.
+
+LEVEL 4 — MULTI_SHOT_ACCEPTED
+
+Dependent real artifacts and transitions passed.
+
+LEVEL 5 — PRODUCTION_ACCEPTED
+
+Complete production passed required mechanical, semantic, continuity, assembly and editorial gates.
+
+Never skip levels by inference.
+
+---
+
+# 73. CLAIM MATURITY
+
+Every release claim should have a maturity level.
+
+Example:
+
+Canonical planning:
+LEVEL 1+
+
+H3 T2V:
+LEVEL 3 within scoped evidence.
+
+LF-001:
+current level determined by actual closure result.
+
+LF-002:
+current level determined by actual closure result.
+
+LF-003:
+current level determined by actual closure result.
+
+Do not report project-wide maturity from the strongest individual feature.
+
+---
+
+# 74. CODE COHESION AUDIT
+
+After production work inspect:
+
+vge_core.py
+vge_quality.py
+vge_runtime.py
+vge_media.py
+vge_evidence.py
+vge_provider.py
+vge.py
+
+For each ask:
+
+Does it have one coherent responsibility?
+
+Does it know things owned by another layer?
+
+Is semantic creative reasoning leaking into deterministic code?
+
+Is provider-specific behavior leaking into canonical state?
+
+Are contracts duplicated?
+
+Are dependencies cyclic?
+
+---
+
+# 75. REFACTOR POLICY
+
+Do NOT refactor because:
+
+file is large;
+another architecture looks cleaner;
+more modules look more professional.
+
+Refactor only when there is:
+
+demonstrated cohesion failure;
+duplicate ownership;
+testability problem;
+dependency inversion;
+provider leakage;
+runtime leakage;
+maintainability blocker.
+
+Every refactor must preserve behavior and pass regression.
+
+---
+
+# 76. AGENT / CODE RESPONSIBILITY BOUNDARY
+
+Agent owns:
+
+creative interpretation
+story
+narrative beats
+performance direction
+cinematography
+semantic decomposition
+qualitative repair strategy
+editorial recommendations
+
+Deterministic code owns:
+
+IDs
+schemas
+timing
+graph validity
+state consistency
+hashes
+fingerprints
+capability intersections
+resource guards
+provenance
+media metadata
+assembly validation
+contract validation
+
+Do not encode artistic taste as brittle deterministic rules.
+
+---
+
+# 77. PROGRESSIVE DISCLOSURE AUDIT
+
+Test actual routing behavior.
+
+CASE A:
+simple 5-second portrait.
+
+Expected:
+minimal core guidance.
+
+CASE B:
+dialogue.
+
+Expected:
+core + directing/audio.
+
+CASE C:
+vehicle entry.
+
+Expected:
+core + continuity + interaction/constraints.
+
+CASE D:
+60-second production.
+
+Expected:
+core + continuity + directing/audio + production quality.
+
+CASE E:
+specific model.
+
+Expected:
+model adaptation.
+
+CASE F:
+actual execution.
+
+Expected:
+ComfyUI execution/runtime.
+
+CASE G:
+sensitive likeness/voice/external action.
+
+Expected:
+safety/provenance.
+
+Do not load irrelevant references ceremonially.
+
+---
+
+# 78. SKILL.md DISCIPLINE
+
+Keep SKILL.md concise and procedural.
+
+It should primarily own:
+
+triggering;
+working boundary;
+reference routing;
+phase order;
+core invariants;
+execution boundary;
+result classes.
+
+Deep knowledge remains in specialist references.
+
+Do not turn SKILL.md into a monolithic manual.
+
+---
+
+# 79. PRODUCTION REFERENCE AUDIT
+
+For every production reference answer:
+
+WHY DOES THIS EXIST?
+
+WHEN IS IT LOADED?
+
+WHAT DECISION DOES IT IMPROVE?
+
+WHAT DOES IT OWN?
+
+DOES IT DUPLICATE ANOTHER REFERENCE?
+
+CAN IT BE SMALLER WITHOUT LOSING BEHAVIOR?
+
+Merge/remove only when evidence supports simplification.
+
+---
+
+# 80. PATTERN LIBRARY POLICY
+
+A reusable pattern earns production status only when:
+
+it appears repeatedly;
+its causal structure is stable;
+it addresses a known failure;
+it has positive fixture coverage;
+it has known-bad/adversarial coverage;
+it can be evaluated.
+
+Strong candidates:
+
+vehicle-entry
+object-handoff
+two-person-dialogue
+walking-and-talking
+human-animal-examination
+automotive-driving
+product-reveal
+
+Do not create speculative pattern catalogs.
+
+---
+
+# 81. PATTERNS ARE NOT CANNED PROMPTS
+
+Patterns should represent:
+
+phases
+state
+causality
+risk
+contact
+acceptance
+
+not:
+
+fixed prose.
+
+Example:
+
+VEHICLE_ENTRY_PATTERN
+
+phases:
+approach
+pre_contact
+handle_contact
+door_open
+body_orientation
+entry
+seated
+door_close
+
+risk:
+hands
+contact
+vehicle_geometry
+collision
+continuity
+
+The compiler creates model-specific language later.
+
+---
+
+# 82. TEST POLICY
+
+Preserve all currently valid tests.
+
+Add tests only for:
+
+real defect;
+new invariant;
+new runtime boundary;
+new repair behavior;
+new production regression.
+
+Do not optimize for test count.
+
+A smaller meaningful suite is better than a larger vanity suite.
+
+---
+
+# 83. METAMORPHIC EVALUATION
+
+Preserve and expand only useful metamorphic invariants.
+
+Examples:
+
+Change vehicle color.
+
+Expected:
+causal graph unchanged.
+
+Change dialogue emotional tone.
+
+Expected:
+speaker/listener order unchanged;
+performance changes.
+
+Change adapter.
+
+Expected:
+canonical semantics unchanged.
+
+Increase project duration.
+
+Expected:
+planning depth changes;
+identity/reference semantics remain stable.
+
+---
+
+# 84. KNOWN-BAD PRODUCTION CASES
+
+Ensure fail-closed coverage for:
+
+missing artifact
+wrong hash
+same artifact on both transition sides
+missing semantic observation
+weak oracle
+identity FAIL
+door-state contradiction
+object teleportation
+ownership without contact
+speaker swap
+listener mouthing
+reaction-before-stimulus
+A/V mismatch
+stale profile
+unproven FLF
+stale assembly
+repair without transition revalidation
+production PASS using synthetic fixture
+long-form PASS using placeholders
+
+---
+
+# 85. SECOND ADAPTER EVIDENCE
+
+If a second real adapter becomes available:
+
+run a small bounded production probe.
+
+Do not begin with LF-003.
+
+Use a simple canonical scene.
+
+Observe actual output.
+
+Bind:
+
+adapter
+runtime
+workflow
+model
+artifact
+hash
+semantic observation
+
+Only then promote the relevant feature.
+
+---
+
+# 86. PORTABILITY
+
+Final Skill package must not depend on:
+
+repository docs;
+verification history;
+developer machine absolute paths;
+test fixtures;
+local temporary files;
+private artifacts;
+hidden environment state.
+
+The distributed Skill must be self-contained for its declared planning/runtime interfaces.
+
+---
+
+# 87. SECURITY AND PRIVACY
+
+Before release verify:
+
+no API keys;
+no credentials;
+no private reference images;
+no private generated media;
+no model weights;
+no sensitive absolute paths;
+no hidden provider secrets.
+
+External credentials remain outside artifacts.
+
+---
+
+# 88. EXTERNAL SIDE EFFECT POLICY
+
+Do not perform without authorization:
+
+paid API calls;
+cloud uploads;
+public publication;
+voice cloning;
+new likeness transfer;
+large model download;
+destructive queue changes.
+
+Local execution may proceed only within the already authorized safe project scope and resource constraints.
+
+---
+
+# 89. SECOND MODEL DOWNLOAD POLICY
+
+Do not satisfy the second-adapter criterion by automatically downloading multi-GB weights.
+
+If no second runtime is already available:
+
+record:
+
+BLOCKED_SECOND_ADAPTER_RUNTIME_UNAVAILABLE
+
+and continue.
+
+---
+
+# 90. TRACEABILITY
+
+Production-critical claims should resolve where applicable:
+
+USER INTENT
+→ REQUIREMENT
+→ CANONICAL STATE
+→ SHOT CONTRACT
+→ COMPILED PROMPT
+→ EXECUTION ATTEMPT
+→ ARTIFACT
+→ OBSERVATION
+→ TRANSITION
+→ REPAIR
+→ ASSEMBLY
+→ ACCEPTANCE
+→ RELEASE CLAIM
+
+Documentation alone is not traceability proof.
+
+---
+
+# 91. CAPABILITY MATRIX
+
+At final closure generate:
+
+| Capability | Structural | Runtime | Artifact | Multi-shot | Production | Maturity | Status |
+
+Required capabilities:
+
+Scene Planning
+Scene Bible
+Shot Graph
+Continuity
+Reference Retention
+Canonical Contradiction Gate
+Prompt Compiler
+Risk-Based Constraints
+H3 T2V
+H3 R2V/I2V
+FLF
+Re-anchor
+Dialogue
+Voice
+Lip-sync
+Audio
+Interaction
+Vehicle Entry
+Semantic QA
+Transition QA
+Repair
+Assembly
+LF-001
+LF-002
+LF-003
+LF-004
+Second Adapter
+
+Use actual evidence.
+
+---
+
+# 92. FINAL QUALITY SCORES
+
+Score independently from 0–100:
+
+Architecture
+Skill Design
+Progressive Disclosure
+Canonical Modeling
+Continuity
+Prompt Compilation
+Interaction
+Dialogue/Performance
+Audio
+Lip-sync
+Model Adaptation
+ComfyUI Runtime
+Resource Safety
+Deterministic QA
+Semantic QA
+Long-form Planning
+Long-form Production
+Repairability
+Provenance
+Portability
+Maintainability
+Production Evidence
+
+Do not hide weak production behind strong architecture.
+
+---
+
+# 93. RELEASE VERDICTS
+
+Allowed final verdicts:
+
+TRIPLE_AAA_PROVEN
+
+TRIPLE_AAA_CANDIDATE
+
+READY_WITH_RISKS
+
+PARTIAL
+
+BLOCKED
+
+Use the strongest verdict justified by evidence, not by project ambition.
+
+---
+
+# 94. TRIPLE_AAA_PROVEN BAR
+
+Use `TRIPLE_AAA_PROVEN` only if ALL critical conditions are satisfied:
+
+Architecture gate PASS.
+
+Verification gate PASS.
+
+Production gate PASS.
+
+LF-001 PRODUCTION_ACCEPTED.
+
+LF-002 PRODUCTION_ACCEPTED.
+
+LF-003 PRODUCTION_ACCEPTED.
+
+Real multi-shot continuity accepted.
+
+Semantic QA accepted.
+
+Assembly accepted.
+
+Real repair demonstrated or explicitly justified as no-natural-failure under a sufficiently strong production set.
+
+Fresh independent critic PASS.
+
+Fresh distribution PASS.
+
+No unresolved critical production blocker.
+
+---
+
+# 95. TRIPLE_AAA_CANDIDATE BAR
+
+`TRIPLE_AAA_CANDIDATE` may be used if:
+
+architecture is strong;
+
+verification is strong;
+
+LF-001/2/3 have substantial real accepted production evidence;
+
+multi-shot production works;
+
+assembly works;
+
+semantic QA works;
+
+repair/re-anchor path has meaningful evidence;
+
+fresh critic is complete;
+
+but a non-core frontier remains blocked, such as:
+
+LF-004;
+second adapter;
+one optional FLF mode.
+
+State the remaining frontier explicitly.
+
+---
+
+# 96. READY_WITH_RISKS BAR
+
+Use `READY_WITH_RISKS` when:
+
+software architecture is production-quality;

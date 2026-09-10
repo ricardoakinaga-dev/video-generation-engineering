@@ -1,0 +1,449 @@
+verification is strong;
+
+but material audiovisual production evidence remains incomplete.
+
+Do not treat this verdict as failure.
+
+It is the correct result when software quality is ahead of production proof.
+
+97. DO NOT GAME THE QUALITY BAR
+
+Forbidden substitutions:
+
+documentation → runtime proof
+
+unit tests → artifact proof
+
+artifact existence → semantic PASS
+
+single short clip → long-form proof
+
+audio stream → dialogue quality
+
+node availability → FLF support
+
+model profile name → capability confirmation
+
+lead-owned fingerprint → independent critic acceptance
+
+historical critic → current critic
+
+synthetic fixture → production evidence
+
+placeholder references → long-form PASS
+
+98. FRESH INDEPENDENT CRITIC
+
+After ALL material implementation, evidence and documentation changes are complete:
+
+FREEZE THE CANDIDATE.
+
+Compute a candidate fingerprint covering at minimum:
+
+SKILL.md
+references
+scripts
+profiles
+assets
+tests
+release-critical docs
+distribution candidate
+
+Then run a fresh independent review.
+
+The reviewer must not inherit the builder's conclusion.
+
+99. CRITIC OUTPUT CONTRACT
+
+The independent critic must return:
+
+reviewer identity/session identifier where available;
+review start timestamp;
+review end timestamp;
+reviewer-owned candidate fingerprint;
+criteria matrix;
+findings;
+severity;
+evidence references;
+mutation sentinel;
+final verdict.
+
+Allowed critic verdicts:
+
+PASS
+REJECT
+INCOMPLETE
+
+INCOMPLETE does not satisfy release assurance.
+
+100. CRITIC MUTATION SENTINEL
+
+After independent review compare the reviewed candidate fingerprint with the final candidate.
+
+If any material reviewed surface changed:
+
+critic evidence becomes STALE.
+
+Freeze again.
+
+Run another fresh critic.
+
+There is no "small fix" exemption for release-critical surfaces.
+
+101. CRITIC REJECT FLOW
+
+If critic returns REJECT:
+
+classify each finding:
+
+P0
+P1
+P2
+P3
+
+Repair only valid findings.
+
+Add regression where appropriate.
+
+Run full verification.
+
+Freeze new candidate.
+
+Run fresh critic again.
+
+Do not negotiate the quality bar downward to obtain PASS.
+
+102. FINAL DISTRIBUTION
+
+Build the final portable package only from the frozen candidate.
+
+Validate:
+
+ZIP integrity;
+CRC;
+SHA-256;
+package manifest;
+Skill validation;
+Python compile;
+local-link integrity;
+secret scan;
+credential scan;
+model-weight scan;
+private-media scan;
+absolute-path scan;
+external-CWD smoke;
+CLI help;
+prepare;
+validate;
+compile.
+
+Record the exact distribution hash.
+
+103. DISTRIBUTION IMMUTABILITY
+
+If the package changes after final distribution validation:
+
+the previous distribution evidence is stale.
+
+Rebuild.
+
+Recompute hashes.
+
+Re-run distribution validation.
+
+104. FINAL CAPABILITY CLAIMS
+
+For every significant capability state exactly:
+
+WHAT IS PROVEN
+
+WHAT IS PARTIAL
+
+WHAT IS UNKNOWN
+
+WHAT IS BLOCKED
+
+WHAT IS NOT RUN
+
+Do not hide unavailable capabilities in prose.
+
+105. FINAL REPORT REQUIRED STRUCTURE
+
+Produce:
+
+Final Triple-AAA Evidence Closure Report
+Final Verdict
+Frozen Candidate
+
+Include:
+commit/fingerprint/package hash.
+
+Baseline
+Changes Made
+Changes Rejected
+
+Include rejected overengineering proposals.
+
+Architecture State
+Regression Results
+
+Exact:
+tests
+passes
+failures
+errors
+skips
+
+Runtime Environment
+Resource State
+H3 Capability State
+LF-001
+
+Include:
+shot contracts
+attempts
+artifacts
+semantic observations
+transitions
+repair/re-anchor
+assembly
+editorial review
+final status
+
+FLF
+
+Include:
+modes tested
+artifacts
+observations
+status
+
+LF-002
+
+Include:
+dialogue
+voice
+performance
+lip-sync
+audio
+artifacts
+assembly
+editorial review
+status
+
+LF-003
+
+Include:
+Scene Bible
+timeline
+shot graph
+continuity
+attempts
+artifacts
+transition results
+repair
+assembly
+editorial review
+status
+
+LF-004
+
+If not run:
+say NOT_RUN and why.
+
+Second Adapter
+Prompt Compiler Findings
+
+Include actual evidence-driven changes only.
+
+Semantic QA Findings
+Repairability Findings
+Architecture/Cohesion Audit
+Progressive Disclosure Audit
+Failed Attempts Preserved
+Independent Critic
+Distribution
+Capability Matrix
+Maturity Matrix
+Quality Scores
+Remaining Gaps
+Claims Now Supported
+Claims Still Unsupported
+106. CLAIMS NOW SUPPORTED
+
+This section must contain only statements directly backed by current evidence.
+
+Example:
+
+"The Skill structurally validates multi-shot continuity."
+
+is different from:
+
+"The Skill has demonstrated accepted multi-shot production."
+
+Do not blur them.
+
+107. CLAIMS STILL UNSUPPORTED
+
+Explicitly list all important unsupported claims.
+
+Examples where applicable:
+
+guaranteed identity preservation
+perfect physics
+production-grade lip-sync
+universal 60-second continuity
+second-adapter parity
+FLF reliability
+120-second production
+provider-independent quality
+
+Transparency is part of Triple-AAA quality.
+
+108. FINAL SUCCESS CRITERION
+
+Do not define success as:
+
+more code;
+more documentation;
+more tests;
+more architectural concepts.
+
+Define success as:
+
+more observed, reproducible, correctly-scoped production behavior.
+
+The strongest possible result of this phase should demonstrate as much as the authorized environment permits of:
+
+INTENT
+→ CANONICAL PLAN
+→ SHOT CONTRACTS
+→ GENERATION
+→ REAL ARTIFACTS
+→ OBSERVATION
+→ FAILURE LOCALIZATION
+→ TARGETED REPAIR
+→ REGENERATION
+→ TRANSITION ACCEPTANCE
+→ ASSEMBLY
+→ SEMANTIC ACCEPTANCE
+→ EDITORIAL ACCEPTANCE
+→ FROZEN RELEASE
+
+109. IF RUNTIME REMAINS BLOCKED
+
+If available VRAM, queue pressure, missing model capabilities, absent provider authorization or unavailable second runtime prevent completion:
+
+DO NOT FABRICATE PRODUCTION EVIDENCE.
+
+Instead:
+
+complete all independent engineering work;
+
+preserve exact blocker evidence;
+
+leave affected capability BLOCKED/UNKNOWN/NOT_RUN;
+
+produce the strongest truthful release verdict.
+
+A truthful READY_WITH_RISKS is superior to a false TRIPLE_AAA_PROVEN.
+
+110. FINAL QUALITY PHILOSOPHY
+
+Generative-video models are probabilistic.
+
+Failure is expected.
+
+Triple-AAA quality does not mean:
+
+"the model never fails."
+
+It means the system can:
+
+define success before generation;
+
+retain canonical intent;
+
+control execution;
+
+observe actual output;
+
+distinguish mechanical from semantic correctness;
+
+detect drift;
+
+identify the responsible layer;
+
+repair the smallest necessary scope;
+
+preserve accepted work;
+
+revalidate affected transitions;
+
+assemble a traceable final artifact;
+
+and state exactly what the evidence proves.
+
+111. FINAL EXECUTION ORDER
+
+Execute in this order:
+
+Fresh baseline audit.
+Full regression gate.
+Fresh runtime/resource discovery.
+Resolve any P0 correctness regressions.
+Close LF-001 as far as real runtime permits.
+Exercise genuine repair/re-anchor when applicable.
+Probe FLF.
+Close LF-002 as far as supported.
+Attempt LF-003 only after the pipeline is sufficiently stable.
+Attempt second adapter only if legitimately available.
+Tune prompt compiler only from observed evidence.
+Audit architecture/cohesion.
+Audit progressive disclosure/context cost.
+Run complete regression.
+Freeze candidate.
+Run fresh independent critic.
+Repair valid critic findings.
+Re-freeze and re-critic after material changes.
+Build final distribution.
+Produce final evidence report.
+112. FINAL INSTRUCTION
+
+Do not ask for confirmation for safe repository-local changes required by this task.
+
+Do not perform paid, destructive, public or privacy-sensitive external actions without explicit authorization.
+
+Do not wait indefinitely for unavailable runtime capacity.
+
+Do not manufacture evidence.
+
+Do not weaken the acceptance bar.
+
+Do not optimize the repository for appearance.
+
+Optimize for:
+
+CORRECTNESS
+CONTINUITY
+EVIDENCE
+REPAIRABILITY
+PRODUCTION QUALITY
+PORTABILITY
+MAINTAINABILITY
+TRUTHFULNESS.
+
+The goal is not merely to create excellent prompts.
+
+The goal is to deliver a State-of-the-Art generative-video engineering Skill capable of:
+
+DIRECTING
+PLANNING
+EXECUTING
+OBSERVING
+DIAGNOSING
+REPAIRING
+ASSEMBLING
+VERIFYING
+
+real video productions while preserving traceability from the user's creative intent to the final accepted artifact.

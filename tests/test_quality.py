@@ -60,7 +60,8 @@ def decision_evidence():
     return [{"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}]
 
 
-def quality_provenance(shot_id, artifact_id, media_ref=None, media_hash=None):
+def quality_provenance(shot_id, artifact_id, media_ref=None, media_hash=None,
+                       runtime_provider="local_comfyui", runtime_endpoint="http://127.0.0.1:8188"):
     safe = re.sub(r"[^A-Za-z0-9_-]", "_", f"{shot_id}-{artifact_id}")
     media_ref = str(QUALITY_ARTIFACT) if media_ref is None else str(media_ref)
     media_hash = QUALITY_ARTIFACT_HASH if media_hash is None else media_hash
@@ -77,7 +78,7 @@ def quality_provenance(shot_id, artifact_id, media_ref=None, media_hash=None):
                       "ended_at": "2026-09-08T17:00:01+00:00",
                       "profile": {**profile_snapshot, "revision": 1, "content_hash": digest(profile_snapshot)},
                       "model": {"id": "model-fixture", "version": "1", "asset_hash": QUALITY_ARTIFACT_HASH},
-                      "runtime": {"provider": "fixture", "endpoint": "http://127.0.0.1:1", "version": "1",
+                      "runtime": {"provider": runtime_provider, "endpoint": runtime_endpoint, "version": "1",
                                   "node_inventory_hash": digest({}), "selected_device": "cuda:0",
                                   "resource_context_hash": digest([])},
                       "workflow": {"ref": str(workflow_ref), "queue_id": "queue-fixture",
@@ -246,6 +247,11 @@ class QualityContractTests(unittest.TestCase):
         duplicate["checks"][-1]["semantic_dimension"] = SEMANTIC_DIMENSIONS[0]
         with self.assertRaisesRegex(ContractError, "Duplicate semantic observation dimension"):
             validate_semantic_observation(duplicate)
+        unrelated = copy.deepcopy(item)
+        unrelated_ref = ROOT / "verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4"
+        unrelated["checks"][0]["evidence"][0].update(ref=str(unrelated_ref), content_hash=file_hash(unrelated_ref))
+        with self.assertRaisesRegex(ContractError, "not bound to the observed artifact"):
+            validate_semantic_observation(unrelated)
 
     def test_long_form_pass_requires_semantic_observations(self):
         def write_json(path, value):
@@ -258,7 +264,7 @@ class QualityContractTests(unittest.TestCase):
             refs = {}
             for name in ("intent", "plan", "bible", "graph", "continuity", "evidence", "audio", "repair", "human"):
                 path = root / f"{name}.json"
-                record = {"id": name}
+                record = {"schema_version": 1, "id": name, "revision": 1}
                 if name == "plan":
                     record["shots"] = [{"id": "shot_1"}, {"id": "shot_2"}]
                 if name in ("graph", "continuity"):
@@ -271,14 +277,15 @@ class QualityContractTests(unittest.TestCase):
                 media_path = QUALITY_ARTIFACT
                 if shot_id == "shot_2":
                     media_path = root / "shot_2.mp4"
-                    shutil.copyfile(QUALITY_ARTIFACT, media_path)
+                    shutil.copyfile(ROOT / "verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4", media_path)
                 media_hash = file_hash(media_path)
-                provenance = quality_provenance(shot_id, artifact_id, media_path, media_hash)
+                record = factory()
+                provenance = quality_provenance(shot_id, artifact_id, media_path, media_hash,
+                                                runtime_provider="local_comfyui", runtime_endpoint="http://127.0.0.1:8188")
                 attempts.append({"ref": provenance["attempt"]["ref"], "content_hash": provenance["attempt"]["content_hash"]})
                 artifacts.append({"ref": provenance["artifact"]["record_ref"],
                                   "content_hash": provenance["artifact"]["record_content_hash"],
                                   "media_ref": str(media_path), "media_content_hash": media_hash})
-                record = factory()
                 record.update(id=f"obs_{shot_id}", shot_id=shot_id, artifact_id=artifact_id,
                               artifact_ref=str(media_path), observed_content_hash=media_hash,
                               provenance=provenance)
@@ -295,7 +302,8 @@ class QualityContractTests(unittest.TestCase):
             next_media = root / "shot_2.mp4"
             next_media_hash = file_hash(next_media)
             next_scorecard.update(artifact_ref=str(next_media), observed_content_hash=next_media_hash,
-                                  provenance=quality_provenance("shot_2", "artifact_2", next_media, next_media_hash))
+                                  provenance=quality_provenance("shot_2", "artifact_2", next_media, next_media_hash,
+                                                               runtime_provider="local_comfyui", runtime_endpoint="http://127.0.0.1:8188"))
             for dimension in next_scorecard["dimensions"]:
                 for item in dimension.get("evidence", []):
                     item["ref"] = str(next_media)
@@ -375,6 +383,22 @@ class QualityContractTests(unittest.TestCase):
             root = Path(raw)
             valid = build_case(semantic_observation, root)
             self.assertEqual("PASS", validate_long_form_case(valid, base_dir=root)["status"])
+            lineage_bad = build_case(semantic_observation, root)
+            assembly_ref = Path(lineage_bad["production_evidence"]["assembly"]["ref"])
+            assembly_record = json.loads(assembly_ref.read_text(encoding="utf-8"))
+            assembly_record["segments"][1]["source_attempt"]["id"] = assembly_record["segments"][0]["source_attempt"]["id"]
+            write_json(assembly_ref, assembly_record)
+            lineage_bad["production_evidence"]["assembly"]["content_hash"] = file_hash(assembly_ref)
+            with self.assertRaisesRegex(ContractError, "source attempt is not bound"):
+                validate_long_form_case(lineage_bad, base_dir=root)
+            fixture_case = build_case(semantic_observation, root)
+            fixture_attempt = Path(fixture_case["production_evidence"]["attempts"][0]["ref"])
+            fixture_record = json.loads(fixture_attempt.read_text(encoding="utf-8"))
+            fixture_record["runtime"]["provider"] = "fixture"
+            write_json(fixture_attempt, fixture_record)
+            fixture_case["production_evidence"]["attempts"][0]["content_hash"] = file_hash(fixture_attempt)
+            with self.assertRaisesRegex(ContractError, "fixture/synthetic"):
+                validate_long_form_case(fixture_case, base_dir=root)
             invalid = build_case(observation, root)
             with self.assertRaisesRegex(ContractError, "semantic_dimension"):
                 validate_long_form_case(invalid, base_dir=root)
@@ -429,10 +453,10 @@ class QualityContractTests(unittest.TestCase):
 
     def test_transition_binds_state_and_scorecard(self):
         next_media = PROVENANCE_ROOT / "transition-next.mp4"
-        shutil.copyfile(QUALITY_ARTIFACT, next_media)
+        shutil.copyfile(ROOT / "verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4", next_media)
         next_media_hash = file_hash(next_media)
-        previous_observation = observation()
-        next_observation = observation()
+        previous_observation = semantic_observation()
+        next_observation = semantic_observation()
         next_observation.update(id="obs_2", shot_id="shot_2", artifact_id="artifact_2",
                                 artifact_ref=str(next_media), observed_content_hash=next_media_hash,
                                 provenance=quality_provenance("shot_2", "artifact_2", next_media, next_media_hash))
@@ -469,7 +493,7 @@ class QualityContractTests(unittest.TestCase):
 
     def test_transition_pass_requires_both_observations(self):
         next_media = PROVENANCE_ROOT / "transition-missing-observation-next.mp4"
-        shutil.copyfile(QUALITY_ARTIFACT, next_media)
+        shutil.copyfile(ROOT / "verification/media/art_c1c52b6492b04dc1847edbe3d028bab7.mp4", next_media)
         next_media_hash = file_hash(next_media)
         next_scorecard = scorecard()
         next_scorecard.update(artifact_ref=str(next_media), observed_content_hash=next_media_hash,
@@ -507,7 +531,8 @@ class QualityContractTests(unittest.TestCase):
     def test_first_last_frame_needs_actual_endpoint_checks(self):
         checks = []
         for check_id in ("endpoint_identity", "motion_path", "object_state", "artifact_delivery"):
-            checks.append({"id": check_id, "category": "visual", "result": "PASS", "oracle": oracle("FRAME"), "confidence": "HIGH", "evidence": [{"type": "FRAME", "ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH, "time_s": 0.5}], "limitations": []})
+            kind = "SEQUENCE" if check_id in ("motion_path", "object_state") else "METADATA" if check_id == "artifact_delivery" else "FRAME"
+            checks.append({"id": check_id, "category": "visual", "result": "PASS", "oracle": oracle(kind), "confidence": "HIGH", "evidence": [{"type": "FRAME", "ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH, "time_s": 0.5}], "limitations": []})
         record = {"schema_version": 1, "profile_id": "h3-r2v", "shot_id": "shot_flf", "capability_status": "CONFIRMED", "workflow_hash": digest("workflow"),
                   "inputs": {"first_frame": {"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}, "last_frame": {"ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}},
                   "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH, "provenance": quality_provenance("shot_flf", "artifact_flf"),
@@ -531,7 +556,7 @@ class QualityContractTests(unittest.TestCase):
         record["checks"][0]["evidence"][0]["ref"] = str(QUALITY_ARTIFACT)
         record["checks"][0]["oracle"] = oracle("METADATA", "Is the FLF node present?")
         for check in record["checks"]: check["oracle"] = oracle("METADATA", "Is the FLF node present?")
-        with self.assertRaisesRegex(ContractError, "metadata alone"):
+        with self.assertRaisesRegex(ContractError, "too weak|metadata alone"):
             validate_first_last_frame(record)
 
     def test_contact_dialogue_and_audio_contracts_separate_channels(self):
@@ -541,7 +566,7 @@ class QualityContractTests(unittest.TestCase):
         contact = {"schema_version": 1, "id": "contact_1", "shot_id": "shot_contact", "actor": "a", "receiver": "b", "object_id": "door", "cause": "hand pushes", "expected_result": "door open", "phases": phases}
         self.assertEqual("PARTIAL", validate_contact_phases(contact)["status"])
         for phase in phases:
-            phase.update(oracle=oracle("FRAME"), evidence=evidence())
+            phase.update(oracle=oracle("FRAME" if phase["phase"] in ("APPROACH", "PRE_CONTACT") else "SEQUENCE"), evidence=evidence())
         contact.update(artifact_ref=str(QUALITY_ARTIFACT), artifact_content_hash=QUALITY_ARTIFACT_HASH,
                        observed_at=datetime.now(timezone.utc).isoformat(), procedure="Bound contact fixture inspection",
                        provenance=quality_provenance("shot_contact", "artifact_contact"))
@@ -558,7 +583,8 @@ class QualityContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "contact.provenance"):
             validate_contact_phases(contact)
         contact["provenance"] = saved_contact_provenance
-        channels = {channel: {"status": "PASS", "oracle": oracle("AUDIO" if channel in ("voice", "mix") else "FRAME"), "evidence": evidence()} for channel in ("semantics", "voice", "performance", "lip_sync", "mix")}
+        channel_oracles = {"semantics": "AUDIO", "voice": "AUDIO", "performance": "SEQUENCE", "lip_sync": "SEQUENCE", "mix": "AUDIO"}
+        channels = {channel: {"status": "PASS", "oracle": oracle(channel_oracles[channel]), "evidence": evidence()} for channel in channel_oracles}
         channels["voice"]["audio_ref"] = "voice.wav"
         dialogue = {"schema_version": 1, "artifact_ref": str(QUALITY_ARTIFACT), "artifact_content_hash": QUALITY_ARTIFACT_HASH, "provenance": quality_provenance("shot_1", "artifact_dialogue"), "lines": [{"id": "line_1", "shot_id": "shot_1", "speaker": "a", "listener": "b", "text": "Ready.", "start_s": 1, "end_s": 2, "intention": "warn", "delivery": "quiet", "emotion": "focused", "gaze": "listener", "pause_policy": "none", "overlap_policy": "none", "visible_speech": True, "channels": channels}]}
         self.assertEqual("PASS", validate_dialogue_contract(dialogue)["status"])
@@ -600,15 +626,26 @@ class QualityContractTests(unittest.TestCase):
 
     def test_prompt_adapter_is_loss_explicit_and_differential(self):
         sections = {"identity": {"subject": "courier"}, "motion": {"action": "walk"}, "audio": {"dialogue": "Ready"}}
-        self.assertEqual("PASS", adapt_prompt(sections, {"id": "fixture", "preserve_sections": list(sections)}, canonical_state={})["status"])
-        degraded = adapt_prompt(sections, {"id": "small", "unsupported_sections": ["audio"]}, canonical_state={})
+        canonical_state = {"scene_id": "fixture"}
+        self.assertEqual("PASS", adapt_prompt(sections, {"id": "fixture", "preserve_sections": list(sections)}, canonical_state=canonical_state)["status"])
+        degraded = adapt_prompt(sections, {"id": "small", "unsupported_sections": ["audio"]}, canonical_state=canonical_state)
         self.assertEqual("DEGRADED", degraded["status"]); self.assertEqual(["audio"], degraded["omissions"])
+        with self.assertRaisesRegex(ContractError, "classify every canonical section"):
+            adapt_prompt(sections, {"id": "ambiguous", "preserve_sections": ["identity"]}, canonical_state=canonical_state)
+        with self.assertRaisesRegex(ContractError, "preserve and omit"):
+            adapt_prompt(sections, {"id": "overlap", "preserve_sections": ["identity", "audio"],
+                                   "unsupported_sections": ["audio"]}, canonical_state=canonical_state)
+        with self.assertRaisesRegex(ContractError, "remapping"):
+            adapt_prompt(sections, {"id": "remapped", "mapping": {"identity": "motion"}},
+                         canonical_state=canonical_state)
         with self.assertRaisesRegex(ContractError, "truncate"):
-            adapt_prompt(sections, {"id": "tiny", "max_words": 1}, canonical_state={})
+            adapt_prompt(sections, {"id": "tiny", "max_words": 1}, canonical_state=canonical_state)
         with self.assertRaisesRegex(ContractError, "requires canonical state"):
             adapt_prompt(sections, {"id": "fixture"})
-        diff = adapter_differential(sections, [{"id": "fixture"}, {"id": "small", "unsupported_sections": ["audio"]}], canonical_state={})
+        diff = adapter_differential(sections, [{"id": "fixture"}, {"id": "small", "unsupported_sections": ["audio"]}], canonical_state=canonical_state)
         self.assertEqual("DEGRADED", diff["status"])
+        self.assertTrue(all(item["canonical_semantics_preserved"] for item in diff["adapters"]))
+        self.assertEqual(digest(canonical_state), diff["canonical_state_hash"])
         self.assertTrue(analyze_prompt_density({"constraints": "not open and static"})["contradictions"])
 
     def test_canonical_prompt_gate_rejects_state_contradictions(self):
@@ -628,6 +665,12 @@ class QualityContractTests(unittest.TestCase):
             validate_canonical_state(state)
         with self.assertRaisesRegex(ContractError, "Canonical state contradictions"):
             adapt_prompt({"identity": {"subject": "adult"}}, {"id": "fixture"}, canonical_state=state)
+        ownership = detect_canonical_contradictions({
+            "ownership": {"owner_before": "a", "owner_after": "b", "contact_state": "PROXIMITY"}
+        })
+        self.assertIn("OWNERSHIP_TRANSFER", {item["id"] for item in ownership["contradictions"]})
+        motion = detect_canonical_contradictions({"vehicle": {"motion_state": "PARKED", "velocity_phase": "ACCELERATING"}})
+        self.assertIn("VEHICLE_MOTION_STATE", {item["id"] for item in motion["contradictions"]})
 
     def test_negative_constraints_are_scene_risk_scoped(self):
         scene = {
@@ -643,6 +686,19 @@ class QualityContractTests(unittest.TestCase):
         self.assertIn("VEHICLE", result["selected_families"])
         self.assertEqual(["VEHICLE"], [item["family"] for item in result["selected"]])
         self.assertEqual("DIALOGUE", result["omitted"][0]["family"])
+        audio = select_negative_constraints({
+            "audio_timeline": [{"layer": "ambience", "source": "room tone"}],
+            "negative_constraints": [{"family": "AUDIO", "constraint": "no clipped mix"}],
+        })
+        self.assertIn("AUDIO", audio["selected_families"])
+        self.assertEqual("AUDIO", audio["selected"][0]["family"])
+
+    def test_cli_quality_partial_is_nonzero(self):
+        case = ROOT / "verification/long-form/LF-001-r4-case.json"
+        command = [sys.executable, str(SKILL / "scripts/vge.py"), "long-form", str(case)]
+        completed = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+        self.assertNotEqual(0, completed.returncode)
+        self.assertIn('"status": "PARTIAL"', completed.stdout)
 
     def test_semantic_qa_rejects_weak_oracle_for_strong_claim(self):
         item = semantic_observation()
@@ -672,6 +728,7 @@ class QualityContractTests(unittest.TestCase):
                     "resource_context_hash": digest("resources")}
         self.assertEqual("CONFIRMED", validate_feature_profile(profile, "text_to_video", observed=observed)["status"])
         self.assertEqual("UNKNOWN", validate_feature_profile(profile, "text_to_video")["status"])
+        self.assertEqual("UNKNOWN", validate_feature_profile(profile, "text_to_video", observed={"unrelated": True})["status"])
         forged_profile = copy.deepcopy(profile); forged_profile["selected_device"] = "UNKNOWN"
         with self.assertRaisesRegex(ContractError, "cannot be UNKNOWN"):
             validate_feature_profile(forged_profile, "text_to_video")
@@ -691,7 +748,9 @@ class QualityContractTests(unittest.TestCase):
         repair["status"] = "AUTHORIZED"
         repair["execution_ledger"] = {"schema_version": 1, "status": "COMPLETE", "attempts": 1, "regenerations": 1, "runtime_s": 10, "cost_usd": 0, "human_reviews": 0, "observed_at": datetime.now(timezone.utc).isoformat(), "completed_at": datetime.now(timezone.utc).isoformat(), "evidence": evidence(), "provenance": quality_provenance("a", "artifact_repair")}
         self.assertEqual("BLOCKED", validate_repair_plan(repair)["status"])
-        repair["transition_revalidation"].update(status="PASS", validated_pairs=["a->b"], evidence_refs=["transition:a->b"])
+        repair["transition_revalidation"].update(
+            status="PASS", validated_pairs=["a->b"],
+            evidence_refs=[{"pair": "a->b", "ref": str(QUALITY_ARTIFACT), "content_hash": QUALITY_ARTIFACT_HASH}])
         self.assertEqual("PASS", validate_repair_plan(repair)["status"])
         saved_repair_provenance = repair["execution_ledger"].pop("provenance")
         with self.assertRaisesRegex(ContractError, "provenance"):

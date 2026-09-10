@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-r9-workflow-validation-20260909",
+  "observed_at": "2026-09-09T23:15:03+00:00",
+  "status": "PASS",
+  "scope": "READ_ONLY_WORKFLOW_PREFLIGHT",
+  "workflow_ref": ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json",
+  "runtime": {"host": "127.0.0.1", "port": 8188, "object_info_source": "local"},
+  "valid": true,
+  "error_count": 0,
+  "warning_count": 0,
+  "partner_nodes": [],
+  "spends_credits": false,
+  "operations": {"post": false, "queue_mutation": false, "download": false},
+  "limitations": [
+    "Preflight validates graph compatibility only; it does not prove VRAM fit, inference success, artifact quality or reference retention."
+  ]
+}

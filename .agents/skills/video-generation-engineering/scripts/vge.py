@@ -140,9 +140,17 @@ def main(argv=None):
         exit_status = status
         if cmd == "accept" and result.get("accepted") is not True:
             exit_status = "BLOCKED"
-        if exit_status in ("FAIL", "FAILED", "BLOCKED", "UNKNOWN") and getattr(args, "output", None):
+        quality_gate_commands = {
+            "scorecard", "transition", "semantic", "shot-acceptance", "contact", "dialogue", "audio",
+            "causality", "ownership", "vehicle-state", "repair-validate", "long-form", "maturity",
+            "adapter-diff", "assembly-validate", "editorial", "profile-check", "first-last-frame",
+            "media-qa",
+        }
+        non_accepting_quality_status = exit_status in ("FAIL", "FAILED", "BLOCKED", "UNKNOWN", "PARTIAL", "NOT_OBSERVED", "NOT_RUN")
+        if non_accepting_quality_status and getattr(args, "output", None):
             print(json.dumps({"status": status, "report": args.output, "next_action": "Inspect issues/gaps in the saved report; the output is not accepted"}), file=sys.stderr)
-        return 2 if exit_status in ("FAIL", "FAILED", "BLOCKED", "UNKNOWN") else 0
+        return 2 if (exit_status in ("FAIL", "FAILED", "BLOCKED", "UNKNOWN") or
+                      (cmd in quality_gate_commands and non_accepting_quality_status)) else 0
     except (ContractError, OSError, KeyError, TypeError, ValueError, AttributeError, IndexError) as exc:
         print(json.dumps({"status": "BLOCKED", "error": str(exc), "next_action": "Inspect the named contract or boundary; do not retry a submission blindly"}), file=sys.stderr)
         return 2

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "bar_id": "VGE-TRIPLE-AAA-R9-EVIDENCE-CLOSURE",
+  "status": "FROZEN",
+  "authority": "CURRENT_USER_PROMPT",
+  "frozen_at": "2026-09-09T22:54:01Z",
+  "source": {
+    "attachments": [
+      {
+        "path": "/home/ricardo/.codex/attachments/dab130ba-0490-4d7a-8327-f4eefd4c9f6a/pasted-text-1.txt",
+        "sha256": "60e20d753558dc877f1477ee0625dc7f9a22fd9d6068dbf519c14199d3be4b2c",
+        "bytes": 16201,
+        "lines": 1190
+      },
+      {
+        "path": "/home/ricardo/.codex/attachments/dab130ba-0490-4d7a-8327-f4eefd4c9f6a/pasted-text-2.txt",
+        "sha256": "7de047adb66fee247330629e2c5ed07b57d5b9d5739089468a4921a04ac9d1f3",
+        "bytes": 18546,
+        "lines": 1192
+      },
+      {
+        "path": "/home/ricardo/.codex/attachments/dab130ba-0490-4d7a-8327-f4eefd4c9f6a/pasted-text-3.txt",
+        "sha256": "311bbb58ad4ed8c2a60aee8539bd3f7a122ad7366361ab240f9233ecc19ebf65",
+        "bytes": 7993,
+        "lines": 448
+      }
+    ],
+    "repository_copies": [
+      {"path": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt", "sha256": "60e20d753558dc877f1477ee0625dc7f9a22fd9d6068dbf519c14199d3be4b2c", "bytes": 16201, "lines": 1190, "byte_exact": true},
+      {"path": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-2.txt", "sha256": "7de047adb66fee247330629e2c5ed07b57d5b9d5739089468a4921a04ac9d1f3", "bytes": 18546, "lines": 1192, "byte_exact": true},
+      {"path": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-3.txt", "sha256": "215e95b721c95e38cc4de9d834ad9fe3e27d5a9d1a5d798ed852fe6955508727", "bytes": 7994, "lines": 449, "byte_exact": false, "normalization": "one final LF added by apply_patch; source hash and original byte count retained above"}
+    ]
+  },
+  "allowed_matrix_statuses": ["PROVEN", "PARTIAL", "UNKNOWN", "BLOCKED", "NOT_RUN", "NOT_APPLICABLE"],
+  "verdicts": ["TRIPLE_AAA_PROVEN", "TRIPLE_AAA_CANDIDATE", "READY_WITH_RISKS", "PARTIAL", "BLOCKED"],
+  "priorities": [
+    {"id": "P0", "name": "Baseline, truth layers, regression, safety and evidence integrity"},
+    {"id": "P1", "name": "LF-001 vehicle-entry production from APPROACH through DOOR_CLOSE"},
+    {"id": "P2", "name": "Real repair and re-anchor with bounded lineage"},
+    {"id": "P3", "name": "FLF FIRST_ONLY, LAST_ONLY and FIRST_AND_LAST"},
+    {"id": "P4", "name": "LF-002 dialogue, voice, performance, lip-sync and audio"},
+    {"id": "P5", "name": "LF-003 45–60 second production and editorial assembly"},
+    {"id": "P6", "name": "Second real adapter differential"},
+    {"id": "P7", "name": "Architecture, cohesion, progressive disclosure and maturity"},
+    {"id": "P8", "name": "Fresh independent critic and mutation sentinel"},
+    {"id": "P9", "name": "Frozen portable distribution and final accounting"}
+  ],
+  "criteria": [
+    {"id": "R9-P0-01", "priority": "P0", "required": true, "name": "Fresh baseline and prompt provenance", "acceptance": "Record exact current code, tests, docs, verification, artifacts, runtime, queue, devices, VRAM, models, workflows, distribution, critics and source/repository prompt hashes before material implementation."},
+    {"id": "R9-P0-02", "priority": "P0", "required": true, "name": "Truth-layer separation", "acceptance": "Keep desired, planned, executed, observed and accepted truth as distinct hash-bound layers; metadata, prompts, fixtures and tests never become semantic production proof."},
+    {"id": "R9-P0-03", "priority": "P0", "required": true, "name": "Regression and harness gate", "acceptance": "Run the complete applicable suite, compile, Skill validation, docs/link/manifest checks, external-CWD smoke, import-cycle audit and privacy/security scans; retain exact counts and known-bad validity."},
+    {"id": "R9-P0-04", "priority": "P0", "required": true, "name": "Resource and side-effect safety", "acceptance": "Require fresh selected-device/free-VRAM/floor/margin evidence before POST; do not mutate unrelated queue work, purchase, upload, publish, clone, download large weights or fabricate runtime evidence."},
+    {"id": "R9-P0-05", "priority": "P0", "required": true, "name": "Immutable failures and artifacts", "acceptance": "Every attempt/artifact/observation retains identity, lineage, hashes and status; OOM, partial, failed, stale and repair evidence remain preserved."},
+    {"id": "R9-P0-06", "priority": "P0", "required": true, "name": "Oracle and canonical gates", "acceptance": "Canonical contradictions fail before adapter compilation; risk-scoped negative constraints and claim-specific oracle strengths are enforced; PASS requires current exact bytes, evidence, confidence and limitations."},
+    {"id": "R9-P0-07", "priority": "P0", "required": true, "name": "Evidence-driven compiler and adapter differential", "acceptance": "Material compiler changes identify observed problem, canonical intent, representation, minimal change, regression and runtime result; adapter differences cannot alter canonical identity, causality, state or acceptance."},
+    {"id": "R9-P1-01", "priority": "P1", "required": true, "name": "LF-001 vehicle-entry closure", "acceptance": "Real production evidence covers the complete causal chain with shot contracts, applicable state, references, semantic dimensions, transitions, assembly and editorial acceptance; otherwise status remains honest."},
+    {"id": "R9-P2-01", "priority": "P2", "required": true, "name": "Real repair and re-anchor", "acceptance": "A naturally occurring failure or justified no-natural-repair case is recorded; any repair includes minimal owner, new attempt, before/after observation, affected transition revalidation and reassembly."},
+    {"id": "R9-P3-01", "priority": "P3", "required": true, "name": "FLF evidence", "acceptance": "FIRST_ONLY, LAST_ONLY and FIRST_AND_LAST are independently probed and observed when supported; absent proof remains NOT_RUN/UNKNOWN/UNSUPPORTED."},
+    {"id": "R9-P4-01", "priority": "P4", "required": true, "name": "LF-002 dialogue and audio", "acceptance": "Real 20–30 second dialogue evidence separates semantics, voice, performance, lip-sync, foley, ambience, mix, A/V timing and editorial review."},
+    {"id": "R9-P5-01", "priority": "P5", "required": true, "name": "LF-003 long-form production", "acceptance": "Real 45–60 second production includes Scene Bible, timeline, 6–12 dependent shots, recurring identities, object interaction, audio, transitions, repair/re-anchor, assembly and human editorial review."},
+    {"id": "R9-P6-01", "priority": "P6", "required": true, "name": "Second real adapter", "acceptance": "If an authorized second runtime exists, run the same canonical scene and bind observed output; otherwise record BLOCKED_SECOND_ADAPTER_RUNTIME_UNAVAILABLE without downloading large weights."},
+    {"id": "R9-P7-01", "priority": "P7", "required": true, "name": "Architecture and disclosure audit", "acceptance": "Preserve cohesive ownership, compact SKILL.md, progressive routing, deterministic/agent boundary, evidence-based patterns, portability and maintainability; refactor only on demonstrated failure."},
+    {"id": "R9-P8-01", "priority": "P8", "required": true, "name": "Fresh independent critic", "acceptance": "After all material changes, a fresh non-inherited read-only critic owns a candidate fingerprint, matrix, timestamps, evidence, severity, mutation sentinel and PASS/REJECT/INCOMPLETE verdict; any material mutation makes it stale."},
+    {"id": "R9-P9-01", "priority": "P9", "required": true, "name": "Frozen distribution and report", "acceptance": "Build only from the frozen candidate; verify ZIP/CRC/SHA, manifest, compile, Skill, links, external-CWD, secret/credential/weight/private-media/absolute-path scans and publish the complete capability, maturity, score, claims and gap report."}
+  ],
+  "required_report_sections": [
+    "Final Triple-AAA Evidence Closure Report", "Final Verdict", "Frozen Candidate", "Baseline", "Changes Made", "Changes Rejected", "Architecture State", "Regression Results", "Runtime Environment", "Resource State", "H3 Capability State", "LF-001", "FLF", "LF-002", "LF-003", "LF-004", "Second Adapter", "Prompt Compiler Findings", "Semantic QA Findings", "Repairability Findings", "Architecture/Cohesion Audit", "Progressive Disclosure Audit", "Failed Attempts Preserved", "Independent Critic", "Distribution", "Capability Matrix", "Maturity Matrix", "Quality Scores", "Remaining Gaps", "Claims Now Supported", "Claims Still Unsupported"
+  ],
+  "proven_requires": ["Architecture gate PASS", "Verification gate PASS", "LF-001 PRODUCTION_ACCEPTED", "LF-002 PRODUCTION_ACCEPTED", "LF-003 PRODUCTION_ACCEPTED", "accepted real multi-shot continuity, semantic QA and assembly", "real repair or justified no-natural-repair evidence", "fresh independent critic PASS", "fresh distribution PASS", "no unresolved critical production blocker"],
+  "limitations_policy": "If runtime capacity, provider authorization, missing model capability or unavailable second runtime blocks a criterion, preserve exact evidence and report BLOCKED/UNKNOWN/NOT_RUN/PARTIAL rather than weakening the bar."
+}

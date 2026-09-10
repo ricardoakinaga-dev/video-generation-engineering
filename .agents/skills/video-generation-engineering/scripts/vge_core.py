@@ -201,11 +201,15 @@ def detect_canonical_contradictions(state):
             "Repair canonical state/action causality before compilation")
 
     motion_values = [
-        _first_path_value(source, ("vehicle.motion_state", "vehicle.velocity_phase", "vehicle.motion")),
-        _first_path_value(source, ("motion_state", "velocity_phase", "vehicle_motion_state")),
+        _path_value(source, path) for path in (
+            "vehicle.motion_state", "vehicle.velocity_phase", "vehicle.motion",
+            "motion_state", "velocity_phase", "vehicle_motion_state"
+        )
     ]
     normalized_motion = {str(value).upper() for value in motion_values if value is not None}
-    if {"PARKED", "MOVING"} <= normalized_motion or {"STATIONARY", "MOVING"} <= normalized_motion:
+    moving_states = {"MOVING", "ACCELERATING", "IN_MOTION", "DRIVING"}
+    stationary_states = {"PARKED", "STATIONARY", "STOPPED"}
+    if normalized_motion & moving_states and normalized_motion & stationary_states:
         add("VEHICLE_MOTION_STATE", ("vehicle.motion_state", "vehicle.velocity_phase"),
             "The vehicle is declared parked/stationary and moving at the same time",
             "Repair the canonical motion state or add a causal transition")
@@ -272,6 +276,19 @@ def detect_canonical_contradictions(state):
                 str(item) if isinstance(item, str) else "The canonical state declares an unresolved contradiction",
                 "Resolve the canonical contradiction before compilation")
 
+    ownership = _first_path_value(source, ("ownership", "object_ownership", "interaction.ownership"))
+    if isinstance(ownership, dict):
+        owner_before = ownership.get("owner_before", ownership.get("before"))
+        owner_after = ownership.get("owner_after", ownership.get("after"))
+        contact = ownership.get("shared_contact") is True or str(ownership.get("contact_state", "")).upper() in {
+            "CONTACT", "SHARED_CONTACT", "HANDOFF", "TRANSFER"
+        }
+        cause = ownership.get("cause") or ownership.get("handoff") or ownership.get("transfer_ref")
+        if owner_before not in (None, "UNKNOWN") and owner_after not in (None, "UNKNOWN") and owner_before != owner_after and not contact and not cause:
+            add("OWNERSHIP_TRANSFER", ("ownership.owner_before", "ownership.owner_after", "ownership.contact_state"),
+                "Object ownership changes without a contact/handoff cause",
+                "Add a visible contact transition or keep ownership unchanged")
+
     return {
         "schema_version": 1,
         "status": "FAIL" if contradictions else "PASS",
@@ -302,6 +319,7 @@ NEGATIVE_CONSTRAINT_FAMILIES = {
     "CAMERA": ("camera", "orbit", "static", "framing", "lens", "shot", "screen_direction"),
     "DIALOGUE": ("dialogue", "speaker", "listener", "line", "turn", "voice"),
     "LIP_SYNC": ("lip_sync", "lip-sync", "mouth", "phoneme", "speech"),
+    "AUDIO": ("audio", "sound", "foley", "ambience", "mix", "diegetic", "sfx"),
     "TEXT": ("text", "logo", "sign", "caption", "lettering"),
 }
 

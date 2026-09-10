@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "id": "comfyui-r9-live-state-20260909",
+  "observed_at": "2026-09-09T23:15:02.898484+00:00",
+  "status": "PASS",
+  "scope": "READ_ONLY_RUNTIME_AND_RESOURCE_OBSERVATION",
+  "authority": "ComfyUI MCP server_info, system_stats and job(action=queue)",
+  "server": {
+    "running": true,
+    "url": "http://127.0.0.1:8188",
+    "comfy_cli_version": "1.20.0",
+    "comfyui_version": "0.34.0",
+    "runtime_commit": "56727514",
+    "python_version": "3.12.3",
+    "pytorch_version": "2.14.0+cu130",
+    "workspace": "/home/ricardo/ComfyUI",
+    "freshness": {
+      "core_outdated": false,
+      "packs_outdated": false,
+      "checked_at": "2026-09-09T23:15:02.898484+00:00"
+    }
+  },
+  "hardware": {
+    "os": "Linux",
+    "arch": "x86_64",
+    "cpu": "AMD Ryzen 7 5700",
+    "ram_total": 67203821568,
+    "ram_free": 43847979008,
+    "gpu": {
+      "vendor": "nvidia",
+      "model": "NVIDIA GeForce RTX 3060",
+      "devices": [
+        {"device": "cuda:0", "vram_total": 12482576384, "vram_free": 11681136640},
+        {"device": "cuda:1", "vram_total": 12490440704, "vram_free": 12301172736}
+      ]
+    }
+  },
+  "queue": {
+    "where": "local",
+    "count": 10,
+    "queued": 9,
+    "cancelled": 1,
+    "mutated_by_audit": false,
+    "jobs": [
+      {"prompt_id": "0836ac61-05c9-443d-9853-d044ac6fac39", "status": "queued", "updated_at": "2026-09-07T02:19:44+00:00"},
+      {"prompt_id": "163c2f39-b826-438d-a366-dce61deb6a45", "status": "queued", "updated_at": "2026-09-07T02:27:00+00:00"},
+      {"prompt_id": "c70effe4-c47f-4584-8f7a-852fe06e1ac2", "status": "queued", "updated_at": "2026-09-08T14:14:00+00:00"},
+      {"prompt_id": "7c9b7d4c-3d89-47a8-ad86-eb33f20b3034", "status": "queued", "updated_at": "2026-09-08T14:20:32+00:00"},
+      {"prompt_id": "71597f5d-fecb-4f1f-8cf0-fb29f3f421b3", "status": "queued", "updated_at": "2026-09-08T14:23:55+00:00"},
+      {"prompt_id": "a960f77d-f0cc-4721-8657-3d7c32d19cb0", "status": "queued", "updated_at": "2026-09-08T14:34:02+00:00"},
+      {"prompt_id": "f4bca6ea-92cd-4118-8e43-e0f05fb199a8", "status": "queued", "updated_at": "2026-09-09T03:00:54+00:00"},
+      {"prompt_id": "afc36a32-7436-40d0-a510-26ede2d7d0bc", "status": "queued", "updated_at": "2026-09-09T03:03:06+00:00"},
+      {"prompt_id": "f2fc193e-9a61-4422-9ec2-9877645f8961", "status": "queued", "updated_at": "2026-09-09T03:52:32+00:00"},
+      {"prompt_id": "bcfdbf10-99df-4192-9a2a-fb47ae159b60", "status": "cancelled", "updated_at": "2026-09-07T02:19:41+00:00"}
+    ]
+  },
+  "operations": {
+    "server_info": "READ_ONLY",
+    "system_stats": "READ_ONLY",
+    "queue": "READ_ONLY",
+    "post": false,
+    "cancel": false,
+    "download": false,
+    "free_memory": false,
+    "external_provider": false
+  },
+  "limitations": [
+    "Runtime availability and VRAM are capability/resource observations only; they do not prove successful inference or audiovisual semantics.",
+    "The queue contains pre-existing jobs and was intentionally not cleared, cancelled or reordered.",
+    "The runtime workspace is outside this repository and its dirty state/model inventory are not promoted into the Skill production claim."
+  ]
+}

@@ -76,8 +76,12 @@ def main():
             elif url.fragment and dest.suffix=='.md':
                 anchors={re.sub(r'[^\w\- ]','',h.lower()).replace(' ','-') for h in re.findall(r'^#{1,6}\s+(.+)$',dest.read_text(),re.M)}
                 if unquote(url.fragment) not in anchors:errors.append(f'Missing anchor: {target}')
+    # Pin the repository root as unittest's import root so every checked-in
+    # test module is discovered consistently with the documented full-suite
+    # command, including tests added outside the original package subset.
+    sys.path.insert(0,str(ROOT))
     sys.path.insert(0,str(ROOT/'tests'))
-    suite=unittest.defaultTestLoader.discover(str(ROOT/'tests'))
+    suite=unittest.defaultTestLoader.discover(str(ROOT/'tests'), pattern='test*.py', top_level_dir=str(ROOT/'tests'))
     stream=io.StringIO()
     result=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
     if result.skipped:errors.append('Suite unexpectedly skipped tests')

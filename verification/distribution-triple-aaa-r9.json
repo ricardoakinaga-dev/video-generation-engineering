@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "id": "distribution-triple-aaa-r9",
+  "observed_at": "2026-09-10T00:00:32.364038+00:00",
+  "completed_at": "2026-09-10T00:00:34.789938+00:00",
+  "status": "PASS",
+  "scope": "FRESH_DETERMINISTIC_PORTABLE_SKILL_DISTRIBUTION",
+  "package_scope": ".agents/skills/video-generation-engineering",
+  "package_manifest_sha256": "sha256:ae029130cfeec425ac9dbc147cea0d75e2ea5a5d161587a3391701e4c8d7093b",
+  "package_file_count": 29,
+  "package_files_sha256": {
+    ".agents/skills/video-generation-engineering/SKILL.md": "sha256:25f5201bca5cfca287c46247aea6cbce013f6f521ec1e7cc1f63af3e7c494ce4",
+    ".agents/skills/video-generation-engineering/agents/openai.yaml": "sha256:2c6fe2911002b105809693f5bd0950e933c7577058de3701982fede3d91ca81a",
+    ".agents/skills/video-generation-engineering/assets/templates/treatment.json": "sha256:7a3f4e9ae792cd6b64ea14fb62ab5fcbd7d9af596ecfbf9031561dc1f00eb5de",
+    ".agents/skills/video-generation-engineering/assets/workflows/h3-r2v-probe-api.json": "sha256:fbf7968c73bb6be157c4f642e620288d17c7dc6c06d143e17f65e24b28088546",
+    ".agents/skills/video-generation-engineering/assets/workflows/h3-smoke-api.json": "sha256:69f49cbf7e3359ef152fcba2b6695da3e5aff91c8a3a3b711f7d0a26de67a102",
+    ".agents/skills/video-generation-engineering/profiles/comfyui-h3-local-probed.json": "sha256:ae6cbd349f0ff7697a7a0a03d97fde243c62845f05db7cc41ad97b7d873266ae",
+    ".agents/skills/video-generation-engineering/profiles/comfyui-h3-r2v-local-probe-v1.json": "sha256:6ab037fe0f896ee9e79b24f08dec78970dde8b2e527a846c3afd76b3a555991a",
+    ".agents/skills/video-generation-engineering/profiles/comfyui-wan22-candidate.json": "sha256:1726aefa7b04a792809dc55e1cb8d258ef4712e48fa07fe307ca5cf95468dfda",
+    ".agents/skills/video-generation-engineering/profiles/evidence/h3-local-20260908.json": "sha256:1d20452d55ab536800151eb32fa474914dd6ebad2be3d204850204a2ad6f447b",
+    ".agents/skills/video-generation-engineering/profiles/evidence/h3-r2v-local-20260908.json": "sha256:44a8f5aeb3e4f69d6ce87d8fbb113f3159d49f393edd36ec83e4c33e18ffa7a7",
+    ".agents/skills/video-generation-engineering/profiles/hailuo-api-candidate.json": "sha256:4d7ca57cc6eeddf0f93ce1ee39a66ff2fbb3133aec726902acfde938d504e084",
+    ".agents/skills/video-generation-engineering/references/comfyui-execution.md": "sha256:10fd54b15403f62a2b9248f17ce86f014d447b0288653ef6f7b20e6ab51bfe9e",
+    ".agents/skills/video-generation-engineering/references/continuity-and-long-form.md": "sha256:f43253cfea61d21c066d36f9254d4d119f698b95c661a1bf16659b3f0bce146d",
+    ".agents/skills/video-generation-engineering/references/core-contracts.md": "sha256:1cabede130cabbb83efa2db5826ad1263b2152b122b497b716f90050553966d0",
+    ".agents/skills/video-generation-engineering/references/directing-and-audio.md": "sha256:b202e7e78df7d57a8e5dcf41713dea95570424fd8a9c3fcd85282de7a38c13a6",
+    ".agents/skills/video-generation-engineering/references/evaluation-and-repair.md": "sha256:03366623894f5d1ebe8bcc8e2284fa0575c5c43cccf7851d05afeac98e4a09e9",
+    ".agents/skills/video-generation-engineering/references/interaction-and-constraints.md": "sha256:a516d3df19e1d51b44accf96a6e289bf618ca5937cfd6073495bd74f8a56301c",
+    ".agents/skills/video-generation-engineering/references/model-adaptation.md": "sha256:401b175009405e9893c1c4b1c3fdd8bcde55882eef1f5d42ed6089efd166aa3b",
+    ".agents/skills/video-generation-engineering/references/observability.md": "sha256:e92eb082e8e1b14df920d41d0040a8102311db38e1788d0f5fb98c74e7fdcad8",
+    ".agents/skills/video-generation-engineering/references/production-quality.md": "sha256:d6a39b9f63ef6e601e8c9d8ae4a7c414f3b361db990041d10072ea6b6e1ac281",
+    ".agents/skills/video-generation-engineering/references/safety-and-provenance.md": "sha256:6a6b65cdb7345014944e58daaecedd2929f4861a4174fc6feca18fa3791f150e",
+    ".agents/skills/video-generation-engineering/scripts/vge.py": "sha256:1f7336c105058cbb323d427a225f9e6f9bf0c82b743e8d3e2e062d07114231cc",
+    ".agents/skills/video-generation-engineering/scripts/vge_core.py": "sha256:2eab85450c4537ceaa1297020e2c1ac109694ec74037878325cf33c131777486",
+    ".agents/skills/video-generation-engineering/scripts/vge_evidence.py": "sha256:25ca8d421eddbeff15ef91d6bcc47c53025c0cc398ef783adf62658c7c7bd28e",
+    ".agents/skills/video-generation-engineering/scripts/vge_media.py": "sha256:ba1702fc86a7e8ce74d727bf0183399212343fa0c27b785777776e720d0495a0",
+    ".agents/skills/video-generation-engineering/scripts/vge_provider.py": "sha256:04621ccda1716e777dd98bcd93b07f06896e9f5bfd8af0151e7aefa30fe65f1a",
+    ".agents/skills/video-generation-engineering/scripts/vge_quality.py": "sha256:7e97e0771f620f875f7fca5c800cd9a9d4e8c4ea365c2b98a2a16d304aa4e8cc",
+    ".agents/skills/video-generation-engineering/scripts/vge_quality_common.py": "sha256:2dcd22a4c2d7662bc77937f54baf5f35a79a17da6569c9c84a278697f8a34d1a",
+    ".agents/skills/video-generation-engineering/scripts/vge_runtime.py": "sha256:3ddf83b913cde73d54decd3301e7948492b15c0c16a7b34677e3866f9c9fd964"
+  },
+  "archive": {
+    "path": "dist/video-generation-engineering-triple-aaa-r9.zip",
+    "sha256": "sha256:cdddaf35ecba70a323e46f2ba132a0b5b1b24dc25d124daaa9b5fa4df79edf90",
+    "bytes": 132482,
+    "entry_count": 29,
+    "file_count": 29,
+    "verification": {
+      "status": "PASS",
+      "errors": [],
+      "unsafe_paths": "PASS",
+      "crc_test": "PASS"
+    }
+  },
+  "external_cwd_smoke": {
+    "status": "PASS",
+    "working_directory": "temporary directory outside repository",
+    "checks": [
+      {
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-rg9wktrr/.agents/skills/video-generation-engineering/scripts/vge.py --help",
+        "returncode": 0,
+        "status": "PASS",
+        "stderr": ""
+      },
+      {
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-rg9wktrr/.agents/skills/video-generation-engineering/scripts/vge.py prepare /tmp/vge-release-audit-rg9wktrr/.agents/skills/video-generation-engineering/assets/templates/treatment.json --output /tmp/vge-release-audit-rg9wktrr/prepared.json",
+        "returncode": 0,
+        "status": "PASS",
+        "stderr": ""
+      },
+      {
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-rg9wktrr/.agents/skills/video-generation-engineering/scripts/vge.py validate /tmp/vge-release-audit-rg9wktrr/prepared.json",
+        "returncode": 0,
+        "status": "PASS",
+        "stderr": ""
+      },
+      {
+        "command": "/usr/bin/python3 /tmp/vge-release-audit-rg9wktrr/.agents/skills/video-generation-engineering/scripts/vge.py compile /tmp/vge-release-audit-rg9wktrr/prepared.json",
+        "returncode": 0,
+        "status": "PASS",
+        "stderr": ""
+      }
+    ]
+  },
+  "compileall": {
+    "status": "PASS",
+    "returncode": 0,
+    "stderr": ""
+  },
+  "critic_binding": {
+    "critic_ref": "verification/triple-aaa-independent-critic-r9.md",
+    "fingerprint_ref": "verification/candidate-fingerprint-r9-final.json"
+  },
+  "security": {
+    "status": "PASS",
+    "errors": [],
+    "secret_value_scan": "PASS",
+    "model_weight_files": "PASS",
+    "private_media": "PASS",
+    "absolute_workspace_paths": "PASS"
+  },
+  "limitations": [
+    "Package integrity and offline CLI smoke do not prove provider capability or audiovisual semantics.",
+    "The audit excludes project docs, generated media, credentials and model weights from the Skill archive.",
+    "A fresh independent critic and production evidence remain separate verdict gates."
+  ]
+}

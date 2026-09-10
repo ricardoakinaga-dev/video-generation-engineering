@@ -228,6 +228,35 @@
         "target": "origin/main at 01a81cfce776f268e2917f034621f2c0c16eca2d and the final R6 closure packet",
         "completion_signal": "Local HEAD and origin/main match at the verified commit, worktree is clean, and R6 REJECT plus production blockers remain explicit"
       }
+    },
+    {
+      "id": "VGE-TRIPLE-AAA-R9",
+      "title": "Implement the evidence-closure Triple-AAA master prompt with a truthful release boundary",
+      "stage": "BUILD",
+      "priority": "P0",
+    "status": "IN_PROGRESS",
+      "origin": "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt, part-2.txt and part-3.txt; user request 2026-09-09",
+      "dependencies": [],
+      "owner": "Codex",
+      "acceptance_summary": "Exact prompt copies and frozen R9 bar; fail-closed semantic/lineage/adapter/repair contracts; fresh offline regression and deterministic release audit; current capability matrix, scorecard, independent critic and honest production verdict",
+      "evidence_refs": [
+        "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-1.txt",
+        "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-2.txt",
+        "docs/master-prompt-triple-aaa-evidence-closure-20260909-part-3.txt",
+        "docs/triple-aaa-quality-bar-r9.json",
+        ".agent/plans/triple-aaa-r9-closure.md",
+        ".agent/state.json",
+        ".agent/PLANS.md",
+        ".agents/skills/video-generation-engineering/scripts/vge_quality.py",
+        "tools/release_audit.py"
+      ],
+    "next_action": {
+      "id": "VGE-TRIPLE-AAA-R9:HANDOFF",
+      "kind": "COMMIT_PUSH",
+      "summary": "Commit and push the independently reviewed R9 candidate, then verify the remote tip and clean worktree",
+      "target": "Current worktree, R9 prompt/bar/plan, Skill contracts, tests, release audit and truthful production matrix",
+      "completion_signal": "Fresh final report, capability matrix, scorecard, critic, fingerprint, distribution audit and post-push remote verification exist; production blockers remain explicit"
+      }
     }
   ]
 }

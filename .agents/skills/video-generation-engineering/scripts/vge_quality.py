@@ -326,6 +326,20 @@ def validate_semantic_observation(observation, artifact=None, required_categorie
     """Validate one explicit, category-bound record for every semantic dimension."""
     semantic_categories = required_categories if required_categories is not None else ("visual", "audio", "temporal")
     result = validate_observation_contract(observation, artifact, semantic_categories)
+    observed_ref = observation["artifact_ref"]
+    observed_hash = observation["observed_content_hash"]
+    for check_index, check in enumerate(observation["checks"]):
+        for evidence_index, item in enumerate(check.get("evidence", [])):
+            direct_binding = item.get("ref") == observed_ref and item.get("content_hash") == observed_hash
+            if direct_binding:
+                continue
+            require(item.get("source_ref") == observed_ref and item.get("source_content_hash") == observed_hash,
+                    f"observation.checks[{check_index}].evidence[{evidence_index}] is not bound to the observed artifact")
+            derived_path = _resolve_quality_path(item.get("ref"),
+                                                 f"observation.checks[{check_index}].evidence[{evidence_index}]",
+                                                 Path(observed_ref).parent)
+            _verify_observed_bytes(str(derived_path), item.get("content_hash"),
+                                   f"observation.checks[{check_index}].evidence[{evidence_index}]", required=True)
     dimensions = tuple(required_dimensions or SEMANTIC_DIMENSIONS)
     require(set(dimensions) <= set(SEMANTIC_DIMENSIONS), "Unknown semantic observation dimension")
     seen = set()
@@ -575,17 +589,17 @@ def validate_shot_acceptance(contract, artifact=None, observation=None, scorecar
 
 
 def _validate_transition_observation(observation, artifact, label):
-    """Accept a complete semantic observation or the legacy six-category envelope."""
+    """Require a complete semantic observation for an accepted transition."""
     _object(observation, label)
     checks = observation.get("checks", [])
-    if isinstance(checks, list) and any(isinstance(item, dict) and item.get("semantic_dimension") for item in checks):
-        result = validate_semantic_observation(observation)
-        require(result["status"] == "PASS", f"{label} semantic observation is not PASS")
-        require(observation.get("artifact_id") == artifact.get("id"), f"{label} artifact id mismatch")
-        require(observation.get("artifact_ref") == artifact.get("artifact_ref"), f"{label} artifact locator mismatch")
-        require(observation.get("observed_content_hash") == artifact.get("content_hash"), f"{label} artifact hash mismatch")
-        return result
-    return validate_observation_contract(observation, artifact)
+    require(isinstance(checks, list) and any(isinstance(item, dict) and item.get("semantic_dimension") for item in checks),
+            f"{label} must use a semantic observation for an accepted transition")
+    result = validate_semantic_observation(observation, artifact)
+    require(result["status"] == "PASS", f"{label} semantic observation is not PASS")
+    require(observation.get("artifact_id") == artifact.get("id"), f"{label} artifact id mismatch")
+    require(observation.get("artifact_ref") == artifact.get("artifact_ref"), f"{label} artifact locator mismatch")
+    require(observation.get("observed_content_hash") == artifact.get("content_hash"), f"{label} artifact hash mismatch")
+    return result
 
 
 def validate_transition_contract(contract):
@@ -601,6 +615,8 @@ def validate_transition_contract(contract):
     require(previous["shot_id"] == contract["previous_shot_id"], "Previous artifact/shot mismatch")
     require(following["shot_id"] == contract["next_shot_id"], "Next artifact/shot mismatch")
     require(previous["artifact_id"] != following["artifact_id"], "Transition requires distinct previous and next artifacts")
+    require(previous["content_hash"] != following["content_hash"],
+            "Transition requires distinct previous and next artifact bytes")
     require((previous["artifact_ref"], previous["content_hash"]) !=
             (following["artifact_ref"], following["content_hash"]),
             "Transition requires distinct previous and next artifact bytes")
@@ -766,7 +782,17 @@ def validate_first_last_frame(record):
         names.add(check["id"])
     required = {"endpoint_identity", "motion_path", "object_state", "artifact_delivery"}
     require(required <= names, "First-last-frame probe lacks endpoint, motion, object and artifact checks")
-    require(any(check["oracle"]["kind"] in ("FRAME", "SEQUENCE") for check in checks), "First-last-frame probe cannot rely on node metadata alone")
+    minimum_oracles = {
+        "endpoint_identity": {"FRAME", "MULTI_FRAME", "SEQUENCE", "HUMAN"},
+        "motion_path": {"MULTI_FRAME", "SEQUENCE", "HUMAN"},
+        "object_state": {"MULTI_FRAME", "SEQUENCE", "HUMAN"},
+        "artifact_delivery": {"METADATA", "RUNTIME", "HUMAN"},
+    }
+    for check in checks:
+        if check["id"] in minimum_oracles and check["result"] in ("PASS", "FAIL", "PARTIAL"):
+            require(check["oracle"]["kind"] in minimum_oracles[check["id"]],
+                    f"first_last_frame.{check['id']} uses an oracle too weak for its claim")
+    require(any(check["oracle"]["kind"] in ("FRAME", "SEQUENCE", "MULTI_FRAME", "HUMAN") for check in checks), "First-last-frame probe cannot rely on node metadata alone")
     status = aggregate_quality(checks)
     observed = status in ("PASS", "FAIL", "PARTIAL")
     if observed:
@@ -824,6 +850,9 @@ def validate_contact_phases(contact):
             _oracle(phase.get("oracle"), f"contact.phases[{index}].oracle")
             evidence = _evidence(phase.get("evidence"), f"contact.phases[{index}].evidence")
             _verify_evidence_bytes(evidence, f"contact.phases[{index}].evidence", required=True)
+            if phase.get("phase") in ("CONTACT", "FORCE_OR_ARTICULATION", "TRANSFER_OR_MOTION", "RELEASE", "RESULT"):
+                require(phase["oracle"]["kind"] in ("MULTI_FRAME", "SEQUENCE", "TRANSITION", "HUMAN"),
+                        f"contact.phases[{index}] needs a sequence oracle for a physical claim")
         if index:
             require(phase["start_s"] >= phases[index - 1]["end_s"], "Contact phases overlap or go backwards")
     status = "PASS" if observed_envelope else "PARTIAL"
@@ -1021,6 +1050,15 @@ def validate_dialogue_contract(dialogue):
             _status(entry.get("status"), f"{label}.channels.{channel}.status")
             _oracle(entry.get("oracle"), f"{label}.channels.{channel}.oracle")
             if entry["status"] in ("PASS", "FAIL", "PARTIAL"):
+                channel_oracles = {
+                    "semantics": {"AUDIO", "HUMAN"},
+                    "voice": {"AUDIO", "HUMAN"},
+                    "performance": {"MULTI_FRAME", "SEQUENCE", "HUMAN"},
+                    "lip_sync": {"MULTI_FRAME", "SEQUENCE", "HUMAN"},
+                    "mix": {"AUDIO", "HUMAN"},
+                }
+                require(entry["oracle"]["kind"] in channel_oracles[channel],
+                        f"{label}.channels.{channel} uses an oracle too weak for its claim")
                 evidence = _evidence(entry.get("evidence"), f"{label}.channels.{channel}.evidence")
                 _verify_evidence_bytes(evidence, f"{label}.channels.{channel}.evidence", required=True)
             else:
@@ -1130,21 +1168,48 @@ def adapt_prompt(sections, adapter, canonical_state=None):
     _nonempty(adapter.get("id"), "prompt adapter.id")
     canonical_state = canonical_state if canonical_state is not None else sections.get("canonical_state")
     require(canonical_state is not None, "Prompt adaptation requires canonical state")
+    require(isinstance(canonical_state, dict) and bool(canonical_state),
+            "Prompt adaptation requires a non-empty canonical state")
     contradiction_gate = validate_canonical_state(canonical_state)
-    preserve = adapter.get("preserve_sections", list(sections))
-    _list(preserve, "prompt adapter.preserve_sections", allow_empty=False)
     unsupported = adapter.get("unsupported_sections", [])
     _list(unsupported, "prompt adapter.unsupported_sections")
     require(set(unsupported) <= set(sections), "Adapter marks an unknown section unsupported")
+    explicit_preserve = "preserve_sections" in adapter
+    preserve = adapter.get("preserve_sections", [key for key in sections if key not in unsupported])
+    _list(preserve, "prompt adapter.preserve_sections", allow_empty=False)
+    require(set(preserve) <= set(sections), "Adapter preserves an unknown section")
+    require(not set(preserve) & set(unsupported),
+            "Adapter cannot preserve and omit the same section")
+    require(set(preserve) | set(unsupported) == set(sections),
+            "Adapter must classify every canonical section as preserved or unsupported")
+    if explicit_preserve:
+        require(len(preserve) == len(set(preserve)), "Adapter preserve_sections contains duplicates")
     omitted = sorted(set(unsupported))
-    selected = [key for key in sections if key not in unsupported]
+    selected = [key for key in sections if key in set(preserve)]
     compiled = "\n".join(f"{key}: {canonical(sections[key])}" for key in selected)
     max_words = adapter.get("max_words")
     density = analyze_prompt_density({key: sections[key] for key in selected}, {"max_words": max_words} if max_words else {})
     require(not max_words or density["word_count"] <= max_words, "Adapter would truncate prompt; declare compression or split the shot")
-    mappings = [{"source": key, "target": adapter.get("mapping", {}).get(key, key), "status": "PRESERVED"} for key in selected]
+    mapping = adapter.get("mapping", {})
+    _object(mapping, "prompt adapter.mapping")
+    require(set(mapping) <= set(sections), "Adapter mapping names an unknown canonical section")
+    mapping_contract = adapter.get("mapping_contract", {})
+    _object(mapping_contract, "prompt adapter.mapping_contract")
+    for key in selected:
+        target = mapping.get(key, key)
+        _nonempty(target, f"prompt adapter.mapping.{key}")
+        if target != key:
+            proof = mapping_contract.get(key)
+            require(isinstance(proof, dict), f"Adapter remapping for {key} is not explicitly bound")
+            require(proof.get("source") == key and proof.get("target") == target,
+                    f"Adapter remapping for {key} is not explicitly bound")
+            require(proof.get("semantic_preserved") is True,
+                    f"Adapter remapping for {key} lacks semantic preservation proof")
+            _list(proof.get("preserved_fields"), f"prompt adapter.mapping_contract.{key}.preserved_fields", allow_empty=False)
+    mappings = [{"source": key, "target": mapping.get(key, key), "status": "PRESERVED"} for key in selected]
     mappings += [{"source": key, "target": None, "status": "UNSUPPORTED", "reason": "Adapter declaration"} for key in omitted]
     return {"schema_version": 1, "adapter_id": adapter["id"], "source_hash": digest(sections),
+            "canonical_state_hash": digest(canonical_state),
             "positive_prompt": compiled, "mappings": mappings, "omissions": omitted,
             "density": density, "contradictions": density["contradictions"],
             "canonical_contradiction_gate": contradiction_gate,
@@ -1156,16 +1221,23 @@ def adapter_differential(canonical_sections, adapters, canonical_state=None):
     """Compare adapters against one canonical source, exposing loss explicitly."""
     _object(canonical_sections, "canonical_sections")
     _list(adapters, "adapters", allow_empty=False)
-    compiled = [adapt_prompt(canonical_sections, adapter, canonical_state=canonical_state) for adapter in adapters]
+    resolved_canonical_state = canonical_state if canonical_state is not None else canonical_sections.get("canonical_state")
+    require(resolved_canonical_state is not None, "Prompt adaptation requires canonical state")
+    canonical_state_hash = digest(resolved_canonical_state)
+    compiled = [adapt_prompt(canonical_sections, adapter, canonical_state=resolved_canonical_state) for adapter in adapters]
     baseline = set(canonical_sections)
     reports = []
     for result in compiled:
         preserved = {item["source"] for item in result["mappings"] if item["status"] == "PRESERVED"}
         unsupported = sorted(baseline - preserved)
         reports.append({"adapter_id": result["adapter_id"], "source_hash": result["source_hash"],
+                        "canonical_state_hash": result["canonical_state_hash"],
                         "preserved_sections": sorted(preserved), "degraded_sections": unsupported,
-                        "status": "PASS" if not unsupported else "DEGRADED", "omissions": result["omissions"]})
+                        "canonical_semantics_preserved": result["canonical_state_hash"] == canonical_state_hash,
+                        "status": "PASS" if not unsupported and result["canonical_state_hash"] == canonical_state_hash else "DEGRADED",
+                        "omissions": result["omissions"]})
     return {"schema_version": 1, "canonical_hash": digest(canonical_sections), "adapters": reports,
+            "canonical_state_hash": canonical_state_hash,
             "status": "PASS" if all(item["status"] == "PASS" for item in reports) else "DEGRADED"}
 
 
@@ -1274,7 +1346,28 @@ def validate_feature_profile(profile, feature, now=None, observed=None, base_dir
     feature_status = evidence.get("status")
     require(feature_status in ("CONFIRMED", "PARTIAL", "PROPOSED", "INFERRED", "UNKNOWN", "UNSUPPORTED", "EXPIRED"), f"Invalid feature status for {feature}")
     reasons = []
-    fresh_observation = isinstance(observed, dict) and bool(observed)
+    required_observation_fields = ["runtime_version", "node_inventory_hash", "selected_device", "resource_context_hash"]
+    if profile.get("workflow_hash") not in (None, "", "UNKNOWN"):
+        required_observation_fields.append("workflow_hash")
+    if profile.get("workflow_fingerprint") not in (None, "", "UNKNOWN"):
+        required_observation_fields.append("workflow_fingerprint")
+    if profile.get("model_asset_hash") not in (None, "", "UNKNOWN"):
+        required_observation_fields.append("model_asset_hash")
+    if profile.get("runtime_commit") not in (None, "", "UNKNOWN"):
+        required_observation_fields.append("runtime_commit")
+    if profile.get("runtime_dirty") not in (None, "", "UNKNOWN"):
+        required_observation_fields.append("runtime_dirty")
+    if profile.get("custom_node_commits") not in (None, "", "UNKNOWN"):
+        required_observation_fields.append("custom_node_commits")
+    missing_observation_fields = [field for field in required_observation_fields
+                                  if not isinstance(observed, dict) or observed.get(field) in (None, "", "UNKNOWN")]
+    fresh_observation = isinstance(observed, dict) and bool(observed) and not missing_observation_fields
+    if observed is not None and missing_observation_fields:
+        reasons.append("fresh runtime observation envelope incomplete: " + ", ".join(sorted(set(missing_observation_fields))))
+    if fresh_observation:
+        for field in ("node_inventory_hash", "resource_context_hash", "workflow_hash", "workflow_fingerprint", "model_asset_hash"):
+            if field in required_observation_fields:
+                _hash(observed.get(field), f"fresh runtime observation.{field}")
     if status == "CONFIRMED" or feature_status == "CONFIRMED":
         require(profile.get("schema_version") == 1, "Confirmed profile needs schema_version 1")
         for field in ("id", "provider", "runtime", "runtime_version", "integration_version", "model",
@@ -1383,6 +1476,20 @@ def build_repair_plan(plan, changed_shot_ids, findings, budget):
         for shot_id in affected
         for dependency in nodes[shot_id].get("dependency_ids", [])
     ]
+    transition_contract = plan.get("transition_contract", {})
+    if isinstance(transition_contract, dict):
+        transition_records = list(transition_contract.values())
+    elif isinstance(transition_contract, list):
+        transition_records = transition_contract
+    else:
+        transition_records = []
+    for transition in transition_records:
+        if not isinstance(transition, dict):
+            continue
+        source = transition.get("from", transition.get("previous_shot_id"))
+        target = transition.get("to", transition.get("next_shot_id"))
+        if isinstance(source, str) and isinstance(target, str) and (source in affected or target in affected):
+            required_pairs.append(f"{source}->{target}")
     required_pairs = sorted(set(required_pairs))
     return {"schema_version": 1, "plan_revision": plan.get("revision"), "changed_shot_ids": changed_shot_ids,
             "affected_shot_ids": affected, "preserved_shot_ids": scope["preserved_shot_ids"], "routes": routes,
@@ -1464,6 +1571,23 @@ def validate_repair_plan(repair):
             require(set(validated_pairs) == set(required_pairs),
                     "PASS transition revalidation must cover every required pair")
             require(evidence_refs, "PASS transition revalidation requires evidence_refs")
+            evidence_by_pair = {}
+            for index, evidence in enumerate(evidence_refs):
+                _object(evidence, f"transition_revalidation.evidence_refs[{index}]")
+                pair = evidence.get("pair")
+                _nonempty(pair, f"transition_revalidation.evidence_refs[{index}].pair")
+                require(pair in set(validated_pairs),
+                        f"transition revalidation evidence pair is not validated: {pair}")
+                require(pair not in evidence_by_pair, f"Duplicate transition revalidation evidence pair: {pair}")
+                _hash(evidence.get("content_hash"),
+                      f"transition_revalidation.evidence_refs[{index}].content_hash")
+                evidence_path = _resolve_quality_path(
+                    evidence.get("ref"), f"transition_revalidation.evidence_refs[{index}]")
+                _verify_observed_bytes(str(evidence_path), evidence["content_hash"],
+                                       f"transition_revalidation.evidence_refs[{index}]", required=True)
+                evidence_by_pair[pair] = evidence
+            require(set(evidence_by_pair) == set(validated_pairs),
+                    "PASS transition revalidation evidence must cover every validated pair")
         if revalidation_status == "NOT_REQUIRED":
             require(not required_pairs and not validated_pairs,
                     "NOT_REQUIRED transition revalidation cannot declare required pairs")
@@ -1599,6 +1723,8 @@ def _validate_long_form_production_evidence(case, base_dir=None):
     canonical = {}
     for field in ("intent_ref", "plan_ref", "scene_bible_ref", "shot_graph_ref", "continuity_ref", "evidence_ref"):
         canonical[field] = _validate_long_form_canonical_ref(case[field], f"long_form_case.{field}", base_dir)
+        require(canonical[field][1].get("schema_version") == 1,
+                f"long_form_case.{field}.record must declare schema_version 1")
     plan_record = canonical["plan_ref"][1]
     plan_shots = _list(plan_record.get("shots"), "long_form_case.plan_ref.record.shots", allow_empty=False)
     plan_ids = [item.get("id") for item in plan_shots if isinstance(item, dict)]
@@ -1633,19 +1759,35 @@ def _validate_long_form_production_evidence(case, base_dir=None):
 
     from vge_evidence import validate_attempt
     attempt_ids = set()
+    attempt_by_id = {}
     for index, (path, record) in enumerate(resolved["attempts"]):
         validate_attempt(record)
         require(record.get("status") == "SUCCEEDED", f"production_evidence.attempts[{index}] is not SUCCEEDED")
+        runtime = record.get("runtime", {})
+        provider = str(runtime.get("provider", "")).strip().lower()
+        endpoint = str(runtime.get("endpoint", "")).strip().lower()
+        require(provider not in {"fixture", "fake", "synthetic", "test"},
+                f"production_evidence.attempts[{index}] fixture/synthetic runtime cannot prove production acceptance")
+        require(endpoint not in {"http://127.0.0.1:1", "http://localhost:1"},
+                f"production_evidence.attempts[{index}] placeholder runtime endpoint cannot prove production acceptance")
+        require(record.get("purpose") == "GENERATION",
+                f"production_evidence.attempts[{index}] must be a generation attempt")
+        require(record["id"] not in attempt_ids, f"Duplicate production attempt id: {record['id']}")
         attempt_ids.add(record["id"])
+        attempt_by_id[record["id"]] = record
 
     artifact_ids = set()
     artifact_by_id = {}
     artifact_shots = set()
+    artifact_content_hashes = set()
     for index, (path, record) in enumerate(resolved["artifacts"]):
         _nonempty(record.get("shot_id"), f"production_evidence.artifacts[{index}].shot_id")
         require(record.get("generation_status") == "GENERATED", f"production_evidence.artifacts[{index}] is not GENERATED")
         require(record.get("execution_attempt_ref") in attempt_ids,
                 f"production_evidence.artifacts[{index}] is not bound to a successful attempt")
+        attempt = attempt_by_id[record["execution_attempt_ref"]]
+        require(record.get("shot_id") == attempt.get("shot_id"),
+                f"production_evidence.artifacts[{index}] shot is not bound to its attempt")
         media = _object(record.get("media"), f"production_evidence.artifacts[{index}].media")
         require(media.get("kind") in ("video", "image", "audio", "gif"),
                 f"production_evidence.artifacts[{index}].media.kind is invalid")
@@ -1663,19 +1805,30 @@ def _validate_long_form_production_evidence(case, base_dir=None):
                 f"production_evidence.artifacts[{index}] media locator disagrees with its record")
         require(item_media_hash == media_hash, f"production_evidence.artifacts[{index}] media hash disagrees with its record")
         require(record["id"] not in artifact_ids, f"Duplicate production artifact id: {record['id']}")
+        require(media_hash not in artifact_content_hashes,
+                f"production_evidence.artifacts[{index}] reuses identical media bytes; fixture/synthetic duplication is not production evidence")
         artifact_ids.add(record["id"])
+        artifact_content_hashes.add(media_hash)
         artifact_by_id[record["id"]] = {"record": record, "path": media_path}
         artifact_shots.add(record["shot_id"])
 
     observed_artifacts = set()
     observation_by_artifact = {}
+    observation_ids = set()
     for index, (path, record) in enumerate(resolved["observations"]):
         normalized = _normalize_quality_record_paths(record, path, f"production_evidence.observations[{index}]")
         require(normalized.get("status") == "PASS", f"production_evidence.observations[{index}] must be PASS")
+        require(normalized.get("id") not in observation_ids,
+                f"Duplicate production observation id: {normalized.get('id')}")
+        observation_ids.add(normalized.get("id"))
         _nonempty(normalized.get("artifact_id"), f"production_evidence.observations[{index}].artifact_id")
         require(normalized["artifact_id"] in artifact_by_id,
                 f"production_evidence.observations[{index}] references an unknown artifact")
         artifact = artifact_by_id[normalized["artifact_id"]]
+        require(normalized.get("shot_id") == artifact["record"].get("shot_id"),
+                f"production_evidence.observations[{index}] shot is not bound to its artifact")
+        require(normalized.get("shot_id") == attempt_by_id[artifact["record"].get("execution_attempt_ref")].get("shot_id"),
+                f"production_evidence.observations[{index}] shot is not bound to its attempt")
         require(normalized.get("artifact_ref") == str(artifact["path"]),
                 f"production_evidence.observations[{index}] artifact locator mismatch")
         require(normalized.get("observed_content_hash") == artifact["record"].get("content_hash"),
@@ -1781,6 +1934,12 @@ def _validate_long_form_production_evidence(case, base_dir=None):
             "production_evidence.assembly shot order is missing or inconsistent")
     require(assembly.get("shot_order") == case_shot_ids,
             "production_evidence.assembly does not cover the canonical shot order")
+    for index, segment in enumerate(segments):
+        artifact_record = artifact_by_id[segment["artifact"]["id"]]["record"]
+        require(segment["shot_id"] == artifact_record.get("shot_id"),
+                f"production_evidence.assembly.segments[{index}] shot is not bound to its artifact")
+        require(segment["source_attempt"].get("id") == artifact_record.get("execution_attempt_ref"),
+                f"production_evidence.assembly.segments[{index}] source attempt is not bound to its artifact")
     final_binding = assembly.get("final_artifact_binding")
     require(isinstance(final_binding, dict), "production_evidence.assembly lacks final artifact binding")
     _hash(final_binding.get("content_hash"), "production_evidence.assembly.final_artifact_binding.content_hash")

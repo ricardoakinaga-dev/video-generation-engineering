@@ -1,0 +1,1190 @@
+# MASTER PROMPT — TRIPLE-AAA EVIDENCE CLOSURE
+
+# video-generation-engineering
+
+# FINAL STATE-OF-THE-ART PRODUCTION HARDENING
+
+Repository:
+https://github.com/ricardoakinaga-dev/video-generation-engineering
+
+Skill:
+`video-generation-engineering`
+
+Current maturity:
+
+* architecture: mature;
+* canonical planning: mature;
+* continuity contracts: mature;
+* deterministic verification: mature;
+* semantic QA architecture: mature;
+* provenance: mature;
+* progressive disclosure: mature;
+* portable distribution: mature;
+* production evidence: incomplete.
+
+Current release verdict:
+
+`READY_WITH_RISKS`
+
+Target:
+
+Deliver the strongest defensible:
+
+STATE-OF-THE-ART
+TRIPLE-AAA
+
+version of this Skill.
+
+Promotion to:
+
+`TRIPLE_AAA_CANDIDATE`
+
+or:
+
+`TRIPLE_AAA_PROVEN`
+
+is allowed ONLY if actual evidence satisfies the required bar.
+
+---
+
+# 0. ARCHITECTURE FREEZE
+
+Treat the current architecture as FROZEN by default.
+
+Do NOT:
+
+* redesign the canonical model;
+* create a new orchestration architecture;
+* create additional conceptual engines;
+* split modules merely because they are large;
+* add new documentation layers;
+* expand SKILL.md unnecessarily;
+* add speculative model adapters;
+* add speculative patterns;
+* add features unrelated to a demonstrated blocker.
+
+Architecture changes require evidence of:
+
+BUG
+COHESION FAILURE
+CONTRACT GAP
+SECURITY ISSUE
+PRODUCTION BLOCKER
+MAINTAINABILITY FAILURE
+
+Otherwise preserve the current design.
+
+The dominant remaining problem is not architecture.
+
+It is:
+
+PRODUCTION EVIDENCE.
+
+---
+
+# 1. NON-NEGOTIABLE TRUTH MODEL
+
+Preserve:
+
+DESIRED TRUTH
+≠
+PLANNED TRUTH
+≠
+EXECUTED TRUTH
+≠
+OBSERVED TRUTH
+≠
+ACCEPTED TRUTH
+
+Never promote one into another without evidence.
+
+A prompt is not an artifact.
+
+An artifact is not a semantic PASS.
+
+A semantic PASS is not an editorial PASS.
+
+A test PASS is not production evidence.
+
+---
+
+# 2. PHASE OBJECTIVE
+
+Close, in priority order:
+
+P0 — any correctness/evidence regressions
+
+P1 — LF-001 complete production
+
+P2 — real repair/re-anchor cycle
+
+P3 — FLF runtime evidence
+
+P4 — LF-002 dialogue/audio/lip-sync
+
+P5 — LF-003 45–60 second production
+
+P6 — second real adapter
+
+P7 — final architecture/context audit
+
+P8 — fresh independent critic
+
+P9 — frozen final distribution
+
+Do not add broad features while P1–P5 remain unresolved.
+
+---
+
+# 3. FRESH BASELINE AUDIT
+
+Before modifying anything inspect:
+
+* SKILL.md;
+* all production references;
+* all scripts;
+* profiles;
+* assets/templates;
+* tests;
+* docs;
+* verification;
+* artifacts;
+* current distribution;
+* current runtime;
+* current ComfyUI queue;
+* GPUs;
+* free/total VRAM;
+* model files;
+* workflow fingerprints;
+* critic records.
+
+Create a fresh capability matrix:
+
+| Capability | Structural | Runtime | Artifact | Multi-shot | Production | Status | Blocker |
+
+Allowed statuses:
+
+PROVEN
+PARTIAL
+UNKNOWN
+BLOCKED
+NOT_RUN
+NOT_APPLICABLE
+
+Do not inherit historical PASS automatically.
+
+---
+
+# 4. BASELINE REGRESSION GATE
+
+Before production work run all current applicable checks.
+
+At minimum:
+
+full Python test suite
+compileall
+Skill validation
+documentation/link checks
+package manifest
+external-CWD smoke
+import dependency/cycle audit
+secret scan
+absolute-path scan
+weight/private-media scan
+
+Record exact:
+
+tests
+passes
+failures
+errors
+skips
+
+If baseline fails:
+
+repair baseline first.
+
+---
+
+# 5. CURRENT EXPECTED BASELINE
+
+Verify rather than assume:
+
+approximately 141 tests;
+R5 distribution;
+ComfyUI 0.34.0 local scope;
+911-node catalog evidence;
+historical H3 T2V;
+partial H3 R2V;
+LF-001 A001/A002 OOM;
+LF-001 A003 S01 real artifact;
+LF-001 complete BLOCKED;
+LF-002 BLOCKED;
+LF-003 BLOCKED;
+LF-004 NOT_RUN;
+FLF UNKNOWN;
+second adapter BLOCKED;
+critic current state INCOMPLETE.
+
+Any difference must be recorded.
+
+---
+
+# 6. RUNTIME DISCOVERY
+
+Before every new production execution obtain a fresh runtime envelope.
+
+Record:
+
+runtime version
+node inventory hash
+workflow hash
+workflow fingerprint
+model identity/hash
+selected GPU
+total VRAM
+free VRAM
+queue state
+resource floor
+safety margin
+critical custom nodes
+frame count
+resolution
+relevant generation parameters
+
+Do not reuse stale runtime capability evidence.
+
+---
+
+# 7. RESOURCE GUARD
+
+Preserve fail-closed execution.
+
+Before POST:
+
+selected_device must exist;
+
+fresh resource snapshot must exist;
+
+free VRAM floor must exist;
+
+margin must exist.
+
+Require:
+
+FREE_VRAM >= REQUIRED_FLOOR × SAFETY_MARGIN
+
+otherwise:
+
+BLOCKED_BY_RUNTIME_CAPACITY
+
+before queue submission.
+
+The guard is not an inference guarantee.
+
+---
+
+# 8. DO NOT DISRUPT OTHER WORK
+
+Do not:
+
+cancel unrelated jobs;
+kill other workloads;
+clear queues destructively;
+change system-wide runtime configuration without necessity.
+
+If runtime is occupied:
+
+record blocker.
+
+Continue all independent work.
+
+---
+
+# 9. LF-001 — HARD CLOSURE
+
+LF-001 is now the highest-priority production objective.
+
+Concept:
+
+Human enters vehicle.
+
+Canonical action chain:
+
+APPROACH
+→ PRE_CONTACT
+→ HANDLE_CONTACT
+→ DOOR_OPEN
+→ BODY_ORIENTATION
+→ ENTRY
+→ SEATED_STATE
+→ DOOR_CLOSE
+
+The existing A003 S01 may be reused only if:
+
+artifact bytes still exist;
+hash matches;
+attempt provenance resolves;
+shot contract matches;
+observation remains valid.
+
+Otherwise regenerate.
+
+---
+
+# 10. LF-001 SHOT DECOMPOSITION
+
+Prefer smallest reliable decomposition.
+
+Suggested:
+
+S01
+APPROACH + PRE_CONTACT
+
+S02
+HANDLE_CONTACT + DOOR_OPEN + BODY_ORIENTATION
+
+S03
+ENTRY + SEATED_STATE + DOOR_CLOSE
+
+This is not mandatory.
+
+If S02 is too complex:
+
+split.
+
+Example:
+
+S02A:
+HANDLE_CONTACT + DOOR_OPEN
+
+S02B:
+BODY_ORIENTATION + ENTRY START
+
+Prefer generation reliability over arbitrary shot count.
+
+---
+
+# 11. LF-001 SHOT CONTRACT
+
+Before generation every shot must define:
+
+shot_id
+narrative_purpose
+duration
+start_state
+end_state
+subjects
+references
+action_phases
+interaction
+camera
+environment
+lighting
+constraints
+acceptance_dimensions
+dependencies
+
+Acceptance criteria MUST exist before artifact observation.
+
+---
+
+# 12. LF-001 STATE CONTRACT
+
+Track applicable:
+
+subject.identity
+subject.wardrobe
+subject.position
+subject.orientation
+subject.hand_occupancy
+subject.seated_state
+
+vehicle.identity
+vehicle.geometry
+vehicle.color
+vehicle.position
+vehicle.door_state
+vehicle.motion_state
+
+environment.identity
+environment.light_direction
+
+camera.screen_direction
+
+interaction.phase
+
+Do not track irrelevant fields merely for schema completeness.
+
+---
+
+# 13. LF-001 GENERATION STRATEGY
+
+For each shot choose deliberately:
+
+T2V
+I2V/R2V
+FLF
+canonical reference conditioning
+validated boundary frame
+editorial cut
+
+Do not assume one generation mode is optimal for all phases.
+
+High-contact phases should prioritize control and consistency over visual spectacle.
+
+---
+
+# 14. LF-001 ACCEPTANCE DIMENSIONS
+
+Observe independently:
+
+IDENTITY
+WARDROBE
+VEHICLE_GEOMETRY
+VEHICLE_COLOR
+DOOR_STATE
+HAND_CONTACT
+BODY_COLLISION
+ENTRY_CAUSALITY
+SEATED_RESULT
+ENVIRONMENT
+LIGHTING
+CAMERA_CONTINUITY
+TEMPORAL_CONTINUITY
+
+Use:
+
+PASS
+FAIL
+PARTIAL
+NOT_OBSERVED
+NOT_APPLICABLE
+
+No aggregate score may hide a critical FAIL.
+
+---
+
+# 15. LF-001 ORACLE REQUIREMENTS
+
+Use claim-specific oracles.
+
+Identity:
+FRAME/MULTI_FRAME/HUMAN as appropriate.
+
+Temporal:
+MULTI_FRAME/SEQUENCE.
+
+Contact:
+MULTI_FRAME/SEQUENCE/HUMAN.
+
+Door articulation:
+MULTI_FRAME.
+
+Cross-shot continuity:
+TRANSITION + observations.
+
+Editorial:
+HUMAN.
+
+Metadata alone cannot prove semantic acceptance.
+
+---
+
+# 16. LF-001 TRANSITION CONTRACT
+
+For each adjacent pair require:
+
+previous artifact;
+next artifact;
+distinct bytes;
+artifact hashes;
+previous observation;
+next observation;
+previous end state;
+next start state;
+continuity dimensions;
+transition oracle.
+
+Reject:
+
+same artifact reuse;
+missing observation;
+state contradiction;
+identity contradiction;
+door contradiction;
+teleportation;
+unmotivated camera-axis break;
+action-phase gap.
+
+---
+
+# 17. REAL FAILURE REPAIR
+
+If a real shot fails:
+
+DO NOT regenerate everything.
+
+Use:
+
+DETECT
+→ LOCALIZE
+→ OWNER
+→ MINIMAL REPAIR
+→ NEW ATTEMPT
+→ OBSERVE
+→ REVALIDATE ADJACENT TRANSITIONS
+→ REASSEMBLE
+
+Possible owners:
+
+REFERENCE
+SHOT
+CONTINUITY
+INTERACTION
+PERFORMANCE
+CAMERA
+CONSTRAINT
+PROMPT
+ADAPTER
+RUNTIME
+AUDIO
+ASSEMBLY
+
+---
+
+# 18. REAL REPAIR REQUIREMENT
+
+Triple-AAA production maturity should include at least one naturally occurring repair loop.
+
+Do not intentionally corrupt a good output merely to satisfy this requirement.
+
+If all production attempts succeed without repair:
+
+record:
+
+NO_NATURAL_REPAIR_CASE
+
+and do not fabricate one.
+
+However, historical/real failures may be used if they can be meaningfully repaired and compared.
+
+---
+
+# 19. REPAIR EVIDENCE
+
+For a repaired shot record:
+
+failed_attempt
+failure_dimension
+diagnosis
+repair_owner
+repair_delta
+new_attempt
+new_artifact
+before_observation
+after_observation
+adjacent_transition_results
+
+The evidence must show whether repair actually improved the failed dimension.
+
+---
+
+# 20. RE-ANCHOR
+
+When drift is observed, prefer canonical source anchors.
+
+Hierarchy:
+
+ORIGINAL SUBJECT REFERENCE
+ORIGINAL VEHICLE/OBJECT REFERENCE
+ORIGINAL ENVIRONMENT REFERENCE
+VALIDATED BOUNDARY FRAME
+
+Never recursively promote degraded generated frames into canonical truth.
+
+---
+
+# 21. RE-ANCHOR DECISION
+
+Allowed:
+
+CONTINUE
+RE_ANCHOR
+RESET
+SPLIT
+REGENERATE
+
+Record:
+
+drift
+risk
+anchor
+reason
+new generation strategy
+result
+
+---
+
+# 22. LF-001 ASSEMBLY
+
+After accepted shots:
+
+assemble LF-001.
+
+Manifest must bind:
+
+final artifact
+→ shot IDs
+→ source artifacts
+→ hashes
+→ attempts
+→ transitions
+→ repair lineage
+
+---
+
+# 23. LF-001 ASSEMBLY QA
+
+Verify:
+
+shot order
+shot count
+duration
+FPS
+resolution
+codec
+audio
+A/V alignment
+missing clips
+duplicates
+black frames
+freeze frames
+transition timing
+source lineage
+
+---
+
+# 24. LF-001 SEMANTIC FINAL REVIEW
+
+Observe assembled result.
+
+Do not rely only on individual shot PASS.
+
+Evaluate:
+
+identity continuity
+vehicle continuity
+action completeness
+physical plausibility
+camera coherence
+environment continuity
+temporal continuity
+final seated result
+
+---
+
+# 25. LF-001 EDITORIAL REVIEW
+
+Use HUMAN oracle for:
+
+pacing
+camera
+clarity
+framing
+performance
+rhythm
+
+LF-001 becomes:
+
+PRODUCTION_ACCEPTED
+
+only if required technical, semantic, transition and editorial gates are satisfied.
+
+---
+
+# 26. LF-001 STOP CONDITION
+
+Do not move to complex LF-003 work while LF-001 remains structurally fixable but unclosed.
+
+If LF-001 is blocked by an actual model/runtime limit:
+
+document the demonstrated limit.
+
+Then continue LF-002 if independent.
+
+---
+
+# 27. FLF — REAL CAPABILITY PROBE
+
+Once runtime is stable, test endpoint conditioning if supported.
+
+Test separately:
+
+FIRST_ONLY
+LAST_ONLY
+FIRST_AND_LAST
+
+For each record:
+
+workflow
+model
+parameters
+start reference
+end reference
+artifact
+hash
+observation
+
+---
+
+# 28. FLF ACCEPTANCE
+
+Observe:
+
+start fidelity
+end fidelity
+identity
+object retention
+environment
+motion
+transition artifacts
+
+Classify:
+
+CONFIRMED
+PARTIAL
+UNSUPPORTED
+UNKNOWN
+
+Do not infer from nodes or documentation.
+
+---
+
+# 29. FLF FALLBACK
+
+If unsupported/partial:
+
+do not make long-form dependent on it.
+
+Fallback:
+
+CANONICAL REFERENCE
++
+VALIDATED BOUNDARY
++
+RE-ANCHOR
++
+EDITORIAL CUT.
+
+---
+
+# 30. LF-002 — DIALOGUE / PERFORMANCE
+
+After LF-001 core pipeline is working or independently blocked, execute LF-002.
+
+Target:
+
+20–30 seconds.
+
+Two recurring adults.
+
+Scenario structure:
+
+QUESTION
+→ LISTEN
+→ PROCESS
+→ REACT
+→ RESPOND
+→ SIMPLE OBJECT INTERACTION
+
+Avoid vehicle entry here.
+
+---
+
+# 31. LF-002 DIALOGUE CONTRACT
+
+Represent:
+
+dialogue_id
+speaker
+listener
+line
+intent
+delivery
+emotion
+start
+end
+pause_before
+pause_after
+overlap_policy
+gaze_target
+gesture
+listener_reaction
+reaction_order
+voice_strategy
+lip_sync_strategy
+
+---
+
+# 32. DIALOGUE CAUSALITY
+
+Enforce:
+
+STIMULUS
+→ PROCESSING
+→ REACTION
+→ RESPONSE
+
+Reject:
+
+speaker swap;
+listener mouthing;
+reaction-before-stimulus;
+response-before-line-end;
+unmotivated emotional jump.
+
+---
+
+# 33. MODULAR AUDIO PIPELINE
+
+Do not require one video model to generate the entire stack.
+
+Allow:
+
+SCRIPT
+→ VOICE
+→ VISUAL PERFORMANCE
+→ LIP_SYNC
+→ FOLEY
+→ AMBIENCE
+→ MIX
+→ ASSEMBLY
+
+Select path based on proven capabilities.
+
+---
+
+# 34. AUDIO ACCEPTANCE
+
+Observe:
+
+dialogue intelligibility
+speaker identity
+voice consistency
+line timing
+listener behavior
+foley causality
+ambience
+mix balance
+A/V alignment
+lip-sync
+
+Use appropriate AUDIO/HUMAN/MULTI_FRAME oracles.
+
+---
+
+# 35. LIP-SYNC
+
+Status:
+
+NATIVE_CONFIRMED
+EXTERNAL_CONFIRMED
+PARTIAL
+FAILED
+UNKNOWN
+
+Observe:
+
+active speaker;
+mouth-motion window;
+listener inactivity;
+face visibility;
+occlusion;
+gross synchronization;
+A/V alignment.
+
+Do not claim phoneme-level perfection without suitable measurement.
+
+---
+
+# 36. LF-002 ASSEMBLY
+
+Assemble the dialogue scene.
+
+Verify:
+
+dialogue order
+audio continuity
+visual continuity
+object interaction
+speaker/listener state
+shot order
+A/V alignment
+
+Obtain semantic and editorial review.
+
+---
+
+# 37. LF-002 EXIT
+
+LF-002 becomes production accepted only with actual observed evidence for applicable:
+
+identity
+dialogue
+performance
+audio
+lip-sync
+interaction
+continuity
+assembly
+
+Otherwise remain PARTIAL/BLOCKED.
+
+---
+
+# 38. LF-003 — 45–60 SECOND PRODUCTION
+
+Only attempt after the production pipeline has sufficient stability.
+
+Goal:
+
+prove the user's original long-form objective.
+
+Create one bounded 45–60 second cinematic/commercial scene.
+
+Required:
+
+2 recurring identities
+Scene Bible
+narrative timeline
+dialogue
+performance
+movement
+persistent object
+physical interaction
+multiple cameras
+audio
+continuity
+multi-shot assembly
+repair/re-anchor path
+human editorial review
+
+---
+
+# 39. LF-003 SCENE BIBLE
+
+Persistent facts:
+
+identity anchors
+wardrobe
+relationships
+environment
+time of day
+light direction
+persistent objects
+voice identity
+visual style
+camera language
+prohibited drift
+
+Scene Bible must not duplicate transient shot state.
+
+---
+
+# 40. LF-003 TIMELINE
+
+Plan before prompting.
+
+Recommended narrative structure:
+
+ESTABLISH
+→ DIALOGUE
+→ REACTION
+→ MOVEMENT
+→ INTERACTION
+→ TRANSITION
+→ SECOND BEAT
+→ RESOLUTION
+→ HERO/CLOSING SHOT
+
+---
+
+# 41. LF-003 SHOT GRAPH
+
+Use complexity-driven shot count.
+
+Expected roughly:
+
+6–12 shots.
+
+Every shot needs:
+
+purpose
+duration
+start/end state
+dependencies
+references
+camera
+performance
+audio
+acceptance
+
+---
+
+# 42. LF-003 CONTINUITY
+
+Track only applicable:
+
+identity
+wardrobe
+hair
+position
+pose
+gaze
+hand occupancy
+object state
+ownership
+environment
+lighting
+screen direction
+camera geography
+emotion
+dialogue
+audio
+time
+
+---
+
+# 43. LF-003 CANONICAL RESET
+
+Do not recursively chain degraded generations.
+
+Re-anchor:
+
+on drift
+or
+at planned continuity checkpoints.
+
+Record every reset.
+
+---
+
+# 44. LF-003 TRANSITIONS
+
+Every dependent transition requires:
+
+two real artifacts
+two semantic observations
+state compatibility
+hash-bound provenance
+continuity result
+
+No declarative PASS.
+
+---
+
+# 45. LF-003 REPAIR
+
+If a shot fails:
+
+repair only smallest dependency scope.
+
+Example:
+
+S06 identity fail
+
+repair S06
+
+then revalidate:
+
+S05→S06
+S06→S07
+
+Reassemble.
+
+---
+
+# 46. LF-003 FINAL ASSEMBLY
+
+Bind:
+
+final artifact
+→ accepted shots
+→ hashes
+→ attempts
+→ transitions
+→ repair lineage
+
+Validate mechanical, semantic and editorial layers independently.
+
+---
+
+# 47. LF-003 HUMAN EDITORIAL GATE
+
+Evaluate:
+
+PACING
+ACTING
+CAMERA
+EMOTION
+FRAMING
+RHYTHM
+
+Require HUMAN oracle.
+
+---
+
+# 48. LF-004
+
+Do not prioritize 90–120 seconds before LF-001 through LF-003.
+
+LF-004 may remain NOT_RUN.
+
+Do not allow optional LF-004 to delay release closure.
+
+---
+
+# 49. SECOND REAL ADAPTER
+
+After primary runtime closure, validate one second real adapter if already available or reasonably accessible.
+
+Do not automatically download large model weights.
+
+If unavailable:
+
+BLOCKED_SECOND_ADAPTER
+
+is valid.
+
+---
+
+# 50. ADAPTER DIFFERENTIAL
+
+Use identical canonical simple scene.
+
+Adapter A and B must preserve:
+
+intent
+identity
+causality
+state
+reference locks
+acceptance criteria
+
+They may differ:
+
+prompt syntax
+workflow
+conditioning
+parameters
+fallbacks
+
+---
+
+# 51. PROMPT COMPILER — EVIDENCE-DRIVEN TUNING
+
+Only change compiler behavior in response to:
+
+real generation failure
+clear

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "docs-current-r9",
+  "observed_at": "2026-09-09T23:28:00Z",
+  "status": "PASS",
+  "scope": "CURRENT_DOCS_AND_PROMPT_COPY_AUDIT",
+  "files": 67,
+  "markdown_or_text_files": 62,
+  "fenced_code_blocks": 76,
+  "local_links_checked": 545,
+  "link_errors": [],
+  "prompt_parts_checked": 3,
+  "required_report_sections": 31,
+  "missing_report_sections": [],
+  "limitations": [
+    "This audit verifies local references and documentation structure; it does not prove runtime or audiovisual claims.",
+    "Absolute source attachment paths are recorded in the frozen bar but are not package dependencies."
+  ]
+}
