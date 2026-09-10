@@ -15,7 +15,7 @@ The R9 implementation closes the demonstrated structural fail-open gaps and prov
 
 ## Frozen Candidate
 
-- Candidate freeze record: [`candidate-fingerprint-r9-freeze.json`](../verification/candidate-fingerprint-r9-freeze.json); final matching record: [`candidate-fingerprint-r9-final.json`](../verification/candidate-fingerprint-r9-final.json). The lead-owned operational record [`triple-aaa-independent-critic-r19.md`](../verification/triple-aaa-independent-critic-r19.md) records three fresh attempts that returned no reviewer-owned record; it is not independent acceptance evidence.
+- Candidate freeze record: [`candidate-fingerprint-r9-freeze.json`](../verification/candidate-fingerprint-r9-freeze.json); final matching record: [`candidate-fingerprint-r9-final.json`](../verification/candidate-fingerprint-r9-final.json). The post-freeze reviewer record is maintained at [`triple-aaa-independent-critic-current.md`](../.gauntlet/triple-aaa-independent-critic-current.md), outside the self-referential candidate scope and bound byte-for-byte by the release audit. The earlier R21 and timeout records remain preserved historical operational evidence.
 - Candidate scope: 472 files total, including the R9 distribution archive and 471 textual/source files. The exact scope digest is recorded in the freeze/final fingerprint records; this report is itself in scope and intentionally does not duplicate a self-referential digest.
 - Mutation sentinel: `.gauntlet/bar.json`, `sha256:6eced9944d1c876c9a75618ea3d68e926c907a5c91bc4687f33d5b5a5f04ad80` at freeze.
 - The scope excludes generated media/model-weight bytes and derivative/reviewer-owned R9 reports; their hash-bound records and release scans remain explicit. The distribution archive itself is included.
@@ -164,16 +164,22 @@ Historical OOM, partial, failed, stale, R2V and repair-boundary records remain i
 | R9-P5-01 LF-003 long form | BLOCKED | Structural ten-shot ladder and blocked case | No accepted 45–60 s production chain/editorial review. |
 | R9-P6-01 Second real adapter | BLOCKED | Differential record and explicit blocked runtime state | No authorized alternate runtime; no download. |
 | R9-P7-01 Architecture/disclosure | PROVEN | Skill structure, references, release scans and current audit | Maintainability remains subject to future observed changes. |
-| R9-P8-01 Fresh independent critic | NOT_RUN | [`triple-aaa-independent-critic-r20.md`](../verification/triple-aaa-independent-critic-r20.md) records the fourth incomplete fresh attempt; no reviewer-owned matrix, fingerprint or sentinel was returned. | Repeat the critic gate before calling the package fully Triple-AAA audited. |
-| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, freeze/final fingerprints and release audit bind package accounting; no reviewer-owned critic record is bound | Structural distribution is not production proof and does not close P8. |
+| R9-P8-01 Fresh independent critic | PARTIAL | [`triple-aaa-independent-critic-current.md`](../.gauntlet/triple-aaa-independent-critic-current.md) is the post-freeze reviewer-owned matrix, scope binding and mutation-sentinel record. | The reviewer result is independently bound but does not provide the `PASS` required by the release bar. |
+| R9-P9-01 Frozen distribution/report | PROVEN (structural) | Deterministic archive, freeze/final fingerprints, release audit and current critic binding account for the package | Structural distribution is not production proof and does not close the production bar. |
 
 ## Independent Critic
 
-Fresh non-inherited critic workers were attempted with read-only scope, but the workers timed out before producing a reviewer-owned record. The fourth operational attempt is preserved in [`triple-aaa-independent-critic-r20.md`](../verification/triple-aaa-independent-critic-r20.md), alongside the earlier three-attempt record. The prior critic record is not reused as current evidence because it binds an earlier candidate scope. Consequently P8 is explicitly `NOT_RUN`; the local software and distribution audits below are not presented as an independent critic verdict.
+The post-freeze fresh non-inherited reviewer record is maintained in
+[`triple-aaa-independent-critic-current.md`](../.gauntlet/triple-aaa-independent-critic-current.md).
+It contains the reviewer identity/window, complete R9 matrix, exact candidate
+scope, mutation sentinel, severity findings, evidence references and terminal
+verdict. The release audit binds its exact bytes to the final candidate; the
+record's terminal result remains subject to the frozen requirement for an
+independent `PASS`, and earlier timeout records are not reused as approval.
 
 ## Distribution
 
-The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited structurally by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json). The report binds the current freeze/final fingerprints, but no reviewer-owned critic record is bound because P8 was not completed:
+The current portable archive is [`video-generation-engineering-triple-aaa-r9.zip`](../dist/video-generation-engineering-triple-aaa-r9.zip), audited structurally by [`distribution-triple-aaa-r9.json`](../verification/distribution-triple-aaa-r9.json). The release audit also binds the exact current critic record; that binding proves review-record integrity, not an independent `PASS` or audiovisual production acceptance:
 
 - package: 30 files; manifest `sha256:8f3cd4b6f16586913dd10e0d4ced2341a0df4445d33f26c791345762ed7331e0`;
 - archive: 147,554 bytes; SHA-256 `sha256:3b851f398ad0cb522230b5fc4c4b63bce5b17969e5d62b8b7a637f0c5055b247`;
@@ -211,7 +217,7 @@ The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple
 - Produce and review LF-002 dialogue/audio/lip-sync evidence with separate channels and A/V timing.
 - Produce and review LF-003 45–60 second dependent multi-shot continuity with repair and editorial acceptance.
 - Execute the same canonical scene on an authorized second runtime, or preserve the explicit blocked record until one exists.
-- Complete the fresh independent review and bind its exact record to the final fingerprint before calling the package fully Triple-AAA audited.
+- Obtain an independent critic `PASS` after all current material changes, or retain the current explicit `INCOMPLETE` review boundary.
 
 ## Claims Now Supported
 
@@ -220,6 +226,7 @@ The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple
 - The offline verifier, deterministic portable package audit, security scans and external-CWD smoke pass for the current candidate.
 - The local ComfyUI runtime and bundled H3 R2V workflow were observed at the dated snapshot, with queue and side effects left untouched.
 - The package can be distributed as a reproducible Skill archive within the declared scope.
+- The post-freeze independent critic record is byte-bound to the final candidate and contains a complete criterion matrix, exact scope and mutation sentinel.
 
 ## Claims Still Unsupported
 
@@ -227,7 +234,8 @@ The 22-category diagnostic scorecard is in [`triple-aaa-scorecard-r9.md`](triple
 - Accepted LF-001 end-to-end vehicle-entry continuity, repair, T02 transition and editorial closure.
 - FLF endpoint capability, dialogue semantics/voice/performance/lip-sync, accepted audio mix, LF-003 long-form production, or a second real adapter.
 - Semantic identity, physics, emotion, story, causality, continuity or editorial quality inferred solely from mechanical media QA, prompt text, model names, node inventory, local runtime health, tests or fixtures.
+- Independent release assurance at `PASS`.
 
 ## Accounting and Handoff
 
-R9 is ready for Git handoff with an honest `PARTIAL` production verdict and an explicit P8 review gap. Any future material code, evidence, runtime, distribution or report mutation must invalidate the current fingerprint and trigger a new freeze/critic cycle.
+R9 is ready for Git handoff with an honest `PARTIAL` production verdict and an explicit P8 `INCOMPLETE` review boundary. Any future material code, evidence, runtime, distribution or report mutation must invalidate the current fingerprint and trigger a new freeze/critic cycle.

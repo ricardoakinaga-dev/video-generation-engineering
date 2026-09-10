@@ -11,8 +11,10 @@ Implement the three user-supplied Triple-AAA Evidence Closure prompts against th
 - [x] (2026-09-10T03:40:52Z) Reconciled the recovered control plane with the current candidate: 159 no-bytecode tests pass, the deterministic distribution is present, and the current fresh-critic attempt is incomplete rather than accepted.
 - [x] (2026-09-10T03:40:52Z) Preserved the supplied prompt copies and recorded a lead-owned operational record for three non-responsive fresh reviewer attempts.
 - [x] (2026-09-10T03:46:50Z) Re-ran integrated offline verification after reconciliation: 159 tests, documentation, compile, package and freeze/final fingerprint binding pass.
-- [x] (2026-09-10T03:56:49Z) A fourth fresh non-inherited critic attempt again returned no reviewer-owned result; P8 remains `NOT_RUN` and no independent acceptance is claimed.
-- [ ] Obtain authorized production observations for the remaining audiovisual gates and a responsive reviewer-owned P8 matrix; this remains outside the current authorization boundary.
+- [x] (2026-09-10T03:56:49Z) A fourth fresh non-inherited critic attempt again returned no reviewer-owned result; the incomplete operational record remains preserved.
+- [x] (2026-09-10T04:01:00Z) A fifth fresh non-inherited critic returned a complete matrix, current candidate scope and mutation sentinel; the reviewer verdict is `INCOMPLETE`, not release approval.
+- [x] (2026-09-10T04:20:00Z) A post-reconciliation fresh critic returned the complete matrix and exact current scope/sentinel binding; the terminal verdict remains `INCOMPLETE`, and the distribution rebinding passed.
+- [ ] Obtain authorized production observations for the remaining audiovisual gates and an independent critic `PASS`; both remain outside the current authorization boundary.
 
 ## Context and Orientation
 
@@ -38,7 +40,7 @@ In scope are local code, tests, documentation, evidence accounting, deterministi
 
 ## Surprises & Discoveries
 
-The recovered state and plan still described an earlier 157-test candidate and a completed critic even though the current reports correctly classified 159 tests and P8 as `NOT_RUN`. Four fresh reviewer attempts now share the same operational timeout pattern. The discrepancy was reconciled without rewriting historical records or treating lead-owned stability checks as independent review.
+The recovered state and plan still described an earlier 157-test candidate and a completed critic even though the current reports correctly classified 159 tests and P8 as `NOT_RUN`. Four fresh reviewer attempts shared the same operational timeout pattern; a fifth returned a complete matrix with an `INCOMPLETE` verdict. The discrepancy was reconciled without rewriting historical records or treating an incomplete review as approval.
 
 ## Quality bar and gates
 
@@ -72,8 +74,8 @@ Work proceeds in the frozen order: preserve sources and the bar, reconcile state
 3. [VGE-TRIPLE-AAA-R9:CONTRACT-HARDENING] — implement only evidence-backed gaps in production acceptance, compiler differential, release packaging and their regressions. **DONE — includes the post-handoff canonical-bundle traceability hardening and its known-bad coverage.**
 4. [VGE-TRIPLE-AAA-R9:REPORTING] — update current capability/maturity/score/report artifacts with exact statuses, claims, blockers and rejected overengineering. **DONE.**
 5. [VGE-TRIPLE-AAA-R9:FULL-VERIFY] — rerun focused checks, full regression, compile, Skill validation, offline package checks, external-CWD smoke and scans. **DONE.**
-6. [VGE-TRIPLE-AAA-R9:FINAL-CRITIC] — freeze the candidate and obtain a fresh non-inherited read-only critic with a reviewer-owned fingerprint and mutation sentinel. **BLOCKED — four fresh attempts returned no reviewer-owned matrix, fingerprint or sentinel; P8 is `NOT_RUN`.**
-7. [VGE-TRIPLE-AAA-R9:DISTRIBUTION] — build and validate a new portable distribution from the frozen candidate and bind it to the available references. **DONE mechanically — package binding is `PASS` without a critic binding.**
+6. [VGE-TRIPLE-AAA-R9:FINAL-CRITIC] — freeze the candidate and obtain a fresh non-inherited read-only critic with a reviewer-owned fingerprint and mutation sentinel. **DONE for the current post-reconciliation record — the matrix and exact bindings are complete, but verdict `INCOMPLETE`; P8 approval is not satisfied.**
+7. [VGE-TRIPLE-AAA-R9:DISTRIBUTION] — build and validate a new portable distribution from the frozen candidate and bind it to the available references. **DONE mechanically — package, current freeze/final scope and current critic binding pass.**
 8. [VGE-TRIPLE-AAA-R9:HANDOFF] — record the final verdict, preserve blockers, commit and push only the integrated verified candidate. **PENDING for this reconciled packet; the prior R9 packet was pushed, and this final state/report correction must be handed off after the last verification.**
 
 ## Architecture and Interfaces
@@ -114,7 +116,7 @@ Preserve current and historical R1–R8 artifacts. A runtime timeout remains tie
 - Current report: `docs/triple-aaa-final-evidence-closure-r9.md`.
 - Matrix: `docs/capability-matrix-r9.md`.
 - Diagnostic scorecard: `docs/triple-aaa-scorecard-r9.md`.
-- Baseline/verification records: `verification/software-triple-aaa-r9.json`, `verification/docs-current-r9.json`, `verification/candidate-fingerprint-r9-*.json`, `verification/triple-aaa-independent-critic-r19.md`, `verification/triple-aaa-independent-critic-r20.md`, `verification/distribution-triple-aaa-r9.json`.
+- Baseline/verification records: `verification/software-triple-aaa-r9.json`, `verification/docs-current-r9.json`, `verification/candidate-fingerprint-r9-*.json`, `verification/triple-aaa-independent-critic-r19.md`, `verification/triple-aaa-independent-critic-r20.md`, `.gauntlet/triple-aaa-independent-critic-r21.md`, `.gauntlet/triple-aaa-independent-critic-current.md`, `verification/distribution-triple-aaa-r9.json`.
 - Distribution: `dist/video-generation-engineering-triple-aaa-r9.zip`.
 
 ## Completion signal
@@ -123,11 +125,11 @@ The integrated repository has the preserved prompts, frozen R9 bar, current evid
 
 ## Outcomes & Retrospective
 
-The implementation closed the demonstrated deterministic fail-open gaps and preserved the production boundary. The current handoff is intentionally `PARTIAL`: software is `READY_WITH_RISKS`, while production and P8 remain unproven. The next useful action is external authorization plus responsive review capacity, not another speculative adapter or synthetic audiovisual claim.
+The implementation closed the demonstrated deterministic fail-open gaps and preserved the production boundary. The current handoff is intentionally `PARTIAL`: software is `READY_WITH_RISKS`, production remains unproven, and the current independent review is `INCOMPLETE` rather than `PASS`. The next useful action is external authorization plus a post-reconciliation independent `PASS`, not another speculative adapter or synthetic audiovisual claim.
 
 ## Post-handoff re-audit — 2026-09-10
 
 - An independent scout identified a real fail-open join in `_validate_long_form_production_evidence`: shared shot IDs did not prove that intent, plan, Scene Bible, shot graph, continuity and evidence belonged to one canonical revision.
 - `vge_quality.py` now requires the explicit `canonical_bundle` identity and content hash chain for a future production `PASS`; `tests/test_quality.py` covers aligned and mismatched case, scene, revision and manifest records.
 - Focused and full no-bytecode regression pass with 159 tests, zero failures/errors/skips; no runtime POST, queue mutation, provider call or production claim was added.
-- The candidate was re-fingerprinted and the deterministic package remains structurally valid; the current fresh-review record is operationally incomplete, so no critic binding is claimed. The remaining production boundary is still the authorized LF/FLF/audio/editorial evidence gate.
+- The candidate was re-fingerprinted and the deterministic package remains structurally valid; the post-reconciliation reviewer supplied a complete matrix and exact scope binding but returned `INCOMPLETE`. The remaining production boundary is still the authorized LF/FLF/audio/editorial evidence gate.

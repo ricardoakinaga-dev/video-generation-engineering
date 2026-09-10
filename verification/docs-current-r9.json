@@ -1,5 +1,5 @@
 {
-  "observed_at": "2026-09-10T03:58:39.419619+00:00",
+  "observed_at": "2026-09-10T04:18:30.476120+00:00",
   "scope": "structural documentation inspection; no runtime or external source validation",
   "python": "3.12.3",
   "pyyaml": "6.0.1",
@@ -103,13 +103,13 @@
     "docs/scene-and-continuity.md": "c2fd226bdebe6df3af7a1a649ad1831346d6523cbae373cd8a7087e16452f321",
     "docs/state-model.md": "4a722db59212663425d55bad202ac2cc2c6408ab308dac5ae2fc110c22c73129",
     "docs/traceability.md": "03737c68102b1f7f96abc743ba8ed4d8d22c0be2b3ffb08c55f817e15c62a41d",
-    "docs/triple-aaa-final-evidence-closure-r9.md": "88db7282f03e3ac1144e03db936288869581b44c3a2610fdf906e0ef8b6f6c4c",
+    "docs/triple-aaa-final-evidence-closure-r9.md": "d1c091c4151498e929aeddae7503f1db048f6f2c74050776610890182ff576a2",
     "docs/triple-aaa-final-production-closure-r4.md": "132827665e3a7741f57b9a62764c9f4aaa502227426e75d8ffdedfafdaffd488",
     "docs/triple-aaa-final-production-closure.md": "d42ce6aa9a61327544de470a4f02d9a9ef7ab4ef4459822886ce2097cea28195",
     "docs/triple-aaa-final-report.md": "1d94a0c15ef2ecac8991f1929ab1743df3865d64ceecbd378795a606dd4111c2",
     "docs/triple-aaa-scorecard-r3.md": "fb0e678bf04463bd5ed8615ef3ee9e434abaea25412bce4ffca397d8844d20ab",
     "docs/triple-aaa-scorecard-r4.md": "f39707509497fb81e5d3a3c8674c1ca47dfcc40719c906a92e3748d19fe69fc0",
-    "docs/triple-aaa-scorecard-r9.md": "9f803db2ab9e34072b1f52985dbf4ff144faf21b0a91edc05aed98500f9f0fa4",
+    "docs/triple-aaa-scorecard-r9.md": "62d1a3b45bb4a60c726335388ea4f2b2112351d0f4842ca2280dc4d2650cb5f5",
     "docs/triple-aaa-scorecard.md": "9f6e2cd8a08a02dce2c1f4f7cfb37bf708948323015b68f5ae251752a2e915f7",
     "docs/triple-aaa-validation.md": "ef7ec3cf961066b036e6a7ebfc0a524200c28d442585bb3afaec9b814298f78b",
     "docs/vision-and-scope.md": "51e132e5792c46c032d102ce551a26cee873d190a6add455d4f17b2cde609d2a"
